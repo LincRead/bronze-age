@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: ed235bd973e802046af1a4ae4e896295
+timeCreated: 1501542984
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - unitStats: {instanceID: 0}
+  - idleState: {fileID: 11400000, guid: e5d40dd15255a5640ab87ffab2cbecb1, type: 2}
+  - _transform: {instanceID: 0}
+  - _spriteRenderer: {instanceID: 0}
+  - _animator: {instanceID: 0}
+  - _pathfinder: {instanceID: 0}
+  - _collider: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
