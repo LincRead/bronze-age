@@ -70,13 +70,12 @@ public class Resource : BaseController {
             if (amountLeft <= 0)
             {
                 depleted = true;
-
-                // TODO fade out ??
             }
 
-            else if (amountLeft < amount / 2.5f)
+            // TODO fade out ??
+            else if (amountLeft < amount / 2.5f && harvestStagesSprites.Length == 3)
                 _spriteRenderer.sprite = harvestStagesSprites[1];
-            else if (amountLeft < amount / 1.4f)
+            else if (amountLeft < amount / 1.4f && harvestStagesSprites.Length == 3)
                 _spriteRenderer.sprite = harvestStagesSprites[0];
         }
     }
