@@ -80,10 +80,10 @@ public class Building : BaseController {
     {
         bool canPlace = false;
 
-        _transform.position = WorldManager.instance.GetGrid().SnapToGrid(Camera.main.ScreenToWorldPoint(Input.mousePosition) - new Vector3(0.0f, _spriteRenderer.bounds.size.y / 2));
+        _transform.position = Grid.instance.SnapToGrid(WorldManager.mousePosition - new Vector2(0.0f, _spriteRenderer.bounds.size.y / 2));
 
         // Adding offset since building pivot point (buttom of sprite) is in the middle of two nodes.
-        if (WorldManager.instance.GetGrid().GetAllTilesFromBoxArEmpty(_transform.position + new Vector3(0.04f, 0.04f), size))
+        if (Grid.instance.GetAllTilesFromBoxArEmpty(_transform.position + new Vector3(0.04f, 0.04f), size))
         {
             canPlace = true;
             _spriteRenderer.color = new Color(1f, 1f, 1f, 0.5f);

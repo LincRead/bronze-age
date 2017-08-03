@@ -160,8 +160,7 @@ public class ObjectSelection : MonoBehaviour {
             return true;
         }
 
-        Grid grid = WorldManager.instance.GetGrid();
-        Tile nodeAtMousePos = grid.GetTileFromWorldPoint(mousePos);
+        Tile nodeAtMousePos = Grid.instance.GetTileFromWorldPoint(mousePos);
 
         if (nodeAtMousePos == null)
             return false;

@@ -288,11 +288,6 @@ public class WorldManager : MonoBehaviour {
         return mousePosition;
     }
 
-    public Grid GetGrid()
-    {
-        return _grid;
-    }
-
     public void UpdateHousingText()
     {
         //UnitUIManager.Manager.housingText.text = new StringBuilder(GetPlayerDataForPlayer(0).population + "/" + GetPlayerDataForPlayer(0).housing).ToString();

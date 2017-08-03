@@ -41,7 +41,7 @@ public class Resource : BaseController {
         zIndex = _transform.position.y;
         _transform.position = new Vector3(_transform.position.x, _transform.position.y, zIndex);
 
-        WorldManager.instance.GetGrid().SetTilesOccupiedByResource(this);
+        Grid.instance.SetTilesOccupiedByResource(this);
 
         _spriteRenderer.sortingLayerName = "Object";
 
