@@ -32,7 +32,7 @@ public class CameraController : MonoBehaviour {
 
         _myTransform = GetComponent<Transform>();
         _grid = GameObject.FindGameObjectWithTag("Grid").GetComponent<Grid>();
-        _clickIndicator = WorldManager.Manager._clickIndicator;
+        _clickIndicator = WorldManager.instance._clickIndicator;
 
         float vertExtent = Camera.main.orthographicSize;
         float horzExtent = vertExtent * Screen.width / Screen.height;

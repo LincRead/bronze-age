@@ -17,11 +17,11 @@ public class ObjectSelection : MonoBehaviour {
 
     void Update()
     {
-        if (WorldManager.Manager.currentUserState != WorldManager.USER_STATE.NONE)
+        if (WorldManager.instance.currentUserState != WorldManager.USER_STATE.NONE)
             return;
 
         // If we press the left mouse button, save mouse location and begin selection
-        if (Input.GetMouseButtonDown(0) && !WorldManager.Manager._cursorHoveringUI.IsCursorHoveringUI())
+        if (Input.GetMouseButtonDown(0) && !WorldManager.instance._cursorHoveringUI.IsCursorHoveringUI())
         {
             mousePosInitial = Input.mousePosition;
 
@@ -36,7 +36,7 @@ public class ObjectSelection : MonoBehaviour {
         // If we let go of the left mouse button, end selection
         if (Input.GetMouseButtonUp(0))
         {
-            if(!WorldManager.Manager._cursorHoveringUI.IsCursorHoveringUI() && isSelecting)
+            if(!WorldManager.instance._cursorHoveringUI.IsCursorHoveringUI() && isSelecting)
                 CreateSelectionRect();
 
             isSelecting = false;
@@ -66,9 +66,9 @@ public class ObjectSelection : MonoBehaviour {
             else if(selectedBuilding != null)
             {
                 if(!selectedBuilding.constructed)
-                    UnitUIManager.Manager.ShowConstructionProgress(); 
+                    UnitUIManager.instance.ShowConstructionProgress(); 
                 else
-                    UnitUIManager.Manager.ShowBuildingUI(selectedBuilding);
+                    UnitUIManager.instance.ShowBuildingUI(selectedBuilding);
 
                 DeselectAllFriendlyUnits();
             }
@@ -76,7 +76,7 @@ public class ObjectSelection : MonoBehaviour {
             else if(selectedResource != null)
             {
                 // Todo show resource UI
-                UnitUIManager.Manager.ShowResourceUI(selectedResource);
+                UnitUIManager.instance.ShowResourceUI(selectedResource);
 
                 DeselectAllFriendlyUnits();
             }
@@ -90,7 +90,7 @@ public class ObjectSelection : MonoBehaviour {
 
     void OnGUI()
     {
-        if(isSelecting && !WorldManager.Manager._cursorHoveringUI.IsCursorHoveringUI())
+        if(isSelecting && !WorldManager.instance._cursorHoveringUI.IsCursorHoveringUI())
         {
             Vector2 mousePosEnd = Input.mousePosition;
 
@@ -113,9 +113,9 @@ public class ObjectSelection : MonoBehaviour {
         selectedGatherers.Clear();
 
         if (SetUnitAsSelected(selectionBox))
-            UnitUIManager.Manager.ShowVillagerUI(selectedGatherers[0]);
+            UnitUIManager.instance.ShowVillagerUI(selectedGatherers[0]);
         else
-            UnitUIManager.Manager.ShowDefaultUI();
+            UnitUIManager.instance.ShowDefaultUI();
     }
 
     public void SelectUnits(Rect selectionBox)
@@ -123,15 +123,15 @@ public class ObjectSelection : MonoBehaviour {
         selectedGatherers.Clear();
 
         if (SetUnitsAsSelected(selectionBox))
-            UnitUIManager.Manager.ShowVillagerUI(selectedGatherers[0]);
+            UnitUIManager.instance.ShowVillagerUI(selectedGatherers[0]);
         else
-            UnitUIManager.Manager.ShowDefaultUI();
+            UnitUIManager.instance.ShowDefaultUI();
     }
 
     // Returns true if selected a villager
     bool SetUnitAsSelected(Rect collisionBox)
     {
-        List<UnitStateController> friendlyUnits = WorldManager.Manager.GetFriendlyUnits();
+        List<UnitStateController> friendlyUnits = WorldManager.instance.GetFriendlyUnits();
         bool selectedVillager = false;
 
         for (int i = 0; i < friendlyUnits.Count; i++)
@@ -154,13 +154,13 @@ public class ObjectSelection : MonoBehaviour {
 
     bool FindAndSelectObject(Vector2 mousePos)
     {
-        if(WorldManager.Manager.selectableResource != null)
+        if(WorldManager.instance.selectableResource != null)
         {
-            SelectResource(WorldManager.Manager.selectableResource);
+            SelectResource(WorldManager.instance.selectableResource);
             return true;
         }
 
-        Grid grid = WorldManager.Manager.GetGrid();
+        Grid grid = WorldManager.instance.GetGrid();
         Tile nodeAtMousePos = grid.GetTileFromWorldPoint(mousePos);
 
         if (nodeAtMousePos == null)
@@ -177,7 +177,7 @@ public class ObjectSelection : MonoBehaviour {
 
     public bool SetUnitsAsSelected(Rect collisionBox)
     {
-        List<UnitStateController> friendlyUnits = WorldManager.Manager.GetFriendlyUnits();
+        List<UnitStateController> friendlyUnits = WorldManager.instance.GetFriendlyUnits();
         bool selectedGatherer = false;
 
         for (int i = 0; i < friendlyUnits.Count; i++)

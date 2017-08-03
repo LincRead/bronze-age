@@ -32,7 +32,7 @@ public class Resource : BaseController {
     {
         base.Start();
 
-        WorldManager.Manager.AddResourceReference(this);
+        WorldManager.instance.AddResourceReference(this);
 
         // Center resource based on number of tiles resource occupies in each directions.
         transform.position += new Vector3(0.0f, 0.08f * (size - 1));
@@ -41,7 +41,7 @@ public class Resource : BaseController {
         zIndex = _transform.position.y;
         _transform.position = new Vector3(_transform.position.x, _transform.position.y, zIndex);
 
-        WorldManager.Manager.GetGrid().SetTilesOccupiedByResource(this);
+        WorldManager.instance.GetGrid().SetTilesOccupiedByResource(this);
 
         _spriteRenderer.sortingLayerName = "Object";
 
@@ -94,18 +94,19 @@ public class Resource : BaseController {
 
     void OnMouseEnter()
     {
-        WorldManager.Manager.mouseHoveringResource = this;
+        WorldManager.instance.mouseHoveringResource = this;
     }
 
     void OnMouseExit()
     {
-        if (WorldManager.Manager.mouseHoveringResource == this)
-            WorldManager.Manager.mouseHoveringResource = null;
+        if (WorldManager.instance.mouseHoveringResource == this)
+            WorldManager.instance.mouseHoveringResource = null;
     }
 
+    // Todo: don't just update stat unless actually showing stats for this resource
     protected void UpdateStat()
     {
-        UnitUIManager.Manager.UpdateStat(0, amountLeft);
+        UnitUIManager.instance.UpdateStat(0, amountLeft);
     }
 
     public override bool IntersectsPoint(Grid.FPoint point)
@@ -135,7 +136,7 @@ public class Resource : BaseController {
 
     public virtual void Destroy()
     {
-        WorldManager.Manager.RemoveResourceReference(this);
+        WorldManager.instance.RemoveResourceReference(this);
         Destroy(gameObject);
     }
 }

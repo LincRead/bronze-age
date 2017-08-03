@@ -33,7 +33,7 @@ public class Building : BaseController {
         if (!hasBeenPlaced)
         {
             _spriteRenderer.sprite = constructionSprites[2];
-            _transform.position = WorldManager.Manager.GetMousePosition() - new Vector2(0.0f, _spriteRenderer.bounds.size.y / 2);
+            _transform.position = WorldManager.instance.GetMousePosition() - new Vector2(0.0f, _spriteRenderer.bounds.size.y / 2);
             _spriteRenderer.color = new Color(1f, 1f, 1f, 0.5f);
             _spriteRenderer.sortingLayerName = "Placing Building";
         } // I love my daughter Ivy. <3
@@ -52,15 +52,15 @@ public class Building : BaseController {
     public void Place()
     {
         hasBeenPlaced = true;
-        Vector3 positionToPlace = WorldManager.Manager.GetGrid().SnapToGrid(_transform.position);
-        zIndex = _transform.position.y + size * (WorldManager.Manager._grid.tileHeight / 2);
+        Vector3 positionToPlace = WorldManager.instance._grid.SnapToGrid(_transform.position);
+        zIndex = _transform.position.y + size * (WorldManager.instance._grid.tileHeight / 2);
         _spriteRenderer.sprite = constructionSprites[0];
         _transform.position = new Vector3(positionToPlace.x, positionToPlace.y, zIndex);
         _spriteRenderer.color = new Color(1f, 1f, 1f, 1f);
         _spriteRenderer.sortingLayerName = "Object";
-        WorldManager.Manager.AddBuildingReference(this);
-        WorldManager.Manager.GetGrid().SetTilesOccupiedByBuilding(this);
-        WorldManager.Manager._clickIndicator.ActivateBounceEffect();
+        WorldManager.instance.AddBuildingReference(this);
+        WorldManager.instance._grid.SetTilesOccupiedByBuilding(this);
+        WorldManager.instance._clickIndicator.ActivateBounceEffect();
     }
 
     // Update is called once per frame
@@ -73,7 +73,7 @@ public class Building : BaseController {
             
         else if(selected && !constructed)
         {
-            UnitUIManager.Manager.UpdateConstructionProgressElements(this, GetPercentageConstructed());
+            UnitUIManager.instance.UpdateConstructionProgressElements(this, GetPercentageConstructed());
         }
 	}
 
@@ -81,10 +81,10 @@ public class Building : BaseController {
     {
         bool canPlace = false;
 
-        _transform.position = WorldManager.Manager.GetGrid().SnapToGrid(Camera.main.ScreenToWorldPoint(Input.mousePosition) - new Vector3(0.0f, _spriteRenderer.bounds.size.y / 2));
+        _transform.position = WorldManager.instance.GetGrid().SnapToGrid(Camera.main.ScreenToWorldPoint(Input.mousePosition) - new Vector3(0.0f, _spriteRenderer.bounds.size.y / 2));
 
         // Adding offset since building pivot point (buttom of sprite) is in the middle of two nodes.
-        if (WorldManager.Manager.GetGrid().GetAllTilesFromBoxArEmpty(_transform.position + new Vector3(0.04f, 0.04f), size))
+        if (WorldManager.instance.GetGrid().GetAllTilesFromBoxArEmpty(_transform.position + new Vector3(0.04f, 0.04f), size))
         {
             canPlace = true;
             _spriteRenderer.color = new Color(1f, 1f, 1f, 0.5f);
@@ -95,19 +95,19 @@ public class Building : BaseController {
             _spriteRenderer.color = new Color(1.0f, 0.5f, 0.5f, 0.5f);
         }
 
-        if (Input.GetMouseButtonUp(0) && !WorldManager.Manager._cursorHoveringUI.IsCursorHoveringUI())
+        if (Input.GetMouseButtonUp(0) && !WorldManager.instance._cursorHoveringUI.IsCursorHoveringUI())
         {
             if (canPlace)
             {
                 Place();
-                WorldManager.Manager.StopBuildPlacementState(this);
+                WorldManager.instance.StopBuildPlacementState(this);
             }
         }
 
         else if (Input.GetMouseButtonUp(1))
         {
             Destroy(gameObject);
-            WorldManager.Manager.StopBuildPlacementState(null);
+            WorldManager.instance.StopBuildPlacementState(null);
         }
     }
 
@@ -137,12 +137,25 @@ public class Building : BaseController {
         _spriteRenderer.sprite = constructionSprites[2];
 
         if (selected)
-            UnitUIManager.Manager.ShowBuildingUI(this);
+            UnitUIManager.instance.ShowBuildingUI(this);
+
+        AddPlayerStats();
+    }
+
+    protected virtual void AddPlayerStats()
+    {
+
+    }
+
+    protected virtual void RemovePlayerStats()
+    {
+
     }
 
     public virtual void Destroy()
     {
-        WorldManager.Manager.RemoveBuildingReference(this);
+        WorldManager.instance.RemoveBuildingReference(this);
+        RemovePlayerStats();
         Destroy(gameObject);
     }
 }

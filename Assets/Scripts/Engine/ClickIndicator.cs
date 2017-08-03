@@ -10,7 +10,7 @@ public class ClickIndicator : MonoBehaviour
         UNIT_ACTION
     }
 
-    INDICATOR_STATE state = INDICATOR_STATE.NONE;
+    private INDICATOR_STATE state = INDICATOR_STATE.NONE;
 
     public float showActionForSecs = 2f;
 
@@ -20,7 +20,7 @@ public class ClickIndicator : MonoBehaviour
     public Texture2D moveCameraTexture;
     public Texture2D buildTexture;
 
-    Transform _transform;
+    private Transform _transform;
 
     public GameObject indicatorBouncePrefab;
     IndicatorBounce _indicatorBounce;
@@ -46,10 +46,10 @@ public class ClickIndicator : MonoBehaviour
 
     void LateUpdate()
     {
-        if (WorldManager.Manager._objectSelection.isSelecting)
+        if (WorldManager.instance._objectSelection.isSelecting)
             ChangeToDefaultCursor();
 
-         _transform.position = WorldManager.Manager.GetMousePosition();
+         _transform.position = WorldManager.instance.GetMousePosition();
     }
 
     public void ShowBuildingPlacementindicator(Vector2 pos)
@@ -73,13 +73,13 @@ public class ClickIndicator : MonoBehaviour
     public void ActivateAttack(Vector2 pos)
     {
         if(state == INDICATOR_STATE.NONE)
-            _indicatorBounce.ActivateBounceEffect(WorldManager.Manager.GetMousePosition(), attackSprite);
+            _indicatorBounce.ActivateBounceEffect(WorldManager.instance.GetMousePosition(), attackSprite);
     }
 
     public void ActivateMoveSprite(Vector2 pos)
     {
         if (state == INDICATOR_STATE.NONE)
-            _indicatorBounce.ActivateBounceEffect(WorldManager.Manager.GetMousePosition(), moveSprite);
+            _indicatorBounce.ActivateBounceEffect(WorldManager.instance.GetMousePosition(), moveSprite);
     }
 
     public void ActivateBounceEffect()

@@ -71,7 +71,7 @@ public class Tile : IHeapItem<Tile>
 
         GameObject tile = GameObject.Instantiate(Resources.Load("Tile"), worldPosition, Quaternion.identity) as GameObject;
 
-        tile.GetComponent<SpriteRenderer>().sprite = WorldManager.Manager._grid.tileSprites[tileIndex];
+        tile.GetComponent<SpriteRenderer>().sprite = WorldManager.instance._grid.tileSprites[tileIndex];
         tile.transform.SetParent(grid.transform);
 
         // Spawn tree?

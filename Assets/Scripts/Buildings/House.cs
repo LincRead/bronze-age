@@ -3,21 +3,17 @@ using System.Collections;
 
 public class House : Building
 {
-    [Header("House stats")]
+    [Header("House values")]
     public int housing = 3;
 
-    protected override void FinishConstruction()
+    protected override void AddPlayerStats()
     {
-        base.FinishConstruction();
-        WorldManager.Manager.GetPlayerDataForPlayer(playerID).housing += housing;
-        WorldManager.Manager.UpdateHousingText();
+        PlayerDataManager.instance.AddHousingForPlayer(housing, playerID);
     }
 
-    public override void Destroy()
+    protected override void RemovePlayerStats()
     {
-        WorldManager.Manager.GetPlayerDataForPlayer(playerID).housing -= housing;
-        WorldManager.Manager.UpdateHousingText();
-        base.Destroy();
+        PlayerDataManager.instance.AddHousingForPlayer(-housing, playerID);
     }
 
     public override int[] GetUniqueStats()

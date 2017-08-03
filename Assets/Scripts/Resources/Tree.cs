@@ -6,7 +6,6 @@ public class Tree : Resource {
 
     protected override void UpdateResourceAmountForPlayer(int playerID)
     {
-        WorldManager.Manager.GetPlayerDataForPlayer(playerID).timber++;
-        UnitUIManager.Manager.timberText.text = WorldManager.Manager.GetPlayerDataForPlayer(playerID).timber.ToString();
+        PlayerDataManager.instance.AddTimberForPlayer(1, playerID);
     }
 }

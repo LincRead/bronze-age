@@ -28,11 +28,11 @@ public class UnitUIButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        UnitUIManager.Manager.ShowTooltip(tooltip);
+        UnitUIManager.instance.ShowTooltip(tooltip);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        UnitUIManager.Manager.HideTooltip();
+        UnitUIManager.instance.HideTooltip();
     }
 }

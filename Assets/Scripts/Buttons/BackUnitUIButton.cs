@@ -7,9 +7,9 @@ public class BackUnitUIButton : UnitUIButton
     // Update is called once per frame
     protected override void OnClick()
     {
-        if(WorldManager.Manager.currentUserState == WorldManager.USER_STATE.PLACING_BUILDING)
-            WorldManager.Manager.CancelBuildPlacebuild();
+        if(WorldManager.instance.currentUserState == WorldManager.USER_STATE.PLACING_BUILDING)
+            WorldManager.instance.CancelBuildPlacebuild();
 
-        UnitUIManager.Manager.GoBack();
+        UnitUIManager.instance.GoBack();
     }
 }

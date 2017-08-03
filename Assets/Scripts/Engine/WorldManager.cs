@@ -5,8 +5,11 @@ using System.Text;
 
 public class WorldManager : MonoBehaviour {
 
-    // Singleton
-    public static WorldManager Manager;
+    [HideInInspector]
+    public static int myPlayerID = 0;
+
+    // 1 for singleplayer, more for multiplayer
+    public int numPlayers = 1;
 
     [HideInInspector]
     public Grid _grid;
@@ -33,9 +36,6 @@ public class WorldManager : MonoBehaviour {
     public CursorHoveringUI _cursorHoveringUI;
 
     [HideInInspector]
-    public List<PlayerData> playerData = new List<PlayerData>(4);
-
-    [HideInInspector]
     public List<UnitStateController> friendlyUnits = new List<UnitStateController>();
 
     [HideInInspector]
@@ -55,21 +55,36 @@ public class WorldManager : MonoBehaviour {
 
     Vector2 mousePosition;
 
-    void Awake()
-    {
-        // Singleton
-        Manager = this;
+    private static WorldManager worldManager;
 
+    public static WorldManager instance
+    {
+        get
+        {
+            if (!worldManager)
+            {
+                worldManager = FindObjectOfType(typeof(WorldManager)) as WorldManager;
+
+                if (!worldManager)
+                {
+                    Debug.LogError("There needs to be one active WorldManager script on a GameObject in your scene.");
+                }
+                else
+                {
+                    worldManager.Init();
+                }
+            }
+
+            return worldManager;
+        }
+    }
+
+    void Init()
+    {
         _clickIndicator = clickIndicatorPrefab.GetComponent<ClickIndicator>();
         _cursorHoveringUI = GetComponent<CursorHoveringUI>();
         _grid = GameObject.FindGameObjectWithTag("Grid").GetComponent<Grid>();
         _objectSelection = GetComponent<ObjectSelection>();
-        playerData.Add(new PlayerData());
-    }
-
-    void Start ()
-    {
-
     }
 
     public void ActivateBuildPlacementState(Building building)
@@ -209,7 +224,7 @@ public class WorldManager : MonoBehaviour {
             }
         }
 
-        WorldManager.Manager._clickIndicator.ActivateMoveSprite(mousePosition);
+        WorldManager.instance._clickIndicator.ActivateMoveSprite(mousePosition);
     }
 
     public Building GetBuildingAtWorldPosition(Vector2 pos)
@@ -229,18 +244,16 @@ public class WorldManager : MonoBehaviour {
         return null;
     }
 
-    public void AddFriendlyUnitReference(UnitStateController unit, int playerID)
+    public void AddFriendlyUnitReference(UnitStateController unit, int player)
     {
         friendlyUnits.Add(unit);
-        GetPlayerDataForPlayer(0).population++;
-        UpdateHousingText();
+        PlayerDataManager.instance.AddPopulationForPlayer(1, player);
     }
 
-    public void RemoveFriendlyUnitReference(UnitStateController unit, int playerID)
+    public void RemoveFriendlyUnitReference(UnitStateController unit, int player)
     {
         friendlyUnits.Remove(unit);
-        GetPlayerDataForPlayer(0).population--;
-        UpdateHousingText();
+        PlayerDataManager.instance.AddPopulationForPlayer(-1, player);
     }
 
     public void AddBuildingReference(Building building)
@@ -282,12 +295,6 @@ public class WorldManager : MonoBehaviour {
     public Grid GetGrid()
     {
         return _grid;
-    }
-
-    public PlayerData GetPlayerDataForPlayer(int playerID)
-    {
-        // Todo: add multiplayer at some stage
-        return playerData[0];
     }
 
     public void UpdateHousingText()

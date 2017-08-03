@@ -91,12 +91,12 @@ public class BaseController : MonoBehaviour {
 
     public virtual Node GetPrimaryNode()
     {
-        return WorldManager.Manager.GetGrid().GetNodeFromWorldPoint(_transform.position + new Vector3(0.0f, 0.04f));
+        return WorldManager.instance.GetGrid().GetNodeFromWorldPoint(_transform.position + new Vector3(0.0f, 0.04f));
     }
 
     public Tile GetPrimaryTile()
     {
-        return WorldManager.Manager.GetGrid().GetTileFromWorldPoint(_transform.position + new Vector3(0.04f, 0.04f));
+        return WorldManager.instance.GetGrid().GetTileFromWorldPoint(_transform.position + new Vector3(0.04f, 0.04f));
     }
 
     public Rect GetCollisionBox()

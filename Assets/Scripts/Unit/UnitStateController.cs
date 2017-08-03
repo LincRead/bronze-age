@@ -52,7 +52,7 @@ public class UnitStateController : BaseController
 
     void SetupPathfinding()
     {
-        WorldManager.Manager.AddFriendlyUnitReference(this, playerID);
+        WorldManager.instance.AddFriendlyUnitReference(this, playerID);
         _pathfinder = GetComponent<Pathfinding>();
         _pathfinder.AddUnit(this);
     }
@@ -105,7 +105,7 @@ public class UnitStateController : BaseController
         }
     }
 
-    void FaceObject(Object obj)
+    void FaceObject(BaseController obj)
     {
         if (_transform.position.x > obj.GetPosition().x)
         {
@@ -120,16 +120,16 @@ public class UnitStateController : BaseController
 
     protected void Kill()
     {
-        WorldManager.Manager.RemoveFriendlyUnitReference(this, playerID);
+        WorldManager.instance.RemoveFriendlyUnitReference(this, playerID);
         Destroy(gameObject);
     }
 
-    public bool IntersectsObject(Object other)
+    public bool IntersectsObject(BaseController other)
     {
-        if (WorldManager.Manager._grid.GetPositionIntersectsWithTilesFromBox(
+        if (WorldManager.instance._grid.GetPositionIntersectsWithTilesFromBox(
                 _pathfinder.currentStandingOnNode.gridPosPoint,
                 other.GetPrimaryNode().gridPosPoint,
-                other.tilesOccupiedWidth))
+                other.size))
         {
             return true;
         }

@@ -35,10 +35,10 @@ public class UnitMoveToController : UnitState
        _pathfinder.DetectCurrentPathfindingNode(_transform.position);
 
         // Make sure unit can use pathfinding to get to object
-        WorldManager.Manager.GetGrid().SetWalkableValueForTiles(_targetObject, true);
+        WorldManager.instance.GetGrid().SetWalkableValueForTiles(_targetObject, true);
 
         // Feedback to player about action
-        WorldManager.Manager._clickIndicator.ActivateBounceEffect();
+        WorldManager.instance._clickIndicator.ActivateBounceEffect();
 
         // Find path
         Node node = _pathfinder.GetNodeFromPoint(_targetObject.GetPrimaryNode().worldPosition);
@@ -47,7 +47,7 @@ public class UnitMoveToController : UnitState
             _pathfinder.FindPath(node);
 
         // Reset for pathfinding
-        WorldManager.Manager.GetGrid().SetWalkableValueForTiles(_targetObject.GetPosition(), _targetObject.size, false);
+        WorldManager.instance.GetGrid().SetWalkableValueForTiles(_targetObject.GetPosition(), _targetObject.size, false);
     }
 
     public override void DoActions()

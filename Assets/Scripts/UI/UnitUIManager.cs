@@ -6,7 +6,7 @@ using System.Text;
 public class UnitUIManager : MonoBehaviour {
 
     // Singleton
-    public static UnitUIManager Manager;
+    public static UnitUIManager instance;
 
     [Header("Main Info")]
     public Text title;
@@ -44,12 +44,6 @@ public class UnitUIManager : MonoBehaviour {
     public Image[] statIcons = new Image[4];
     public Text[] statTexts = new Text[4];
 
-    [Header("Resources")]
-    public Text housingText;
-    public Text foodSurplusText;
-    public Text timberText;
-    public Text stoneText;
-
     UNIT_UI_TYPE currentActivatedUI = UNIT_UI_TYPE.NONE;
     UNIT_UI_TYPE lastActivateUI = UNIT_UI_TYPE.NONE;
 
@@ -58,7 +52,7 @@ public class UnitUIManager : MonoBehaviour {
     void Awake()
     {
         // Singleton
-        Manager = this;
+        instance = this;
     }
 
 	// Use this for initialization
