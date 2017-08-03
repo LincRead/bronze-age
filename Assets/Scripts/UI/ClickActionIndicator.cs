@@ -31,11 +31,6 @@ public class ClickActionIndicator : MonoBehaviour
         EventManager.StopListening("ActivateMoveUnitsIndicator", ActivateMoveUnitsIndicator);
     }
 
-    void LateUpdate()
-    {
-        _transform.position = WorldManager.mousePosition;
-    }
-
     public void ActivateAttackIndicator()
     {
         ActivateBounceEffect(attackSprite);
