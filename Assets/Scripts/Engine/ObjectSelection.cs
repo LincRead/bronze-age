@@ -57,7 +57,7 @@ public class ObjectSelection : MonoBehaviour {
 
         if (Vector2.Distance(mousePostToWorldPointInitial, mousePosEnd) < .1f)
         {
-            if(!FindAndSelectObject(mousePosEnd))
+            if (!FindAndSelectObject(mousePosEnd))
             {
                 SelectUnit(selectionRect);
             }
