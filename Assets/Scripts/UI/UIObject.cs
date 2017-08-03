@@ -14,6 +14,6 @@ public class UIObject : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        _transform.position = guiPos + CameraController.Manager._myTransform.position;
+        _transform.position = guiPos + CameraController.instance._transform.position;
 	}
 }

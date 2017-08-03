@@ -3,57 +3,59 @@ using System.Collections;
 
 public class CameraController : MonoBehaviour {
 
-    public static CameraController Manager;
+    public static CameraController instance;
+
+    [HideInInspector]
+    public Transform _transform;
+
+    private Grid _grid;
 
     public float scrollSpeed = 1f;
 
-    float timeButtonDownBeforeScroll = 0.1f;
-    float timeSinceButtonDown = 0.0f;
+    private float timeButtonDownBeforeScroll = 0.1f;
+    private float timeSinceMoveButtonPressedDown = 0.0f;
 
-    Vector2 oldMousePosition = Vector2.zero;
+    private Vector2 oldMousePosition = Vector2.zero;
 
     private float rightBound;
     private float leftBound;
     private float topBound;
     private float bottomBound;
 
-    bool movingCamera = false;
+    bool currentlyMovingCamera = false;
 
-    [HideInInspector]
-    public Transform _myTransform;
-
-    Grid _grid;
-    CursorManager _clickIndicator;
-
-    // Use this for initialization
     void Start()
     {
-        Manager = this;
+        instance = this;
 
-        _myTransform = GetComponent<Transform>();
-        _grid = GameObject.FindGameObjectWithTag("Grid").GetComponent<Grid>();
+        _transform = GetComponent<Transform>();
+        _grid = Grid.instance;
 
+        SetupBounds();
+    }
+
+    void SetupBounds()
+    {
         float vertExtent = Camera.main.orthographicSize;
         float horzExtent = vertExtent * Screen.width / Screen.height;
-
         float extraSpace = 2f;
+
         leftBound = (float)(horzExtent - (_grid.GetGridWorldSizeX() / 2)) - extraSpace;
         rightBound = (float)((_grid.GetGridWorldSizeX() / 2) - horzExtent) + extraSpace;
         bottomBound = (float)(vertExtent) - extraSpace;
         topBound = (float)((_grid.GetGridWorldSizeY()) - vertExtent) + extraSpace;
-        //Vector3.up* gridWorldSize.y / 2
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if(!MovingCameraUsingMouse())
-            if (!MovingCameraUsingKeys())
-                Reset();
+        // Check if camera is moved by mouse or keys, and reset controller if not
+        if(!MovingCameraUsingMouse() && !MovingCameraUsingKeys())
+            Reset();
     }
 
     bool MovingCameraUsingMouse()
     {
+        // Center mouse button pressed down
         if (Input.GetMouseButtonDown(2))
         {
             oldMousePosition = Input.mousePosition;
@@ -61,9 +63,10 @@ public class CameraController : MonoBehaviour {
             return false;
         }
 
+        // Center mouse button released
         else if (Input.GetMouseButtonUp(2))
         {
-            if (movingCamera)
+            if (currentlyMovingCamera)
             {
                 EventManager.TriggerEvent("CancelMoveCameraCursor");
             }
@@ -71,32 +74,31 @@ public class CameraController : MonoBehaviour {
             return false;
         }
 
+        // Holding in center mouse button
         else if (Input.GetMouseButton(2) /*&& !gameController.IsHoveringUI()*/)
         {
             Vector2 newMousePosition = Input.mousePosition;
 
-            if (timeSinceButtonDown > timeButtonDownBeforeScroll && newMousePosition != oldMousePosition)
+            // After holding down the center mouse button for a certain amount of time, ...
+            // ... and we have moved the cursor while holding button down
+            if (timeSinceMoveButtonPressedDown > timeButtonDownBeforeScroll 
+                && newMousePosition != oldMousePosition)
             {
-                Vector3 newCameraPos = _myTransform.position;
+                Vector3 newCameraPos = _transform.position;
                 newCameraPos += transform.TransformDirection((Vector3)((oldMousePosition - newMousePosition) * Time.deltaTime));
                 newCameraPos.x = Mathf.Clamp(newCameraPos.x, leftBound, rightBound);
                 newCameraPos.y = Mathf.Clamp(newCameraPos.y, bottomBound, topBound);
                 transform.position = newCameraPos;
 
-                if(!movingCamera)
+                if(!currentlyMovingCamera)
                     EventManager.TriggerEvent("ChangeToMoveCameraCursor");
 
-                movingCamera = true;
-
-                oldMousePosition = newMousePosition;
+                currentlyMovingCamera = true;
             }
 
-            else
-            {
-                oldMousePosition = Input.mousePosition;
-            }
+            oldMousePosition = newMousePosition;
 
-            timeSinceButtonDown += Time.deltaTime;
+            timeSinceMoveButtonPressedDown += Time.deltaTime;
 
             return true;
         }
@@ -106,7 +108,7 @@ public class CameraController : MonoBehaviour {
 
     bool MovingCameraUsingKeys()
     {
-        Vector3 newCameraPos = _myTransform.position;
+        Vector3 newCameraPos = _transform.position;
         bool movingByKey = false;
 
         if (Input.GetKey(KeyCode.LeftArrow))
@@ -138,7 +140,7 @@ public class CameraController : MonoBehaviour {
             newCameraPos.x = Mathf.Clamp(newCameraPos.x, leftBound, rightBound);
             newCameraPos.y = Mathf.Clamp(newCameraPos.y, bottomBound, topBound);
             transform.position = newCameraPos;
-            movingCamera = true;
+            currentlyMovingCamera = true;
             return true;
         }
 
@@ -148,12 +150,7 @@ public class CameraController : MonoBehaviour {
     void Reset()
     {
         oldMousePosition = Vector2.zero;
-        movingCamera = false;
-        timeSinceButtonDown = 0.0f;
-    }
-
-    public bool IsMoving()
-    {
-        return movingCamera;
+        currentlyMovingCamera = false;
+        timeSinceMoveButtonPressedDown = 0.0f;
     }
 }

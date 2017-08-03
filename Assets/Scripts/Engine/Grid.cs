@@ -73,7 +73,7 @@ public class Grid : MonoBehaviour {
 
     void Awake()
     {
-        // SIngleton
+        // Singleton
         instance = this;
 
         if (numTilesX < 16)
@@ -187,7 +187,6 @@ public class Grid : MonoBehaviour {
             List<Tile> tilesToCheck = GetNeighbourTiles(currentTile);
             foreach (Tile neighbour in tilesToCheck)
             {
-                // Todo avoid friendly units who are in attack mode
                 if (closedSet.Contains(neighbour))
                     continue;
 
@@ -227,8 +226,15 @@ public class Grid : MonoBehaviour {
         }
     }
 
-    public void SpawnTree(Tile tile) { SpawnResource(tile, treePrefab); }
-    public void SpawnFruitBush(Tile tile) { SpawnResource(tile, fruitBushPrefab); }
+    public void SpawnTree(Tile tile)
+    {
+        SpawnResource(tile, treePrefab);
+    }
+
+    public void SpawnFruitBush(Tile tile)
+    {
+        SpawnResource(tile, fruitBushPrefab);
+    }
 
     Vector2 GetPosIsometricTo2D(Vector2 posIso)
     {
@@ -575,19 +581,18 @@ public class Grid : MonoBehaviour {
         return numTilesY * tileHeight * 2;
     }
 
-
     /*
-     * Debug grid size in Gizmo.
+     * Debug Grid size in Gizmo.
      * Debug which tiles are walkable and not.
      * Need to run game to see tiles in Editor Scene.
-     * Grid gets created at Start().
+     * Grid gets created at Awake().
      */
     void OnDrawGizmos()
     {
         // Show grid size
         Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, gridWorldSize.y, 1.0f));
 
-        // Grid gets created at Start()
+        // Grid gets created at Awake()
         if (tiles != null)
         {
             foreach (Tile t in tiles)
