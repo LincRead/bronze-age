@@ -59,8 +59,6 @@ public class Building : BaseController {
         _spriteRenderer.color = new Color(1f, 1f, 1f, 1f);
         _spriteRenderer.sortingLayerName = "Object";
         WorldManager.instance.AddBuildingReference(this);
-        WorldManager.instance._grid.SetTilesOccupiedByBuilding(this);
-        WorldManager.instance._clickIndicator.ActivateBounceEffect();
     }
 
     // Update is called once per frame

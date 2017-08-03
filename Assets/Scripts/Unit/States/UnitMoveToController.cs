@@ -37,9 +37,6 @@ public class UnitMoveToController : UnitState
         // Make sure unit can use pathfinding to get to object
         WorldManager.instance.GetGrid().SetWalkableValueForTiles(_targetObject, true);
 
-        // Feedback to player about action
-        WorldManager.instance._clickIndicator.ActivateBounceEffect();
-
         // Find path
         Node node = _pathfinder.GetNodeFromPoint(_targetObject.GetPrimaryNode().worldPosition);
 

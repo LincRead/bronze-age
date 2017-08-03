@@ -23,7 +23,7 @@ public class CameraController : MonoBehaviour {
     public Transform _myTransform;
 
     Grid _grid;
-    ClickIndicator _clickIndicator;
+    CursorManager _clickIndicator;
 
     // Use this for initialization
     void Start()
@@ -32,7 +32,6 @@ public class CameraController : MonoBehaviour {
 
         _myTransform = GetComponent<Transform>();
         _grid = GameObject.FindGameObjectWithTag("Grid").GetComponent<Grid>();
-        _clickIndicator = WorldManager.instance._clickIndicator;
 
         float vertExtent = Camera.main.orthographicSize;
         float horzExtent = vertExtent * Screen.width / Screen.height;
@@ -65,7 +64,9 @@ public class CameraController : MonoBehaviour {
         else if (Input.GetMouseButtonUp(2))
         {
             if (movingCamera)
-                _clickIndicator.DeactivateMoveCamera();
+            {
+                EventManager.TriggerEvent("CancelMoveCameraCursor");
+            }
 
             return false;
         }
@@ -82,9 +83,10 @@ public class CameraController : MonoBehaviour {
                 newCameraPos.y = Mathf.Clamp(newCameraPos.y, bottomBound, topBound);
                 transform.position = newCameraPos;
 
-                movingCamera = true;
+                if(!movingCamera)
+                    EventManager.TriggerEvent("ChangeToMoveCameraCursor");
 
-                _clickIndicator.ActivateMoveCamera();
+                movingCamera = true;
 
                 oldMousePosition = newMousePosition;
             }

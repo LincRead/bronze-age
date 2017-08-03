@@ -24,11 +24,6 @@ public class WorldManager : MonoBehaviour {
     [HideInInspector]
     public USER_STATE currentUserState = USER_STATE.NONE;
 
-    public GameObject clickIndicatorPrefab;
-
-    [HideInInspector]
-    public ClickIndicator _clickIndicator;
-
     [HideInInspector]
     public ObjectSelection _objectSelection;
 
@@ -53,7 +48,8 @@ public class WorldManager : MonoBehaviour {
     [HideInInspector]
     public Resource mouseHoveringResource = null;
 
-    Vector2 mousePosition;
+    [HideInInspector]
+    public static Vector2 mousePosition;
 
     private static WorldManager worldManager;
 
@@ -81,7 +77,6 @@ public class WorldManager : MonoBehaviour {
 
     void Init()
     {
-        _clickIndicator = clickIndicatorPrefab.GetComponent<ClickIndicator>();
         _cursorHoveringUI = GetComponent<CursorHoveringUI>();
         _grid = GameObject.FindGameObjectWithTag("Grid").GetComponent<Grid>();
         _objectSelection = GetComponent<ObjectSelection>();
@@ -90,8 +85,8 @@ public class WorldManager : MonoBehaviour {
     public void ActivateBuildPlacementState(Building building)
     {
         currentUserState = USER_STATE.PLACING_BUILDING;
-        _clickIndicator.ShowBuildingPlacementindicator(building.GetPosition());
         buildingBeingPlaced = building;
+        EventManager.TriggerEvent("SetBuildCursor");
     }
 
     public void CancelBuildPlacebuild()
@@ -100,7 +95,7 @@ public class WorldManager : MonoBehaviour {
             buildingBeingPlaced.Destroy();
 
         currentUserState = USER_STATE.NONE;
-        _clickIndicator.ChangeToDefaultCursor();
+        EventManager.TriggerEvent("SetDefaultCursor");
     }
 
     public void StopBuildPlacementState(Building building)
@@ -115,7 +110,7 @@ public class WorldManager : MonoBehaviour {
         }
 
         currentUserState = USER_STATE.NONE;
-        _clickIndicator.ChangeToDefaultCursor();
+        EventManager.TriggerEvent("SetDefaultCursor");
     }
 
     // Update is called once per frame
@@ -155,7 +150,8 @@ public class WorldManager : MonoBehaviour {
             && _objectSelection.GetSelectedGatherers().Count > 0
             && !_cursorHoveringUI.IsCursorHoveringUI())
         {
-            _clickIndicator.ShowBuildingPlacementindicator(selectableResource.GetPosition());
+            // Todo change based on type of resource
+            EventManager.TriggerEvent("SetBuildCursor");
         }
 
         else
@@ -166,12 +162,12 @@ public class WorldManager : MonoBehaviour {
                 && !hoveringBuilding.constructed
                 && !_cursorHoveringUI.IsCursorHoveringUI())
             {
-                _clickIndicator.ShowBuildingPlacementindicator(hoveringBuilding.GetPosition());
+                EventManager.TriggerEvent("SetBuildCursor");
             }
 
             else
             {
-                _clickIndicator.ChangeToDefaultCursor();
+                EventManager.TriggerEvent("SetDefaultCursor");
             }
         }
     }
@@ -224,7 +220,7 @@ public class WorldManager : MonoBehaviour {
             }
         }
 
-        WorldManager.instance._clickIndicator.ActivateMoveSprite(mousePosition);
+        EventManager.TriggerEvent("ActivateMoveUnitsIndicator");
     }
 
     public Building GetBuildingAtWorldPosition(Vector2 pos)
