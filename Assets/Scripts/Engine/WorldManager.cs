@@ -92,7 +92,7 @@ public class WorldManager : MonoBehaviour {
     public void CancelBuildPlacebuild()
     {
         if(buildingBeingPlaced != null)
-            buildingBeingPlaced.Destroy();
+            buildingBeingPlaced.CancelPlacing();
 
         currentUserState = USER_STATE.NONE;
         EventManager.TriggerEvent("SetDefaultCursor");
@@ -113,9 +113,8 @@ public class WorldManager : MonoBehaviour {
         EventManager.TriggerEvent("SetDefaultCursor");
     }
 
-    // Update is called once per frame
-    void Update () {
-
+    void Update ()
+    {
         mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         switch (currentUserState)

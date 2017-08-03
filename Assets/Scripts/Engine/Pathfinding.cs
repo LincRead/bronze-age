@@ -22,7 +22,6 @@ public class Pathfinding : MonoBehaviour {
     [HideInInspector]
     public bool enteredNewNode = false;
 
-    // Use this for initialization
     void Start()
     {
         parentController = transform.GetComponent<BaseController>();

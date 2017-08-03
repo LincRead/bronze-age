@@ -33,7 +33,7 @@ public class Building : BaseController {
         if (!hasBeenPlaced)
         {
             _spriteRenderer.sprite = constructionSprites[2];
-            _transform.position = WorldManager.instance.GetMousePosition() - new Vector2(0.0f, _spriteRenderer.bounds.size.y / 2);
+            _transform.position = WorldManager.mousePosition - new Vector2(0.0f, _spriteRenderer.bounds.size.y / 2);
             _spriteRenderer.color = new Color(1f, 1f, 1f, 0.5f);
             _spriteRenderer.sortingLayerName = "Placing Building";
         } // I love my daughter Ivy. <3
@@ -58,8 +58,10 @@ public class Building : BaseController {
         _transform.position = new Vector3(positionToPlace.x, positionToPlace.y, zIndex);
         _spriteRenderer.color = new Color(1f, 1f, 1f, 1f);
         _spriteRenderer.sortingLayerName = "Object";
+
         WorldManager.instance.AddBuildingReference(this);
         WorldManager.instance._grid.SetTilesOccupiedByBuilding(this);
+        WorldManager.instance.StopBuildPlacementState(this);
     }
 
     // Update is called once per frame
@@ -72,40 +74,42 @@ public class Building : BaseController {
             
         else if(selected && !constructed)
         {
-            UnitUIManager.instance.UpdateConstructionProgressElements(this, GetPercentageConstructed());
+            UnitUIManager.instance.UpdateConstructionProgressElements(this, CalculatePercentageConstructed());
         }
 	}
 
     void HandlePlacingBuilding()
     {
-        bool canPlace = false;
-
         _transform.position = Grid.instance.SnapToGrid(WorldManager.mousePosition - new Vector2(0.0f, _spriteRenderer.bounds.size.y / 2));
 
-        // Adding offset since building pivot point (buttom of sprite) is in the middle of two nodes.
+        bool canPlace = false;
+
+        // Adding offset since building pivot point (buttom of sprite) is in the middle of two nodes
+        // Show that location is suitable
         if (Grid.instance.GetAllTilesFromBoxArEmpty(_transform.position + new Vector3(0.04f, 0.04f), size))
         {
             canPlace = true;
             _spriteRenderer.color = new Color(1f, 1f, 1f, 0.5f);
         }
 
+        // Show that location is not suitable
         else
         {
             _spriteRenderer.color = new Color(1.0f, 0.5f, 0.5f, 0.5f);
         }
 
-        if (Input.GetMouseButtonUp(0) && !WorldManager.instance._cursorHoveringUI.IsCursorHoveringUI())
+        // Clicked left mouse button to place building on a suitable location
+        if (canPlace
+            && Input.GetMouseButtonUp(0) 
+            && !WorldManager.instance._cursorHoveringUI.IsCursorHoveringUI())
         {
-            if (canPlace)
-            {
-                Place();
-                WorldManager.instance.StopBuildPlacementState(this);
-            }
+            Place();
         }
 
+        // Cancel placing by clicking right mouse button
         else if (Input.GetMouseButtonUp(1))
         {
-            Destroy(gameObject);
+            CancelPlacing();
             WorldManager.instance.StopBuildPlacementState(null);
         }
     }
@@ -125,7 +129,7 @@ public class Building : BaseController {
         }
     }
 
-    public float GetPercentageConstructed()
+    public float CalculatePercentageConstructed()
     {
         return stepsConstructed / stepsToConstruct;
     }
@@ -135,20 +139,27 @@ public class Building : BaseController {
         constructed = true;
         _spriteRenderer.sprite = constructionSprites[2];
 
+        AddPlayerStats();
+
         if (selected)
             UnitUIManager.instance.ShowBuildingUI(this);
-
-        AddPlayerStats();
     }
 
+    // Unique per building
     protected virtual void AddPlayerStats()
     {
 
     }
 
+    // Unique per building
     protected virtual void RemovePlayerStats()
     {
 
+    }
+
+    public void CancelPlacing()
+    {
+        Destroy(gameObject);
     }
 
     public virtual void Destroy()
