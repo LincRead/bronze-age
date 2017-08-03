@@ -43,7 +43,7 @@ public class ClickActionIndicator : MonoBehaviour
 
     public void ActivateBounceEffect(Sprite sprite)
     {
-        _transform.position = WorldManager.mousePosition;
+        _transform.position = PlayerManager.mousePosition;
 
         _spriteRenderer.sprite = sprite;
         _spriteRenderer.enabled = true;

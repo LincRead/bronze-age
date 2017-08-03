@@ -23,11 +23,11 @@ public class SelectBuildingButton : UnitUIButton {
 
     protected override void OnClick()
     {
-        if(WorldManager.instance.currentUserState == WorldManager.USER_STATE.PLACING_BUILDING)
-            WorldManager.instance.CancelBuildPlacebuild();
+        if(PlayerManager.instance.currentUserState == PlayerManager.PLAYER_ACTION_STATE.PLACING_BUILDING)
+            PlayerManager.instance.CancelBuildPlacebuild();
 
-        GameObject newBuilding = GameObject.Instantiate(buildingPrefab, WorldManager.instance.GetMousePosition(), Quaternion.identity) as GameObject;
-        WorldManager.instance.ActivateBuildPlacementState(newBuilding.GetComponent<Building>());
+        GameObject newBuilding = GameObject.Instantiate(buildingPrefab, PlayerManager.mousePosition, Quaternion.identity) as GameObject;
+        PlayerManager.instance.ActivateBuildPlacementState(newBuilding.GetComponent<Building>());
     }
 }
 

@@ -41,7 +41,7 @@ public class PlayerDataManager : MonoBehaviour
 
     void InitStartingResourcesForAllPlayers()
     {
-        int numPlayers = WorldManager.instance.numPlayers;
+        int numPlayers = WorldManager.numPlayers;
 
         playerData = new List<PlayerData>(numPlayers);
 

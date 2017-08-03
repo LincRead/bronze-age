@@ -32,8 +32,6 @@ public class Resource : BaseController {
     {
         base.Start();
 
-        WorldManager.instance.AddResourceReference(this);
-
         // Center resource based on number of tiles resource occupies in each directions.
         transform.position += new Vector3(0.0f, 0.08f * (size - 1));
 
@@ -94,13 +92,13 @@ public class Resource : BaseController {
 
     void OnMouseEnter()
     {
-        WorldManager.instance.mouseHoveringResource = this;
+        PlayerManager.instance.mouseHoveringResource = this;
     }
 
     void OnMouseExit()
     {
-        if (WorldManager.instance.mouseHoveringResource == this)
-            WorldManager.instance.mouseHoveringResource = null;
+        if (PlayerManager.instance.mouseHoveringResource == this)
+            PlayerManager.instance.mouseHoveringResource = null;
     }
 
     // Todo: don't just update stat unless actually showing stats for this resource
@@ -136,7 +134,7 @@ public class Resource : BaseController {
 
     public virtual void Destroy()
     {
-        WorldManager.instance.RemoveResourceReference(this);
+        Grid.instance.RemoveTilesOccupiedByResource(this);
         Destroy(gameObject);
     }
 }

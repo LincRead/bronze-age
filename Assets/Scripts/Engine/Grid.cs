@@ -497,22 +497,32 @@ public class Grid : MonoBehaviour {
         }
     }
 
-    public void RemoveTilesOccupiedByResource(Resource resource)
+    public void RemoveTilesOccupiedByResource(BaseController controller)
     {
-        Tile tile = GetTileFromWorldPoint(resource.GetPosition());
+        Tile tile = GetTileFromWorldPoint(controller.GetPosition());
 
         if (tile == null)
             return;
 
-        for (int i = 0; i < resource.size; i++)
+        for (int i = 0; i < controller.size; i++)
         {
-            for (int j = 0; j < resource.size; j++)
+            for (int j = 0; j < controller.size; j++)
             {
                 if (i > -1 && j > -1 && i < numTilesX + 1 && j < numTilesY + 1)
                 {
                     Tile removeFromTile = GetTileFromGridPos(tile.gridPosX + i, tile.gridPosY + j);
                     removeFromTile.SetWalkable();
-                    removeFromTile.resourceOccupying = null;
+
+                    switch(controller.controllerType)
+                    {
+                        case BaseController.CONTROLLER_TYPE.STATIC_RESOURCE:
+                            removeFromTile.resourceOccupying = null;
+                            break;
+                        case BaseController.CONTROLLER_TYPE.BUILDING:
+                            removeFromTile.buildingOccupying = null;
+                            break;
+
+                    }
                 }
             }
         }

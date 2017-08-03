@@ -17,11 +17,11 @@ public class ObjectSelection : MonoBehaviour {
 
     void Update()
     {
-        if (WorldManager.instance.currentUserState != WorldManager.USER_STATE.NONE)
+        if (PlayerManager.instance.currentUserState != PlayerManager.PLAYER_ACTION_STATE.NONE)
             return;
 
         // If we press the left mouse button, save mouse location and begin selection
-        if (Input.GetMouseButtonDown(0) && !WorldManager.instance._cursorHoveringUI.IsCursorHoveringUI())
+        if (Input.GetMouseButtonDown(0) && !PlayerManager.instance._cursorHoveringUI.IsCursorHoveringUI())
         {
             mousePosInitial = Input.mousePosition;
 
@@ -36,7 +36,7 @@ public class ObjectSelection : MonoBehaviour {
         // If we let go of the left mouse button, end selection
         if (Input.GetMouseButtonUp(0))
         {
-            if(!WorldManager.instance._cursorHoveringUI.IsCursorHoveringUI() && isSelecting)
+            if(!PlayerManager.instance._cursorHoveringUI.IsCursorHoveringUI() && isSelecting)
                 CreateSelectionRect();
 
             isSelecting = false;
@@ -90,7 +90,7 @@ public class ObjectSelection : MonoBehaviour {
 
     void OnGUI()
     {
-        if(isSelecting && !WorldManager.instance._cursorHoveringUI.IsCursorHoveringUI())
+        if(isSelecting && !PlayerManager.instance._cursorHoveringUI.IsCursorHoveringUI())
         {
             Vector2 mousePosEnd = Input.mousePosition;
 
@@ -131,7 +131,7 @@ public class ObjectSelection : MonoBehaviour {
     // Returns true if selected a villager
     bool SetUnitAsSelected(Rect collisionBox)
     {
-        List<UnitStateController> friendlyUnits = WorldManager.instance.GetFriendlyUnits();
+        List<UnitStateController> friendlyUnits = PlayerManager.instance.GetFriendlyUnits();
         bool selectedVillager = false;
 
         for (int i = 0; i < friendlyUnits.Count; i++)
@@ -154,9 +154,9 @@ public class ObjectSelection : MonoBehaviour {
 
     bool FindAndSelectObject(Vector2 mousePos)
     {
-        if(WorldManager.instance.selectableResource != null)
+        if(PlayerManager.instance.selectableResource != null)
         {
-            SelectResource(WorldManager.instance.selectableResource);
+            SelectResource(PlayerManager.instance.selectableResource);
             return true;
         }
 
@@ -176,7 +176,7 @@ public class ObjectSelection : MonoBehaviour {
 
     public bool SetUnitsAsSelected(Rect collisionBox)
     {
-        List<UnitStateController> friendlyUnits = WorldManager.instance.GetFriendlyUnits();
+        List<UnitStateController> friendlyUnits = PlayerManager.instance.GetFriendlyUnits();
         bool selectedGatherer = false;
 
         for (int i = 0; i < friendlyUnits.Count; i++)

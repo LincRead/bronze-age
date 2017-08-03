@@ -33,7 +33,7 @@ public class Building : BaseController {
         if (!hasBeenPlaced)
         {
             _spriteRenderer.sprite = constructionSprites[2];
-            _transform.position = WorldManager.mousePosition - new Vector2(0.0f, _spriteRenderer.bounds.size.y / 2);
+            _transform.position = PlayerManager.mousePosition - new Vector2(0.0f, _spriteRenderer.bounds.size.y / 2);
             _spriteRenderer.color = new Color(1f, 1f, 1f, 0.5f);
             _spriteRenderer.sortingLayerName = "Placing Building";
         } // I love my daughter Ivy. <3
@@ -52,16 +52,19 @@ public class Building : BaseController {
     public void Place()
     {
         hasBeenPlaced = true;
-        Vector3 positionToPlace = WorldManager.instance._grid.SnapToGrid(_transform.position);
-        zIndex = _transform.position.y + size * (WorldManager.instance._grid.tileHeight / 2);
-        _spriteRenderer.sprite = constructionSprites[0];
+
+        // Position
+        Vector3 positionToPlace = Grid.instance.SnapToGrid(_transform.position);
+        zIndex = _transform.position.y + size * (Grid.instance.tileHeight / 2);
         _transform.position = new Vector3(positionToPlace.x, positionToPlace.y, zIndex);
+
+        // Constructed sprite
+        _spriteRenderer.sprite = constructionSprites[0];
         _spriteRenderer.color = new Color(1f, 1f, 1f, 1f);
         _spriteRenderer.sortingLayerName = "Object";
 
-        WorldManager.instance.AddBuildingReference(this);
-        WorldManager.instance._grid.SetTilesOccupiedByBuilding(this);
-        WorldManager.instance.StopBuildPlacementState(this);
+        Grid.instance.SetTilesOccupiedByBuilding(this);
+        PlayerManager.instance.StopBuildPlacementState(this);
     }
 
     // Update is called once per frame
@@ -80,7 +83,7 @@ public class Building : BaseController {
 
     void HandlePlacingBuilding()
     {
-        _transform.position = Grid.instance.SnapToGrid(WorldManager.mousePosition - new Vector2(0.0f, _spriteRenderer.bounds.size.y / 2));
+        _transform.position = Grid.instance.SnapToGrid(PlayerManager.mousePosition - new Vector2(0.0f, _spriteRenderer.bounds.size.y / 2));
 
         bool canPlace = false;
 
@@ -101,7 +104,7 @@ public class Building : BaseController {
         // Clicked left mouse button to place building on a suitable location
         if (canPlace
             && Input.GetMouseButtonUp(0) 
-            && !WorldManager.instance._cursorHoveringUI.IsCursorHoveringUI())
+            && !PlayerManager.instance._cursorHoveringUI.IsCursorHoveringUI())
         {
             Place();
         }
@@ -110,7 +113,7 @@ public class Building : BaseController {
         else if (Input.GetMouseButtonUp(1))
         {
             CancelPlacing();
-            WorldManager.instance.StopBuildPlacementState(null);
+            PlayerManager.instance.StopBuildPlacementState(null);
         }
     }
 
@@ -164,7 +167,7 @@ public class Building : BaseController {
 
     public virtual void Destroy()
     {
-        WorldManager.instance.RemoveBuildingReference(this);
+        Grid.instance.RemoveTilesOccupiedByResource(this);
         RemovePlayerStats();
         Destroy(gameObject);
     }

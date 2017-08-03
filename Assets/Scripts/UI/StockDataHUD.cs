@@ -16,7 +16,7 @@ public class StockDataHUD : MonoBehaviour {
 
     private void Awake()
     {
-        myPlayerData = PlayerDataManager.instance.playerData[WorldManager.myPlayerID];
+        myPlayerData = PlayerDataManager.instance.playerData[PlayerManager.myPlayerID];
     }
 
     private void OnEnable()

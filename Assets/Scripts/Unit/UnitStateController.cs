@@ -48,11 +48,13 @@ public class UnitStateController : BaseController
         // Initial state
         currentState = idleState;
         currentState.OnEnter(this);
+
+        if(PlayerManager.myPlayerID == playerID)
+            PlayerManager.instance.AddFriendlyUnitReference(this, playerID);
     }
 
     void SetupPathfinding()
     {
-        WorldManager.instance.AddFriendlyUnitReference(this, playerID);
         _pathfinder = GetComponent<Pathfinding>();
         _pathfinder.AddUnit(this);
     }
@@ -120,13 +122,15 @@ public class UnitStateController : BaseController
 
     protected void Kill()
     {
-        WorldManager.instance.RemoveFriendlyUnitReference(this, playerID);
+        if (PlayerManager.myPlayerID == playerID)
+            PlayerManager.instance.RemoveFriendlyUnitReference(this, playerID);
+
         Destroy(gameObject);
     }
 
     public bool IntersectsObject(BaseController other)
     {
-        if (WorldManager.instance._grid.GetPositionIntersectsWithTilesFromBox(
+        if (Grid.instance.GetPositionIntersectsWithTilesFromBox(
                 _pathfinder.currentStandingOnNode.gridPosPoint,
                 other.GetPrimaryNode().gridPosPoint,
                 other.size))
