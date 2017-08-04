@@ -94,15 +94,15 @@ public class ControllerSelecting : MonoBehaviour {
                 Building selectedBuilding = selectedController.GetComponent<Building>();
 
                 if (!selectedBuilding.constructed)
-                    UnitUIManager.instance.ShowConstructionProgress();
+                    ControllerUIManager.instance.ShowConstructionProgress();
                 else
-                    UnitUIManager.instance.ShowBuildingUI(selectedBuilding);
+                    ControllerUIManager.instance.ShowBuildingUI(selectedBuilding);
             }
 
             if(selectedController.controllerType == BaseController.CONTROLLER_TYPE.STATIC_RESOURCE)
             {
                 // Todo show resource UI
-                UnitUIManager.instance.ShowResourceUI(selectedController.GetComponent<Resource>());
+                ControllerUIManager.instance.ShowResourceUI(selectedController.GetComponent<Resource>());
             }
         }
     }
@@ -112,9 +112,9 @@ public class ControllerSelecting : MonoBehaviour {
         SetUnitAsSelected(selectionBox);
 
         if(selectedGatherers.Count > 0)
-            UnitUIManager.instance.ShowVillagerUI(selectedGatherers[0]);
+            ControllerUIManager.instance.ShowVillagerUI(selectedGatherers[0]);
         else
-            UnitUIManager.instance.ShowDefaultUI();
+            ControllerUIManager.instance.ShowDefaultUI();
     }
 
     void SelectUnits(Rect selectionBox)
@@ -122,9 +122,9 @@ public class ControllerSelecting : MonoBehaviour {
         SetUnitAsSelected(selectionBox);
 
         if(selectedGatherers.Count > 0)
-            UnitUIManager.instance.ShowVillagerUI(selectedGatherers[0]);
+            ControllerUIManager.instance.ShowVillagerUI(selectedGatherers[0]);
         else
-            UnitUIManager.instance.ShowDefaultUI();
+            ControllerUIManager.instance.ShowDefaultUI();
     }
 
     bool FindAndSelectController(Vector2 mousePos)

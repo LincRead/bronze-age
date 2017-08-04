@@ -75,7 +75,7 @@ public class CameraController : MonoBehaviour {
         }
 
         // Holding in center mouse button
-        else if (Input.GetMouseButton(2) /*&& !gameController.IsHoveringUI()*/)
+        else if (Input.GetMouseButton(2))
         {
             Vector2 newMousePosition = Input.mousePosition;
 

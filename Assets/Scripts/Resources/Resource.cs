@@ -104,7 +104,7 @@ public class Resource : BaseController {
     // Todo: don't just update stat unless actually showing stats for this resource
     protected void UpdateStat()
     {
-        UnitUIManager.instance.UpdateStat(0, amountLeft);
+        ControllerUIManager.instance.UpdateStat(0, amountLeft);
     }
 
     public override bool IntersectsPoint(Grid.FPoint point)

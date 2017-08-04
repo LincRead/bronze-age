@@ -4,12 +4,11 @@ using UnityEngine.UI;
 
 public class BackUnitUIButton : UnitUIButton
 {
-    // Update is called once per frame
     protected override void OnClick()
     {
         if(PlayerManager.instance.currentUserState == PlayerManager.PLAYER_ACTION_STATE.PLACING_BUILDING)
             PlayerManager.instance.CancelPlaceBuildingState();
 
-        UnitUIManager.instance.GoBack();
+        ControllerUIManager.instance.GoBack();
     }
 }

@@ -59,6 +59,7 @@ public class Node : IHeapItem<Node>
         {
             return heapIndex;
         }
+
         set
         {
             heapIndex = value;
@@ -68,10 +69,12 @@ public class Node : IHeapItem<Node>
     public int CompareTo(Node tileToCompare)
     {
         int compare = fCost.CompareTo(tileToCompare.fCost);
+
         if (compare == 0)
         {
             compare = hCost.CompareTo(tileToCompare.hCost);
         }
+
         return -compare;
     }
 }

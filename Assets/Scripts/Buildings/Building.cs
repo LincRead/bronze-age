@@ -77,7 +77,7 @@ public class Building : BaseController {
             
         else if(selected && !constructed)
         {
-            UnitUIManager.instance.UpdateConstructionProgressElements(this, CalculatePercentageConstructed());
+            ControllerUIManager.instance.UpdateConstructionProgressElements(this, CalculatePercentageConstructed());
         }
 	}
 
@@ -145,7 +145,7 @@ public class Building : BaseController {
         AddPlayerStats();
 
         if (selected)
-            UnitUIManager.instance.ShowBuildingUI(this);
+            ControllerUIManager.instance.ShowBuildingUI(this);
     }
 
     // Unique per building

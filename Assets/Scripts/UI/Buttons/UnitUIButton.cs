@@ -5,20 +5,26 @@ using UnityEngine.EventSystems;
 
 public class UnitUIButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
 
-    Button btn;
     public string title = "?";
     public KeyCode hotkey;
+
+    Button _button;
     protected string tooltip;
 
     protected virtual void Start () {
+
+        // Todo make tooltip system
         tooltip = title;
-        btn = GetComponent<Button>();
-        btn.onClick.AddListener(OnClick);
+
+        _button = GetComponent<Button>();
+        _button.onClick.AddListener(OnClick);
     }
 
     void Update()
     {
-        if (btn != null && btn.enabled && Input.GetKeyDown(hotkey))
+        if (_button != null 
+            && _button.enabled
+            && Input.GetKeyDown(hotkey))
             OnClick();
     }
 	
@@ -28,11 +34,11 @@ public class UnitUIButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        UnitUIManager.instance.ShowTooltip(tooltip);
+        ControllerUIManager.instance.ShowTooltip(tooltip);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        UnitUIManager.instance.HideTooltip();
+        ControllerUIManager.instance.HideTooltip();
     }
 }

@@ -3,10 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 using System.Text;
 
-public class UnitUIManager : MonoBehaviour {
-
-    // Singleton
-    public static UnitUIManager instance;
+public class ControllerUIManager : MonoBehaviour {
 
     [Header("Main Info")]
     public Text title;
@@ -18,7 +15,7 @@ public class UnitUIManager : MonoBehaviour {
     public Button[] buildingButtons;
 
     [HideInInspector]
-    public enum UNIT_UI_TYPE
+    public enum CONTROLLER_UI_TYPE
     {
         NONE,
         VILLAGER,
@@ -41,36 +38,62 @@ public class UnitUIManager : MonoBehaviour {
 
     [Header("Stats")]
     public GameObject statsInfoPrefab;
+
+    [HideInInspector]
     public Image[] statIcons = new Image[4];
+
+    [HideInInspector]
     public Text[] statTexts = new Text[4];
 
-    UNIT_UI_TYPE currentActivatedUI = UNIT_UI_TYPE.NONE;
-    UNIT_UI_TYPE lastActivateUI = UNIT_UI_TYPE.NONE;
+    CONTROLLER_UI_TYPE currentActiveView = CONTROLLER_UI_TYPE.NONE;
+    CONTROLLER_UI_TYPE lastActiveView = CONTROLLER_UI_TYPE.NONE;
 
     string none = "";
 
-    void Awake()
+    private static ControllerUIManager controllerUIManager;
+
+    public static ControllerUIManager instance
     {
-        // Singleton
-        instance = this;
+        get
+        {
+            if (!controllerUIManager)
+            {
+                controllerUIManager = FindObjectOfType(typeof(ControllerUIManager)) as ControllerUIManager;
+
+                if (!controllerUIManager)
+                {
+                    Debug.LogError("There needs to be one active ControllerUIManager script on a GameObject in your scene.");
+                }
+                else
+                {
+                    controllerUIManager.Init();
+                }
+            }
+
+            return controllerUIManager;
+        }
     }
 
-	// Use this for initialization
+    void Init()
+    {
+
+    }
+
 	void Start () {
-        DeactivateVillagerUI();
-        DeactivateBuildingsUI();
-        DeactivateStatsUI();
-        DeactivateConstructionProgressUI();
-        DeactivateHitpointsUI();
-        ChangeUI(UNIT_UI_TYPE.NONE);
+        DeactivateVillagerView();
+        DeactivateBuildingsView();
+        DeactivateStatsView();
+        DeactivateConstructionProgressView();
+        DeactivateHitpointsView();
+        ChangeUI(CONTROLLER_UI_TYPE.NONE);
         HideTooltip();
     }
 
     public void GoBack()
     {
-        if(lastActivateUI != UNIT_UI_TYPE.NONE)
+        if(lastActiveView != CONTROLLER_UI_TYPE.NONE)
         {
-            ChangeUI(lastActivateUI);
+            ChangeUI(lastActiveView);
         }
     }
 
@@ -84,67 +107,65 @@ public class UnitUIManager : MonoBehaviour {
 
     public void ShowDefaultUI()
     {
-        ChangeUI(UNIT_UI_TYPE.NONE);
+        ChangeUI(CONTROLLER_UI_TYPE.NONE);
     }
 
     public void ShowVillagerUI(UnitStateController unit)
     {
         title.text = unit.title;
         icon.sprite = unit.iconSprite;
-        ChangeUI(UNIT_UI_TYPE.VILLAGER);
-        ActivateHitpointsUI();
-        UpdateHitpoints(unit.hitpointsLeft, unit._unitStats.maxHitpoints);
-        DeactivateStatsUI(); // todo: show unit stats like attack, defence etc.
-    }
-
-    public void ShowConstructionProgress()
-    {
-        ChangeUI(UNIT_UI_TYPE.CONSTRUCTION_PROGRESS);
+        ChangeUI(CONTROLLER_UI_TYPE.VILLAGER);
+        ActivateHitpointsUI(unit.hitpointsLeft, unit._unitStats.maxHitpoints);
+        DeactivateStatsView(); // Todo show unit stats like attack, defence etc.
     }
 
     public void ShowBuildingUI(Building building)
     {
         title.text = building.title;
         icon.sprite = building.iconSprite;
-        ChangeUI(UNIT_UI_TYPE.BUILDING_INFO);
-        ActivateHitpointsUI();
-        UpdateHitpoints(building.hitpoints, building.maxHitPoints);
+        ChangeUI(CONTROLLER_UI_TYPE.BUILDING_INFO);
+        ActivateHitpointsUI(building.hitpoints, building.maxHitPoints);
         ActivateStatsUI(building.statSprites, building.GetUniqueStats());
     }
 
-    public void ShowResourceUI(Resource resource)
+    public void ShowConstructionProgressView()
+    {
+        ChangeUI(CONTROLLER_UI_TYPE.CONSTRUCTION_PROGRESS);
+    }
+
+    public void ShowResourceView(Resource resource)
     {
         title.text = resource.title;
         icon.sprite = resource.iconSprite;
-        ChangeUI(UNIT_UI_TYPE.RECOURSE_INFO);
+        ChangeUI(CONTROLLER_UI_TYPE.RECOURSE_INFO);
         ActivateStatsUI(resource.statSprites, resource.GetUniqueStats());
     }
 
-    void ActivateVillagerUI()
+    void ActivateVillagerView()
     {
         for(int i = 0; i < villagerButtons.Length; i++)
             villagerButtons[i].gameObject.SetActive(true);
     }
 
-    void DeactivateVillagerUI()
+    void DeactivateVillagerView()
     {
         for (int i = 0; i < villagerButtons.Length; i++)
             villagerButtons[i].gameObject.SetActive(false);
     }
 
-    public void ActivateBuildingsUI()
+    public void ActivateBuildingsView()
     {
         for (int i = 0; i < buildingButtons.Length; i++)
             buildingButtons[i].gameObject.SetActive(true);
     }
 
-    public void DeactivateBuildingsUI()
+    public void DeactivateBuildingsView()
     {
         for (int i = 0; i < buildingButtons.Length; i++)
             buildingButtons[i].gameObject.SetActive(false);
     }
 
-    public void ActivateStatsUI(Sprite[] icons, int[] stats)
+    public void ActivateStatsView(Sprite[] icons, int[] stats)
     {
         statsInfoPrefab.gameObject.SetActive(true);
 
@@ -167,85 +188,96 @@ public class UnitUIManager : MonoBehaviour {
         }
     }
 
-    public void DeactivateStatsUI()
+    public void DeactivateStatsView()
     {
         statsInfoPrefab.gameObject.SetActive(false);
     }
 
-    public void ActivateConstructionProgressUI()
+    public void ActivateConstructionProgressView()
     {
         constructionProgressPrefab.gameObject.SetActive(true);
     }
 
-    public void DeactivateConstructionProgressUI()
+    public void DeactivateConstructionProgressView()
     {
         constructionProgressPrefab.gameObject.SetActive(false);
     }
 
-    void ActivateHitpointsUI()
+    void ActivateHitpointsView(int hp, int max)
     {
         hitpointsPrefab.gameObject.SetActive(true);
+        UpdateHitpoints(hp, max);
     }
 
-    public void DeactivateHitpointsUI()
+    public void DeactivateHitpointsView()
     {
         hitpointsPrefab.gameObject.SetActive(false);
     }
 
-    public void ChangeUI(UNIT_UI_TYPE uiType)
+    public void ChangeUI(CONTROLLER_UI_TYPE viewType)
     {
-        switch (currentActivatedUI)
-        {
-            case UNIT_UI_TYPE.NONE:
-                break;
-            case UNIT_UI_TYPE.BUILDINGS:
-                DeactivateBuildingsUI();
-                break;
-            case UNIT_UI_TYPE.VILLAGER:
-                DeactivateVillagerUI();
-                break;
-            case UNIT_UI_TYPE.CONSTRUCTION_PROGRESS:
-                DeactivateConstructionProgressUI();
-                break;
-            case UNIT_UI_TYPE.BUILDING_INFO:
-                break;
-            case UNIT_UI_TYPE.RECOURSE_INFO:
-                break;
-        }
+        DisableLastControllerView(lastActiveView);
 
-        lastActivateUI = currentActivatedUI;
-        currentActivatedUI = uiType;
+        lastActiveView = currentActiveView;
+        currentActiveView = viewType;
 
-        if (currentActivatedUI != UNIT_UI_TYPE.NONE)
+        if (currentActiveView != CONTROLLER_UI_TYPE.NONE)
             icon.enabled = true;
 
-        switch (currentActivatedUI)
-        {
-            case UNIT_UI_TYPE.NONE:
-                title.text = none;
-                icon.enabled = false;
-                DeactivateHitpointsUI();
-                DeactivateStatsUI();
-                break;
-            case UNIT_UI_TYPE.BUILDINGS:
-                ActivateBuildingsUI();
-                break;
-            case UNIT_UI_TYPE.VILLAGER:
-                ActivateVillagerUI();
-                break;
-            case UNIT_UI_TYPE.CONSTRUCTION_PROGRESS:
-                ActivateConstructionProgressUI();
-                DeactivateHitpointsUI();
-                DeactivateStatsUI();
-                break;
-            case UNIT_UI_TYPE.BUILDING_INFO:
-                break;
-            case UNIT_UI_TYPE.RECOURSE_INFO:
-                DeactivateHitpointsUI();
-                break;
-        }
+        ActivateCurrentView(currentActiveView);
 
         HideTooltip();
+    }
+
+    void ActivateCurrentView(CONTROLLER_UI_TYPE viewType)
+    {
+        switch (viewType)
+        {
+            case CONTROLLER_UI_TYPE.NONE:
+                title.text = none;
+                icon.enabled = false;
+                DeactivateHitpointsView();
+                DeactivateStatsView();
+                break;
+            case CONTROLLER_UI_TYPE.BUILDINGS:
+                ActivateBuildingsView();
+                break;
+            case CONTROLLER_UI_TYPE.VILLAGER:
+                ActivateVillagerView();
+                break;
+            case CONTROLLER_UI_TYPE.CONSTRUCTION_PROGRESS:
+                ActivateConstructionProgressView();
+                DeactivateHitpointsView();
+                DeactivateStatsView();
+                break;
+            case CONTROLLER_UI_TYPE.BUILDING_INFO:
+                break;
+            case CONTROLLER_UI_TYPE.RECOURSE_INFO:
+                DeactivateHitpointsView();
+                break;
+        }
+    }
+
+    void DisableLastControllerView(CONTROLLER_UI_TYPE viewType)
+    {
+        switch (viewType)
+        {
+            case CONTROLLER_UI_TYPE.NONE:
+                break;
+            case CONTROLLER_UI_TYPE.BUILDINGS:
+                DeactivateBuildingsView();
+                break;
+            case CONTROLLER_UI_TYPE.VILLAGER:
+                DeactivateVillagerView();
+                break;
+            case CONTROLLER_UI_TYPE.CONSTRUCTION_PROGRESS:
+                DeactivateConstructionProgressView();
+                break;
+            case CONTROLLER_UI_TYPE.BUILDING_INFO:
+                break;
+            case CONTROLLER_UI_TYPE.RECOURSE_INFO:
+                break;
+        }
     }
 
     public void UpdateHitpoints(int hp, int max)

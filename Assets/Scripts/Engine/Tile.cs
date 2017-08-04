@@ -143,6 +143,7 @@ public class Tile : IHeapItem<Tile>
         {
             return heapIndex;
         }
+
         set
         {
             heapIndex = value;
@@ -152,10 +153,12 @@ public class Tile : IHeapItem<Tile>
     public int CompareTo(Tile nodeToCompare)
     {
         int compare = fCost.CompareTo(nodeToCompare.fCost);
+
         if (compare == 0)
         {
             compare = hCost.CompareTo(nodeToCompare.hCost);
         }
+
         return -compare;
     }
 
