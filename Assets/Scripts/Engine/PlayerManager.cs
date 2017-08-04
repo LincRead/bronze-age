@@ -19,28 +19,19 @@ public class PlayerManager : MonoBehaviour {
     public PLAYER_ACTION_STATE currentUserState = PLAYER_ACTION_STATE.DEFAULT;
 
     [HideInInspector]
-    public ControllerSelecting _objectSelection;
-
-    [HideInInspector]
-    public CursorHoveringUI _cursorHoveringUI;
+    public ControllerSelecting _controllerSelecting;
 
     [HideInInspector]
     public List<UnitStateController> friendlyUnits = new List<UnitStateController>();
 
     [HideInInspector]
-    public List<Building> buildings = new List<Building>();
-
-    [HideInInspector]
-    public List<Resource> resources = new List<Resource>();
-
-    [HideInInspector]
     public Building buildingBeingPlaced = null;
 
     [HideInInspector]
-    public Resource selectableResource = null;
+    public BaseController mouseHoveringController = null;
 
     [HideInInspector]
-    public Resource mouseHoveringResource = null;
+    public BaseController selectableController = null;
 
     [HideInInspector]
     public static Vector2 mousePosition;
@@ -71,8 +62,7 @@ public class PlayerManager : MonoBehaviour {
 
     void Init()
     {
-        _cursorHoveringUI = GetComponent<CursorHoveringUI>();
-        _objectSelection = GetComponent<ControllerSelecting>();
+        _controllerSelecting = GetComponent<ControllerSelecting>();
     }
 
     public void SetBuildingPlacementState(Building building)
@@ -90,24 +80,20 @@ public class PlayerManager : MonoBehaviour {
 
         buildingBeingPlaced = null;
 
-        SetDefaultState();
+        currentUserState = PLAYER_ACTION_STATE.DEFAULT;
+        EventManager.TriggerEvent("SetDefaultCursor");
     }
 
-    public void PlacedBuilding(Building building)
+    public void PlacedBuilding(BaseController building)
     {
-        List<UnitStateController> selectedBuilders = _objectSelection.GetSelectedGatherers();
+        List<UnitStateController> selectedBuilders = _controllerSelecting.GetSelectedGatherers();
+
         for (int i = 0; i < selectedBuilders.Count; i++)
         {
             selectedBuilders[i].MoveTo(building);
         }
 
-        SetDefaultState();
-    }
-
-    public void SetDefaultState()
-    {
         currentUserState = PLAYER_ACTION_STATE.DEFAULT;
-        EventManager.TriggerEvent("SetDefaultCursor");
     }
 
     void Update ()
@@ -118,15 +104,11 @@ public class PlayerManager : MonoBehaviour {
         {
             case PLAYER_ACTION_STATE.DEFAULT:
 
-                UpdateMouseCursor();
+                UpdateSelectableController();
 
                 if (Input.GetMouseButtonUp(1))
                     MoveSelectedUnitsToTarget();
 
-                break;
-
-            case PLAYER_ACTION_STATE.PLACING_BUILDING:
-                HandlePlaceBuilding();
                 break;
 
             default:
@@ -134,104 +116,88 @@ public class PlayerManager : MonoBehaviour {
         }
     }
 
-    void HandlePlaceBuilding()
+    void UpdateSelectableController()
     {
-        // ...
+        BaseController newSelectableController = Grid.instance.GetControllerFromWorldPoint(mousePosition);
+
+        if (mouseHoveringController != null)
+            newSelectableController = mouseHoveringController;
+
+        if (newSelectableController != selectableController)
+        {
+            selectableController = newSelectableController;
+            UpdateMouseCursor();
+        }
     }
 
     void UpdateMouseCursor()
     {
-        Resource mouseHoveringNodeWithResource = Grid.instance.GetResourceFromWorldPoint(mousePosition);
-
-        if (mouseHoveringNodeWithResource == null)
-            selectableResource = mouseHoveringResource;
-        else
-            selectableResource = mouseHoveringNodeWithResource;
-
-        if (selectableResource != null
-            && _objectSelection.GetSelectedGatherers().Count > 0
-            && !_cursorHoveringUI.IsCursorHoveringUI())
+        if (selectableController != null)
         {
-            // Todo change based on type of resource
-            EventManager.TriggerEvent("SetBuildCursor");
+            if (selectableController.controllerType == BaseController.CONTROLLER_TYPE.STATIC_RESOURCE)
+            {
+                if (_controllerSelecting.GetSelectedGatherers().Count > 0 && !CursorHoveringUI.value)
+                {
+                    // Todo change based on type of resource
+
+                    EventManager.TriggerEvent("SetBuildCursor");
+                }
+            }
+
+            else if (selectableController.controllerType == BaseController.CONTROLLER_TYPE.BUILDING)
+            {
+                Building building = selectableController.GetComponent<Building>();
+
+                if (!building.constructed && !CursorHoveringUI.value)
+                {
+                    EventManager.TriggerEvent("SetBuildCursor");
+                }
+            }
         }
 
         else
         {
-            Building hoveringBuilding = Grid.instance.GetBuildingFromWorldPoint(mousePosition);
-            if (_objectSelection.GetSelectedGatherers().Count > 0
-                && hoveringBuilding != null
-                && !hoveringBuilding.constructed
-                && !_cursorHoveringUI.IsCursorHoveringUI())
-            {
-                EventManager.TriggerEvent("SetBuildCursor");
-            }
-
-            else
-            {
-                EventManager.TriggerEvent("SetDefaultCursor");
-            }
+            EventManager.TriggerEvent("SetDefaultCursor");
         }
     }
 
     public void MoveSelectedUnitsToTarget()
     {
-        float averageX = 0;
-        float averageY = 0;
-        int numUnits = 0;
-        Building goToBuldingForTask = null;
+        List<UnitStateController> selectedUnits = _controllerSelecting.GetSelectedUnits();
 
-        for (int i = 0; i < friendlyUnits.Count; i++)
-        {
-            if (friendlyUnits[i].selected)
-            {
-                averageX += friendlyUnits[i]._transform.position.x;
-                averageY += friendlyUnits[i]._transform.position.y;
-                numUnits++;
-            }
-        }
-
-        if (numUnits == 0)
+        // No units selected
+        if (selectedUnits.Count == 0)
             return;
 
-        averageX /= numUnits;
-        averageY /= numUnits;
+        float averagePositionX = 0;
+        float averagePositionY = 0;
 
-        goToBuldingForTask = FindBuildingAtWorldPosition();
-
-        // Todo refactor dont check null for every unit
-        for (int i = 0; i < friendlyUnits.Count; i++)
+        for (int i = 0; i < selectedUnits.Count; i++)
         {
-            if(friendlyUnits[i].selected) 
+            averagePositionX += friendlyUnits[i]._transform.position.x;
+            averagePositionY += friendlyUnits[i]._transform.position.y;
+        }
+
+        averagePositionX /= selectedUnits.Count;
+        averagePositionY /= selectedUnits.Count;
+
+        for (int i = 0; i < selectedUnits.Count; i++)
+        {
+            // Move to controller on location
+            if(selectableController != null)
             {
-                if(goToBuldingForTask != null)
-                {
-                    friendlyUnits[i].MoveTo(goToBuldingForTask);
-                }
+                selectedUnits[i].MoveTo(selectableController);
+            }
 
-                else if(selectableResource != null)
-                {
-                    friendlyUnits[i].MoveTo(selectableResource);
-                }
-
-                else
-                {
-                    Vector2 offset = new Vector2(averageX - friendlyUnits[i]._transform.position.x, averageY - friendlyUnits[i]._transform.position.y);
-                    friendlyUnits[i].MoveTo(mousePosition - offset);
-                }
+            // Move to empty location
+            else
+            {
+                Vector2 offset = new Vector2(averagePositionX - selectedUnits[i]._transform.position.x, averagePositionY - selectedUnits[i]._transform.position.y);
+                selectedUnits[i].MoveTo(mousePosition - offset);
             }
         }
 
         EventManager.TriggerEvent("ActivateMoveUnitsIndicator");
-    }
-
-    public Building FindBuildingAtWorldPosition()
-    {
-        Tile mouseOverNode = Grid.instance.GetTileFromWorldPoint(mousePosition);
-        if (mouseOverNode == null)
-            return null;
-
-        return mouseOverNode.buildingOccupying;
     }
 
     public void AddFriendlyUnitReference(UnitStateController unit, int player)

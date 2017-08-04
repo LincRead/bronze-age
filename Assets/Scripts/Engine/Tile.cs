@@ -34,10 +34,7 @@ public class Tile : IHeapItem<Tile>
     public UnitStateController controllerStandingHere;
 
     [HideInInspector]
-    public Building buildingOccupying = null;
-
-    [HideInInspector]
-    public Resource resourceOccupying = null;
+    public BaseController controllerOccupying = null;
 
     [HideInInspector]
     public float fertility = 0;

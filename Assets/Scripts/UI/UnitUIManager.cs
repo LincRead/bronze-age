@@ -65,11 +65,6 @@ public class UnitUIManager : MonoBehaviour {
         ChangeUI(UNIT_UI_TYPE.NONE);
         HideTooltip();
     }
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 
     public void GoBack()
     {

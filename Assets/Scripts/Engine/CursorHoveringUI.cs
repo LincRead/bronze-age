@@ -4,28 +4,13 @@ using UnityEngine.EventSystems;
 
 public class CursorHoveringUI : MonoBehaviour
 {
-    bool cursorHoveringUI = true;
-
-    void Start()
-    {
-        
-    }
+    public static bool value = true;
 
     void Update()
     {
-        ValidateInput();
-    }
-
-    void ValidateInput()
-    {
         if (EventSystem.current.IsPointerOverGameObject())
-            cursorHoveringUI = true;
+            value = true;
         else
-            cursorHoveringUI = false;
-    }
-
-    public bool IsCursorHoveringUI()
-    {
-        return cursorHoveringUI;
+            value = false;
     }
 }

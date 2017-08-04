@@ -63,7 +63,7 @@ public class Building : BaseController {
         _spriteRenderer.color = new Color(1f, 1f, 1f, 1f);
         _spriteRenderer.sortingLayerName = "Object";
 
-        Grid.instance.SetTilesOccupiedByBuilding(this);
+        Grid.instance.SetTilesOccupiedByController(this);
         PlayerManager.instance.PlacedBuilding(this);
     }
 
@@ -104,7 +104,7 @@ public class Building : BaseController {
         // Clicked left mouse button to place building on a suitable location
         if (canPlace
             && Input.GetMouseButtonUp(0) 
-            && !PlayerManager.instance._cursorHoveringUI.IsCursorHoveringUI())
+            && !CursorHoveringUI.value)
         {
             Place();
         }
@@ -113,7 +113,7 @@ public class Building : BaseController {
         else if (Input.GetMouseButtonUp(1))
         {
             CancelPlacing();
-            PlayerManager.instance.PlacedBuilding(null);
+            PlayerManager.instance.CancelPlaceBuildingState();
         }
     }
 
@@ -167,7 +167,7 @@ public class Building : BaseController {
 
     public virtual void Destroy()
     {
-        Grid.instance.RemoveTilesOccupiedByResource(this);
+        Grid.instance.RemoveTilesOccupiedByController(this);
         RemovePlayerStats();
         Destroy(gameObject);
     }

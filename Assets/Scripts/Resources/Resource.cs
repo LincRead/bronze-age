@@ -39,7 +39,7 @@ public class Resource : BaseController {
         zIndex = _transform.position.y;
         _transform.position = new Vector3(_transform.position.x, _transform.position.y, zIndex);
 
-        Grid.instance.SetTilesOccupiedByResource(this);
+        Grid.instance.SetTilesOccupiedByController(this);
 
         _spriteRenderer.sortingLayerName = "Object";
 
@@ -92,13 +92,13 @@ public class Resource : BaseController {
 
     void OnMouseEnter()
     {
-        PlayerManager.instance.mouseHoveringResource = this;
+        PlayerManager.instance.mouseHoveringController = this;
     }
 
     void OnMouseExit()
     {
-        if (PlayerManager.instance.mouseHoveringResource == this)
-            PlayerManager.instance.mouseHoveringResource = null;
+        if (PlayerManager.instance.mouseHoveringController == this)
+            PlayerManager.instance.mouseHoveringController = null;
     }
 
     // Todo: don't just update stat unless actually showing stats for this resource
@@ -134,7 +134,7 @@ public class Resource : BaseController {
 
     public virtual void Destroy()
     {
-        Grid.instance.RemoveTilesOccupiedByResource(this);
+        Grid.instance.RemoveTilesOccupiedByController(this);
         Destroy(gameObject);
     }
 }

@@ -15,18 +15,13 @@ public class ControllerSelecting : MonoBehaviour {
     private List<UnitStateController> selectedGatherers = new List<UnitStateController>();
     private List<UnitStateController> selectedUnits = new List<UnitStateController>();
 
-    Building selectedBuilding = null;
-    Resource selectedResource = null;
-
-    private bool mouseIsHoveringGUI;
+    BaseController selectedController = null;
 
     void Update()
     {
-        mouseIsHoveringGUI = PlayerManager.instance._cursorHoveringUI.IsCursorHoveringUI();
-
         // Don't select anything unless player is in default state
         if (PlayerManager.instance.currentUserState == PlayerManager.PLAYER_ACTION_STATE.DEFAULT
-            && !mouseIsHoveringGUI)
+            && !CursorHoveringUI.value)
             UpdateSelecting();
     }
 
@@ -59,11 +54,12 @@ public class ControllerSelecting : MonoBehaviour {
     void ExecuteSelecting()
     {
         ResetSelection();
+        mousePosScreenToWorldPointEnd = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         CreateSelectionRectangle();
 
         if (Vector2.Distance(mousePosScreenToWorldPointStart, mousePosScreenToWorldPointEnd) < .1f)
         {
-            FindControllerToSelect();
+            SelectController();
         }
 
         else
@@ -76,8 +72,6 @@ public class ControllerSelecting : MonoBehaviour {
 
     void CreateSelectionRectangle()
     {
-        mousePosScreenToWorldPointEnd = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
         selectionRect = new Rect(
             mousePosScreenToWorldPointStart.x,
             mousePosScreenToWorldPointStart.y,
@@ -85,37 +79,141 @@ public class ControllerSelecting : MonoBehaviour {
             mousePosScreenToWorldPointEnd.y - mousePosScreenToWorldPointStart.y);
     }
 
-    void FindControllerToSelect()
+    void SelectController()
     {
-        if (!FindAndSelectObject(mousePosScreenToWorldPointEnd))
+        // Try to select unit if tile is not occupied
+        if (!FindAndSelectController(mousePosScreenToWorldPointEnd))
         {
             SelectUnit(selectionRect);
         }
 
-        // Selected building
-        else if (selectedBuilding != null)
+        else
         {
-            if (!selectedBuilding.constructed)
-                UnitUIManager.instance.ShowConstructionProgress();
-            else
-                UnitUIManager.instance.ShowBuildingUI(selectedBuilding);
+            if (selectedController.controllerType == BaseController.CONTROLLER_TYPE.BUILDING)
+            {
+                Building selectedBuilding = selectedController.GetComponent<Building>();
 
-            DeselectAllFriendlyUnits();
+                if (!selectedBuilding.constructed)
+                    UnitUIManager.instance.ShowConstructionProgress();
+                else
+                    UnitUIManager.instance.ShowBuildingUI(selectedBuilding);
+            }
+
+            if(selectedController.controllerType == BaseController.CONTROLLER_TYPE.STATIC_RESOURCE)
+            {
+                // Todo show resource UI
+                UnitUIManager.instance.ShowResourceUI(selectedController.GetComponent<Resource>());
+            }
+        }
+    }
+
+    void SelectUnit(Rect selectionBox)
+    {
+        SetUnitAsSelected(selectionBox);
+
+        if(selectedGatherers.Count > 0)
+            UnitUIManager.instance.ShowVillagerUI(selectedGatherers[0]);
+        else
+            UnitUIManager.instance.ShowDefaultUI();
+    }
+
+    void SelectUnits(Rect selectionBox)
+    {
+        SetUnitAsSelected(selectionBox);
+
+        if(selectedGatherers.Count > 0)
+            UnitUIManager.instance.ShowVillagerUI(selectedGatherers[0]);
+        else
+            UnitUIManager.instance.ShowDefaultUI();
+    }
+
+    bool FindAndSelectController(Vector2 mousePos)
+    {
+        Tile nodeAtMousePos = Grid.instance.GetTileFromWorldPoint(mousePos);
+
+        if (nodeAtMousePos == null)
+            return false;
+
+        BaseController controller = nodeAtMousePos.controllerOccupying;
+
+        if (controller != null)
+        {
+            controller.Select();
+            selectedController = controller;
+            return true;
         }
 
-        else if (selectedResource != null)
-        {
-            // Todo show resource UI
-            UnitUIManager.instance.ShowResourceUI(selectedResource);
+        return false;
+    }
 
-            DeselectAllFriendlyUnits();
+    void SetUnitAsSelected(Rect collisionBox)
+    {
+        List<UnitStateController> friendlyUnits = PlayerManager.instance.GetAllFriendlyUnits();
+
+        for (int i = 0; i < friendlyUnits.Count; i++)
+        {
+            if (friendlyUnits[i].IntersectsRectangle(collisionBox))
+            {
+                friendlyUnits[i].Select();
+
+                selectedUnits.Add(friendlyUnits[i]);
+
+                if (friendlyUnits[i]._unitStats.gatherer)
+                {
+                    selectedGatherers.Add(friendlyUnits[i]);
+                }
+
+                return;
+            }
         }
+    }
+
+    void SetUnitsAsSelected(Rect collisionBox)
+    {
+        List<UnitStateController> friendlyUnits = PlayerManager.instance.GetAllFriendlyUnits();
+
+        for (int i = 0; i < friendlyUnits.Count; i++)
+        {
+            if (friendlyUnits[i].IntersectsRectangle(collisionBox))
+            {
+                friendlyUnits[i].Select();
+
+                selectedUnits.Add(friendlyUnits[i]);
+
+                if (friendlyUnits[i]._unitStats.gatherer)
+                {
+                    selectedGatherers.Add(friendlyUnits[i]);
+                }
+            }
+        }
+    }
+
+    void ResetSelection()
+    {
+        DeselectAllFriendlyUnits();
+
+        if (selectedController != null)
+        {
+            selectedController.Deselect();
+            selectedController = null;
+        }
+    }
+
+    public void DeselectAllFriendlyUnits()
+    {
+        for(int i = 0; i < selectedUnits.Count; i++)
+        {
+            selectedUnits[i].Deselect();
+        }
+
+        selectedUnits.Clear();
+        selectedGatherers.Clear();
     }
 
     void OnGUI()
     {
         // Show selection box
-        if(showSelectBox && !mouseIsHoveringGUI)
+        if(showSelectBox && !CursorHoveringUI.value)
         {
             Vector2 mousePosEnd = Input.mousePosition;
 
@@ -133,136 +231,13 @@ public class ControllerSelecting : MonoBehaviour {
         }
     }
 
-    public void SelectUnit(Rect selectionBox)
-    {
-        selectedGatherers.Clear();
-
-        if (SetUnitAsSelected(selectionBox))
-            UnitUIManager.instance.ShowVillagerUI(selectedGatherers[0]);
-        else
-            UnitUIManager.instance.ShowDefaultUI();
-    }
-
-    public void SelectUnits(Rect selectionBox)
-    {
-        selectedGatherers.Clear();
-
-        if (SetUnitsAsSelected(selectionBox))
-            UnitUIManager.instance.ShowVillagerUI(selectedGatherers[0]);
-        else
-            UnitUIManager.instance.ShowDefaultUI();
-    }
-
-    // Returns true if selected a villager
-    bool SetUnitAsSelected(Rect collisionBox)
-    {
-        List<UnitStateController> friendlyUnits = PlayerManager.instance.GetAllFriendlyUnits();
-        bool selectedVillager = false;
-
-        for (int i = 0; i < friendlyUnits.Count; i++)
-        {
-            if (!selectedVillager && friendlyUnits[i].IntersectsRectangle(collisionBox))
-            {
-                friendlyUnits[i].Select();
-                if (friendlyUnits[i]._unitStats.gatherer)
-                {
-                    selectedGatherers.Add(friendlyUnits[i]);
-                    selectedVillager = true;
-                }
-            }
-            else
-                friendlyUnits[i].Deselect();
-        }
-
-        return selectedVillager;
-    }
-
-    bool FindAndSelectObject(Vector2 mousePos)
-    {
-        if(PlayerManager.instance.selectableResource != null)
-        {
-            SelectResource(PlayerManager.instance.selectableResource);
-            return true;
-        }
-
-        Tile nodeAtMousePos = Grid.instance.GetTileFromWorldPoint(mousePos);
-
-        if (nodeAtMousePos == null)
-            return false;
-
-        if (nodeAtMousePos.buildingOccupying)
-        {
-            SelectBuilding(nodeAtMousePos.buildingOccupying);
-            return true;
-        }
-
-        return false;
-    }
-
-    public bool SetUnitsAsSelected(Rect collisionBox)
-    {
-        List<UnitStateController> friendlyUnits = PlayerManager.instance.GetAllFriendlyUnits();
-        bool selectedGatherer = false;
-
-        for (int i = 0; i < friendlyUnits.Count; i++)
-        {
-            if (friendlyUnits[i].IntersectsRectangle(collisionBox))
-            {
-                friendlyUnits[i].Select();
-                if (friendlyUnits[i]._unitStats.gatherer)
-                {
-                    selectedGatherers.Add(friendlyUnits[i]);
-                    selectedGatherer = true;
-                }
-            }
-            else
-                friendlyUnits[i].Deselect();
-        }
-
-        return selectedGatherer;
-    }
-
-    public void SelectBuilding(Building building)
-    {
-        ResetSelection();
-        building.Select();
-        selectedBuilding = building;
-    }
-
-    public void SelectResource(Resource resource)
-    {
-        ResetSelection();
-        resource.Select();
-        selectedResource = resource;
-    }
-
-    void ResetSelection()
-    {
-        if (selectedBuilding != null)
-        {
-            selectedBuilding.Deselect();
-            selectedBuilding = null;
-        }
-
-        if (selectedResource != null)
-        {
-            selectedResource.Deselect();
-            selectedResource = null;
-        }
-    }
-
     public List<UnitStateController> GetSelectedGatherers()
     {
         return selectedGatherers;
     }
 
-    public void DeselectAllFriendlyUnits()
+    public List<UnitStateController> GetSelectedUnits()
     {
-        for(int i = 0; i < selectedGatherers.Count; i++)
-        {
-            selectedGatherers[i].Deselect();
-        }
-
-        selectedGatherers.Clear();
+        return selectedUnits;
     }
 }

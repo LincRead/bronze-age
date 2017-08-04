@@ -122,7 +122,7 @@ public class BaseController : MonoBehaviour {
             _collider.bounds.center - new Vector3(_collider.bounds.size.x / 2, _collider.bounds.size.y / 2, 0.0f),
             _collider.bounds.size);
 
-        if (rect.Overlaps(otherBox, true))
+        if (otherBox.Overlaps(rect, true))
         {
             return true;
         }

@@ -46,7 +46,7 @@ public class CursorManager : MonoBehaviour
         // Used for holding over building that needs construction
         // Todo change this
         // "Blinks" when going from building state to holding over building not yet constructed
-        if (PlayerManager.instance._objectSelection.showSelectBox)
+        if (PlayerManager.instance._controllerSelecting.showSelectBox)
             SetToDefaultCursor();
     }
 

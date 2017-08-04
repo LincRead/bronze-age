@@ -314,19 +314,19 @@ public class Grid : MonoBehaviour {
         return nodes[gridPosX, gridPosY];
     }
 
-    public Building GetBuildingFromWorldPoint(Vector2 worldPoint)
+    public BaseController GetControllerFromWorldPoint(Vector2 worldPoint)
     {
         Point coords = GetTileCoordinates(GetPosIsometricTo2D(worldPoint));
 
         if (coords.x > -1 && coords.y > -1 && coords.x < numTilesX && coords.y < numTilesY)
         {
-            return tiles[coords.x, coords.y].buildingOccupying;
+            return tiles[coords.x, coords.y].controllerOccupying;
         }
 
         return null;
     }
 
-    public Building GetBuildingFromGridPos(int gridPosX, int gridPosY)
+    public BaseController GetControllerFromGridPos(int gridPosX, int gridPosY)
     {
         if (gridPosX < 0 || gridPosX > numTilesX - 1 || gridPosY < 0 || gridPosY > numTilesY - 1)
         {
@@ -334,19 +334,7 @@ public class Grid : MonoBehaviour {
             return null;
         }
 
-        return tiles[gridPosX, gridPosY].buildingOccupying;
-    }
-
-    public Resource GetResourceFromWorldPoint(Vector2 worldPoint)
-    {
-        Point coords = GetTileCoordinates(GetPosIsometricTo2D(worldPoint));
-
-        if (coords.x > -1 && coords.y > -1 && coords.x < numTilesX && coords.y < numTilesY)
-        {
-            return tiles[coords.x, coords.y].resourceOccupying;
-        }
-
-        return null;
+        return tiles[gridPosX, gridPosY].controllerOccupying;
     }
 
     public List<Tile> GetNeighbourTiles(Tile tile)
@@ -454,50 +442,29 @@ public class Grid : MonoBehaviour {
         }
     }
 
-    public void SetTilesOccupiedByBuilding(Building building)
+    public void SetTilesOccupiedByController(BaseController controller)
     {
         // Adding offset since building pivot point (buttom of sprite) is in the middle of two tiles.
-        Tile tile = GetTileFromWorldPoint(building.GetPosition() + new Vector2(0.04f, 0.04f));
+        Tile tile = GetTileFromWorldPoint(controller.GetPosition() + new Vector2(0.04f, 0.04f));
 
         if (tile == null)
             return;
 
-        for (int i = 0; i < building.size; i++)
+        for (int i = 0; i < controller.size; i++)
         {
-            for (int j = 0; j < building.size; j++)
+            for (int j = 0; j < controller.size; j++)
             {
                 if (i > -1 && j > -1 && i < numTilesX + 1 && j < numTilesY + 1)
                 {
                     Tile occupyTile = GetTileFromGridPos(tile.gridPosX + i, tile.gridPosY + j);
                     occupyTile.SetUnwalkable();
-                    occupyTile.buildingOccupying = building;
+                    occupyTile.controllerOccupying = controller;
                 }
             }
         }
     }
 
-    public void SetTilesOccupiedByResource(Resource resource)
-    {
-        Tile tile = GetTileFromWorldPoint(resource.GetPosition());
-
-        if (tile == null)
-            return;
-
-        for (int i = 0; i < resource.size; i++)
-        {
-            for (int j = 0; j < resource.size; j++)
-            {
-                if (i > -1 && j > -1 && i < numTilesX + 1 && j < numTilesY + 1)
-                {
-                    Tile occupyTile = GetTileFromGridPos(tile.gridPosX + i, tile.gridPosY + j);
-                    occupyTile.SetUnwalkable();
-                    occupyTile.resourceOccupying = resource;
-                }
-            }
-        }
-    }
-
-    public void RemoveTilesOccupiedByResource(BaseController controller)
+    public void RemoveTilesOccupiedByController(BaseController controller)
     {
         Tile tile = GetTileFromWorldPoint(controller.GetPosition());
 
@@ -510,19 +477,9 @@ public class Grid : MonoBehaviour {
             {
                 if (i > -1 && j > -1 && i < numTilesX + 1 && j < numTilesY + 1)
                 {
-                    Tile removeFromTile = GetTileFromGridPos(tile.gridPosX + i, tile.gridPosY + j);
-                    removeFromTile.SetWalkable();
-
-                    switch(controller.controllerType)
-                    {
-                        case BaseController.CONTROLLER_TYPE.STATIC_RESOURCE:
-                            removeFromTile.resourceOccupying = null;
-                            break;
-                        case BaseController.CONTROLLER_TYPE.BUILDING:
-                            removeFromTile.buildingOccupying = null;
-                            break;
-
-                    }
+                    Tile tileToRemoveFrom = GetTileFromGridPos(tile.gridPosX + i, tile.gridPosY + j);
+                    tileToRemoveFrom.SetWalkable();
+                    tileToRemoveFrom.controllerOccupying = null;
                 }
             }
         }
