@@ -64,7 +64,7 @@ public class Building : BaseController {
         _spriteRenderer.sortingLayerName = "Object";
 
         Grid.instance.SetTilesOccupiedByBuilding(this);
-        PlayerManager.instance.StopBuildPlacementState(this);
+        PlayerManager.instance.PlacedBuilding(this);
     }
 
     // Update is called once per frame
@@ -113,7 +113,7 @@ public class Building : BaseController {
         else if (Input.GetMouseButtonUp(1))
         {
             CancelPlacing();
-            PlayerManager.instance.StopBuildPlacementState(null);
+            PlayerManager.instance.PlacedBuilding(null);
         }
     }
 

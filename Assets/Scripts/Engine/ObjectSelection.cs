@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
+// Todo rename
 public class ObjectSelection : MonoBehaviour {
 
     Vector3 mousePosInitial;
@@ -11,15 +12,21 @@ public class ObjectSelection : MonoBehaviour {
     [HideInInspector]
     public bool isSelecting = false;
 
-    List<UnitStateController> selectedGatherers = new List<UnitStateController>();
+    private List<UnitStateController> selectedGatherers = new List<UnitStateController>();
+    private List<UnitStateController> selectedUnits = new List<UnitStateController>();
+
     Building selectedBuilding = null;
     Resource selectedResource = null;
 
     void Update()
     {
-        if (PlayerManager.instance.currentUserState != PlayerManager.PLAYER_ACTION_STATE.NONE)
-            return;
+        // Don't select anything unless player is in default state
+        if (PlayerManager.instance.currentUserState == PlayerManager.PLAYER_ACTION_STATE.DEFAULT)
+            CheckSelecting();
+    }
 
+    void CheckSelecting()
+    {
         // If we press the left mouse button, save mouse location and begin selection
         if (Input.GetMouseButtonDown(0) && !PlayerManager.instance._cursorHoveringUI.IsCursorHoveringUI())
         {
@@ -36,11 +43,11 @@ public class ObjectSelection : MonoBehaviour {
         // If we let go of the left mouse button, end selection
         if (Input.GetMouseButtonUp(0))
         {
-            if(!PlayerManager.instance._cursorHoveringUI.IsCursorHoveringUI() && isSelecting)
+            if (!PlayerManager.instance._cursorHoveringUI.IsCursorHoveringUI() && isSelecting)
                 CreateSelectionRect();
 
             isSelecting = false;
-        } 
+        }
     }
 
     void CreateSelectionRect()
@@ -131,7 +138,7 @@ public class ObjectSelection : MonoBehaviour {
     // Returns true if selected a villager
     bool SetUnitAsSelected(Rect collisionBox)
     {
-        List<UnitStateController> friendlyUnits = PlayerManager.instance.GetFriendlyUnits();
+        List<UnitStateController> friendlyUnits = PlayerManager.instance.GetAllFriendlyUnits();
         bool selectedVillager = false;
 
         for (int i = 0; i < friendlyUnits.Count; i++)
@@ -176,7 +183,7 @@ public class ObjectSelection : MonoBehaviour {
 
     public bool SetUnitsAsSelected(Rect collisionBox)
     {
-        List<UnitStateController> friendlyUnits = PlayerManager.instance.GetFriendlyUnits();
+        List<UnitStateController> friendlyUnits = PlayerManager.instance.GetAllFriendlyUnits();
         bool selectedGatherer = false;
 
         for (int i = 0; i < friendlyUnits.Count; i++)

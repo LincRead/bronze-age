@@ -51,6 +51,8 @@ public class UnitStateController : BaseController
 
         if(PlayerManager.myPlayerID == playerID)
             PlayerManager.instance.AddFriendlyUnitReference(this, playerID);
+
+        PlayerDataManager.instance.AddPopulationForPlayer(1, playerID);
     }
 
     void SetupPathfinding()
@@ -124,6 +126,8 @@ public class UnitStateController : BaseController
     {
         if (PlayerManager.myPlayerID == playerID)
             PlayerManager.instance.RemoveFriendlyUnitReference(this, playerID);
+
+        PlayerDataManager.instance.AddPopulationForPlayer(-1, playerID);
 
         Destroy(gameObject);
     }

@@ -10,13 +10,13 @@ public class PlayerManager : MonoBehaviour {
 
     public enum PLAYER_ACTION_STATE
     {
-        NONE,
+        DEFAULT,
         PLACING_BUILDING,
         MENU
     }
 
     [HideInInspector]
-    public PLAYER_ACTION_STATE currentUserState = PLAYER_ACTION_STATE.NONE;
+    public PLAYER_ACTION_STATE currentUserState = PLAYER_ACTION_STATE.DEFAULT;
 
     [HideInInspector]
     public ObjectSelection _objectSelection;
@@ -75,34 +75,38 @@ public class PlayerManager : MonoBehaviour {
         _objectSelection = GetComponent<ObjectSelection>();
     }
 
-    public void ActivateBuildPlacementState(Building building)
+    public void SetBuildingPlacementState(Building building)
     {
-        currentUserState = PLAYER_ACTION_STATE.PLACING_BUILDING;
         buildingBeingPlaced = building;
+
+        currentUserState = PLAYER_ACTION_STATE.PLACING_BUILDING;
         EventManager.TriggerEvent("SetBuildCursor");
     }
 
-    public void CancelBuildPlacebuild()
+    public void CancelPlaceBuildingState()
     {
         if(buildingBeingPlaced != null)
             buildingBeingPlaced.CancelPlacing();
 
-        currentUserState = PLAYER_ACTION_STATE.NONE;
-        EventManager.TriggerEvent("SetDefaultCursor");
+        buildingBeingPlaced = null;
+
+        SetDefaultState();
     }
 
-    public void StopBuildPlacementState(Building building)
+    public void PlacedBuilding(Building building)
     {
-        if(building != null)
+        List<UnitStateController> selectedBuilders = _objectSelection.GetSelectedGatherers();
+        for (int i = 0; i < selectedBuilders.Count; i++)
         {
-            List<UnitStateController> selectedBuilders = _objectSelection.GetSelectedGatherers();
-            for (int i = 0; i < selectedBuilders.Count; i++)
-            {
-                selectedBuilders[i].MoveTo(building);
-            }
+            selectedBuilders[i].MoveTo(building);
         }
 
-        currentUserState = PLAYER_ACTION_STATE.NONE;
+        SetDefaultState();
+    }
+
+    public void SetDefaultState()
+    {
+        currentUserState = PLAYER_ACTION_STATE.DEFAULT;
         EventManager.TriggerEvent("SetDefaultCursor");
     }
 
@@ -112,10 +116,13 @@ public class PlayerManager : MonoBehaviour {
 
         switch (currentUserState)
         {
-            case PLAYER_ACTION_STATE.NONE:
+            case PLAYER_ACTION_STATE.DEFAULT:
+
                 UpdateMouseCursor();
+
                 if (Input.GetMouseButtonUp(1))
                     MoveSelectedUnitsToTarget();
+
                 break;
 
             case PLAYER_ACTION_STATE.PLACING_BUILDING:
@@ -230,16 +237,14 @@ public class PlayerManager : MonoBehaviour {
     public void AddFriendlyUnitReference(UnitStateController unit, int player)
     {
         friendlyUnits.Add(unit);
-        PlayerDataManager.instance.AddPopulationForPlayer(1, player);
     }
 
     public void RemoveFriendlyUnitReference(UnitStateController unit, int player)
     {
         friendlyUnits.Remove(unit);
-        PlayerDataManager.instance.AddPopulationForPlayer(-1, player);
     }
 
-    public List<UnitStateController> GetFriendlyUnits()
+    public List<UnitStateController> GetAllFriendlyUnits()
     {
         return friendlyUnits;
     }
