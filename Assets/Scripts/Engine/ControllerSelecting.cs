@@ -2,15 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 
-// Todo rename
-public class ObjectSelection : MonoBehaviour {
+public class ControllerSelecting : MonoBehaviour {
 
-    Vector3 mousePosInitial;
-    Vector3 mousePostToWorldPointInitial;
+    Vector3 mousePosStart;
+    Vector3 mousePosScreenToWorldPointStart;
+    Vector3 mousePosScreenToWorldPointEnd;
     Rect selectionRect;
 
     [HideInInspector]
-    public bool isSelecting = false;
+    public bool showSelectBox = false;
 
     private List<UnitStateController> selectedGatherers = new List<UnitStateController>();
     private List<UnitStateController> selectedUnits = new List<UnitStateController>();
@@ -18,86 +18,104 @@ public class ObjectSelection : MonoBehaviour {
     Building selectedBuilding = null;
     Resource selectedResource = null;
 
+    private bool mouseIsHoveringGUI;
+
     void Update()
     {
+        mouseIsHoveringGUI = PlayerManager.instance._cursorHoveringUI.IsCursorHoveringUI();
+
         // Don't select anything unless player is in default state
-        if (PlayerManager.instance.currentUserState == PlayerManager.PLAYER_ACTION_STATE.DEFAULT)
-            CheckSelecting();
+        if (PlayerManager.instance.currentUserState == PlayerManager.PLAYER_ACTION_STATE.DEFAULT
+            && !mouseIsHoveringGUI)
+            UpdateSelecting();
     }
 
-    void CheckSelecting()
+    void UpdateSelecting()
     {
-        // If we press the left mouse button, save mouse location and begin selection
-        if (Input.GetMouseButtonDown(0) && !PlayerManager.instance._cursorHoveringUI.IsCursorHoveringUI())
+        // If we press the left mouse button, save mouse location and begin controller selection
+        if (Input.GetMouseButtonDown(0))
         {
-            mousePosInitial = Input.mousePosition;
-
-            // Move origin from bottom left to top left
-            mousePosInitial.y = Screen.height - mousePosInitial.y;
-
-            mousePostToWorldPointInitial = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-            isSelecting = true;
+            InitialSelecting();
         }
 
-        // If we let go of the left mouse button, end selection
         if (Input.GetMouseButtonUp(0))
         {
-            if (!PlayerManager.instance._cursorHoveringUI.IsCursorHoveringUI() && isSelecting)
-                CreateSelectionRect();
-
-            isSelecting = false;
+            ExecuteSelecting();
         }
     }
 
-    void CreateSelectionRect()
+    void InitialSelecting()
     {
-        Vector2 mousePosEnd = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePosStart = Input.mousePosition;
 
-        selectionRect = new Rect(
-            mousePostToWorldPointInitial.x,
-            mousePostToWorldPointInitial.y,
-            mousePosEnd.x - mousePostToWorldPointInitial.x,
-            mousePosEnd.y - mousePostToWorldPointInitial.y);
+        // Move origin from bottom left to top left
+        mousePosStart.y = Screen.height - mousePosStart.y;
 
+        mousePosScreenToWorldPointStart = PlayerManager.mousePosition;
+
+        showSelectBox = true;
+    }
+
+    void ExecuteSelecting()
+    {
         ResetSelection();
+        CreateSelectionRectangle();
 
-        if (Vector2.Distance(mousePostToWorldPointInitial, mousePosEnd) < .1f)
+        if (Vector2.Distance(mousePosScreenToWorldPointStart, mousePosScreenToWorldPointEnd) < .1f)
         {
-            if (!FindAndSelectObject(mousePosEnd))
-            {
-                SelectUnit(selectionRect);
-            }
-
-            // Selected building
-            else if(selectedBuilding != null)
-            {
-                if(!selectedBuilding.constructed)
-                    UnitUIManager.instance.ShowConstructionProgress(); 
-                else
-                    UnitUIManager.instance.ShowBuildingUI(selectedBuilding);
-
-                DeselectAllFriendlyUnits();
-            }
-
-            else if(selectedResource != null)
-            {
-                // Todo show resource UI
-                UnitUIManager.instance.ShowResourceUI(selectedResource);
-
-                DeselectAllFriendlyUnits();
-            }
-
-            return;
+            FindControllerToSelect();
         }
 
-        // Move?
-        SelectUnits(selectionRect);
+        else
+        {
+            SelectUnits(selectionRect);
+        }
+
+        showSelectBox = false;
+    }
+
+    void CreateSelectionRectangle()
+    {
+        mousePosScreenToWorldPointEnd = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        selectionRect = new Rect(
+            mousePosScreenToWorldPointStart.x,
+            mousePosScreenToWorldPointStart.y,
+            mousePosScreenToWorldPointEnd.x - mousePosScreenToWorldPointStart.x,
+            mousePosScreenToWorldPointEnd.y - mousePosScreenToWorldPointStart.y);
+    }
+
+    void FindControllerToSelect()
+    {
+        if (!FindAndSelectObject(mousePosScreenToWorldPointEnd))
+        {
+            SelectUnit(selectionRect);
+        }
+
+        // Selected building
+        else if (selectedBuilding != null)
+        {
+            if (!selectedBuilding.constructed)
+                UnitUIManager.instance.ShowConstructionProgress();
+            else
+                UnitUIManager.instance.ShowBuildingUI(selectedBuilding);
+
+            DeselectAllFriendlyUnits();
+        }
+
+        else if (selectedResource != null)
+        {
+            // Todo show resource UI
+            UnitUIManager.instance.ShowResourceUI(selectedResource);
+
+            DeselectAllFriendlyUnits();
+        }
     }
 
     void OnGUI()
     {
-        if(isSelecting && !PlayerManager.instance._cursorHoveringUI.IsCursorHoveringUI())
+        // Show selection box
+        if(showSelectBox && !mouseIsHoveringGUI)
         {
             Vector2 mousePosEnd = Input.mousePosition;
 
@@ -105,10 +123,10 @@ public class ObjectSelection : MonoBehaviour {
             mousePosEnd.y = Screen.height - mousePosEnd.y;
 
             selectionRect = new Rect(
-                mousePosInitial.x,
-                mousePosInitial.y,
-                mousePosEnd.x - mousePosInitial.x,
-                mousePosEnd.y - mousePosInitial.y);
+                mousePosStart.x,
+                mousePosStart.y,
+                mousePosEnd.x - mousePosStart.x,
+                mousePosEnd.y - mousePosStart.y);
 
             Utils.DrawScreenRect(selectionRect, new Color(0.15f, 0.9f, 0.15f, 0.2f));
             Utils.DrawScreenRectBorder(selectionRect, 1, new Color(0.15f, 0.9f, 0.15f));
@@ -236,16 +254,6 @@ public class ObjectSelection : MonoBehaviour {
     public List<UnitStateController> GetSelectedGatherers()
     {
         return selectedGatherers;
-    }
-
-    public Building GetSelectedBuilding()
-    {
-        return selectedBuilding;
-    }
-
-    public Resource GetSelecteResource()
-    {
-        return selectedResource;
     }
 
     public void DeselectAllFriendlyUnits()

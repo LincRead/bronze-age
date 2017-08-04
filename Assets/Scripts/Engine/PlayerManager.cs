@@ -19,7 +19,7 @@ public class PlayerManager : MonoBehaviour {
     public PLAYER_ACTION_STATE currentUserState = PLAYER_ACTION_STATE.DEFAULT;
 
     [HideInInspector]
-    public ObjectSelection _objectSelection;
+    public ControllerSelecting _objectSelection;
 
     [HideInInspector]
     public CursorHoveringUI _cursorHoveringUI;
@@ -72,7 +72,7 @@ public class PlayerManager : MonoBehaviour {
     void Init()
     {
         _cursorHoveringUI = GetComponent<CursorHoveringUI>();
-        _objectSelection = GetComponent<ObjectSelection>();
+        _objectSelection = GetComponent<ControllerSelecting>();
     }
 
     public void SetBuildingPlacementState(Building building)
