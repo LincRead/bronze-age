@@ -6,8 +6,6 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "UI/Controller views/buildings")]
 public class BuildingsView : UnitView
 {
-    UnitStateController unitController;
-
     public override void OnEnter(ControllerUIManager ui, BaseController controller)
     {
         base.OnEnter(ui, controller);
