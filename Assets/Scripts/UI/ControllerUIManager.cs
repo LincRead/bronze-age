@@ -115,7 +115,7 @@ public class ControllerUIManager : MonoBehaviour {
         title.text = unit.title;
         icon.sprite = unit.iconSprite;
         ChangeUI(CONTROLLER_UI_TYPE.VILLAGER);
-        ActivateHitpointsUI(unit.hitpointsLeft, unit._unitStats.maxHitpoints);
+        ActivateHitpointsView(unit.hitpointsLeft, unit._unitStats.maxHitpoints);
         DeactivateStatsView(); // Todo show unit stats like attack, defence etc.
     }
 
@@ -124,8 +124,8 @@ public class ControllerUIManager : MonoBehaviour {
         title.text = building.title;
         icon.sprite = building.iconSprite;
         ChangeUI(CONTROLLER_UI_TYPE.BUILDING_INFO);
-        ActivateHitpointsUI(building.hitpoints, building.maxHitPoints);
-        ActivateStatsUI(building.statSprites, building.GetUniqueStats());
+        ActivateHitpointsView(building.hitpoints, building.maxHitPoints);
+        ActivateStatsView(building.statSprites, building.GetUniqueStats());
     }
 
     public void ShowConstructionProgressView()
@@ -138,7 +138,7 @@ public class ControllerUIManager : MonoBehaviour {
         title.text = resource.title;
         icon.sprite = resource.iconSprite;
         ChangeUI(CONTROLLER_UI_TYPE.RECOURSE_INFO);
-        ActivateStatsUI(resource.statSprites, resource.GetUniqueStats());
+        ActivateStatsView(resource.statSprites, resource.GetUniqueStats());
     }
 
     void ActivateVillagerView()

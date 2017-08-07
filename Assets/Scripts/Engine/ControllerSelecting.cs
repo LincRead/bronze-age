@@ -94,7 +94,7 @@ public class ControllerSelecting : MonoBehaviour {
                 Building selectedBuilding = selectedController.GetComponent<Building>();
 
                 if (!selectedBuilding.constructed)
-                    ControllerUIManager.instance.ShowConstructionProgress();
+                    ControllerUIManager.instance.ShowConstructionProgressView();
                 else
                     ControllerUIManager.instance.ShowBuildingUI(selectedBuilding);
             }
@@ -102,7 +102,7 @@ public class ControllerSelecting : MonoBehaviour {
             if(selectedController.controllerType == BaseController.CONTROLLER_TYPE.STATIC_RESOURCE)
             {
                 // Todo show resource UI
-                ControllerUIManager.instance.ShowResourceUI(selectedController.GetComponent<Resource>());
+                ControllerUIManager.instance.ShowResourceView(selectedController.GetComponent<Resource>());
             }
         }
     }
