@@ -93,6 +93,8 @@ public class PlayerManager : MonoBehaviour {
             selectedBuilders[i].MoveTo(building);
         }
 
+        buildingBeingPlaced = null;
+
         currentUserState = PLAYER_ACTION_STATE.DEFAULT;
     }
 

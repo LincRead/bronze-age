@@ -74,11 +74,6 @@ public class Building : BaseController {
         {
             HandlePlacingBuilding();
         }
-            
-        else if(selected && !constructed)
-        {
-            ControllerUIManager.instance.UpdateConstructionProgressElements(this, CalculatePercentageConstructed());
-        }
 	}
 
     void HandlePlacingBuilding()
@@ -132,7 +127,7 @@ public class Building : BaseController {
         }
     }
 
-    public float CalculatePercentageConstructed()
+    public float GetPercentageConstructed()
     {
         return stepsConstructed / stepsToConstruct;
     }
@@ -145,7 +140,7 @@ public class Building : BaseController {
         AddPlayerStats();
 
         if (selected)
-            ControllerUIManager.instance.ShowBuildingUI(this);
+            ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.BUILDING_INFO, this);
     }
 
     // Unique per building

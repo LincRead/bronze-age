@@ -93,16 +93,16 @@ public class ControllerSelecting : MonoBehaviour {
             {
                 Building selectedBuilding = selectedController.GetComponent<Building>();
 
-                if (!selectedBuilding.constructed)
-                    ControllerUIManager.instance.ShowConstructionProgressView();
+                if (selectedBuilding.constructed)
+                    ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.BUILDING_INFO, selectedBuilding);
                 else
-                    ControllerUIManager.instance.ShowBuildingUI(selectedBuilding);
+                    ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.CONSTRUCTION_PROGRESS, selectedBuilding);
             }
 
             if(selectedController.controllerType == BaseController.CONTROLLER_TYPE.STATIC_RESOURCE)
             {
                 // Todo show resource UI
-                ControllerUIManager.instance.ShowResourceView(selectedController.GetComponent<Resource>());
+                ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.RECOURSE_INFO, selectedController);
             }
         }
     }
@@ -112,19 +112,19 @@ public class ControllerSelecting : MonoBehaviour {
         SetUnitAsSelected(selectionBox);
 
         if(selectedGatherers.Count > 0)
-            ControllerUIManager.instance.ShowVillagerUI(selectedGatherers[0]);
+            ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.VILLAGER, selectedGatherers[0]);
         else
-            ControllerUIManager.instance.ShowDefaultUI();
+            ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.NONE, null);
     }
 
     void SelectUnits(Rect selectionBox)
     {
-        SetUnitAsSelected(selectionBox);
+        SetUnitsAsSelected(selectionBox);
 
         if(selectedGatherers.Count > 0)
-            ControllerUIManager.instance.ShowVillagerUI(selectedGatherers[0]);
+            ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.VILLAGER, selectedGatherers[0]);
         else
-            ControllerUIManager.instance.ShowDefaultUI();
+            ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.NONE, null);
     }
 
     bool FindAndSelectController(Vector2 mousePos)

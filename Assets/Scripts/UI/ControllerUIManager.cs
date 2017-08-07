@@ -5,17 +5,18 @@ using System.Text;
 
 public class ControllerUIManager : MonoBehaviour {
 
-    [Header("Main Info")]
+    [Header("Controller info")]
     public Text title;
     public Image icon;
 
     public Text tooltipText;
 
+    [Header("Buttons")]
     public Button[] villagerButtons;
     public Button[] buildingButtons;
 
     [HideInInspector]
-    public enum CONTROLLER_UI_TYPE
+    public enum CONTROLLER_UI_VIEW
     {
         NONE,
         VILLAGER,
@@ -45,10 +46,19 @@ public class ControllerUIManager : MonoBehaviour {
     [HideInInspector]
     public Text[] statTexts = new Text[4];
 
-    CONTROLLER_UI_TYPE currentActiveView = CONTROLLER_UI_TYPE.NONE;
-    CONTROLLER_UI_TYPE lastActiveView = CONTROLLER_UI_TYPE.NONE;
+    CONTROLLER_UI_VIEW currentViewType = CONTROLLER_UI_VIEW.NONE;
+    CONTROLLER_UI_VIEW lastViewType = CONTROLLER_UI_VIEW.NONE;
 
-    string none = "";
+    ControllerUIView currentView;
+    ControllerUIView lastView;
+
+    [Header("Views")]
+    public ControllerUIView nothingSelectedView;
+    public VillagerView villagerView;
+    public BuildingsView buildingsView;
+    public BuildingView buildingView;
+    public ResourceView resourceView;
+    public ConstructionView constructionView;
 
     private static ControllerUIManager controllerUIManager;
 
@@ -62,8 +72,9 @@ public class ControllerUIManager : MonoBehaviour {
 
                 if (!controllerUIManager)
                 {
-                    Debug.LogError("There needs to be one active ControllerUIManager script on a GameObject in your scene.");
+                    Debug.LogError("There needs to be one active ControllerUIManager script on a GameObject in the scene.");
                 }
+
                 else
                 {
                     controllerUIManager.Init();
@@ -76,102 +87,105 @@ public class ControllerUIManager : MonoBehaviour {
 
     void Init()
     {
-
+        
     }
 
-	void Start () {
-        DeactivateVillagerView();
-        DeactivateBuildingsView();
-        DeactivateStatsView();
-        DeactivateConstructionProgressView();
-        DeactivateHitpointsView();
-        ChangeUI(CONTROLLER_UI_TYPE.NONE);
+    void Start () {
+
+        foreach (Button btn in villagerButtons)
+            btn.gameObject.SetActive(false);
+
+        foreach (Button btn in buildingButtons)
+            btn.gameObject.SetActive(false);
+
+        ChangeView(CONTROLLER_UI_VIEW.NONE, null);
         HideTooltip();
-    }
-
-    public void GoBack()
-    {
-        if(lastActiveView != CONTROLLER_UI_TYPE.NONE)
-        {
-            ChangeUI(lastActiveView);
-        }
-    }
-
-    public void UpdateConstructionProgressElements(Building building, float percent)
-    {
-        title.text = building.title;
-        icon.sprite = building.iconSprite;
-        constructionProgressText.text = ((int)(percent * 100)).ToString() + "%";
-        constructionProgressBarImage.fillAmount = percent;
+        HideHitpoints();
+        HideStats();
     }
 
     public void ShowDefaultUI()
     {
-        ChangeUI(CONTROLLER_UI_TYPE.NONE);
+        ChangeView(CONTROLLER_UI_VIEW.NONE, null);
     }
 
-    public void ShowVillagerUI(UnitStateController unit)
+    public void ChangeView(CONTROLLER_UI_VIEW viewType, BaseController controller)
     {
-        title.text = unit.title;
-        icon.sprite = unit.iconSprite;
-        ChangeUI(CONTROLLER_UI_TYPE.VILLAGER);
-        ActivateHitpointsView(unit.hitpointsLeft, unit._unitStats.maxHitpoints);
-        DeactivateStatsView(); // Todo show unit stats like attack, defence etc.
+        lastViewType = currentViewType;
+
+        if (currentView != null)
+        {
+            currentView.OnExit();
+            lastView = currentView;
+        }
+
+        switch (viewType)
+        {
+            case CONTROLLER_UI_VIEW.NONE:
+                currentView = nothingSelectedView;
+                break;
+
+            case CONTROLLER_UI_VIEW.VILLAGER:
+                currentView = villagerView;
+                break;
+
+            case CONTROLLER_UI_VIEW.BUILDINGS:
+                controller = lastView.controller;
+                currentView = buildingsView;
+                break;
+
+            case CONTROLLER_UI_VIEW.BUILDING_INFO:
+                currentView = buildingView;
+                break;
+
+            case CONTROLLER_UI_VIEW.CONSTRUCTION_PROGRESS:
+                currentView = constructionView;
+                break;
+
+            case CONTROLLER_UI_VIEW.RECOURSE_INFO:
+                currentView = resourceView;
+                break;
+        }
+
+        currentView.OnEnter(this, controller);
+        currentViewType = viewType;
+
+        HideTooltip();
     }
 
-    public void ShowBuildingUI(Building building)
+    public void GoBackToLastView()
     {
-        title.text = building.title;
-        icon.sprite = building.iconSprite;
-        ChangeUI(CONTROLLER_UI_TYPE.BUILDING_INFO);
-        ActivateHitpointsView(building.hitpoints, building.maxHitPoints);
-        ActivateStatsView(building.statSprites, building.GetUniqueStats());
+        ChangeView(lastViewType, lastView.controller);
     }
 
-    public void ShowConstructionProgressView()
+    private void Update()
     {
-        ChangeUI(CONTROLLER_UI_TYPE.CONSTRUCTION_PROGRESS);
+        currentView.Update();
     }
 
-    public void ShowResourceView(Resource resource)
+    public void ShowHitpoints(int hp, int max)
     {
-        title.text = resource.title;
-        icon.sprite = resource.iconSprite;
-        ChangeUI(CONTROLLER_UI_TYPE.RECOURSE_INFO);
-        ActivateStatsView(resource.statSprites, resource.GetUniqueStats());
+        hitpointsPrefab.gameObject.SetActive(true);
+        UpdateHitpoints(hp, max);
     }
 
-    void ActivateVillagerView()
+    public void HideHitpoints()
     {
-        for(int i = 0; i < villagerButtons.Length; i++)
-            villagerButtons[i].gameObject.SetActive(true);
+        hitpointsPrefab.gameObject.SetActive(false);
     }
 
-    void DeactivateVillagerView()
+    public void UpdateHitpoints(int hp, int max)
     {
-        for (int i = 0; i < villagerButtons.Length; i++)
-            villagerButtons[i].gameObject.SetActive(false);
+        hitpointsText.text = new StringBuilder(hp.ToString() + "/" + max.ToString()).ToString();
     }
 
-    public void ActivateBuildingsView()
-    {
-        for (int i = 0; i < buildingButtons.Length; i++)
-            buildingButtons[i].gameObject.SetActive(true);
-    }
-
-    public void DeactivateBuildingsView()
-    {
-        for (int i = 0; i < buildingButtons.Length; i++)
-            buildingButtons[i].gameObject.SetActive(false);
-    }
-
-    public void ActivateStatsView(Sprite[] icons, int[] stats)
+    public void ShowStats(Sprite[] icons, int[] stats)
     {
         statsInfoPrefab.gameObject.SetActive(true);
 
-        for(int i = 0; i < 4; i++)
+        for (int i = 0; i < 4; i++)
         {
-            if(i < stats.Length)
+            if (i < stats.Length)
             {
                 statIcons[i].enabled = true;
                 statIcons[i].sprite = icons[i];
@@ -188,106 +202,26 @@ public class ControllerUIManager : MonoBehaviour {
         }
     }
 
-    public void DeactivateStatsView()
+    public void UpdateStats(Sprite[] icons, int[] stats)
     {
-        statsInfoPrefab.gameObject.SetActive(false);
-    }
-
-    public void ActivateConstructionProgressView()
-    {
-        constructionProgressPrefab.gameObject.SetActive(true);
-    }
-
-    public void DeactivateConstructionProgressView()
-    {
-        constructionProgressPrefab.gameObject.SetActive(false);
-    }
-
-    void ActivateHitpointsView(int hp, int max)
-    {
-        hitpointsPrefab.gameObject.SetActive(true);
-        UpdateHitpoints(hp, max);
-    }
-
-    public void DeactivateHitpointsView()
-    {
-        hitpointsPrefab.gameObject.SetActive(false);
-    }
-
-    public void ChangeUI(CONTROLLER_UI_TYPE viewType)
-    {
-        DisableLastControllerView(lastActiveView);
-
-        lastActiveView = currentActiveView;
-        currentActiveView = viewType;
-
-        if (currentActiveView != CONTROLLER_UI_TYPE.NONE)
-            icon.enabled = true;
-
-        ActivateCurrentView(currentActiveView);
-
-        HideTooltip();
-    }
-
-    void ActivateCurrentView(CONTROLLER_UI_TYPE viewType)
-    {
-        switch (viewType)
+        for (int i = 0; i < 4; i++)
         {
-            case CONTROLLER_UI_TYPE.NONE:
-                title.text = none;
-                icon.enabled = false;
-                DeactivateHitpointsView();
-                DeactivateStatsView();
-                break;
-            case CONTROLLER_UI_TYPE.BUILDINGS:
-                ActivateBuildingsView();
-                break;
-            case CONTROLLER_UI_TYPE.VILLAGER:
-                ActivateVillagerView();
-                break;
-            case CONTROLLER_UI_TYPE.CONSTRUCTION_PROGRESS:
-                ActivateConstructionProgressView();
-                DeactivateHitpointsView();
-                DeactivateStatsView();
-                break;
-            case CONTROLLER_UI_TYPE.BUILDING_INFO:
-                break;
-            case CONTROLLER_UI_TYPE.RECOURSE_INFO:
-                DeactivateHitpointsView();
-                break;
+            if (i < stats.Length)
+            {
+                statIcons[i].sprite = icons[i];
+                statTexts[i].text = stats[i].ToString();
+            }
         }
-    }
-
-    void DisableLastControllerView(CONTROLLER_UI_TYPE viewType)
-    {
-        switch (viewType)
-        {
-            case CONTROLLER_UI_TYPE.NONE:
-                break;
-            case CONTROLLER_UI_TYPE.BUILDINGS:
-                DeactivateBuildingsView();
-                break;
-            case CONTROLLER_UI_TYPE.VILLAGER:
-                DeactivateVillagerView();
-                break;
-            case CONTROLLER_UI_TYPE.CONSTRUCTION_PROGRESS:
-                DeactivateConstructionProgressView();
-                break;
-            case CONTROLLER_UI_TYPE.BUILDING_INFO:
-                break;
-            case CONTROLLER_UI_TYPE.RECOURSE_INFO:
-                break;
-        }
-    }
-
-    public void UpdateHitpoints(int hp, int max)
-    {
-        hitpointsText.text = new StringBuilder(hp.ToString() + "/" + max.ToString()).ToString();
     }
 
     public void UpdateStat(int index, int value)
     {
         statTexts[index].text = value.ToString();
+    }
+
+    public void HideStats()
+    {
+        statsInfoPrefab.gameObject.SetActive(false);
     }
 
     public void ShowTooltip(string tip)
