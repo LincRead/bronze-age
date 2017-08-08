@@ -101,7 +101,6 @@ public class ControllerSelecting : MonoBehaviour {
 
             if(selectedController.controllerType == BaseController.CONTROLLER_TYPE.STATIC_RESOURCE)
             {
-                // Todo show resource UI
                 ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.RECOURSE_INFO, selectedController);
             }
         }

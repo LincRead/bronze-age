@@ -71,9 +71,9 @@ public class Resource : BaseController {
             }
 
             // TODO fade out ??
-            else if (amountLeft < amount / 2.5f && harvestStagesSprites.Length == 3)
+            else if (amountLeft < amount / 2.5f && harvestStagesSprites.Length == 2)
                 _spriteRenderer.sprite = harvestStagesSprites[1];
-            else if (amountLeft < amount / 1.4f && harvestStagesSprites.Length == 3)
+            else if (amountLeft < amount / 1.4f && harvestStagesSprites.Length == 2)
                 _spriteRenderer.sprite = harvestStagesSprites[0];
         }
     }

@@ -140,9 +140,16 @@ public class PlayerManager : MonoBehaviour {
             {
                 if (_controllerSelecting.GetSelectedGatherers().Count > 0 && !CursorHoveringUI.value)
                 {
-                    // Todo change based on type of resource
+                    Resource resource = selectableController.GetComponent<Resource>();
 
-                    EventManager.TriggerEvent("SetBuildCursor");
+                    switch(resource.resourceType)
+                    {
+                        case Resource.HARVEST_TYPE.CHOP: EventManager.TriggerEvent("SetChopCursor"); break;
+                        case Resource.HARVEST_TYPE.MINE: EventManager.TriggerEvent("SetMineCursor"); break;
+                        case Resource.HARVEST_TYPE.GATHER: EventManager.TriggerEvent("SetGatherCursor"); break;
+                        case Resource.HARVEST_TYPE.FARM: EventManager.TriggerEvent("SetFarmCursor"); break;
+                        default: EventManager.TriggerEvent("SetBuildCursor"); break;
+                    }
                 }
             }
 

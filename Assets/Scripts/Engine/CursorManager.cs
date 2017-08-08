@@ -7,7 +7,8 @@ public class CursorManager : MonoBehaviour
     {
         NONE,
         CAMERA_MOVEMENT,
-        ACTION_BUILD
+        ACTION_BUILD,
+        HARVEST
     }
 
     private CURSOR_STATE state = CURSOR_STATE.NONE;
@@ -16,7 +17,11 @@ public class CursorManager : MonoBehaviour
     [Header("Cursor textures")]
     public Texture2D defaultTexture;
     public Texture2D moveCameraTexture;
-    public Texture2D buildTexture; // Todo: add more
+    public Texture2D buildTexture;
+    public Texture2D chopTexture;
+    public Texture2D mineTexture;
+    public Texture2D gatherTexture;
+    public Texture2D farmTexture;
 
     void Start()
     {
@@ -29,6 +34,10 @@ public class CursorManager : MonoBehaviour
         EventManager.StartListening("ChangeToMoveCameraCursor", SetToMoveCameraCursor);
         EventManager.StartListening("SetBuildCursor", SetToBuildCursor);
         EventManager.StartListening("CancelMoveCameraCursor", CancelMoveCameraCursor);
+        EventManager.StartListening("SetChopCursor", SetToChopCursor);
+        EventManager.StartListening("SetMineCursor", SetToMineCursor);
+        EventManager.StartListening("SetGatherCursor", SetToGatherCursor);
+        EventManager.StartListening("SetFarmCursor", SetToFarmCursor);
 
     }
 
@@ -38,6 +47,10 @@ public class CursorManager : MonoBehaviour
         EventManager.StopListening("ChangeToMoveCameraCursor", SetToMoveCameraCursor);
         EventManager.StopListening("SetBuildCursor", SetToBuildCursor);
         EventManager.StopListening("CancelMoveCameraCursor", CancelMoveCameraCursor);
+        EventManager.StopListening("SetChopCursor", SetToChopCursor);
+        EventManager.StopListening("SetMineCursor", SetToMineCursor);
+        EventManager.StopListening("SetGatherCursor", SetToGatherCursor);
+        EventManager.StopListening("SetFarmCursor", SetToFarmCursor);
     }
 
     void LateUpdate()
@@ -98,5 +111,29 @@ public class CursorManager : MonoBehaviour
         Cursor.SetCursor(buildTexture, Vector2.zero, CursorMode.Auto);
         state = CURSOR_STATE.ACTION_BUILD;
         lastState = state;
+    }
+
+    public void SetToChopCursor()
+    {
+        Cursor.SetCursor(chopTexture, Vector2.zero, CursorMode.Auto);
+        state = CURSOR_STATE.HARVEST;
+    }
+
+    public void SetToMineCursor()
+    {
+        Cursor.SetCursor(mineTexture, Vector2.zero, CursorMode.Auto);
+        state = CURSOR_STATE.HARVEST;
+    }
+
+    public void SetToGatherCursor()
+    {
+        Cursor.SetCursor(gatherTexture, Vector2.zero, CursorMode.Auto);
+        state = CURSOR_STATE.HARVEST;
+    }
+
+    public void SetToFarmCursor()
+    {
+        Cursor.SetCursor(farmTexture, Vector2.zero, CursorMode.Auto);
+        state = CURSOR_STATE.HARVEST;
     }
 }
