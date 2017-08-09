@@ -42,7 +42,7 @@ public class BaseController : MonoBehaviour {
 
     [Header("Selection indicator")]
     public GameObject selectionIndicator;
-    SpriteRenderer _selectedIndicatorRenderer;
+    protected SpriteRenderer _selectedIndicatorRenderer;
 
     protected virtual void Awake()
     {

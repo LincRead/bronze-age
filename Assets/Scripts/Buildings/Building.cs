@@ -36,6 +36,9 @@ public class Building : BaseController {
             _transform.position = PlayerManager.mousePosition - new Vector2(0.0f, _spriteRenderer.bounds.size.y / 2);
             _spriteRenderer.color = new Color(1f, 1f, 1f, 0.5f);
             _spriteRenderer.sortingLayerName = "Placing Building";
+
+            _selectedIndicatorRenderer.enabled = true;
+            _selectedIndicatorRenderer.color = new Color(1f, 1f, 1f, 0.5f);
         } // I love my daughter Ivy. <3
 
         else
@@ -63,6 +66,9 @@ public class Building : BaseController {
         _spriteRenderer.color = new Color(1f, 1f, 1f, 1f);
         _spriteRenderer.sortingLayerName = "Object";
 
+        _selectedIndicatorRenderer.color = new Color(1f, 1f, 1f, 1f);
+        _selectedIndicatorRenderer.enabled = false;
+
         Grid.instance.SetTilesOccupiedByController(this);
         PlayerManager.instance.PlacedBuilding(this);
     }
@@ -88,12 +94,14 @@ public class Building : BaseController {
         {
             canPlace = true;
             _spriteRenderer.color = new Color(1f, 1f, 1f, 0.5f);
+            _selectedIndicatorRenderer.color = new  Color(1f, 1f, 1f, 0.5f);
         }
 
         // Show that location is not suitable
         else
         {
             _spriteRenderer.color = new Color(1.0f, 0.5f, 0.5f, 0.5f);
+            _selectedIndicatorRenderer.color = new Color(1.0f, 0.5f, 0.5f, 0.5f);
         }
 
         // Clicked left mouse button to place building on a suitable location
