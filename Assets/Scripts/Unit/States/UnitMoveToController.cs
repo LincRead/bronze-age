@@ -26,7 +26,9 @@ public class UnitMoveToController : UnitState
 
         FindPathToTarget();
 
-        if (!controller._animator.GetCurrentAnimatorStateInfo(0).IsName("run"))
+        // Only play if path found
+        if (_pathfinder.path.Count > 0
+            && !controller._animator.GetCurrentAnimatorStateInfo(0).IsName("run"))
             _controller._animator.Play("run");
     }
 
@@ -65,6 +67,8 @@ public class UnitMoveToController : UnitState
         // Fetch next target node
         if (_pathfinder.path.Count > 0)
             nextTargetNode = _pathfinder.path[0];
+        else
+            return;  // Don't move if path not found
 
         // Reached next target node
         if (_pathfinder.currentStandingOnNode == nextTargetNode)
@@ -109,15 +113,20 @@ public class UnitMoveToController : UnitState
 
     public override void CheckTransitions()
     {
-        if (_pathfinder.path == null)
+        if (_pathfinder.path == null || _pathfinder.path.Count == 0)
+        {
             _controller.TransitionToState(_controller.idleState);
+        }
 
         if (_controller.targetController.IntersectsPoint(_pathfinder.currentStandingOnNode.gridPosPoint))
         {
             // Don't wanna stay on an unwalkable node, so move back again
             if (!_pathfinder.currentStandingOnNode.walkable)
+            {
                 _transform.position = lastPosition;
-
+                _pathfinder.DetectCurrentPathfindingNode(_transform.position);
+            }
+                
             // TODO resources and building
             if (_controller._unitStats.builder && _targetObject.controllerType == BaseController.CONTROLLER_TYPE.BUILDING)
             {

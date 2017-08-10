@@ -164,6 +164,12 @@ public class Tile : IHeapItem<Tile>
 
     public bool IsEmpty()
     {
+        for (int i = 0; i < nodes.Length; i++)
+        {
+            if (nodes[i].unitControllerStandingHere != null)
+                return false;
+        }
+
         return walkable && !controllerStandingHere;
     }
 }

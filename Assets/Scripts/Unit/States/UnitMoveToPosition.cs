@@ -21,8 +21,10 @@ public class UnitMoveToPosition : UnitState
         velocity = Vector2.zero;
 
         FindPathToPosition();
-
-        if (!controller._animator.GetCurrentAnimatorStateInfo(0).IsName("run"))
+        
+        // Only play if path found
+        if (_pathfinder.path.Count > 0
+            && !controller._animator.GetCurrentAnimatorStateInfo(0).IsName("run"))
             _controller._animator.Play("run");
     }
 
@@ -59,6 +61,8 @@ public class UnitMoveToPosition : UnitState
         // Fetch next target node
         if (_pathfinder.path.Count > 0)
             nextTargetNode = _pathfinder.path[0];
+        else
+            return; // Don't move if path not found
 
         // Reached next target node
         if (_pathfinder.currentStandingOnNode == nextTargetNode)
@@ -103,11 +107,12 @@ public class UnitMoveToPosition : UnitState
 
     public override void CheckTransitions()
     {
-        if (_pathfinder.path == null)
+        // No path to follow
+        if (_pathfinder.path == null || _pathfinder.path.Count == 0)
             _controller.TransitionToState(_controller.idleState);
 
         // Reached target node
-        if (_pathfinder.currentStandingOnNode == targetNode)
+        else if (_pathfinder.currentStandingOnNode == targetNode)
         {
             _controller.TransitionToState(_controller.idleState);
         }

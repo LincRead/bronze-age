@@ -125,6 +125,7 @@ public class PlayerManager : MonoBehaviour {
         if (mouseHoveringController != null)
             newSelectableController = mouseHoveringController;
 
+        // Only change mouse cursor when selectable controller changes
         if (newSelectableController != selectableController)
         {
             selectableController = newSelectableController;
@@ -148,7 +149,7 @@ public class PlayerManager : MonoBehaviour {
                         case Resource.HARVEST_TYPE.MINE: EventManager.TriggerEvent("SetMineCursor"); break;
                         case Resource.HARVEST_TYPE.GATHER: EventManager.TriggerEvent("SetGatherCursor"); break;
                         case Resource.HARVEST_TYPE.FARM: EventManager.TriggerEvent("SetFarmCursor"); break;
-                        default: EventManager.TriggerEvent("SetBuildCursor"); break;
+                        default: EventManager.TriggerEvent("SetDefaultCursor"); break;
                     }
                 }
             }
@@ -160,6 +161,11 @@ public class PlayerManager : MonoBehaviour {
                 if (!building.constructed && !CursorHoveringUI.value)
                 {
                     EventManager.TriggerEvent("SetBuildCursor");
+                }
+
+                else
+                {
+                    EventManager.TriggerEvent("SetDefaultCursor");
                 }
             }
         }

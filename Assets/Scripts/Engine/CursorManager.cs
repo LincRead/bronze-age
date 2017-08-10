@@ -38,7 +38,6 @@ public class CursorManager : MonoBehaviour
         EventManager.StartListening("SetMineCursor", SetToMineCursor);
         EventManager.StartListening("SetGatherCursor", SetToGatherCursor);
         EventManager.StartListening("SetFarmCursor", SetToFarmCursor);
-
     }
 
     private void OnDisable()
