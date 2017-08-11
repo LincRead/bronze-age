@@ -50,6 +50,13 @@ public class Building : BaseController {
         // And Kate <3
 
         hitpoints = maxHitPoints;
+
+        SetupTeamColor();
+    }
+
+    void SetupTeamColor()
+    {
+        _spriteRenderer.material.SetColor("_TeamColor", PlayerDataManager.instance.playerData[playerID].teamColor);
     }
 
     public void Place()

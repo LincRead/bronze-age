@@ -14,4 +14,7 @@ public class PlayerData {
     public int copper = 0;
     public int tin = 0;
     public int bronze = 0;
+
+    [HideInInspector]
+    public Color teamColor = Color.white;
 }

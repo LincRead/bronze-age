@@ -53,6 +53,13 @@ public class UnitStateController : BaseController
             PlayerManager.instance.AddFriendlyUnitReference(this, playerID);
 
         PlayerDataManager.instance.AddPopulationForPlayer(1, playerID);
+
+        SetupTeamColor();
+    }
+
+    void SetupTeamColor()
+    {
+        _spriteRenderer.material.SetColor("_TeamColor", PlayerDataManager.instance.playerData[playerID].teamColor);
     }
 
     void SetupPathfinding()

@@ -37,6 +37,7 @@ public class PlayerDataManager : MonoBehaviour
     void Init()
     {
         InitStartingResourcesForAllPlayers();
+        SetTeamColors();
     }
 
     void InitStartingResourcesForAllPlayers()
@@ -55,6 +56,20 @@ public class PlayerDataManager : MonoBehaviour
             newPlayerData.tin = playersStartingResources.tin;
             newPlayerData.bronze = playersStartingResources.bronze;
             playerData.Add(new PlayerData());
+        }
+    }
+
+    void SetTeamColors()
+    {
+        for (int i = 0; i < WorldManager.numPlayers; i++)
+        {
+            switch (i)
+            {
+                case 0: playerData[i].teamColor = Color.blue; break;
+                case 1: playerData[i].teamColor = Color.red; break;
+                case 2: playerData[i].teamColor = Color.green; break;
+                case 3: playerData[i].teamColor = Color.yellow; break;
+            }
         }
     }
 
