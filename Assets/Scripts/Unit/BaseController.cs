@@ -5,7 +5,6 @@ public class BaseController : MonoBehaviour {
 
     public string title = "Title";
 
-    [HideInInspector]
     public int playerID = 0;
 
     public enum CONTROLLER_TYPE

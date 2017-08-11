@@ -49,17 +49,21 @@ public class UnitStateController : BaseController
         currentState = idleState;
         currentState.OnEnter(this);
 
-        if(PlayerManager.myPlayerID == playerID)
-            PlayerManager.instance.AddFriendlyUnitReference(this, playerID);
+        if(playerID == PlayerManager.myPlayerID)
+                PlayerManager.instance.AddFriendlyUnitReference(this, playerID);
 
-        PlayerDataManager.instance.AddPopulationForPlayer(1, playerID);
+        if(playerID > -1)
+            PlayerDataManager.instance.AddPopulationForPlayer(1, playerID);
 
         SetupTeamColor();
     }
 
     void SetupTeamColor()
     {
-        _spriteRenderer.material.SetColor("_TeamColor", PlayerDataManager.instance.playerData[playerID].teamColor);
+        if(playerID > -1)
+            _spriteRenderer.material.SetColor("_TeamColor", PlayerDataManager.instance.playerData[playerID].teamColor);
+        else
+            _spriteRenderer.material.SetColor("_TeamColor", new Color(0.4f, 0.2f, 0.1f));
     }
 
     void SetupPathfinding()
