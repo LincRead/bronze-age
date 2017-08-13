@@ -8,7 +8,8 @@ public class CursorManager : MonoBehaviour
         NONE,
         CAMERA_MOVEMENT,
         ACTION_BUILD,
-        HARVEST
+        HARVEST,
+        ATTACK
     }
 
     private CURSOR_STATE state = CURSOR_STATE.NONE;
@@ -22,6 +23,7 @@ public class CursorManager : MonoBehaviour
     public Texture2D mineTexture;
     public Texture2D gatherTexture;
     public Texture2D farmTexture;
+    public Texture2D attackTexture;
 
     void Start()
     {
@@ -38,6 +40,7 @@ public class CursorManager : MonoBehaviour
         EventManager.StartListening("SetMineCursor", SetToMineCursor);
         EventManager.StartListening("SetGatherCursor", SetToGatherCursor);
         EventManager.StartListening("SetFarmCursor", SetToFarmCursor);
+        EventManager.StartListening("SetAttackCursor", SetToAttackCursor);
     }
 
     private void OnDisable()
@@ -50,6 +53,7 @@ public class CursorManager : MonoBehaviour
         EventManager.StopListening("SetMineCursor", SetToMineCursor);
         EventManager.StopListening("SetGatherCursor", SetToGatherCursor);
         EventManager.StopListening("SetFarmCursor", SetToFarmCursor);
+        EventManager.StopListening("SetAttackCursor", SetToAttackCursor);
     }
 
     void LateUpdate()
@@ -134,5 +138,11 @@ public class CursorManager : MonoBehaviour
     {
         Cursor.SetCursor(farmTexture, Vector2.zero, CursorMode.Auto);
         state = CURSOR_STATE.HARVEST;
+    }
+
+    public void SetToAttackCursor()
+    {
+        Cursor.SetCursor(attackTexture, Vector2.zero, CursorMode.Auto);
+        state = CURSOR_STATE.ATTACK;
     }
 }

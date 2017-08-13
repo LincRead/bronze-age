@@ -162,6 +162,18 @@ public class Tile : IHeapItem<Tile>
         return -compare;
     }
 
+    public UnitStateController GetUnitStandingOnTile()
+    {
+        for (int i = 0; i < nodes.Length; i++)
+        {
+            if (nodes[i].unitControllerStandingHere != null)
+                return nodes[i].unitControllerStandingHere;
+        }
+
+        return null;
+
+    }
+
     public bool IsEmpty()
     {
         for (int i = 0; i < nodes.Length; i++)
@@ -172,4 +184,5 @@ public class Tile : IHeapItem<Tile>
 
         return walkable && !controllerStandingHere;
     }
+
 }

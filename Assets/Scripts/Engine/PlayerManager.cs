@@ -120,7 +120,12 @@ public class PlayerManager : MonoBehaviour {
 
     void UpdateSelectableController()
     {
+        // Look for static Controller that occupies Tile first
         BaseController newSelectableController = Grid.instance.GetControllerFromWorldPoint(mousePosition);
+
+        // If not found, see if any units occupy nodes in Tiles
+        if (newSelectableController == null)
+            newSelectableController = Grid.instance.GetUnitFromWorldPoint(mousePosition);
 
         if (mouseHoveringController != null)
             newSelectableController = mouseHoveringController;
@@ -166,6 +171,16 @@ public class PlayerManager : MonoBehaviour {
                 else
                 {
                     EventManager.TriggerEvent("SetDefaultCursor");
+                }
+            }
+
+            else if(selectableController.controllerType == BaseController.CONTROLLER_TYPE.UNIT)
+            {
+                UnitStateController unit = selectableController.GetComponent<UnitStateController>();
+
+                if (!friendlyUnits.Contains(unit))
+                {
+                    EventManager.TriggerEvent("SetAttackCursor");
                 }
             }
         }

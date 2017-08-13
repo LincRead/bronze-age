@@ -326,6 +326,18 @@ public class Grid : MonoBehaviour {
         return null;
     }
 
+    public BaseController GetUnitFromWorldPoint(Vector2 worldPoint)
+    {
+        Point coords = GetTileCoordinates(GetPosIsometricTo2D(worldPoint));
+
+        if (coords.x > -1 && coords.y > -1 && coords.x < numTilesX && coords.y < numTilesY)
+        {
+            return tiles[coords.x, coords.y].GetUnitStandingOnTile();
+        }
+
+        return null;
+    }
+
     public BaseController GetControllerFromGridPos(int gridPosX, int gridPosY)
     {
         if (gridPosX < 0 || gridPosX > numTilesX - 1 || gridPosY < 0 || gridPosY > numTilesY - 1)
