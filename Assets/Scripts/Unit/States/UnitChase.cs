@@ -5,14 +5,14 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "States/Unit states/chase")]
 public class UnitChase : UnitMoveTo
 {
-    BaseController _targetController;
+    UnitStateController _targetController;
     Vector2 _targetControllerPosition;
 
     public override void OnEnter(UnitStateController controller)
     {
         base.OnEnter(controller);
 
-        _targetController = _controller.targetController;
+        _targetController = (UnitStateController)_controller.targetController;
         _targetControllerPosition = _targetController.GetPosition();
 
         FindPathToTarget();
@@ -22,7 +22,9 @@ public class UnitChase : UnitMoveTo
     protected override void FindPathToTarget()
     {
         // Find path
-        Node node = _pathfinder.GetNodeFromPoint(_targetController.GetPrimaryNode().worldPosition);
+        Node node = _pathfinder.GetNodeFromGridPos(
+            (int)_targetController._pathfinder.currentStandingOnNode.gridPosPoint.x,
+            (int)_targetController._pathfinder.currentStandingOnNode.gridPosPoint.y);
 
         if (node != null)
             _pathfinder.FindPath(node);
@@ -43,7 +45,7 @@ public class UnitChase : UnitMoveTo
         }
 
         if (Grid.instance.GetDistanceBetweenNodes(
-            _controller._pathfinder.currentStandingOnNode, _targetController.GetPrimaryNode()) <= 20)
+            _controller._pathfinder.currentStandingOnNode, _targetController._pathfinder.currentStandingOnNode) <= 10)
         {
             _controller.TransitionToState(_controller.attackState);
         }

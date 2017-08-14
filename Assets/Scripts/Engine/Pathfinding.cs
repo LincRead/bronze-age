@@ -158,6 +158,11 @@ public class Pathfinding : MonoBehaviour {
 
     bool AvoidUnit(Node node)
     {
+        if(node != destinationNode 
+            && node.unitControllerStandingHere != null 
+            && !node.unitControllerStandingHere.isMoving)
+            return true;
+
         for(int i = 0; i < unitsToAvoid.Count; i++)
         {
             if (node.unitControllerStandingHere == unitsToAvoid[i])

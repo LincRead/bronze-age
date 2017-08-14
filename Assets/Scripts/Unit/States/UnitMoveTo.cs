@@ -68,7 +68,7 @@ public class UnitMoveTo : UnitState
                 _controller.waitingForNextNodeToGetAvailable = true;
             }
 
-            // Find a path around the blocking unit
+            // Find a path around the blocking unit who is waiting for you
             else if (unitBlocking.waitingForNextNodeToGetAvailable)
             {
                 List<UnitStateController> unitsToAvoid = new List<UnitStateController>();
@@ -76,6 +76,7 @@ public class UnitMoveTo : UnitState
                 FindPathToTargetAvoidingUnits(unitsToAvoid);
             }
 
+            // Find path around all stationary units
             else if(!unitBlocking.isMoving)
             {
                 List<UnitStateController> friendlyStationaryUnits = new List<UnitStateController>(); ;

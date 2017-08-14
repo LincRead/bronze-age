@@ -29,9 +29,6 @@ public class UnitStateController : BaseController
     public UnitGather gatherState;
 
     [HideInInspector]
-    public UnitChase chaseState;
-
-    [HideInInspector]
     public UnitAttack attackState;
 
     [HideInInspector]
@@ -71,7 +68,6 @@ public class UnitStateController : BaseController
         moveToControllerState = ScriptableObject.CreateInstance<UnitMoveToController>();
         buildState = ScriptableObject.CreateInstance<UnitBuild>();
         gatherState = ScriptableObject.CreateInstance<UnitGather>();
-        chaseState = ScriptableObject.CreateInstance<UnitChase>();
         attackState = ScriptableObject.CreateInstance<UnitAttack>();
         dieState = ScriptableObject.CreateInstance<UnitDie>();
 
@@ -116,10 +112,7 @@ public class UnitStateController : BaseController
 
         this.targetController = targetController;
 
-        if (targetController.controllerType == CONTROLLER_TYPE.UNIT)
-            TransitionToState(chaseState);
-        else
-            TransitionToState(moveToControllerState);
+        TransitionToState(moveToControllerState);
     }
 
     public void MoveTo(Vector2 targetPosition)
@@ -202,5 +195,10 @@ public class UnitStateController : BaseController
             Gizmos.color = new Color(0.5f, 0.2f, 1.0f, 0.8f);
             Gizmos.DrawWireCube(_transform.position, new Vector3(0.32f, 0.32f, 0.0f));
         }
+    }
+
+    public override Node GetPrimaryNode()
+    {
+        return _pathfinder.currentStandingOnNode;
     }
 }

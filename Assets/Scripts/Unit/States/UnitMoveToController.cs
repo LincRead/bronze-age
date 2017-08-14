@@ -25,7 +25,8 @@ public class UnitMoveToController : UnitMoveTo
             return;
 
         // Make sure unit can use pathfinding to controller
-        Grid.instance.SetWalkableValueForTiles(_targetController, true);
+        if(_targetController.controllerType != BaseController.CONTROLLER_TYPE.UNIT)
+            Grid.instance.SetWalkableValueForTiles(_targetController, true);
 
         // Find path
         Node node = _pathfinder.GetNodeFromPoint(_targetController.GetPrimaryNode().worldPosition);
@@ -34,7 +35,8 @@ public class UnitMoveToController : UnitMoveTo
             _pathfinder.FindPath(node);
 
         // Reset
-        Grid.instance.SetWalkableValueForTiles(_targetController.GetPosition(), _targetController.size, false);
+        if (_targetController.controllerType != BaseController.CONTROLLER_TYPE.UNIT)
+            Grid.instance.SetWalkableValueForTiles(_targetController.GetPosition(), _targetController.size, false);
     }
 
     public override void CheckTransitions()
@@ -61,6 +63,11 @@ public class UnitMoveToController : UnitMoveTo
             else if (_controller._unitStats.gatherer && _targetController.controllerType == BaseController.CONTROLLER_TYPE.STATIC_RESOURCE)
             {
                 _controller.TransitionToState(_controller.gatherState);
+            }
+
+            else if (_targetController.controllerType == BaseController.CONTROLLER_TYPE.UNIT)
+            {
+                _controller.TransitionToState(_controller.attackState);
             }
 
             else

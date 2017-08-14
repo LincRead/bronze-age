@@ -19,10 +19,7 @@ public class UnitMoveToPosition : UnitMoveTo
     {
         targetNode = _pathfinder.GetNodeFromPoint(_controller.targetPosition);
 
-        if (targetNode == null)
-            return;
-
-        if (!targetNode.walkable)
+        if (targetNode == null || !targetNode.walkable)
             return;
 
         _pathfinder.FindPath(targetNode);
