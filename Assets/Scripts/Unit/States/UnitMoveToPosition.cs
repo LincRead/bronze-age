@@ -31,7 +31,7 @@ public class UnitMoveToPosition : UnitMoveTo
     public override void CheckTransitions()
     {
         // No path to follow
-        if (_pathfinder.path == null)
+        if (_pathfinder.path == null || targetNode == null)
             _controller.TransitionToState(_controller.idleState);
 
         // Reached target node

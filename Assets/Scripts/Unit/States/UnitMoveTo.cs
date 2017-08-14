@@ -54,44 +54,51 @@ public class UnitMoveTo : UnitState
             {
                 nextTargetNode = _pathfinder.path[0];
             }
+        }
 
-            // Another unit is blocking the path
-            if (nextTargetNode.unitControllerStandingHere
-                && nextTargetNode.unitControllerStandingHere != this)
+        // Another unit is blocking the path
+        if (nextTargetNode.unitControllerStandingHere
+            && nextTargetNode.unitControllerStandingHere != _controller)
+        {
+            UnitStateController unitBlocking = nextTargetNode.unitControllerStandingHere;
+
+            // Wait for blocking unit to find a path around me
+            if (!unitBlocking.waitingForNextNodeToGetAvailable && unitBlocking.isMoving)
             {
-                UnitStateController unitBlocking = nextTargetNode.unitControllerStandingHere;
-
-                // Wait for blocking unit to find a path around me
-                if (!unitBlocking.waitingForNextNodeToGetAvailable && unitBlocking.isMoving)
-                {
-                    _controller.waitingForNextNodeToGetAvailable = true;
-                }
-
-                // Find a path around the blocking unit
-                else
-                {
-                    List<UnitStateController> friendlyStationaryUnits = new List<UnitStateController>(); ;
-                    List<UnitStateController> friendlyUnits = PlayerManager.instance.GetAllFriendlyUnits();
-
-                    for (int i = 0; i < friendlyUnits.Count; i++)
-                    {
-                        if (!friendlyUnits[i].isMoving)
-                            friendlyStationaryUnits.Add(friendlyUnits[i]);
-                    }
-
-                    FindPathToTargetAvoidingUnits(friendlyStationaryUnits);
-                }
-
-                // Wait one tick before continuing
-                velocity = Vector2.zero;
-                return;
+                _controller.waitingForNextNodeToGetAvailable = true;
             }
 
-            // Special case for last node
-            else if (nextTargetNode.walkable)
+            // Find a path around the blocking unit
+            else if (unitBlocking.waitingForNextNodeToGetAvailable)
             {
-                _pathfinder.SetCurrentPathfindingNode(nextTargetNode);
+                List<UnitStateController> unitsToAvoid = new List<UnitStateController>();
+                unitsToAvoid.Add(unitBlocking);
+                FindPathToTargetAvoidingUnits(unitsToAvoid);
             }
+
+            else if(!unitBlocking.isMoving)
+            {
+                List<UnitStateController> friendlyStationaryUnits = new List<UnitStateController>(); ;
+                List<UnitStateController> friendlyUnits = PlayerManager.instance.GetAllFriendlyUnits();
+
+                for (int i = 0; i < friendlyUnits.Count; i++)
+                {
+                    if (!friendlyUnits[i].isMoving)
+                        friendlyStationaryUnits.Add(friendlyUnits[i]);
+                }
+
+                FindPathToTargetAvoidingUnits(friendlyStationaryUnits);
+            }
+
+            // Wait one tick before continuing
+            velocity = Vector2.zero;
+            return;
+        }
+
+        // Special case for last node
+        else if (nextTargetNode.walkable)
+        {
+            _pathfinder.SetCurrentPathfindingNode(nextTargetNode);
         }
 
         _controller.waitingForNextNodeToGetAvailable = false;

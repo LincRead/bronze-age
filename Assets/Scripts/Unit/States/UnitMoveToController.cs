@@ -21,6 +21,9 @@ public class UnitMoveToController : UnitMoveTo
 
     protected override void FindPathToTarget()
     {
+        if (_targetController == null)
+            return;
+
         // Make sure unit can use pathfinding to controller
         Grid.instance.SetWalkableValueForTiles(_targetController, true);
 
