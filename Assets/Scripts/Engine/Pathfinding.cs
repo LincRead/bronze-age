@@ -17,7 +17,7 @@ public class Pathfinding : MonoBehaviour {
     protected BaseController parentController;
 
     [HideInInspector]
-    public bool avoidUnits = false;
+    public List<UnitStateController> unitsToAvoid = new List<UnitStateController>();
 
     [HideInInspector]
     public bool enteredNewNode = false;
@@ -134,9 +134,9 @@ public class Pathfinding : MonoBehaviour {
             List<Node> nodesToCheck = grid.GetNeighbourNodes(currentNode);
             foreach (Node neighbour in nodesToCheck)
             {
-                // Todo avoid friendly units who are in attack mode
-                if (!neighbour.walkable 
-                    || (avoidUnits && neighbour.unitControllerStandingHere != null && !neighbour.unitControllerStandingHere.IsMoving()) 
+                // Todo avoid friendly units who are in action mode
+                if (!neighbour.walkable
+                    || AvoidUnit(neighbour)
                     || closedSet.Contains(neighbour))
                     continue;
 
@@ -152,6 +152,17 @@ public class Pathfinding : MonoBehaviour {
                 }
             }
         }
+    }
+
+    bool AvoidUnit(Node node)
+    {
+        for(int i = 0; i < unitsToAvoid.Count; i++)
+        {
+            if (node.unitControllerStandingHere == unitsToAvoid[i])
+                return true;
+        }
+
+        return false;
     }
 
     List<Node> RetracePath(Node startNode, Node endNode)

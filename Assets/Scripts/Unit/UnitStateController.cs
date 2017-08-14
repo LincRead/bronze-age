@@ -13,17 +13,28 @@ public class UnitStateController : BaseController
     [Header("Stats")]
     public UnitStats _unitStats;
 
-    [Header("States")]
+    [HideInInspector]
     public UnitIdle idleState;
+
+    [HideInInspector]
     public UnitMoveToPosition moveToPositionState;
+
+    [HideInInspector]
     public UnitMoveToController moveToControllerState;
+
+    [HideInInspector]
     public UnitBuild buildState;
+
+    [HideInInspector]
     public UnitGather gatherState;
 
     protected UnitState currentState;
 
     [HideInInspector]
     public bool waitingForNextNodeToGetAvailable = false;
+
+    [HideInInspector]
+    public bool isMoving = false;
 
     [HideInInspector]
     public BaseController targetController;
@@ -44,6 +55,13 @@ public class UnitStateController : BaseController
         hitpointsLeft = _unitStats.maxHitpoints;
 
         SetupPathfinding();
+
+        // Init states
+        idleState = ScriptableObject.CreateInstance<UnitIdle>();
+        moveToPositionState = ScriptableObject.CreateInstance<UnitMoveToPosition>();
+        moveToControllerState = ScriptableObject.CreateInstance<UnitMoveToController>();
+        buildState = ScriptableObject.CreateInstance<UnitBuild>();
+        gatherState = ScriptableObject.CreateInstance<UnitGather>();
 
         // Initial state
         currentState = idleState;

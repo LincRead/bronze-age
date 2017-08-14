@@ -1,38 +1,23 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 [CreateAssetMenu(menuName = "States/Unit states/move to controller")]
-public class UnitMoveToController : UnitState
+public class UnitMoveToController : UnitMoveTo
 {
-    Transform _transform;
-    Pathfinding _pathfinder;
-    BaseController _targetObject;
-
-    Vector2 velocity;
-    Vector3 lastPosition;
-
-    Node nextTargetNode;
+    protected BaseController _targetObject;
 
     public override void OnEnter(UnitStateController controller)
     {
         base.OnEnter(controller);
 
-        // Set up references
-        _transform = _controller._transform;
-        _pathfinder = _controller._pathfinder;
         _targetObject = _controller.targetController;
 
-        velocity = Vector2.zero;
-
         FindPathToTarget();
-
-        // Only play if path found
-        if (_pathfinder.path.Count > 0
-            && !controller._animator.GetCurrentAnimatorStateInfo(0).IsName("run"))
-            _controller._animator.Play("run");
+        PlayRunAnimation();
     }
 
-    void FindPathToTarget()
+    protected override void FindPathToTarget()
     {
        _pathfinder.DetectCurrentPathfindingNode(_transform.position);
 
@@ -49,68 +34,6 @@ public class UnitMoveToController : UnitState
         Grid.instance.SetWalkableValueForTiles(_targetObject.GetPosition(), _targetObject.size, false);
     }
 
-    public override void DoActions()
-    {
-        _pathfinder.DetectCurrentPathfindingNode(_transform.position);
-
-        if (_pathfinder.currentStandingOnNode.walkable)
-            lastPosition = _transform.position;
-
-        MoveToTarget();
-
-        _controller.ExecuteMovement(velocity);
-        _controller.FaceMoveDirection(velocity);
-    }
-
-    void MoveToTarget()
-    {
-        // Fetch next target node
-        if (_pathfinder.path.Count > 0)
-            nextTargetNode = _pathfinder.path[0];
-        else
-            return;  // Don't move if path not found
-
-        // Reached next target node
-        if (_pathfinder.currentStandingOnNode == nextTargetNode)
-        {
-            _pathfinder.path.Remove(nextTargetNode);
-            
-            // Fetch next target node
-            if (_pathfinder.path.Count > 0)
-            {
-                nextTargetNode = _pathfinder.path[0];
-            }
-        }
-
-        // Another unit is blocking the path
-        if (nextTargetNode.unitControllerStandingHere && nextTargetNode.unitControllerStandingHere != this)
-        {
-            // Wait for blocking unit to find a path around me
-            if (!nextTargetNode.unitControllerStandingHere.waitingForNextNodeToGetAvailable)
-            {
-                _controller.waitingForNextNodeToGetAvailable = true;
-            }
-
-            // Find a path around the blocking unit
-            else
-            {
-                FindPathToTarget();
-            }
-
-            // Wait one tick before continuing
-            velocity = Vector2.zero;
-            return;
-        }
-
-        _controller.waitingForNextNodeToGetAvailable = false;
-
-        float dirx = nextTargetNode.worldPosition.x - _transform.position.x;
-        float diry = nextTargetNode.worldPosition.y - _transform.position.y;
-
-        velocity = new Vector2(dirx, diry);
-        velocity.Normalize();
-    }
-
     public override void CheckTransitions()
     {
         if (_pathfinder.path == null || _pathfinder.path.Count == 0)
@@ -118,16 +41,8 @@ public class UnitMoveToController : UnitState
             _controller.TransitionToState(_controller.idleState);
         }
 
-        if (_controller.targetController.IntersectsPoint(_pathfinder.currentStandingOnNode.gridPosPoint))
-        {
-            // Don't wanna stay on an unwalkable node, so move back again
-            if (!_pathfinder.currentStandingOnNode.walkable)
-            {
-                _transform.position = lastPosition;
-                _pathfinder.DetectCurrentPathfindingNode(_transform.position);
-            }
-                
-            // TODO resources and building
+        if (_controller.targetController.IntersectsPoint(nextTargetNode.gridPosPoint))
+        { 
             if (_controller._unitStats.builder && _targetObject.controllerType == BaseController.CONTROLLER_TYPE.BUILDING)
             {
                 _controller.TransitionToState(_controller.buildState);
@@ -138,15 +53,12 @@ public class UnitMoveToController : UnitState
                 _controller.TransitionToState(_controller.gatherState);
             }
 
+            // Todo attack mode
+
             else
             {
                 _controller.TransitionToState(_controller.idleState);
             }
         }
-    }
-
-    public override void OnExit()
-    {
-        _pathfinder.path.Clear();
     }
 }

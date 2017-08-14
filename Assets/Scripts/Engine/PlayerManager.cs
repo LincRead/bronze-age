@@ -204,8 +204,8 @@ public class PlayerManager : MonoBehaviour {
 
         for (int i = 0; i < selectedUnits.Count; i++)
         {
-            averagePositionX += friendlyUnits[i]._transform.position.x;
-            averagePositionY += friendlyUnits[i]._transform.position.y;
+            averagePositionX += selectedUnits[i]._transform.position.x;
+            averagePositionY += selectedUnits[i]._transform.position.y;
         }
 
         averagePositionX /= selectedUnits.Count;
@@ -216,7 +216,16 @@ public class PlayerManager : MonoBehaviour {
             // Move to controller on location
             if(selectableController != null)
             {
-                selectedUnits[i].MoveTo(selectableController);
+                if(selectableController.controllerType == BaseController.CONTROLLER_TYPE.UNIT)
+                {
+
+                }
+
+                else
+                {
+                    selectedUnits[i].MoveTo(selectableController);
+                }
+                
             }
 
             // Move to empty location

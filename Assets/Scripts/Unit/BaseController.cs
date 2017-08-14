@@ -129,11 +129,6 @@ public class BaseController : MonoBehaviour {
         return false;
     }
 
-    public virtual bool IsMoving()
-    {
-        return false;
-    }
-
     public virtual int[] GetUniqueStats()
     {
         return new int[0];
