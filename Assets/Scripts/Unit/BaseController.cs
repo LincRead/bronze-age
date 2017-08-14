@@ -119,8 +119,8 @@ public class BaseController : MonoBehaviour {
     {
         Grid.FPoint myNodePoint = GetPrimaryNode().gridPosPoint;
 
-        if (point.x >= myNodePoint.x && point.x < myNodePoint.x + (size * 2)
-            && point.y >= myNodePoint.y && point.y < myNodePoint.y + (size * 2))
+        if (point.x > myNodePoint.x && point.x < myNodePoint.x + (size * 2)
+            && point.y > myNodePoint.y && point.y < myNodePoint.y + (size * 2))
             return true;
 
         return false;
