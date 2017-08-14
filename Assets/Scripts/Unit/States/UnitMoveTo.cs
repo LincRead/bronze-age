@@ -65,16 +65,12 @@ public class UnitMoveTo : UnitState
             // Wait for blocking unit to find a path around me
             if (!unitBlocking.waitingForNextNodeToGetAvailable && unitBlocking.isMoving)
             {
-                Debug.Log("LETS WAIT");
-
                 _controller.waitingForNextNodeToGetAvailable = true;
             }
 
             // Find a path around the blocking unit who is waiting for you
             else if (unitBlocking.waitingForNextNodeToGetAvailable)
             {
-                Debug.Log("OTHER UNIT WAITING");
-
                 List<UnitStateController> unitsToAvoid = new List<UnitStateController>();
                 unitsToAvoid.Add(unitBlocking);
                 FindPathToTargetAvoidingUnits(unitsToAvoid);

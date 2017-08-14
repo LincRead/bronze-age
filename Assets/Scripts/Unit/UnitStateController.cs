@@ -188,6 +188,12 @@ public class UnitStateController : BaseController
         return false;
     }
 
+    public override bool IntersectsPoint(Grid.FPoint point)
+    {
+        return _pathfinder.currentStandingOnNode.gridPosPoint.x == point.x 
+            && _pathfinder.currentStandingOnNode.gridPosPoint.y == point.y;
+    }
+
     void OnDrawGizmos()
     {
         if (_transform != null)
