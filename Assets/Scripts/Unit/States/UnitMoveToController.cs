@@ -5,13 +5,15 @@ using System.Collections.Generic;
 [CreateAssetMenu(menuName = "States/Unit states/move to controller")]
 public class UnitMoveToController : UnitMoveTo
 {
-    protected BaseController _targetObject;
+    BaseController _targetController;
+    Vector2 _targetControllerPosition;
 
     public override void OnEnter(UnitStateController controller)
     {
         base.OnEnter(controller);
 
-        _targetObject = _controller.targetController;
+        _targetController = _controller.targetController;
+        _targetControllerPosition = _targetController.GetPosition();
 
         FindPathToTarget();
         PlayRunAnimation();
@@ -19,19 +21,17 @@ public class UnitMoveToController : UnitMoveTo
 
     protected override void FindPathToTarget()
     {
-       _pathfinder.DetectCurrentPathfindingNode(_transform.position);
-
-        // Make sure unit can use pathfinding to get to object
-        Grid.instance.SetWalkableValueForTiles(_targetObject, true);
+        // Make sure unit can use pathfinding to controller
+        Grid.instance.SetWalkableValueForTiles(_targetController, true);
 
         // Find path
-        Node node = _pathfinder.GetNodeFromPoint(_targetObject.GetPrimaryNode().worldPosition);
+        Node node = _pathfinder.GetNodeFromPoint(_targetController.GetPrimaryNode().worldPosition);
 
         if (node != null)
             _pathfinder.FindPath(node);
 
-        // Reset for pathfinding
-        Grid.instance.SetWalkableValueForTiles(_targetObject.GetPosition(), _targetObject.size, false);
+        // Reset
+        Grid.instance.SetWalkableValueForTiles(_targetController.GetPosition(), _targetController.size, false);
     }
 
     public override void CheckTransitions()
@@ -39,21 +39,26 @@ public class UnitMoveToController : UnitMoveTo
         if (_pathfinder.path == null || _pathfinder.path.Count == 0)
         {
             _controller.TransitionToState(_controller.idleState);
+            return;
+        }
+
+        if(_targetController == null)
+        {
+            _controller.MoveTo(_targetControllerPosition);
+            return;
         }
 
         if (_controller.targetController.IntersectsPoint(nextTargetNode.gridPosPoint))
         { 
-            if (_controller._unitStats.builder && _targetObject.controllerType == BaseController.CONTROLLER_TYPE.BUILDING)
+            if (_controller._unitStats.builder && _targetController.controllerType == BaseController.CONTROLLER_TYPE.BUILDING)
             {
                 _controller.TransitionToState(_controller.buildState);
             }
 
-            else if (_controller._unitStats.gatherer && _targetObject.controllerType == BaseController.CONTROLLER_TYPE.STATIC_RESOURCE)
+            else if (_controller._unitStats.gatherer && _targetController.controllerType == BaseController.CONTROLLER_TYPE.STATIC_RESOURCE)
             {
                 _controller.TransitionToState(_controller.gatherState);
             }
-
-            // Todo attack mode
 
             else
             {

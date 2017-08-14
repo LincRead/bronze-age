@@ -328,11 +328,11 @@ public class Grid : MonoBehaviour {
 
     public BaseController GetUnitFromWorldPoint(Vector2 worldPoint)
     {
-        Point coords = GetTileCoordinates(GetPosIsometricTo2D(worldPoint));
+        Point coords = GetNodeCoordinates(GetPosIsometricTo2D(worldPoint));
 
-        if (coords.x > -1 && coords.y > -1 && coords.x < numTilesX && coords.y < numTilesY)
+        if (coords.x > -1 && coords.y > -1 && coords.x < numNodesX && coords.y < numNodesY)
         {
-            return tiles[coords.x, coords.y].GetUnitStandingOnTile();
+            return nodes[coords.x, coords.y].unitControllerStandingHere;
         }
 
         return null;
@@ -548,6 +548,16 @@ public class Grid : MonoBehaviour {
             return true;
 
         return false;
+    }
+
+    public int GetDistanceBetweenNodes(Node nodeA, Node nodeB)
+    {
+        int distX = Mathf.Abs(nodeA.gridPosX - nodeB.gridPosX);
+        int distY = Mathf.Abs(nodeA.gridPosY - nodeB.gridPosY);
+
+        if (distX > distY)
+            return 14 * distY + 10 * (distX - distY);
+        return 14 * distX + 10 * (distY - distX);
     }
 
     public float GetGridWorldSizeX()

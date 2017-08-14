@@ -28,6 +28,15 @@ public class UnitStateController : BaseController
     [HideInInspector]
     public UnitGather gatherState;
 
+    [HideInInspector]
+    public UnitChase chaseState;
+
+    [HideInInspector]
+    public UnitAttack attackState;
+
+    [HideInInspector]
+    public UnitDie dieState;
+
     protected UnitState currentState;
 
     [HideInInspector]
@@ -62,6 +71,9 @@ public class UnitStateController : BaseController
         moveToControllerState = ScriptableObject.CreateInstance<UnitMoveToController>();
         buildState = ScriptableObject.CreateInstance<UnitBuild>();
         gatherState = ScriptableObject.CreateInstance<UnitGather>();
+        chaseState = ScriptableObject.CreateInstance<UnitChase>();
+        attackState = ScriptableObject.CreateInstance<UnitAttack>();
+        dieState = ScriptableObject.CreateInstance<UnitDie>();
 
         // Initial state
         currentState = idleState;
@@ -99,14 +111,23 @@ public class UnitStateController : BaseController
 
     public void MoveTo(BaseController targetController)
     {
+        if (this.targetController == targetController)
+            return;
+
         this.targetController = targetController;
 
-        TransitionToState(moveToControllerState);
+        if (targetController.controllerType == CONTROLLER_TYPE.UNIT)
+            TransitionToState(chaseState);
+        else
+            TransitionToState(moveToControllerState);
     }
 
     public void MoveTo(Vector2 targetPosition)
     {
         this.targetPosition = targetPosition;
+
+        // No longer targetting a Controller
+        targetController = null;
 
         TransitionToState(moveToPositionState);
     }

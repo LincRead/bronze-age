@@ -90,17 +90,6 @@ public class Resource : BaseController {
         UpdateStat();
     }
 
-    void OnMouseEnter()
-    {
-        PlayerManager.instance.mouseHoveringController = this;
-    }
-
-    void OnMouseExit()
-    {
-        if (PlayerManager.instance.mouseHoveringController == this)
-            PlayerManager.instance.mouseHoveringController = null;
-    }
-
     // Todo: don't just update stat unless actually showing stats for this resource
     protected void UpdateStat()
     {

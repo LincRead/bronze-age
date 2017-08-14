@@ -71,6 +71,17 @@ public class BaseController : MonoBehaviour {
             zIndex = _transform.position.y;
     }
 
+    void OnMouseEnter()
+    {
+        PlayerManager.instance.mouseHoveringController = this;
+    }
+
+    void OnMouseExit()
+    {
+        if (PlayerManager.instance.mouseHoveringController == this)
+            PlayerManager.instance.mouseHoveringController = null;
+    }
+
     public virtual void Select()
     {
         selected = true;

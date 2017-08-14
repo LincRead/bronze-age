@@ -31,14 +31,13 @@ public class UnitMoveToPosition : UnitMoveTo
     public override void CheckTransitions()
     {
         // No path to follow
-        if (_pathfinder.path == null || _pathfinder.path.Count == 0)
+        if (_pathfinder.path == null)
             _controller.TransitionToState(_controller.idleState);
 
         // Reached target node
-        else if (_pathfinder.currentStandingOnNode == targetNode)
+        else if (Vector2.Distance(_transform.position, targetNode.worldPosition) < 0.01f)
         {
             _controller.TransitionToState(_controller.idleState);
         }
     }
-
 }

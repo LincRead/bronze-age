@@ -7,5 +7,6 @@ public class UnitIdle : UnitState
     public override void OnEnter(UnitStateController controller)
     {
         controller._animator.Play("idle");
+        controller.targetController = null;
     }
 }

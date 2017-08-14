@@ -62,17 +62,19 @@ public class Pathfinding : MonoBehaviour {
 
             // Store the node this controller is currently standing on
             currentStandingOnNode = node;
-
-            enteredNewNode = true;
         }
-
-        else
-            enteredNewNode = false;
 
         if (currentStandingOnNode.unitControllerStandingHere == null)
             currentStandingOnNode.unitControllerStandingHere = (UnitStateController)parentController;
 
         return node;
+    }
+
+    public void SetCurrentPathfindingNode(Node node)
+    {
+        currentStandingOnNode.unitControllerStandingHere = null;
+        currentStandingOnNode = node;
+        currentStandingOnNode.unitControllerStandingHere = (UnitStateController)parentController;
     }
 
     public Node GetNodeFromPoint(Vector3 pos)

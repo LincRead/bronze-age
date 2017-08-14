@@ -216,16 +216,7 @@ public class PlayerManager : MonoBehaviour {
             // Move to controller on location
             if(selectableController != null)
             {
-                if(selectableController.controllerType == BaseController.CONTROLLER_TYPE.UNIT)
-                {
-
-                }
-
-                else if(selectableController != selectedUnits[i].targetController)
-                {
-                    selectedUnits[i].MoveTo(selectableController);
-                }
-                
+                selectedUnits[i].MoveTo(selectableController);
             }
 
             // Move to empty location
