@@ -221,7 +221,7 @@ public class PlayerManager : MonoBehaviour {
 
                 }
 
-                else
+                else if(selectableController != selectedUnits[i].targetController)
                 {
                     selectedUnits[i].MoveTo(selectableController);
                 }

@@ -12,7 +12,8 @@ public class UnitBuild : UnitState
 
         _building = _controller.targetController.GetComponent<Building>();
 
-        _controller._animator.Play("build");
+        if(!_building.constructed)
+            _controller._animator.Play("build");
     }
 
     public override void DoActions()
