@@ -41,7 +41,7 @@ public class UnitMoveToController : UnitMoveTo
 
     public override void CheckTransitions()
     {
-        if (_pathfinder.path == null || _pathfinder.path.Count == 0)
+        if (_pathfinder.path.Count == 0)
         {
             _controller.TransitionToState(_controller.idleState);
             return;

@@ -90,16 +90,15 @@ public class Pathfinding : MonoBehaviour {
     public void FindPath()
     {
         if (destinationNode == null)
-        {
-            path.Clear();
             return;
-        }
 
         FindPath(destinationNode.worldPosition);
     }
 
     public void FindPath(Node endNode)
     {
+        path.Clear();
+
         if (!currentStandingOnNode.walkable)
         {
             currentStandingOnNode.walkable = true;

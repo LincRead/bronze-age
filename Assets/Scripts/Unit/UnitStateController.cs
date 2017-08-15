@@ -39,7 +39,7 @@ public class UnitStateController : BaseController
     [HideInInspector]
     public bool waitingForNextNodeToGetAvailable = false;
 
-    [HideInInspector]
+    //[HideInInspector]
     public bool isMoving = false;
 
     [HideInInspector]
