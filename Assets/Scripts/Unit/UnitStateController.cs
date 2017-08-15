@@ -75,7 +75,7 @@ public class UnitStateController : BaseController
         currentState = idleState;
         currentState.OnEnter(this);
 
-        if(playerID == PlayerManager.myPlayerID)
+        //if(playerID == PlayerManager.myPlayerID)
                 PlayerManager.instance.AddFriendlyUnitReference(this, playerID);
 
         if(playerID > -1)
