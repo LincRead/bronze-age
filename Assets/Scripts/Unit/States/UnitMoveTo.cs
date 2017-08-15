@@ -79,16 +79,7 @@ public class UnitMoveTo : UnitState
             // Find path around all stationary units
             else if(!unitBlocking.isMoving)
             {
-                List<UnitStateController> friendlyStationaryUnits = new List<UnitStateController>(); ;
-                List<UnitStateController> friendlyUnits = PlayerManager.instance.GetAllFriendlyUnits();
-
-                for (int i = 0; i < friendlyUnits.Count; i++)
-                {
-                    if (!friendlyUnits[i].isMoving)
-                        friendlyStationaryUnits.Add(friendlyUnits[i]);
-                }
-
-                FindPathToTargetAvoidingUnits(friendlyStationaryUnits);
+                FindPathToTarget();
             }
 
             // Wait one tick before continuing

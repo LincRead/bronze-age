@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 8ed3eff11f0e5024d8fd1244fdad0412
-timeCreated: 1494978801
+timeCreated: 1502766893
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -63,12 +63,29 @@ TextureImporter:
     21300112: Worker_56
     21300114: Worker_57
     21300116: Worker_58
-  serializedVersion: 2
+    21300118: Worker_59
+    21300120: Worker_60
+    21300122: Worker_61
+    21300124: Worker_62
+    21300126: Worker_63
+    21300128: Worker_64
+    21300130: Worker_65
+    21300132: Worker_66
+    21300134: Worker_67
+    21300136: Worker_68
+    21300138: Worker_69
+    21300140: Worker_70
+    21300142: Worker_71
+    21300144: Worker_72
+    21300146: Worker_73
+    21300148: Worker_74
+    21300150: Worker_75
+  serializedVersion: 4
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
+    sRGBTexture: 1
     linearTexture: 0
-    correctGamma: 0
     fadeOut: 0
     borderMipMap: 0
     mipMapFadeDistanceStart: 1
@@ -80,33 +97,59 @@ TextureImporter:
     normalMapFilter: 0
   isReadable: 0
   grayScaleToAlpha: 0
-  generateCubemap: 0
+  generateCubemap: 6
   cubemapConvolution: 0
-  cubemapConvolutionSteps: 7
-  cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
-  textureFormat: -3
+  textureFormat: 1
   maxTextureSize: 2048
   textureSettings:
     filterMode: 0
-    aniso: 16
+    aniso: -1
     mipBias: -1
     wrapMode: 1
   nPOTScale: 0
   lightmap: 0
-  rGBM: 0
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 7
+  alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
+  alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
   textureType: 8
-  buildTargetSettings: []
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Windows Store Apps
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -115,8 +158,8 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 220
-        width: 24
+        y: 280
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -127,9 +170,9 @@ TextureImporter:
       name: Worker_1
       rect:
         serializedVersion: 2
-        x: 24
-        y: 220
-        width: 24
+        x: 26
+        y: 280
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -140,9 +183,9 @@ TextureImporter:
       name: Worker_2
       rect:
         serializedVersion: 2
-        x: 48
-        y: 220
-        width: 24
+        x: 52
+        y: 280
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -153,9 +196,9 @@ TextureImporter:
       name: Worker_3
       rect:
         serializedVersion: 2
-        x: 72
-        y: 220
-        width: 24
+        x: 78
+        y: 280
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -166,9 +209,9 @@ TextureImporter:
       name: Worker_4
       rect:
         serializedVersion: 2
-        x: 96
-        y: 220
-        width: 24
+        x: 104
+        y: 280
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -180,8 +223,8 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 200
-        width: 24
+        y: 260
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -192,9 +235,9 @@ TextureImporter:
       name: Worker_6
       rect:
         serializedVersion: 2
-        x: 24
-        y: 200
-        width: 24
+        x: 26
+        y: 260
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -205,9 +248,9 @@ TextureImporter:
       name: Worker_7
       rect:
         serializedVersion: 2
-        x: 48
-        y: 200
-        width: 24
+        x: 52
+        y: 260
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -218,9 +261,9 @@ TextureImporter:
       name: Worker_8
       rect:
         serializedVersion: 2
-        x: 72
-        y: 200
-        width: 24
+        x: 78
+        y: 260
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -231,9 +274,9 @@ TextureImporter:
       name: Worker_9
       rect:
         serializedVersion: 2
-        x: 96
-        y: 200
-        width: 24
+        x: 104
+        y: 260
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -245,8 +288,8 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 180
-        width: 24
+        y: 240
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -257,9 +300,9 @@ TextureImporter:
       name: Worker_11
       rect:
         serializedVersion: 2
-        x: 24
-        y: 180
-        width: 24
+        x: 26
+        y: 240
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -270,9 +313,9 @@ TextureImporter:
       name: Worker_12
       rect:
         serializedVersion: 2
-        x: 48
-        y: 180
-        width: 24
+        x: 52
+        y: 240
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -283,9 +326,9 @@ TextureImporter:
       name: Worker_13
       rect:
         serializedVersion: 2
-        x: 72
-        y: 180
-        width: 24
+        x: 78
+        y: 240
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -296,9 +339,9 @@ TextureImporter:
       name: Worker_14
       rect:
         serializedVersion: 2
-        x: 96
-        y: 180
-        width: 24
+        x: 104
+        y: 240
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -310,8 +353,8 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 160
-        width: 24
+        y: 220
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -322,9 +365,9 @@ TextureImporter:
       name: Worker_16
       rect:
         serializedVersion: 2
-        x: 24
-        y: 160
-        width: 24
+        x: 26
+        y: 220
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -335,9 +378,9 @@ TextureImporter:
       name: Worker_17
       rect:
         serializedVersion: 2
-        x: 48
-        y: 160
-        width: 24
+        x: 52
+        y: 220
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -348,9 +391,9 @@ TextureImporter:
       name: Worker_18
       rect:
         serializedVersion: 2
-        x: 72
-        y: 160
-        width: 24
+        x: 78
+        y: 220
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -361,9 +404,9 @@ TextureImporter:
       name: Worker_19
       rect:
         serializedVersion: 2
-        x: 96
-        y: 160
-        width: 24
+        x: 104
+        y: 220
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -375,8 +418,8 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 140
-        width: 24
+        y: 200
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -387,9 +430,9 @@ TextureImporter:
       name: Worker_21
       rect:
         serializedVersion: 2
-        x: 24
-        y: 140
-        width: 24
+        x: 26
+        y: 200
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -400,9 +443,9 @@ TextureImporter:
       name: Worker_22
       rect:
         serializedVersion: 2
-        x: 48
-        y: 140
-        width: 24
+        x: 52
+        y: 200
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -413,9 +456,9 @@ TextureImporter:
       name: Worker_23
       rect:
         serializedVersion: 2
-        x: 72
-        y: 140
-        width: 24
+        x: 78
+        y: 200
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -426,9 +469,9 @@ TextureImporter:
       name: Worker_24
       rect:
         serializedVersion: 2
-        x: 96
-        y: 140
-        width: 24
+        x: 104
+        y: 200
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -440,8 +483,8 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 120
-        width: 24
+        y: 180
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -452,9 +495,9 @@ TextureImporter:
       name: Worker_26
       rect:
         serializedVersion: 2
-        x: 24
-        y: 120
-        width: 24
+        x: 26
+        y: 180
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -465,9 +508,9 @@ TextureImporter:
       name: Worker_27
       rect:
         serializedVersion: 2
-        x: 48
-        y: 120
-        width: 24
+        x: 52
+        y: 180
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -478,9 +521,9 @@ TextureImporter:
       name: Worker_28
       rect:
         serializedVersion: 2
-        x: 72
-        y: 120
-        width: 24
+        x: 78
+        y: 180
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -491,9 +534,9 @@ TextureImporter:
       name: Worker_29
       rect:
         serializedVersion: 2
-        x: 96
-        y: 120
-        width: 24
+        x: 104
+        y: 180
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -505,8 +548,8 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 100
-        width: 24
+        y: 160
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -517,9 +560,9 @@ TextureImporter:
       name: Worker_31
       rect:
         serializedVersion: 2
-        x: 24
-        y: 100
-        width: 24
+        x: 26
+        y: 160
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -530,9 +573,9 @@ TextureImporter:
       name: Worker_32
       rect:
         serializedVersion: 2
-        x: 48
-        y: 100
-        width: 24
+        x: 52
+        y: 160
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -543,9 +586,9 @@ TextureImporter:
       name: Worker_33
       rect:
         serializedVersion: 2
-        x: 72
-        y: 100
-        width: 24
+        x: 78
+        y: 160
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -556,9 +599,9 @@ TextureImporter:
       name: Worker_34
       rect:
         serializedVersion: 2
-        x: 96
-        y: 100
-        width: 24
+        x: 104
+        y: 160
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -570,8 +613,8 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 80
-        width: 24
+        y: 140
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -582,9 +625,9 @@ TextureImporter:
       name: Worker_36
       rect:
         serializedVersion: 2
-        x: 24
-        y: 80
-        width: 24
+        x: 26
+        y: 140
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -595,9 +638,9 @@ TextureImporter:
       name: Worker_37
       rect:
         serializedVersion: 2
-        x: 48
-        y: 80
-        width: 24
+        x: 52
+        y: 140
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -608,9 +651,9 @@ TextureImporter:
       name: Worker_38
       rect:
         serializedVersion: 2
-        x: 72
-        y: 80
-        width: 24
+        x: 78
+        y: 140
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -621,9 +664,9 @@ TextureImporter:
       name: Worker_39
       rect:
         serializedVersion: 2
-        x: 96
-        y: 80
-        width: 24
+        x: 104
+        y: 140
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -635,8 +678,8 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 60
-        width: 24
+        y: 120
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -647,9 +690,9 @@ TextureImporter:
       name: Worker_41
       rect:
         serializedVersion: 2
-        x: 24
-        y: 60
-        width: 24
+        x: 26
+        y: 120
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -660,9 +703,9 @@ TextureImporter:
       name: Worker_42
       rect:
         serializedVersion: 2
-        x: 48
-        y: 60
-        width: 24
+        x: 52
+        y: 120
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -673,9 +716,9 @@ TextureImporter:
       name: Worker_43
       rect:
         serializedVersion: 2
-        x: 72
-        y: 60
-        width: 24
+        x: 78
+        y: 120
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -686,9 +729,9 @@ TextureImporter:
       name: Worker_44
       rect:
         serializedVersion: 2
-        x: 96
-        y: 60
-        width: 24
+        x: 104
+        y: 120
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -700,8 +743,8 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 40
-        width: 24
+        y: 100
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -712,9 +755,9 @@ TextureImporter:
       name: Worker_46
       rect:
         serializedVersion: 2
-        x: 24
-        y: 40
-        width: 24
+        x: 26
+        y: 100
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -725,9 +768,9 @@ TextureImporter:
       name: Worker_47
       rect:
         serializedVersion: 2
-        x: 48
-        y: 40
-        width: 24
+        x: 52
+        y: 100
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -738,9 +781,9 @@ TextureImporter:
       name: Worker_48
       rect:
         serializedVersion: 2
-        x: 72
-        y: 40
-        width: 24
+        x: 78
+        y: 100
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -751,9 +794,9 @@ TextureImporter:
       name: Worker_49
       rect:
         serializedVersion: 2
-        x: 96
-        y: 40
-        width: 24
+        x: 104
+        y: 100
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -765,8 +808,8 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 20
-        width: 24
+        y: 80
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -777,9 +820,9 @@ TextureImporter:
       name: Worker_51
       rect:
         serializedVersion: 2
-        x: 24
-        y: 20
-        width: 24
+        x: 26
+        y: 80
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -790,9 +833,9 @@ TextureImporter:
       name: Worker_52
       rect:
         serializedVersion: 2
-        x: 48
-        y: 20
-        width: 24
+        x: 52
+        y: 80
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -803,9 +846,9 @@ TextureImporter:
       name: Worker_53
       rect:
         serializedVersion: 2
-        x: 72
-        y: 20
-        width: 24
+        x: 78
+        y: 80
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -816,9 +859,9 @@ TextureImporter:
       name: Worker_54
       rect:
         serializedVersion: 2
-        x: 96
-        y: 20
-        width: 24
+        x: 104
+        y: 80
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -830,8 +873,8 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 24
+        y: 60
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -842,9 +885,9 @@ TextureImporter:
       name: Worker_56
       rect:
         serializedVersion: 2
-        x: 24
-        y: 0
-        width: 24
+        x: 26
+        y: 60
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -855,9 +898,9 @@ TextureImporter:
       name: Worker_57
       rect:
         serializedVersion: 2
-        x: 48
-        y: 0
-        width: 24
+        x: 52
+        y: 60
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -868,9 +911,204 @@ TextureImporter:
       name: Worker_58
       rect:
         serializedVersion: 2
-        x: 72
+        x: 78
+        y: 60
+        width: 26
+        height: 20
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Worker_59
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 60
+        width: 26
+        height: 20
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Worker_60
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 40
+        width: 26
+        height: 20
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Worker_61
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 40
+        width: 26
+        height: 20
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Worker_62
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 40
+        width: 26
+        height: 20
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Worker_63
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 40
+        width: 26
+        height: 20
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Worker_64
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 40
+        width: 26
+        height: 20
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Worker_65
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 20
+        width: 26
+        height: 20
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Worker_66
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 20
+        width: 26
+        height: 20
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Worker_67
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 20
+        width: 26
+        height: 20
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Worker_68
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 20
+        width: 26
+        height: 20
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Worker_69
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 20
+        width: 26
+        height: 20
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Worker_70
+      rect:
+        serializedVersion: 2
+        x: 0
         y: 0
-        width: 24
+        width: 26
+        height: 20
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Worker_71
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 0
+        width: 26
+        height: 20
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Worker_72
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 0
+        width: 26
+        height: 20
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Worker_73
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 0
+        width: 26
         height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}

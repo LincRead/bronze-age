@@ -43,6 +43,9 @@ public class BaseController : MonoBehaviour {
     public GameObject selectionIndicator;
     protected SpriteRenderer _selectedIndicatorRenderer;
 
+    [HideInInspector]
+    public bool dead = false;
+
     protected virtual void Awake()
     {
         _transform = GetComponent<Transform>();
@@ -92,6 +95,11 @@ public class BaseController : MonoBehaviour {
     {
         selected = false;
         _selectedIndicatorRenderer.enabled = false;
+    }
+
+    public virtual void Hit(int damageValue)
+    {
+
     }
 
     public virtual Vector2 GetPosition()

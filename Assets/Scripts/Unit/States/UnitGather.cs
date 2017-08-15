@@ -21,7 +21,7 @@ public class UnitGather : UnitState {
         switch (_resource.resourceType)
         {
             case Resource.HARVEST_TYPE.GATHER:
-                _controller._animator.Play("harvest");
+                _controller._animator.Play("gather");
                 break;
             case Resource.HARVEST_TYPE.CHOP:
                 _controller._animator.Play("chop");

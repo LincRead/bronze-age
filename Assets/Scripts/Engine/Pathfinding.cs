@@ -135,7 +135,6 @@ public class Pathfinding : MonoBehaviour {
             List<Node> nodesToCheck = grid.GetNeighbourNodes(currentNode);
             foreach (Node neighbour in nodesToCheck)
             {
-                // Todo avoid friendly units who are in action mode
                 if (!neighbour.walkable
                     || AvoidUnit(neighbour)
                     || closedSet.Contains(neighbour))

@@ -4,6 +4,7 @@ using System.Collections;
 public class UnitState : ScriptableObject
 {
     protected UnitStateController _controller;
+    protected float timeSinceStateChange = 0.0f;
 
     public virtual void OnEnter(UnitStateController controller)
     {
@@ -12,6 +13,7 @@ public class UnitState : ScriptableObject
 
     public virtual void UpdateState()
     {
+        timeSinceStateChange += Time.deltaTime;
         DoActions();
         CheckTransitions();
     }

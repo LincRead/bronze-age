@@ -75,7 +75,7 @@ public class UnitStateController : BaseController
         currentState = idleState;
         currentState.OnEnter(this);
 
-        //if(playerID == PlayerManager.myPlayerID)
+        if(playerID == PlayerManager.myPlayerID)
                 PlayerManager.instance.AddFriendlyUnitReference(this, playerID);
 
         if(playerID > -1)
@@ -165,14 +165,35 @@ public class UnitStateController : BaseController
         }
     }
 
+    public void Attack()
+    {
+        if (targetController == null || targetController.dead)
+            return;
+         
+        targetController.Hit(_unitStats.damage);
+    }
+
+    public override void Hit(int damageValue)
+    {
+        hitpointsLeft -= damageValue;
+
+        if(hitpointsLeft <= 0)
+        {
+            Kill();
+        }
+    }
+
     protected void Kill()
     {
+        hitpointsLeft = 0;
+
         if (PlayerManager.myPlayerID == playerID)
             PlayerManager.instance.RemoveFriendlyUnitReference(this, playerID);
 
-        PlayerDataManager.instance.AddPopulationForPlayer(-1, playerID);
+        if(playerID > 0)
+            PlayerDataManager.instance.AddPopulationForPlayer(-1, playerID);
 
-        Destroy(gameObject);
+        TransitionToState(dieState);
     }
 
     public bool IntersectsObject(BaseController other)
