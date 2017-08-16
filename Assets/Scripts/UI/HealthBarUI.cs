@@ -6,16 +6,11 @@ using UnityEngine.UI;
 public class HealthBarUI : MonoBehaviour
 {
     public GameObject bar;
-    Image _barImage;
     RectTransform _barTransform;
-
-    float width = 0.0f;
 
     void Start()
     {
-        _barImage = bar.GetComponent<Image>();
         _barTransform = bar.GetComponent<RectTransform>();
-        width = _barTransform.rect.width;
     }
 
     public void UpdateHitpointsAmount(int currHP, int maxHP)

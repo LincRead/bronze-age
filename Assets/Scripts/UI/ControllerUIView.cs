@@ -17,9 +17,9 @@ public class ControllerUIView : ScriptableObject {
         this.ui = ui;
         this._controller = controller;
 
-        if(controller)
+        if(_controller)
         {
-            ui.title.text = controller.title;
+            ui.title.text = _controller.title;
         }
 
         else

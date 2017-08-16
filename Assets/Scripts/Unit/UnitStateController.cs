@@ -58,9 +58,10 @@ public class UnitStateController : BaseController
     {
         base.Start();
 
+        title = _unitStats.title;
+
         _animator = GetComponent<Animator>();
         _pathfinder = GetComponent<Pathfinding>();
-
 
         hitpointsLeft = _unitStats.maxHitpoints;
         _healthBar = GetComponent<HealthBar>();

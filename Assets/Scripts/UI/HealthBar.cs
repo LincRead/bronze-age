@@ -48,5 +48,10 @@ public class HealthBar : MonoBehaviour {
     {
         float scale = (float)(currHP / (float)maxHP);
         _barTransform.localScale = new Vector3(scale * 1.0f, 1.0f, 1.0f);
+
+        _barTransform.localPosition = new Vector3(
+        - (((width / 2) * (1 - scale))),
+        0.0f,
+        0.0f);
     }
 }
