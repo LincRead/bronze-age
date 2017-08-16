@@ -550,10 +550,73 @@ public class Grid : MonoBehaviour {
         return false;
     }
 
+    public List<Tile> GetAllTilesBasedOnVisibilityFromNode(int visiblity, Node node)
+    {
+        Tile primaryTile = node.parentTile;
+        List<Tile> visibleTiles = new List<Tile>();
+
+        Heap<Tile> openSet = new Heap<Tile>(Grid.instance.MaxSize);
+        HashSet<Tile> closedSet = new HashSet<Tile>();
+        openSet.Add(primaryTile);
+
+        while (openSet.Count > 0)
+        {
+            Tile currentTile = openSet.RemoveFirst();
+            closedSet.Add(currentTile);
+
+            List<Tile> tilesToCheck = GetNeighbourTiles(currentTile);
+            foreach (Tile neighbour in tilesToCheck)
+            {
+                if (closedSet.Contains(neighbour))
+                    continue;
+
+                if (GetDistanceBetweenTiles(primaryTile, neighbour) <= (visiblity * 10))
+                {
+                    visibleTiles.Add(neighbour);
+
+                    if (!openSet.Contains(neighbour))
+                        openSet.Add(neighbour);
+                }
+            }
+        }
+
+
+        /*
+         * Breadth-First-Search(Graph, root):
+    
+    create empty set S
+    create empty queue Q      
+
+    add root to S
+    Q.enqueue(root)                      
+
+    while Q is not empty:
+        current = Q.dequeue()
+        if current is the goal:
+            return current
+        for each node n that is adjacent to current:
+            if n is not in S:
+                add n to S
+                Q.enqueue(n)
+         */
+
+        return visibleTiles;
+    }
+
     public int GetDistanceBetweenNodes(Node nodeA, Node nodeB)
     {
         int distX = Mathf.Abs(nodeA.gridPosX - nodeB.gridPosX);
         int distY = Mathf.Abs(nodeA.gridPosY - nodeB.gridPosY);
+
+        if (distX > distY)
+            return 14 * distY + 10 * (distX - distY);
+        return 14 * distX + 10 * (distY - distX);
+    }
+
+    public int GetDistanceBetweenTiles(Tile tileA, Tile tileB)
+    {
+        int distX = Mathf.Abs(tileA.gridPosX - tileB.gridPosX);
+        int distY = Mathf.Abs(tileA.gridPosY - tileB.gridPosY);
 
         if (distX > distY)
             return 14 * distY + 10 * (distX - distY);
@@ -576,7 +639,7 @@ public class Grid : MonoBehaviour {
      * Need to run game to see tiles in Editor Scene.
      * Grid gets created at Awake().
      */
-    void OnDrawGizmos()
+        void OnDrawGizmos()
     {
         // Show grid size
         Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, gridWorldSize.y, 1.0f));

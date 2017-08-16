@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Building : BaseController {
 
@@ -56,7 +57,10 @@ public class Building : BaseController {
 
     void SetupTeamColor()
     {
-        _spriteRenderer.material.SetColor("_TeamColor", PlayerDataManager.instance.playerData[playerID].teamColor);
+        if (playerID > -1)
+            _spriteRenderer.material.SetColor("_TeamColor", PlayerDataManager.instance.playerData[playerID].teamColor);
+        else
+            _spriteRenderer.material.SetColor("_TeamColor", PlayerDataManager.neutralPlayerColor);
     }
 
     public void Place()
@@ -77,6 +81,7 @@ public class Building : BaseController {
         _selectedIndicatorRenderer.enabled = false;
 
         Grid.instance.SetTilesOccupiedByController(this);
+        CheckTileAndSetVisibility();
         PlayerManager.instance.PlacedBuilding(this);
     }
 
@@ -153,9 +158,26 @@ public class Building : BaseController {
         _spriteRenderer.sprite = constructionSprites[2];
 
         AddPlayerStats();
+        SetVisibility();
 
         if (selected)
             ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.BUILDING_INFO, this);
+    }
+
+    public void SetVisibility()
+    {
+        Node currentNode = GetPrimaryNode();
+        List<Tile> visibleTiles = Grid.instance.GetAllTilesBasedOnVisibilityFromNode(10, currentNode);
+
+        if (!currentNode.parentTile.traversed)
+        {
+            for (int i = 0; i < visibleTiles.Count; i++)
+            {
+                visibleTiles[i].SetExplored();
+            }
+
+            currentNode.parentTile.traversed = true;
+        }
     }
 
     // Unique per building

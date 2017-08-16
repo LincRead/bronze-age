@@ -102,6 +102,14 @@ public class BaseController : MonoBehaviour {
 
     }
 
+    // If we are not an allied controller and current tile is unexplored,
+    // make sure we are not visible
+    protected void CheckTileAndSetVisibility()
+    {
+        if (playerID != PlayerManager.myPlayerID && !GetPrimaryTile().explored)
+            _spriteRenderer.enabled = false;
+    }
+
     public virtual Vector2 GetPosition()
     {
         return _transform.position + new Vector3(0.04f, 0.04f);

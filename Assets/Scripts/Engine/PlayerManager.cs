@@ -140,7 +140,8 @@ public class PlayerManager : MonoBehaviour {
 
     void UpdateMouseCursor()
     {
-        if (selectableController != null)
+        // Don't select invisible controllers
+        if (selectableController != null && selectableController._spriteRenderer.enabled)
         {
             if (selectableController.controllerType == BaseController.CONTROLLER_TYPE.STATIC_RESOURCE)
             {

@@ -90,6 +90,7 @@ public class UnitMoveTo : UnitState
         else if (nextTargetNode.walkable)
         {
             _pathfinder.SetCurrentPathfindingNode(nextTargetNode);
+            _controller.UpdateVisibility();
         }
 
         _controller.waitingForNextNodeToGetAvailable = false;

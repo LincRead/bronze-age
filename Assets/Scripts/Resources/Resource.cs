@@ -41,6 +41,8 @@ public class Resource : BaseController {
 
         Grid.instance.SetTilesOccupiedByController(this);
 
+        playerID = -1;
+        CheckTileAndSetVisibility();
         _spriteRenderer.sortingLayerName = "Object";
 
         amountLeft = amount;

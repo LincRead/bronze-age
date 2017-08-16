@@ -138,7 +138,7 @@ public class ControllerSelecting : MonoBehaviour {
 
         BaseController controller = nodeAtMousePos.controllerOccupying;
 
-        if (controller != null)
+        if (controller != null && controller._spriteRenderer.enabled)
         {
             controller.Select();
             selectedController = controller;
@@ -151,6 +151,7 @@ public class ControllerSelecting : MonoBehaviour {
     void SetUnitAsSelected(Rect collisionBox)
     {
         if(PlayerManager.instance.selectableController != null
+            && PlayerManager.instance.selectableController._spriteRenderer.enabled
             && PlayerManager.instance.selectableController.controllerType == BaseController.CONTROLLER_TYPE.UNIT)
         {
             UnitStateController unit = PlayerManager.instance.selectableController.GetComponent<UnitStateController>();

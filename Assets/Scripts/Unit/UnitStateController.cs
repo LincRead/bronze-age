@@ -70,6 +70,8 @@ public class UnitStateController : BaseController
         _healthBar.UpdateHitpointsAmount(hitpointsLeft, _unitStats.maxHitpoints);
 
         SetupPathfinding();
+        CheckTileAndSetVisibility();
+        UpdateVisibility();
 
         // Init states
         idleState = ScriptableObject.CreateInstance<UnitIdle>();
@@ -209,6 +211,25 @@ public class UnitStateController : BaseController
             PlayerDataManager.instance.AddPopulationForPlayer(-1, playerID);
 
         TransitionToState(dieState);
+    }
+
+    public void UpdateVisibility()
+    {
+        if (playerID != PlayerManager.myPlayerID)
+            return;
+
+        Node currentNode = GetPrimaryNode();
+        List<Tile> visibleTiles = Grid.instance.GetAllTilesBasedOnVisibilityFromNode(_unitStats.visionRange, currentNode);
+
+        if(!currentNode.parentTile.traversed)
+        {
+            for (int i = 0; i < visibleTiles.Count; i++)
+            {
+                visibleTiles[i].SetExplored();
+            }
+
+            currentNode.parentTile.traversed = true;
+        }
     }
 
     public bool IntersectsObject(BaseController other)

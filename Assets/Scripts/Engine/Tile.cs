@@ -27,6 +27,8 @@ public class Tile : IHeapItem<Tile>
 
     public GameObject tilePrefab;
 
+    GameObject _tile;
+
     [HideInInspector]
     public bool walkable = true;
 
@@ -41,6 +43,12 @@ public class Tile : IHeapItem<Tile>
 
     [HideInInspector]
     public bool fertilityLocked = false;
+
+    [HideInInspector]
+    public bool explored = false;
+
+    [HideInInspector]
+    public bool traversed = false;
 
     public Tile(bool _walkable, Vector2 _worldPosition, int _gridPosX, int _gridPosY, Grid grid)
     {
@@ -66,10 +74,15 @@ public class Tile : IHeapItem<Tile>
         else if (fertility > 0)
             tileIndex = 1;
 
-        GameObject tile = GameObject.Instantiate(Resources.Load("Tile"), worldPosition, Quaternion.identity) as GameObject;
+        _tile = GameObject.Instantiate(Resources.Load("Tile"), worldPosition, Quaternion.identity) as GameObject;
 
-        tile.GetComponent<SpriteRenderer>().sprite = Grid.instance.tileSprites[tileIndex];
-        tile.transform.SetParent(grid.transform);
+        if(explored || traversed)
+            _tile.GetComponent<SpriteRenderer>().color = Color.white;
+        else
+            _tile.GetComponent<SpriteRenderer>().color = Color.black;
+
+        _tile.GetComponent<SpriteRenderer>().sprite = Grid.instance.tileSprites[tileIndex];
+        _tile.transform.SetParent(grid.transform);
 
         // Spawn tree?
         if (walkable)
@@ -85,6 +98,7 @@ public class Tile : IHeapItem<Tile>
             }
         }
 
+        // Spawn Stone?
         if (walkable)
         {
             float spawnValue = 0.0f;
@@ -162,7 +176,16 @@ public class Tile : IHeapItem<Tile>
         return -compare;
     }
 
-    public UnitStateController GetUnitStandingOnTile()
+    public void SetUnitsStandingOnTileAsVisible()
+    {
+        for (int i = 0; i < nodes.Length; i++)
+        {
+            if (nodes[i].unitControllerStandingHere != null)
+                nodes[i].unitControllerStandingHere._spriteRenderer.enabled = true;
+        }
+    }
+
+    public UnitStateController GetUnitsStandingOnTile()
     {
         for (int i = 0; i < nodes.Length; i++)
         {
@@ -171,7 +194,21 @@ public class Tile : IHeapItem<Tile>
         }
 
         return null;
+    }
 
+    public void SetExplored()
+    {
+        explored = true;
+
+        // Set everything on tile to visible
+
+        if (_tile)
+            _tile.GetComponent<SpriteRenderer>().color = Color.white;
+
+        if (controllerOccupying)
+            controllerOccupying._spriteRenderer.enabled = true;
+
+        SetUnitsStandingOnTileAsVisible();
     }
 
     public bool IsEmpty()
@@ -184,5 +221,4 @@ public class Tile : IHeapItem<Tile>
 
         return walkable && !controllerStandingHere;
     }
-
 }
