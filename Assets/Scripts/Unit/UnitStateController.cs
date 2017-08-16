@@ -160,7 +160,7 @@ public class UnitStateController : BaseController
         }
     }
 
-    void FaceObject(BaseController obj)
+    public void FaceController(BaseController obj)
     {
         if (_transform.position.x > obj.GetPosition().x)
         {

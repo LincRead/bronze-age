@@ -13,6 +13,8 @@ public class UnitAttack : UnitState
 
         attackSpeed = _controller._unitStats.attackSpeed;
 
+        _controller.FaceController(_controller.targetController);
+
         PlayAttackAnimation();
     }
 
