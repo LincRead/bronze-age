@@ -7,6 +7,7 @@ public class UnitMoveToController : UnitMoveTo
 {
     BaseController _targetController;
     Vector2 _targetControllerPosition;
+    Node endNode;
 
     public override void OnEnter(UnitStateController controller)
     {
@@ -29,14 +30,32 @@ public class UnitMoveToController : UnitMoveTo
             Grid.instance.SetWalkableValueForTiles(_targetController, true);
 
         // Find path
-        Node node = _pathfinder.GetNodeFromPoint(_targetController.GetPrimaryNode().worldPosition);
+        endNode = _pathfinder.GetNodeFromPoint(_targetController.GetPrimaryNode().worldPosition);
 
-        if (node != null)
-            _pathfinder.FindPath(node);
+        if (endNode != null)
+            _pathfinder.FindPath(endNode);
 
         // Reset
         if (_targetController.controllerType != BaseController.CONTROLLER_TYPE.UNIT)
             Grid.instance.SetWalkableValueForTiles(_targetController.GetPosition(), _targetController.size, false);
+    }
+
+    public override void UpdateState()
+    {
+        base.UpdateState();
+
+        if (_targetController != null)
+        {
+            _targetControllerPosition = _targetController.GetPosition();
+        }
+    }
+
+    public override void DoActions()
+    {
+        //if (endNode != _controller.targetController.GetPrimaryNode())
+        //    FindPathToTarget();
+
+        base.DoActions();
     }
 
     public override void CheckTransitions()
@@ -74,6 +93,8 @@ public class UnitMoveToController : UnitMoveTo
             {
                 _controller.TransitionToState(_controller.idleState);
             }
+
+            _controller.FaceController(_targetController);
         }
     }
 }

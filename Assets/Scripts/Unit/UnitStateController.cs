@@ -232,6 +232,53 @@ public class UnitStateController : BaseController
         }
     }
 
+    IEnumerator DetectNearbyEnemies()
+    {
+        for (;;)
+        {
+            LookForNearbyEnemies();
+            yield return new WaitForSeconds(.1f);
+        }
+    }
+
+    // Todo include animals
+    void LookForNearbyEnemies()
+    {
+        Debug.Log(playerID);
+        List<Tile> visibleTiles = Grid.instance.GetAllTilesBasedOnVisibilityFromNode(_unitStats.visionRange, GetPrimaryNode());
+        List<UnitStateController> enemyUnitsDetected = new List<UnitStateController>();
+        for (int i = 0; i < visibleTiles.Count; i++)
+        {
+            List<UnitStateController> units = visibleTiles[i].GetUnitsStandingOnTile();
+            for(int j = 0; j < units.Count; j++)
+            {
+                if(units[j].playerID != playerID)
+                    enemyUnitsDetected.Add(units[j]);
+            }
+        }
+
+        if(enemyUnitsDetected.Count > 1)
+            ChaseClosestEnemy(enemyUnitsDetected);
+    }
+
+    void ChaseClosestEnemy(List<UnitStateController> enemyUnits)
+    {
+        UnitStateController closestEnemy = enemyUnits[0];
+        float closestDistance = Grid.instance.GetDistanceBetweenNodes(closestEnemy.GetPrimaryNode(), this.GetPrimaryNode());
+        for(int i = 1; i < enemyUnits.Count; i++)
+        {
+            float distance = Grid.instance.GetDistanceBetweenNodes(closestEnemy.GetPrimaryNode(), this.GetPrimaryNode());
+
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestEnemy = enemyUnits[i];
+            }
+        }
+
+        MoveTo(closestEnemy);
+    }
+
     public bool IntersectsObject(BaseController other)
     {
         if (Grid.instance.GetPositionIntersectsWithTilesFromBox(

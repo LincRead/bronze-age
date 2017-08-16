@@ -580,26 +580,6 @@ public class Grid : MonoBehaviour {
             }
         }
 
-
-        /*
-         * Breadth-First-Search(Graph, root):
-    
-    create empty set S
-    create empty queue Q      
-
-    add root to S
-    Q.enqueue(root)                      
-
-    while Q is not empty:
-        current = Q.dequeue()
-        if current is the goal:
-            return current
-        for each node n that is adjacent to current:
-            if n is not in S:
-                add n to S
-                Q.enqueue(n)
-         */
-
         return visibleTiles;
     }
 

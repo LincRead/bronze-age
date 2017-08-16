@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Tile : IHeapItem<Tile>
 {
@@ -185,15 +186,17 @@ public class Tile : IHeapItem<Tile>
         }
     }
 
-    public UnitStateController GetUnitsStandingOnTile()
+    public List<UnitStateController> GetUnitsStandingOnTile()
     {
+        List<UnitStateController> units = new List<UnitStateController>();
+
         for (int i = 0; i < nodes.Length; i++)
         {
             if (nodes[i].unitControllerStandingHere != null)
-                return nodes[i].unitControllerStandingHere;
+                units.Add(nodes[i].unitControllerStandingHere);
         }
 
-        return null;
+        return units;
     }
 
     public void SetExplored()

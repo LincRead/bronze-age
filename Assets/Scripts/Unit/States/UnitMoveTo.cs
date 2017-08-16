@@ -24,7 +24,6 @@ public class UnitMoveTo : UnitState
 
     protected void PlayRunAnimation()
     {
-
         // Only play if path found
         if (_pathfinder.path.Count > 0
             && !_controller._animator.GetCurrentAnimatorStateInfo(0).IsName("run"))
