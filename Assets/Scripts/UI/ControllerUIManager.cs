@@ -31,6 +31,7 @@ public class ControllerUIManager : MonoBehaviour {
     public Image hitpointsBackground;
     public Image hitpointsBar;
     public Text hitpointsText;
+    HealthBarUI _healthBar;
 
     [Header("Constrcution progress")]
     public GameObject constructionProgressPrefab;
@@ -91,6 +92,8 @@ public class ControllerUIManager : MonoBehaviour {
     }
 
     void Start () {
+
+        _healthBar = GetComponent<HealthBarUI>();
 
         foreach (Button btn in villagerButtons)
             btn.gameObject.SetActive(false);
@@ -177,6 +180,7 @@ public class ControllerUIManager : MonoBehaviour {
     public void UpdateHitpoints(int hp, int max)
     {
         hitpointsText.text = new StringBuilder(hp.ToString() + "/" + max.ToString()).ToString();
+        _healthBar.UpdateHitpointsAmount(hp, max);
     }
 
     public void ShowStats(Sprite[] icons, int[] stats)
