@@ -144,7 +144,9 @@ public class PlayerManager : MonoBehaviour {
         {
             if (selectableController.controllerType == BaseController.CONTROLLER_TYPE.STATIC_RESOURCE)
             {
-                if (_controllerSelecting.GetSelectedGatherers().Count > 0 && !CursorHoveringUI.value)
+                if (_controllerSelecting.GetSelectedGatherers().Count > 0 
+                    && _controllerSelecting.selectedEnemy == null // Not selected an enemy Villager
+                    && !CursorHoveringUI.value)
                 {
                     Resource resource = selectableController.GetComponent<Resource>();
 
@@ -176,9 +178,8 @@ public class PlayerManager : MonoBehaviour {
 
             else if(selectableController.controllerType == BaseController.CONTROLLER_TYPE.UNIT)
             {
-                UnitStateController unit = selectableController.GetComponent<UnitStateController>();
-
-                if (!friendlyUnits.Contains(unit))
+                if (_controllerSelecting.GetSelectedUnits().Count > 0 
+                    && selectableController.playerID != PlayerManager.myPlayerID)
                 {
                     EventManager.TriggerEvent("SetAttackCursor");
                 }
@@ -195,8 +196,9 @@ public class PlayerManager : MonoBehaviour {
     {
         List<UnitStateController> selectedUnits = _controllerSelecting.GetSelectedUnits();
 
-        // No units selected
-        if (selectedUnits.Count == 0)
+        // No units selected,
+        // or enemy unit selected
+        if (selectedUnits.Count == 0 || selectedUnits[0].playerID != PlayerManager.myPlayerID)
             return;
 
         float averagePositionX = 0;

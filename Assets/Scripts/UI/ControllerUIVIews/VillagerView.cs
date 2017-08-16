@@ -9,11 +9,15 @@ public class VillagerView : UnitView
     {
         base.OnEnter(ui, controller);
 
-        EventManager.TriggerEvent("ActivateVillagerView");
+        if(_controller.playerID == PlayerManager.myPlayerID)
+            EventManager.TriggerEvent("ActivateVillagerView");
     }
 
     public override void OnExit()
     {
-        EventManager.TriggerEvent("DisableVillagerView");
+        base.OnExit();
+
+        if (_controller.playerID == PlayerManager.myPlayerID)
+            EventManager.TriggerEvent("DisableVillagerView");
     }
 }

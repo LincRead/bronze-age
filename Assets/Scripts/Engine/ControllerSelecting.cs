@@ -15,6 +15,9 @@ public class ControllerSelecting : MonoBehaviour {
     private List<UnitStateController> selectedGatherers = new List<UnitStateController>();
     private List<UnitStateController> selectedUnits = new List<UnitStateController>();
 
+    [HideInInspector]
+    public UnitStateController selectedEnemy = null;
+
     BaseController selectedController = null;
 
     void Update()
@@ -147,22 +150,22 @@ public class ControllerSelecting : MonoBehaviour {
 
     void SetUnitAsSelected(Rect collisionBox)
     {
-        List<UnitStateController> friendlyUnits = PlayerManager.instance.GetAllFriendlyUnits();
-
-        for (int i = 0; i < friendlyUnits.Count; i++)
+        if(PlayerManager.instance.selectableController != null
+            && PlayerManager.instance.selectableController.controllerType == BaseController.CONTROLLER_TYPE.UNIT)
         {
-            if (friendlyUnits[i].IntersectsRectangle(collisionBox))
+            UnitStateController unit = PlayerManager.instance.selectableController.GetComponent<UnitStateController>();
+
+            unit.Select();
+
+            // Store unit selected
+            if (unit.playerID == PlayerManager.myPlayerID)
+                selectedUnits.Add(unit);
+            else
+                selectedEnemy = unit;
+
+            if(unit._unitStats.gatherer)
             {
-                friendlyUnits[i].Select();
-
-                selectedUnits.Add(friendlyUnits[i]);
-
-                if (friendlyUnits[i]._unitStats.gatherer)
-                {
-                    selectedGatherers.Add(friendlyUnits[i]);
-                }
-
-                return;
+                selectedGatherers.Add(unit);
             }
         }
     }
@@ -190,6 +193,12 @@ public class ControllerSelecting : MonoBehaviour {
     void ResetSelection()
     {
         DeselectAllFriendlyUnits();
+
+        if (selectedEnemy != null)
+        {
+            selectedEnemy.Deselect();
+            selectedEnemy = null;
+        }
 
         if (selectedController != null)
         {

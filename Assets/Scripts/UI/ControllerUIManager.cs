@@ -130,7 +130,7 @@ public class ControllerUIManager : MonoBehaviour {
                 break;
 
             case CONTROLLER_UI_VIEW.BUILDINGS:
-                controller = lastView.controller;
+                controller = lastView._controller;
                 currentView = buildingsView;
                 break;
 
@@ -155,7 +155,7 @@ public class ControllerUIManager : MonoBehaviour {
 
     public void GoBackToLastView()
     {
-        ChangeView(lastViewType, lastView.controller);
+        ChangeView(lastViewType, lastView._controller);
     }
 
     private void Update()

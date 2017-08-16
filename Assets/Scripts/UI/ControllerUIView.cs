@@ -8,14 +8,14 @@ public class ControllerUIView : ScriptableObject {
     protected ControllerUIManager ui;
 
     [HideInInspector]
-    public BaseController controller;
+    public BaseController _controller;
 
     string emptyString = "";
 
     public virtual void OnEnter(ControllerUIManager ui, BaseController controller)
     {
         this.ui = ui;
-        this.controller = controller;
+        this._controller = controller;
 
         if(controller)
         {
@@ -32,10 +32,10 @@ public class ControllerUIView : ScriptableObject {
 
     void SetIcon()
     {
-        if (controller != null && controller.iconSprite != null)
+        if (_controller != null && _controller.iconSprite != null)
         {
             ui.icon.enabled = true;
-            ui.icon.sprite = controller.iconSprite;
+            ui.icon.sprite = _controller.iconSprite;
         }
            
         else

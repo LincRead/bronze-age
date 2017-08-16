@@ -10,6 +10,9 @@ public class UnitStateController : BaseController
     [HideInInspector]
     public Pathfinding _pathfinder;
 
+    public GameObject healthBar;
+    HealthBar _healthBar;
+
     [Header("Stats")]
     public UnitStats _unitStats;
 
@@ -58,7 +61,11 @@ public class UnitStateController : BaseController
         _animator = GetComponent<Animator>();
         _pathfinder = GetComponent<Pathfinding>();
 
+
         hitpointsLeft = _unitStats.maxHitpoints;
+        _healthBar = GetComponent<HealthBar>();
+        _healthBar.SetAlignment(playerID == PlayerManager.myPlayerID);
+        _healthBar.UpdateHitpointsAmount(hitpointsLeft, _unitStats.maxHitpoints);
 
         SetupPathfinding();
 
@@ -181,11 +188,17 @@ public class UnitStateController : BaseController
         {
             Kill();
         }
+
+        else
+        {
+            _healthBar.UpdateHitpointsAmount(hitpointsLeft, _unitStats.maxHitpoints);
+        }
     }
 
     protected void Kill()
     {
         hitpointsLeft = 0;
+        _healthBar.Deactivate();
 
         if (PlayerManager.myPlayerID == playerID)
             PlayerManager.instance.RemoveFriendlyUnitReference(this, playerID);
@@ -213,6 +226,20 @@ public class UnitStateController : BaseController
     {
         return _pathfinder.currentStandingOnNode.gridPosPoint.x == point.x 
             && _pathfinder.currentStandingOnNode.gridPosPoint.y == point.y;
+    }
+
+    public override void Select()
+    {
+        base.Select();
+
+        _healthBar.Activate();
+    }
+
+    public override void Deselect()
+    {
+        base.Deselect();
+
+        _healthBar.Deactivate();
     }
 
     void OnDrawGizmos()
