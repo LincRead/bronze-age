@@ -63,7 +63,9 @@ public class Resource : BaseController {
             harvestProgress = 0.0f;
             amountLeft--;
             UpdateResourceAmountForPlayer(playerID);
-            UpdateStat();
+
+            if(selected)
+                UpdateStat();
 
             if (amountLeft <= 0)
             {
