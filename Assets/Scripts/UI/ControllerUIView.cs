@@ -36,6 +36,11 @@ public class ControllerUIView : ScriptableObject {
         {
             ui.icon.enabled = true;
             ui.icon.sprite = _controller.iconSprite;
+
+            if (_controller.playerID > -1)
+                ui.icon.material.SetColor("_TeamColor", PlayerDataManager.instance.playerData[_controller.playerID].teamColor);
+            else
+                ui.icon.material.SetColor("_TeamColor", PlayerDataManager.neutralPlayerColor);
         }
            
         else

@@ -11,6 +11,9 @@ public class PlayerDataManager : MonoBehaviour
 
     public PlayerStartResources playersStartingResources;
 
+    [HideInInspector]
+    public static Color neutralPlayerColor = new Color(0.4f, 0.2f, 0.1f);
+
     public static PlayerDataManager instance
     {
         get

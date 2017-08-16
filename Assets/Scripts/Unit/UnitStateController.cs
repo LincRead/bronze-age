@@ -97,7 +97,7 @@ public class UnitStateController : BaseController
         if(playerID > -1)
             _spriteRenderer.material.SetColor("_TeamColor", PlayerDataManager.instance.playerData[playerID].teamColor);
         else
-            _spriteRenderer.material.SetColor("_TeamColor", new Color(0.4f, 0.2f, 0.1f));
+            _spriteRenderer.material.SetColor("_TeamColor", PlayerDataManager.neutralPlayerColor);
     }
 
     void SetupPathfinding()
