@@ -65,7 +65,7 @@ public class UnitMoveToController : UnitMoveTo
                 _controller.TransitionToState(_controller.gatherState);
             }
 
-            else if (_targetController.controllerType == BaseController.CONTROLLER_TYPE.UNIT)
+            else if (_targetController.controllerType == BaseController.CONTROLLER_TYPE.UNIT && _targetController.playerID != _controller.playerID)
             {
                 _controller.TransitionToState(_controller.attackState);
             }
