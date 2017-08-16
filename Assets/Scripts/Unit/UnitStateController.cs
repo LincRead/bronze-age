@@ -65,6 +65,7 @@ public class UnitStateController : BaseController
 
         hitpointsLeft = _unitStats.maxHitpoints;
         _healthBar = GetComponent<HealthBar>();
+        _healthBar.Init();
         _healthBar.SetAlignment(playerID == PlayerManager.myPlayerID);
         _healthBar.UpdateHitpointsAmount(hitpointsLeft, _unitStats.maxHitpoints);
 
@@ -255,5 +256,12 @@ public class UnitStateController : BaseController
     public override Node GetPrimaryNode()
     {
         return _pathfinder.currentStandingOnNode;
+    }
+
+    public override int[] GetUniqueStats()
+    {
+        int[] stats = new int[1];
+        stats[0] = _unitStats.damage;
+        return stats;
     }
 }

@@ -13,7 +13,7 @@ public class HealthBar : MonoBehaviour {
 
     float width = 0.0f;
 
-    void Start ()
+    public void Init ()
     {
         _barSpriteRenderer = bar.GetComponent<SpriteRenderer>();
         _barTransform = bar.GetComponent<Transform>();
