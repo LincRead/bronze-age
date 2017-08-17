@@ -8,6 +8,7 @@ public class UnitMoveTo : UnitState
     protected Pathfinding _pathfinder;
     protected Vector2 velocity;
     protected Node nextTargetNode;
+    protected Node endNode;
 
     public override void OnEnter(UnitStateController controller)
     {
@@ -50,13 +51,7 @@ public class UnitMoveTo : UnitState
         // Reached next target node
         if (Vector2.Distance(_transform.position, nextTargetNode.worldPosition) < 0.01f)
         {
-            _pathfinder.path.Remove(nextTargetNode);
-
-            // Fetch next target node
-            if (_pathfinder.path.Count > 0)
-            {
-                nextTargetNode = _pathfinder.path[0];
-            }
+            ReachedNextTargetNode();
         }
 
         // Another unit is blocking the path
@@ -66,7 +61,9 @@ public class UnitMoveTo : UnitState
             UnitStateController unitBlocking = nextTargetNode.unitControllerStandingHere;
 
             // Wait for blocking unit to find a path around me
-            if (!unitBlocking.waitingForNextNodeToGetAvailable && unitBlocking.isMoving)
+            // Only do this for friendly units
+            if (!unitBlocking.waitingForNextNodeToGetAvailable 
+                && unitBlocking.isMoving)
             {
                 _controller.waitingForNextNodeToGetAvailable = true;
             }
@@ -103,6 +100,17 @@ public class UnitMoveTo : UnitState
 
         velocity = new Vector2(dirx, diry);
         velocity.Normalize();
+    }
+
+    protected virtual void ReachedNextTargetNode()
+    {
+        _pathfinder.path.Remove(nextTargetNode);
+
+        // Fetch next target node
+        if (_pathfinder.path.Count > 0)
+        {
+            nextTargetNode = _pathfinder.path[0];
+        }
     }
 
     protected void FindPathToTargetAvoidingUnits(List<UnitStateController> unitsToAvoid)

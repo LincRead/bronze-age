@@ -39,7 +39,10 @@ public class UnitAttack : UnitState
 
     void PlayAttackAnimation()
     {
-        _controller._animator.Play("attack", -1, 0.0f);
+        if (!_controller._animator.GetCurrentAnimatorStateInfo(0).IsName("attack"))
+            _controller._animator.Play("attack");
+        else
+            _controller._animator.Play("attack", -1, 0.0f);
     }
 
     public override void CheckTransitions()

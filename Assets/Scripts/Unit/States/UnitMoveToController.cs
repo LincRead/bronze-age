@@ -7,7 +7,6 @@ public class UnitMoveToController : UnitMoveTo
 {
     BaseController _targetController;
     Vector2 _targetControllerPosition;
-    Node endNode;
 
     public override void OnEnter(UnitStateController controller)
     {
@@ -40,11 +39,23 @@ public class UnitMoveToController : UnitMoveTo
             Grid.instance.SetWalkableValueForTiles(_targetController.GetPosition(), _targetController.size, false);
     }
 
-    public override void UpdateState()
+    protected override void ReachedNextTargetNode()
     {
+        _pathfinder.path.Remove(nextTargetNode);
+
+        // Did controller move?
         if (endNode != _controller.targetController.GetPrimaryNode())
             FindPathToTarget();
 
+        // Fetch next target node
+        if (_pathfinder.path.Count > 0)
+        {
+            nextTargetNode = _pathfinder.path[0];
+        }
+    }
+
+    public override void UpdateState()
+    {
         base.UpdateState();
 
         if (_targetController != null)
@@ -55,12 +66,6 @@ public class UnitMoveToController : UnitMoveTo
 
     public override void CheckTransitions()
     {
-        if (_pathfinder.path.Count == 0)
-        {
-            _controller.TransitionToState(_controller.idleState);
-            return;
-        }
-
         if(_targetController == null)
         {
             _controller.MoveTo(_targetControllerPosition);
@@ -69,20 +74,34 @@ public class UnitMoveToController : UnitMoveTo
 
         if (_controller.targetController.IntersectsPoint(nextTargetNode.gridPosPoint))
         { 
-            if (_controller._unitStats.builder && _targetController.controllerType == BaseController.CONTROLLER_TYPE.BUILDING)
+            if (_targetController.controllerType == BaseController.CONTROLLER_TYPE.UNIT)
             {
-                _controller.TransitionToState(_controller.buildState);
+                if (_targetController.playerID != _controller.playerID)
+                {
+                    _controller.TransitionToState(_controller.attackState);
+                }
+
+                else
+                {
+                    _controller.TransitionToState(_controller.idleState);
+                }
             }
 
-            else if (_targetController.controllerType == BaseController.CONTROLLER_TYPE.UNIT
-                && _targetController.playerID != _controller.playerID)
+            else if (_targetController.controllerType == BaseController.CONTROLLER_TYPE.BUILDING)
             {
-                _controller.TransitionToState(_controller.attackState);
+                if(_controller._unitStats.builder)
+                {
+                    _controller.TransitionToState(_controller.buildState);
+                }
+                
             }
 
-            else if (_controller._unitStats.gatherer && _targetController.controllerType == BaseController.CONTROLLER_TYPE.STATIC_RESOURCE)
+            else if (_targetController.controllerType == BaseController.CONTROLLER_TYPE.STATIC_RESOURCE)
             {
-                _controller.TransitionToState(_controller.gatherState);
+                if(_controller._unitStats.gatherer)
+                {
+                    _controller.TransitionToState(_controller.gatherState);
+                }
             }
 
             else

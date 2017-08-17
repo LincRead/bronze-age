@@ -37,7 +37,7 @@ public class UnitStateController : BaseController
     [HideInInspector]
     public UnitDie dieState;
 
-    protected UnitState currentState;
+    public UnitState currentState;
 
     [HideInInspector]
     public bool waitingForNextNodeToGetAvailable = false;
@@ -118,7 +118,10 @@ public class UnitStateController : BaseController
 
     public void MoveTo(BaseController targetController)
     {
-        if (this.targetController == targetController)
+        // Don't do anything if target is already set
+        // Don't target self
+        if (this.targetController == targetController
+            || this  == targetController)
             return;
 
         this.targetController = targetController;
@@ -218,6 +221,7 @@ public class UnitStateController : BaseController
 
     public void UpdateVisibility()
     {
+        // Only my units removes Fog of War
         if (playerID != PlayerManager.myPlayerID)
             return;
 
@@ -254,12 +258,12 @@ public class UnitStateController : BaseController
             List<UnitStateController> units = visibleTiles[i].GetUnitsStandingOnTile();
             for(int j = 0; j < units.Count; j++)
             {
-                if(units[j].playerID != playerID)
+                if(units[j].playerID != this.playerID)
                     enemyUnitsDetected.Add(units[j]);
             }
         }
 
-        if(enemyUnitsDetected.Count > 0 && playerID == PlayerManager.myPlayerID)
+        if(enemyUnitsDetected.Count > 0)
             ChaseClosestEnemy(enemyUnitsDetected);
     }
 
@@ -277,8 +281,6 @@ public class UnitStateController : BaseController
                 closestEnemy = enemyUnits[i];
             }
         }
-
-        Debug.Log(closestDistance);
 
         if(closestDistance <= (_unitStats.attackRange * 20))
             MoveTo(closestEnemy);

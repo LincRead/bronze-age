@@ -5,8 +5,6 @@ using System.Collections.Generic;
 [CreateAssetMenu(menuName = "States/Unit states/move to position")]
 public class UnitMoveToPosition : UnitMoveTo
 {
-    Node targetNode;
-
     public override void OnEnter(UnitStateController controller)
     {
         base.OnEnter(controller);
@@ -17,26 +15,19 @@ public class UnitMoveToPosition : UnitMoveTo
 
     protected override void FindPathToTarget()
     {
-        targetNode = _pathfinder.GetNodeFromPoint(_controller.targetPosition);
+        endNode = _pathfinder.GetNodeFromPoint(_controller.targetPosition);
 
-        if (targetNode == null || !targetNode.walkable)
+        if (endNode == null || !endNode.walkable)
             return;
 
-        _pathfinder.FindPath(targetNode);
+        _pathfinder.FindPath(endNode);
     }
 
     public override void CheckTransitions()
-    {
-        // No path to follow
-        if (_pathfinder.path.Count == 0 || targetNode == null)
-        {
-            _controller.TransitionToState(_controller.idleState);
-            return;
-        }
-           
+    { 
         // Reached target node
-        if (nextTargetNode == targetNode &&
-            Vector2.Distance(_transform.position, targetNode.worldPosition) < 0.01f)
+        if (nextTargetNode == endNode &&
+            Vector2.Distance(_transform.position, endNode.worldPosition) < 0.01f)
         {
             _controller.TransitionToState(_controller.idleState);
         }
