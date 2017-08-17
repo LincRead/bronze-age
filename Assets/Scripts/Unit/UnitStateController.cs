@@ -244,7 +244,6 @@ public class UnitStateController : BaseController
     // Todo include animals
     void LookForNearbyEnemies()
     {
-        Debug.Log(playerID);
         List<Tile> visibleTiles = Grid.instance.GetAllTilesBasedOnVisibilityFromNode(_unitStats.visionRange, GetPrimaryNode());
         List<UnitStateController> enemyUnitsDetected = new List<UnitStateController>();
         for (int i = 0; i < visibleTiles.Count; i++)
@@ -257,17 +256,17 @@ public class UnitStateController : BaseController
             }
         }
 
-        if(enemyUnitsDetected.Count > 1)
+        if(enemyUnitsDetected.Count > 0 && playerID == PlayerManager.myPlayerID)
             ChaseClosestEnemy(enemyUnitsDetected);
     }
 
     void ChaseClosestEnemy(List<UnitStateController> enemyUnits)
     {
         UnitStateController closestEnemy = enemyUnits[0];
-        float closestDistance = Grid.instance.GetDistanceBetweenNodes(closestEnemy.GetPrimaryNode(), this.GetPrimaryNode());
+        float closestDistance = Grid.instance.GetDistanceBetweenTiles(closestEnemy.GetPrimaryTile(), this.GetPrimaryTile());
         for(int i = 1; i < enemyUnits.Count; i++)
         {
-            float distance = Grid.instance.GetDistanceBetweenNodes(closestEnemy.GetPrimaryNode(), this.GetPrimaryNode());
+            float distance = Grid.instance.GetDistanceBetweenTiles(closestEnemy.GetPrimaryTile(), this.GetPrimaryTile());
 
             if (distance < closestDistance)
             {
@@ -276,7 +275,10 @@ public class UnitStateController : BaseController
             }
         }
 
-        MoveTo(closestEnemy);
+        Debug.Log(closestDistance);
+
+        if(closestDistance <= (_unitStats.attackRange * 10))
+            MoveTo(closestEnemy);
     }
 
     public bool IntersectsObject(BaseController other)
@@ -324,6 +326,11 @@ public class UnitStateController : BaseController
     public override Node GetPrimaryNode()
     {
         return _pathfinder.currentStandingOnNode;
+    }
+
+    public override Tile GetPrimaryTile()
+    {
+        return _pathfinder.currentStandingOnNode.parentTile;
     }
 
     public override int[] GetUniqueStats()

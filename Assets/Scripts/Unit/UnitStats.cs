@@ -10,6 +10,7 @@ public class UnitStats : ScriptableObject {
     public float attackSpeed = 1f;
     public float moveSpeed = 20f;
     public int visionRange = 8;
+    public int attackRange = 5;
 
     public bool builder = false;
     public bool gatherer = false;

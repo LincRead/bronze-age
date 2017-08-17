@@ -25,16 +25,25 @@ public class UnitAttack : UnitState
         timeSinceAttack += Time.deltaTime;
         if(timeSinceAttack >= attackSpeed)
         {
-            PlayAttackAnimation();
             timeSinceAttack = 0.0f;
+
+            if (_controller.targetController == null
+                || _controller.targetController.dead
+                // Has moved
+                || _controller.targetController.GetPrimaryNode() != _targetStandingOnNode)
+                _controller.TransitionToState(_controller.idleState);
+            else
+                PlayAttackAnimation();
         }
     }
 
     void PlayAttackAnimation()
     {
-        if(_controller.targetController == null || _controller.targetController.dead)
-            _controller.TransitionToState(_controller.idleState);
-        else
-            _controller._animator.Play("attack", -1, 0.0f);
+        _controller._animator.Play("attack", -1, 0.0f);
+    }
+
+    public override void CheckTransitions()
+    {
+        base.CheckTransitions();
     }
 }

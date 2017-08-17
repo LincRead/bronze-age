@@ -30,7 +30,7 @@ public class UnitMoveToController : UnitMoveTo
             Grid.instance.SetWalkableValueForTiles(_targetController, true);
 
         // Find path
-        endNode = _pathfinder.GetNodeFromPoint(_targetController.GetPrimaryNode().worldPosition);
+        endNode = _targetController.GetPrimaryNode();
 
         if (endNode != null)
             _pathfinder.FindPath(endNode);
@@ -42,20 +42,15 @@ public class UnitMoveToController : UnitMoveTo
 
     public override void UpdateState()
     {
+        if (endNode != _controller.targetController.GetPrimaryNode())
+            FindPathToTarget();
+
         base.UpdateState();
 
         if (_targetController != null)
         {
             _targetControllerPosition = _targetController.GetPosition();
         }
-    }
-
-    public override void DoActions()
-    {
-        //if (endNode != _controller.targetController.GetPrimaryNode())
-        //    FindPathToTarget();
-
-        base.DoActions();
     }
 
     public override void CheckTransitions()
@@ -79,14 +74,15 @@ public class UnitMoveToController : UnitMoveTo
                 _controller.TransitionToState(_controller.buildState);
             }
 
+            else if (_targetController.controllerType == BaseController.CONTROLLER_TYPE.UNIT
+                && _targetController.playerID != _controller.playerID)
+            {
+                _controller.TransitionToState(_controller.attackState);
+            }
+
             else if (_controller._unitStats.gatherer && _targetController.controllerType == BaseController.CONTROLLER_TYPE.STATIC_RESOURCE)
             {
                 _controller.TransitionToState(_controller.gatherState);
-            }
-
-            else if (_targetController.controllerType == BaseController.CONTROLLER_TYPE.UNIT && _targetController.playerID != _controller.playerID)
-            {
-                _controller.TransitionToState(_controller.attackState);
             }
 
             else

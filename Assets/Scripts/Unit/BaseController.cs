@@ -120,7 +120,7 @@ public class BaseController : MonoBehaviour {
         return Grid.instance.GetNodeFromWorldPoint(_transform.position + new Vector3(0.0f, 0.04f));
     }
 
-    public Tile GetPrimaryTile()
+    public virtual Tile GetPrimaryTile()
     {
         return Grid.instance.GetTileFromWorldPoint(_transform.position + new Vector3(0.04f, 0.04f));
     }
