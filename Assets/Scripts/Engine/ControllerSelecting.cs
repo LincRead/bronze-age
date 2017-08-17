@@ -241,6 +241,17 @@ public class ControllerSelecting : MonoBehaviour {
         }
     }
 
+    public void RemoveFromSelectedUnits(UnitStateController unit)
+    {
+        selectedUnits.Remove(unit);
+
+        if (selectedGatherers.Contains(unit))
+            selectedGatherers.Remove(unit);
+
+        if (selectedUnits.Count == 0)
+            ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.NONE, null);
+    }
+
     public List<UnitStateController> GetSelectedGatherers()
     {
         return selectedGatherers;

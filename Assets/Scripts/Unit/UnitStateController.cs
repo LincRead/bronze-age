@@ -210,6 +210,9 @@ public class UnitStateController : BaseController
         if(playerID > 0)
             PlayerDataManager.instance.AddPopulationForPlayer(-1, playerID);
 
+        if (selected)
+            PlayerManager.instance._controllerSelecting.RemoveFromSelectedUnits(this);
+
         TransitionToState(dieState);
     }
 
