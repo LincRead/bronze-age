@@ -120,8 +120,7 @@ public class UnitStateController : BaseController
     {
         // Don't do anything if target is already set
         // Don't target self
-        if (this.targetController == targetController
-            || this  == targetController)
+        if (this.targetController == targetController || this  == targetController)
             return;
 
         this.targetController = targetController;

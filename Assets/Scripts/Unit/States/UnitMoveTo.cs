@@ -10,6 +10,9 @@ public class UnitMoveTo : UnitState
     protected Node nextTargetNode;
     protected Node endNode;
 
+    protected float timeSinceRouteBlocked = 0.0f;
+    protected float timeBeforeGivingUpRoute = 0.5f;
+
     public override void OnEnter(UnitStateController controller)
     {
         base.OnEnter(controller);
@@ -45,8 +48,7 @@ public class UnitMoveTo : UnitState
         // Fetch next target node
         if (_pathfinder.path.Count > 0)
             nextTargetNode = _pathfinder.path[0];
-        else
-            return; // Don't move if path not found
+        else return;
 
         // Reached next target node
         if (Vector2.Distance(_transform.position, nextTargetNode.worldPosition) < 0.01f)
@@ -60,16 +62,8 @@ public class UnitMoveTo : UnitState
         {
             UnitStateController unitBlocking = nextTargetNode.unitControllerStandingHere;
 
-            // Wait for blocking unit to find a path around me
-            // Only do this for friendly units
-            if (!unitBlocking.waitingForNextNodeToGetAvailable 
-                && unitBlocking.isMoving)
-            {
-                _controller.waitingForNextNodeToGetAvailable = true;
-            }
-
-            // Find a path around the blocking unit who is waiting for you
-            else if (unitBlocking.waitingForNextNodeToGetAvailable)
+            // Find a path around the unit moving if it is blocking us
+            if (unitBlocking.isMoving)
             {
                 List<UnitStateController> unitsToAvoid = new List<UnitStateController>();
                 unitsToAvoid.Add(unitBlocking);
@@ -77,13 +71,12 @@ public class UnitMoveTo : UnitState
             }
 
             // Find path around all stationary units
-            else if(!unitBlocking.isMoving)
+            else
             {
                 FindPathToTarget();
             }
 
-            // Wait one tick before continuing
-            velocity = Vector2.zero;
+            WaitToMove();
             return;
         }
 
@@ -93,13 +86,19 @@ public class UnitMoveTo : UnitState
             _controller.UpdateVisibility();
         }
 
-        _controller.waitingForNextNodeToGetAvailable = false;
+        timeSinceRouteBlocked = 0.0f;
 
         float dirx = nextTargetNode.worldPosition.x - _transform.position.x;
         float diry = nextTargetNode.worldPosition.y - _transform.position.y;
 
         velocity = new Vector2(dirx, diry);
         velocity.Normalize();
+    }
+
+    void WaitToMove()
+    {
+        timeSinceRouteBlocked += Time.deltaTime;
+        velocity = Vector2.zero;
     }
 
     protected virtual void ReachedNextTargetNode()

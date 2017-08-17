@@ -24,7 +24,14 @@ public class UnitMoveToPosition : UnitMoveTo
     }
 
     public override void CheckTransitions()
-    { 
+    {
+        // No path to follow
+        if (endNode == null || timeSinceRouteBlocked >= timeBeforeGivingUpRoute)
+        {
+            _controller.TransitionToState(_controller.idleState);
+            return;
+        }
+           
         // Reached target node
         if (nextTargetNode == endNode &&
             Vector2.Distance(_transform.position, endNode.worldPosition) < 0.01f)

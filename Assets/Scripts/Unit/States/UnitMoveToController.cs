@@ -65,10 +65,16 @@ public class UnitMoveToController : UnitMoveTo
     }
 
     public override void CheckTransitions()
-    {
-        if(_targetController == null)
+    {            
+        if (_targetController == null)
         {
             _controller.MoveTo(_targetControllerPosition);
+            return;
+        }
+
+        if (timeSinceRouteBlocked >= timeBeforeGivingUpRoute)
+        {
+            _controller.TransitionToState(_controller.idleState);
             return;
         }
 
