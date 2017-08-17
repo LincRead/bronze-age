@@ -152,7 +152,8 @@ public class ControllerSelecting : MonoBehaviour {
     {
         if(PlayerManager.instance.selectableController != null
             && PlayerManager.instance.selectableController._spriteRenderer.enabled
-            && PlayerManager.instance.selectableController.controllerType == BaseController.CONTROLLER_TYPE.UNIT)
+            && PlayerManager.instance.selectableController.controllerType == BaseController.CONTROLLER_TYPE.UNIT
+            && !PlayerManager.instance.selectableController.dead)
         {
             UnitStateController unit = PlayerManager.instance.selectableController.GetComponent<UnitStateController>();
 
@@ -177,7 +178,7 @@ public class ControllerSelecting : MonoBehaviour {
 
         for (int i = 0; i < friendlyUnits.Count; i++)
         {
-            if (friendlyUnits[i].IntersectsRectangle(collisionBox))
+            if (!friendlyUnits[i].dead && friendlyUnits[i].IntersectsRectangle(collisionBox))
             {
                 friendlyUnits[i].Select();
 

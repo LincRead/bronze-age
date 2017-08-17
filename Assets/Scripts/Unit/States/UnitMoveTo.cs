@@ -25,9 +25,13 @@ public class UnitMoveTo : UnitState
     protected void PlayRunAnimation()
     {
         // Only play if path found
-        if (_pathfinder.path.Count > 0
-            && !_controller._animator.GetCurrentAnimatorStateInfo(0).IsName("run"))
-            _controller._animator.Play("run");
+        if (_pathfinder.path.Count > 0)
+        {
+            if (!_controller._animator.GetCurrentAnimatorStateInfo(0).IsName("run"))
+                _controller._animator.Play("run");
+            else
+                _controller._animator.Play("run", -1, 0.0f);
+        }
     }
 
     protected virtual void FindPathToTarget()

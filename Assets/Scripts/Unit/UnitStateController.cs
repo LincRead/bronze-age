@@ -263,10 +263,10 @@ public class UnitStateController : BaseController
     void ChaseClosestEnemy(List<UnitStateController> enemyUnits)
     {
         UnitStateController closestEnemy = enemyUnits[0];
-        float closestDistance = Grid.instance.GetDistanceBetweenTiles(closestEnemy.GetPrimaryTile(), this.GetPrimaryTile());
+        float closestDistance = Grid.instance.GetDistanceBetweenNodes(closestEnemy.GetPrimaryNode(), this.GetPrimaryNode());
         for(int i = 1; i < enemyUnits.Count; i++)
         {
-            float distance = Grid.instance.GetDistanceBetweenTiles(closestEnemy.GetPrimaryTile(), this.GetPrimaryTile());
+            float distance = Grid.instance.GetDistanceBetweenNodes(closestEnemy.GetPrimaryNode(), this.GetPrimaryNode());
 
             if (distance < closestDistance)
             {
@@ -277,7 +277,7 @@ public class UnitStateController : BaseController
 
         Debug.Log(closestDistance);
 
-        if(closestDistance <= (_unitStats.attackRange * 10))
+        if(closestDistance <= (_unitStats.attackRange * 20))
             MoveTo(closestEnemy);
     }
 
