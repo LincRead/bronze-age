@@ -34,7 +34,7 @@ public class Tile : IHeapItem<Tile>
     public bool walkable = true;
 
     [HideInInspector]
-    public UnitStateController controllerStandingHere;
+    public List<UnitStateController> unitsStandingHere = new List<UnitStateController>();
 
     [HideInInspector]
     public BaseController controllerOccupying = null;
@@ -188,22 +188,13 @@ public class Tile : IHeapItem<Tile>
 
     public List<UnitStateController> GetUnitsStandingOnTile()
     {
-        List<UnitStateController> units = new List<UnitStateController>();
-
-        for (int i = 0; i < nodes.Length; i++)
-        {
-            if (nodes[i].unitControllerStandingHere != null)
-                units.Add(nodes[i].unitControllerStandingHere);
-        }
-
-        return units;
+        return unitsStandingHere;
     }
 
+    // Set everything on tile to visible
     public void SetExplored()
     {
         explored = true;
-
-        // Set everything on tile to visible
 
         if (_tile)
             _tile.GetComponent<SpriteRenderer>().color = Color.white;
@@ -216,12 +207,6 @@ public class Tile : IHeapItem<Tile>
 
     public bool IsEmpty()
     {
-        for (int i = 0; i < nodes.Length; i++)
-        {
-            if (nodes[i].unitControllerStandingHere != null)
-                return false;
-        }
-
-        return walkable && !controllerStandingHere;
+        return walkable && unitsStandingHere.Count == 0;
     }
 }

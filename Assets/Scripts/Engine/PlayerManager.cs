@@ -184,6 +184,11 @@ public class PlayerManager : MonoBehaviour {
                 {
                     EventManager.TriggerEvent("SetAttackCursor");
                 }
+
+                else
+                {
+                    EventManager.TriggerEvent("SetDefaultCursor");
+                }
             }
         }
 

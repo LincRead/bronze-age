@@ -5,8 +5,8 @@ using System.Collections.Generic;
 [CreateAssetMenu(menuName = "States/Unit states/move to controller")]
 public class UnitMoveToController : UnitMoveTo
 {
-    BaseController _targetController;
-    Vector2 _targetControllerPosition;
+    protected BaseController _targetController;
+    protected Vector2 _targetControllerPosition;
 
     public override void OnEnter(UnitStateController controller)
     {
@@ -26,7 +26,9 @@ public class UnitMoveToController : UnitMoveTo
 
         // Make sure unit can use pathfinding to controller
         if(_targetController.controllerType != BaseController.CONTROLLER_TYPE.UNIT)
+        {
             Grid.instance.SetWalkableValueForTiles(_targetController, true);
+        }
 
         // Find path
         endNode = _targetController.GetPrimaryNode();
@@ -66,15 +68,9 @@ public class UnitMoveToController : UnitMoveTo
 
     public override void CheckTransitions()
     {            
-        if (_targetController == null)
+        if (_controller.targetController == null)
         {
             _controller.MoveTo(_targetControllerPosition);
-            return;
-        }
-
-        if (timeSinceRouteBlocked >= timeBeforeGivingUpRoute)
-        {
-            _controller.TransitionToState(_controller.idleState);
             return;
         }
 
@@ -116,6 +112,13 @@ public class UnitMoveToController : UnitMoveTo
             }
 
             _controller.FaceController(_targetController);
+        }
+
+        // Didn't find path
+        // Do this check last
+        else if (_pathfinder.path.Count == 0)
+        {
+            _controller.TransitionToState(_controller.idleState);
         }
     }
 }

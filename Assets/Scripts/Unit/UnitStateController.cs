@@ -39,9 +39,6 @@ public class UnitStateController : BaseController
 
     public UnitState currentState;
 
-    [HideInInspector]
-    public bool waitingForNextNodeToGetAvailable = false;
-
     //[HideInInspector]
     public bool isMoving = false;
 
@@ -207,13 +204,23 @@ public class UnitStateController : BaseController
         _healthBar.Deactivate();
 
         if (PlayerManager.myPlayerID == playerID)
+        {
             PlayerManager.instance.RemoveFriendlyUnitReference(this, playerID);
+        }
 
         if(playerID > 0)
+        {
             PlayerDataManager.instance.AddPopulationForPlayer(-1, playerID);
-
+        }
+            
         if (selected)
+        {
             PlayerManager.instance._controllerSelecting.RemoveFromSelectedUnits(this);
+        }
+            
+        // Remove from path finding
+        _pathfinder.currentStandingOnNode.parentTile.unitsStandingHere.Remove(this);
+        _pathfinder.currentStandingOnNode.unitControllerStandingHere = null;
 
         TransitionToState(dieState);
     }
@@ -227,34 +234,34 @@ public class UnitStateController : BaseController
         Node currentNode = GetPrimaryNode();
         List<Tile> visibleTiles = Grid.instance.GetAllTilesBasedOnVisibilityFromNode(_unitStats.visionRange, currentNode);
 
-        if(!currentNode.parentTile.traversed)
+        for (int i = 0; i < visibleTiles.Count; i++)
         {
-            for (int i = 0; i < visibleTiles.Count; i++)
-            {
+            if(!visibleTiles[i].explored)
                 visibleTiles[i].SetExplored();
-            }
-
-            currentNode.parentTile.traversed = true;
         }
+
+        currentNode.parentTile.traversed = true;
     }
 
     IEnumerator DetectNearbyEnemies()
     {
         for (;;)
         {
-            LookForNearbyEnemies();
-            yield return new WaitForSeconds(.1f);
+            yield return new WaitForSeconds(1f);
+            //LookForNearbyEnemies();
         }
     }
 
     // Todo include animals
     void LookForNearbyEnemies()
     {
-        List<Tile> visibleTiles = Grid.instance.GetAllTilesBasedOnVisibilityFromNode(_unitStats.visionRange, GetPrimaryNode());
+        Node currentNode = GetPrimaryNode();
+        List<Tile> visibleTiles = Grid.instance.GetAllTilesBasedOnVisibilityFromNode(_unitStats.visionRange, currentNode);
         List<UnitStateController> enemyUnitsDetected = new List<UnitStateController>();
+
         for (int i = 0; i < visibleTiles.Count; i++)
         {
-            List<UnitStateController> units = visibleTiles[i].GetUnitsStandingOnTile();
+            List<UnitStateController> units = visibleTiles[i].unitsStandingHere;
             for(int j = 0; j < units.Count; j++)
             {
                 if(units[j].playerID != this.playerID)

@@ -14,22 +14,26 @@ public class Pathfinding : MonoBehaviour {
 
     protected Node startNode;
     protected Node destinationNode;
-    protected BaseController parentController;
+    protected UnitStateController _parentController;
 
     [HideInInspector]
     public List<UnitStateController> unitsToAvoid = new List<UnitStateController>();
+
+    [HideInInspector]
+    public List<Tile> limitSearchToTiles = new List<Tile>();
 
     [HideInInspector]
     public bool enteredNewNode = false;
 
     void Start()
     {
-        parentController = transform.GetComponent<BaseController>();
+
     }
 
     public void AddUnit(UnitStateController unit)
     {
         SetGridReference();
+        _parentController = unit;
         DetectCurrentPathfindingNode(unit._transform.position);
         currentStandingOnNode.unitControllerStandingHere = unit;
     }
@@ -42,7 +46,7 @@ public class Pathfinding : MonoBehaviour {
             grid = gridObj.GetComponent<Grid>();
     }
 
-    public Node DetectCurrentPathfindingNode(Vector3 pos)
+    public void DetectCurrentPathfindingNode(Vector3 pos)
     {
         Node node = grid.GetNodeFromWorldPoint(pos);
 
@@ -50,31 +54,30 @@ public class Pathfinding : MonoBehaviour {
         if (node == null)
         {
             Debug.LogError(name + " is standing outside of the Grid");
-            return null;
+            return;
         }
 
-        // Standing on another node than currently stored
-        if (currentStandingOnNode != node)
-        {
-            if (currentStandingOnNode != null
-                && currentStandingOnNode.unitControllerStandingHere == parentController)
-                currentStandingOnNode.unitControllerStandingHere = null;
-
-            // Store the node this controller is currently standing on
-            currentStandingOnNode = node;
-        }
-
-        if (currentStandingOnNode.unitControllerStandingHere == null)
-            currentStandingOnNode.unitControllerStandingHere = (UnitStateController)parentController;
-
-        return node;
+        currentStandingOnNode = node;
+        currentStandingOnNode.unitControllerStandingHere = _parentController;
+        currentStandingOnNode.parentTile.unitsStandingHere.Add(_parentController);
     }
 
     public void SetCurrentPathfindingNode(Node node)
     {
+        if(currentStandingOnNode.parentTile != node.parentTile)
+        {
+            currentStandingOnNode.parentTile.unitsStandingHere.Remove(_parentController);
+            node.parentTile.unitsStandingHere.Add(_parentController);
+        }
+
         currentStandingOnNode.unitControllerStandingHere = null;
         currentStandingOnNode = node;
-        currentStandingOnNode.unitControllerStandingHere = (UnitStateController)parentController;
+        currentStandingOnNode.unitControllerStandingHere = _parentController;
+    }
+
+    void UpdateUnitStandingOnTile()
+    {
+
     }
 
     public Node GetNodeFromPoint(Vector3 pos)
@@ -137,6 +140,7 @@ public class Pathfinding : MonoBehaviour {
             {
                 if (!neighbour.walkable
                     || AvoidUnit(neighbour)
+                    || (limitSearchToTiles.Count > 0 && !limitSearchToTiles.Contains(neighbour.parentTile))
                     || closedSet.Contains(neighbour))
                     continue;
 
