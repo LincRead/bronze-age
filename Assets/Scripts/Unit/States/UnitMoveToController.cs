@@ -67,7 +67,13 @@ public class UnitMoveToController : UnitMoveTo
     }
 
     public override void CheckTransitions()
-    {            
+    {
+        if (nextTargetNode == null)
+        {
+            _controller.TransitionToState(_controller.idleState);
+            return;
+        }
+
         if (_controller.targetController == null)
         {
             _controller.MoveTo(_targetControllerPosition);

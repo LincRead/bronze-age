@@ -17,7 +17,7 @@ public class Pathfinding : MonoBehaviour {
     protected UnitStateController _parentController;
 
     [HideInInspector]
-    public List<UnitStateController> unitsToAvoid = new List<UnitStateController>();
+    public UnitStateController unitToAvoid = null;
 
     [HideInInspector]
     public bool enteredNewNode = false;
@@ -35,7 +35,6 @@ public class Pathfinding : MonoBehaviour {
         SetGridReference();
         _parentController = unit;
         DetectCurrentPathfindingNode(unit._transform.position);
-        currentStandingOnNode.unitControllerStandingHere = unit;
     }
 
     public void SetGridReference()
@@ -167,15 +166,20 @@ public class Pathfinding : MonoBehaviour {
 
     bool AvoidUnit(Node node)
     {
-        if(node != destinationNode 
-            && node.unitControllerStandingHere != null 
-            && !node.unitControllerStandingHere.isMoving)
-            return true;
-
-        for(int i = 0; i < unitsToAvoid.Count; i++)
+        if (node.unitControllerStandingHere != null)
         {
-            if (node.unitControllerStandingHere == unitsToAvoid[i])
+            if (node != destinationNode)
+            {
+                if (!node.unitControllerStandingHere.isMoving)
+                {
+                    return true;
+                }
+            }
+
+            if (node.unitControllerStandingHere == unitToAvoid)
+            {
                 return true;
+            }
         }
 
         return false;

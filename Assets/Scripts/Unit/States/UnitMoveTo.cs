@@ -65,9 +65,7 @@ public class UnitMoveTo : UnitState
             // Find a path around the unit moving if it is blocking us
             if (unitBlocking.isMoving)
             {
-                List<UnitStateController> unitsToAvoid = new List<UnitStateController>();
-                unitsToAvoid.Add(unitBlocking);
-                FindPathToTargetAvoidingUnits(unitsToAvoid);
+                FindPathToTargetAvoidingUnit(unitBlocking);
             }
 
             // Find path around all stationary units
@@ -113,13 +111,13 @@ public class UnitMoveTo : UnitState
         _controller.UpdateVisibility();
     }
 
-    protected void FindPathToTargetAvoidingUnits(List<UnitStateController> unitsToAvoid)
+    protected void FindPathToTargetAvoidingUnit(UnitStateController unitToAvoid)
     {
-        _pathfinder.unitsToAvoid = unitsToAvoid;
+        _pathfinder.unitToAvoid = unitToAvoid;
 
         FindPathToTarget();
 
-        _pathfinder.unitsToAvoid.Clear();
+        _pathfinder.unitToAvoid = null;
     }
 
     public override void DoActions()

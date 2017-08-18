@@ -84,7 +84,7 @@ public class UnitStateController : BaseController
         currentState.OnEnter(this);
 
         if(playerID == PlayerManager.myPlayerID)
-                PlayerManager.instance.AddFriendlyUnitReference(this, playerID);
+            PlayerManager.instance.AddFriendlyUnitReference(this, playerID);
 
         if(playerID > -1)
             PlayerDataManager.instance.AddPopulationForPlayer(1, playerID);
@@ -245,15 +245,15 @@ public class UnitStateController : BaseController
     {
         for (;;)
         {
-            yield return new WaitForSeconds(1f);
-            //LookForNearbyEnemies();
+            yield return new WaitForSeconds(.2f);
+            LookForNearbyEnemies();
         }
     }
 
     // Todo include animals
     void LookForNearbyEnemies()
     {
-        Node currentNode = GetPrimaryNode();
+        Node currentNode = _pathfinder.currentStandingOnNode;
         List<Tile> visibleTiles = Grid.instance.GetAllTilesBasedOnVisibilityFromNode(_unitStats.visionRange, currentNode);
         List<UnitStateController> enemyUnitsDetected = new List<UnitStateController>();
 
@@ -263,21 +263,25 @@ public class UnitStateController : BaseController
             for(int j = 0; j < units.Count; j++)
             {
                 if(units[j].playerID != this.playerID)
+                {
                     enemyUnitsDetected.Add(units[j]);
+                }
             }
         }
 
         if(enemyUnitsDetected.Count > 0)
+        {
             ChaseClosestEnemy(enemyUnitsDetected);
+        }
     }
 
     void ChaseClosestEnemy(List<UnitStateController> enemyUnits)
     {
-        UnitStateController closestEnemy = enemyUnits[0];
-        float closestDistance = Grid.instance.GetDistanceBetweenNodes(closestEnemy.GetPrimaryNode(), this.GetPrimaryNode());
-        for(int i = 1; i < enemyUnits.Count; i++)
+        float closestDistance = 10000;
+        UnitStateController closestEnemy = null;
+        for(int i = 0; i < enemyUnits.Count; i++)
         {
-            float distance = Grid.instance.GetDistanceBetweenNodes(closestEnemy.GetPrimaryNode(), this.GetPrimaryNode());
+            float distance = Grid.instance.GetDistanceBetweenNodes(enemyUnits[i].GetPrimaryNode(), _pathfinder.currentStandingOnNode);
 
             if (distance < closestDistance)
             {
@@ -286,7 +290,7 @@ public class UnitStateController : BaseController
             }
         }
 
-        if(closestDistance <= (_unitStats.attackRange * 20))
+        if(closestDistance <= (_unitStats.visionRange * 10))
             MoveTo(closestEnemy);
     }
 
