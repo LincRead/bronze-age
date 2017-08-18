@@ -26,6 +26,9 @@ public class UnitStateController : BaseController
     public UnitMoveToController moveToControllerState;
 
     [HideInInspector]
+    public MoveToNearbyEnemy moveToNearbyEnemyState;
+
+    [HideInInspector]
     public UnitBuild buildState;
 
     [HideInInspector]
@@ -77,6 +80,7 @@ public class UnitStateController : BaseController
         idleState = ScriptableObject.CreateInstance<UnitIdle>();
         moveToPositionState = ScriptableObject.CreateInstance<UnitMoveToPosition>();
         moveToControllerState = ScriptableObject.CreateInstance<UnitMoveToController>();
+        moveToNearbyEnemyState = ScriptableObject.CreateInstance<MoveToNearbyEnemy>();
         buildState = ScriptableObject.CreateInstance<UnitBuild>();
         gatherState = ScriptableObject.CreateInstance<UnitGather>();
         attackState = ScriptableObject.CreateInstance<UnitAttack>();
@@ -295,7 +299,11 @@ public class UnitStateController : BaseController
         }
 
         if(closestDistance <= (_unitStats.visionRange * 10))
-            MoveTo(closestEnemy);
+        {
+            // Chase closest enemy
+            targetController = closestEnemy;
+            TransitionToState(moveToNearbyEnemyState);
+        }
     }
 
     public bool IntersectsObject(BaseController other)
