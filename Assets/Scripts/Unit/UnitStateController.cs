@@ -51,6 +51,9 @@ public class UnitStateController : BaseController
     [HideInInspector]
     public int hitpointsLeft = 0;
 
+    [HideInInspector]
+    public List<Tile> visibleTiles = new List<Tile>();
+
     protected override void Start()
     {
         base.Start();
@@ -227,16 +230,18 @@ public class UnitStateController : BaseController
 
     public void UpdateVisibility()
     {
-        // Only my units removes Fog of War
-        if (playerID != PlayerManager.myPlayerID)
-            return;
-
         Node currentNode = _pathfinder.currentStandingOnNode;
-        List<Tile> visibleTiles = Grid.instance.GetAllTilesBasedOnVisibilityFromNode(_unitStats.visionRange, currentNode);
+        visibleTiles = Grid.instance.GetAllTilesBasedOnVisibilityFromNode(_unitStats.visionRange, currentNode);
 
+        if (playerID == PlayerManager.myPlayerID)
+            ExploreFogOfWar();
+    }
+
+    void ExploreFogOfWar()
+    {
         for (int i = 0; i < visibleTiles.Count; i++)
         {
-            if(!visibleTiles[i].explored)
+            if (!visibleTiles[i].explored)
                 visibleTiles[i].SetExplored();
         }
     }
@@ -254,7 +259,6 @@ public class UnitStateController : BaseController
     void LookForNearbyEnemies()
     {
         Node currentNode = _pathfinder.currentStandingOnNode;
-        List<Tile> visibleTiles = Grid.instance.GetAllTilesBasedOnVisibilityFromNode(_unitStats.visionRange, currentNode);
         List<UnitStateController> enemyUnitsDetected = new List<UnitStateController>();
 
         for (int i = 0; i < visibleTiles.Count; i++)
