@@ -231,7 +231,7 @@ public class UnitStateController : BaseController
         if (playerID != PlayerManager.myPlayerID)
             return;
 
-        Node currentNode = GetPrimaryNode();
+        Node currentNode = _pathfinder.currentStandingOnNode;
         List<Tile> visibleTiles = Grid.instance.GetAllTilesBasedOnVisibilityFromNode(_unitStats.visionRange, currentNode);
 
         for (int i = 0; i < visibleTiles.Count; i++)
@@ -239,8 +239,6 @@ public class UnitStateController : BaseController
             if(!visibleTiles[i].explored)
                 visibleTiles[i].SetExplored();
         }
-
-        currentNode.parentTile.traversed = true;
     }
 
     IEnumerator DetectNearbyEnemies()

@@ -17,6 +17,9 @@ public class MoveToNearbyEnemy : UnitMoveToController
 
         if (endNode != null)
             _pathfinder.FindPath(endNode);
+
+        // Reset
+        _pathfinder.maxDistanceToTargetNode = -1;
     }
 
     public override void CheckTransitions()

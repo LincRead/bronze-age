@@ -83,9 +83,6 @@ public class UnitMoveTo : UnitState
         else if (nextTargetNode.walkable)
         {
             _pathfinder.SetCurrentPathfindingNode(nextTargetNode);
-
-            if(!_pathfinder.currentStandingOnNode.parentTile.traversed)
-                _controller.UpdateVisibility();
         }
 
         timeSinceRouteBlocked = 0.0f;
@@ -112,6 +109,8 @@ public class UnitMoveTo : UnitState
         {
             nextTargetNode = _pathfinder.path[0];
         }
+
+        _controller.UpdateVisibility();
     }
 
     protected void FindPathToTargetAvoidingUnits(List<UnitStateController> unitsToAvoid)

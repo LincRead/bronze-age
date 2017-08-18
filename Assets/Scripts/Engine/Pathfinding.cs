@@ -20,16 +20,14 @@ public class Pathfinding : MonoBehaviour {
     public List<UnitStateController> unitsToAvoid = new List<UnitStateController>();
 
     [HideInInspector]
-    public List<Tile> limitSearchToTiles = new List<Tile>();
-
-    [HideInInspector]
     public bool enteredNewNode = false;
 
-    public float maxDistanceToTargetNode = -1;
+    [HideInInspector]
+    public float maxDistanceToTargetNode;
 
     void Start()
     {
-
+        maxDistanceToTargetNode = -1;
     }
 
     public void AddUnit(UnitStateController unit)
@@ -66,6 +64,9 @@ public class Pathfinding : MonoBehaviour {
 
     public void SetCurrentPathfindingNode(Node node)
     {
+        if (currentStandingOnNode == node)
+            return;
+
         if(currentStandingOnNode.parentTile != node.parentTile)
         {
             currentStandingOnNode.parentTile.unitsStandingHere.Remove(_parentController);
@@ -152,8 +153,7 @@ public class Pathfinding : MonoBehaviour {
                     neighbour.hCost = GetDistanceBetweenNodes(neighbour, destinationNode);
                     neighbour.parent = currentNode;
 
-                    if(maxDistanceToTargetNode != -1 
-                        && neighbour.hCost > maxDistanceToTargetNode * 10)
+                    if(maxDistanceToTargetNode != -1 && neighbour.hCost > maxDistanceToTargetNode * 10)
                     {
                         continue;
                     }
