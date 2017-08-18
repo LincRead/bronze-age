@@ -25,6 +25,8 @@ public class Pathfinding : MonoBehaviour {
     [HideInInspector]
     public bool enteredNewNode = false;
 
+    public float maxDistanceToTargetNode = -1;
+
     void Start()
     {
 
@@ -140,7 +142,6 @@ public class Pathfinding : MonoBehaviour {
             {
                 if (!neighbour.walkable
                     || AvoidUnit(neighbour)
-                    || (limitSearchToTiles.Count > 0 && !limitSearchToTiles.Contains(neighbour.parentTile))
                     || closedSet.Contains(neighbour))
                     continue;
 
@@ -150,6 +151,12 @@ public class Pathfinding : MonoBehaviour {
                     neighbour.gCost = newMovementCostToNeighbour;
                     neighbour.hCost = GetDistanceBetweenNodes(neighbour, destinationNode);
                     neighbour.parent = currentNode;
+
+                    if(maxDistanceToTargetNode != -1 
+                        && neighbour.hCost > maxDistanceToTargetNode * 10)
+                    {
+                        continue;
+                    }
 
                     if (!openSet.Contains(neighbour))
                         openSet.Add(neighbour);

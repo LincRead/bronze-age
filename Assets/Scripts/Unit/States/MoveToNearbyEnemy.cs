@@ -13,14 +13,10 @@ public class MoveToNearbyEnemy : UnitMoveToController
         // Find path
         endNode = _targetController.GetPrimaryNode();
 
-        _pathfinder.limitSearchToTiles = Grid.instance.GetAllTilesBasedOnVisibilityFromNode(
-            _controller._unitStats.visionRange, 
-            _controller.GetPrimaryNode());
+        _pathfinder.maxDistanceToTargetNode = _controller._unitStats.attackRange * 2;
 
         if (endNode != null)
             _pathfinder.FindPath(endNode);
-
-        _pathfinder.limitSearchToTiles.Clear();
     }
 
     public override void CheckTransitions()
