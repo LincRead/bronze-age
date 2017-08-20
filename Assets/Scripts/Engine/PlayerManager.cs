@@ -166,9 +166,24 @@ public class PlayerManager : MonoBehaviour {
             {
                 Building building = selectableController.GetComponent<Building>();
 
-                if (!building.constructed && !CursorHoveringUI.value)
+                // Player building
+                if(building.playerID == PlayerManager.myPlayerID)
                 {
-                    EventManager.TriggerEvent("SetBuildCursor");
+                    if (!building.constructed && !CursorHoveringUI.value)
+                    {
+                        EventManager.TriggerEvent("SetBuildCursor");
+                    }
+
+                    else
+                    {
+                        EventManager.TriggerEvent("SetDefaultCursor");
+                    }
+                }
+
+                // Enemy building
+                else if(_controllerSelecting.GetSelectedUnits().Count > 0)
+                {
+                    EventManager.TriggerEvent("SetAttackCursor");
                 }
 
                 else
