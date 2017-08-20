@@ -13,8 +13,13 @@ public class BuildingView : ControllerUIView
         base.OnEnter(ui, controller);
 
         Building buildingsController = controller.GetComponent<Building>();
-        ui.ShowStats(buildingsController.statSprites, buildingsController.GetUniqueStats());
+
         ui.ShowHitpoints(buildingsController.hitpoints, buildingsController.maxHitPoints);
+
+        if (PlayerManager.myPlayerID == _controller.playerID)
+        {
+            ui.ShowStats(buildingsController.statSprites, buildingsController.GetUniqueStats());
+        }
     }
 
     public override void Update()
