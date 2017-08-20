@@ -11,15 +11,18 @@ public class HealthBar : MonoBehaviour {
     public GameObject outline;
     SpriteRenderer _outlineSpriteRenderer;
 
+    float scale = 0.0f;
     float width = 0.0f;
 
-    public void Init ()
+    public void Init (int size)
     {
         _barSpriteRenderer = bar.GetComponent<SpriteRenderer>();
         _barTransform = bar.GetComponent<Transform>();
+        scale = size;
         width = _barSpriteRenderer.bounds.size.x;
 
         _outlineSpriteRenderer = outline.GetComponent<SpriteRenderer>();
+        outline.GetComponent<Transform>().localScale = new Vector3(scale, 1.0f);
 
         Deactivate();
 	}
@@ -46,11 +49,11 @@ public class HealthBar : MonoBehaviour {
 
     public void UpdateHitpointsAmount(int currHP, int maxHP)
     {
-        float scale = (float)(currHP / (float)maxHP);
-        _barTransform.localScale = new Vector3(scale * 1.0f, 1.0f, 1.0f);
+        float scaleX = (float)(currHP / (float)maxHP);
+        _barTransform.localScale = new Vector3(scaleX * scale,  1.0f, 1.0f);
 
         _barTransform.localPosition = new Vector3(
-        - (((width / 2) * (1 - scale))),
+        - (((width / 2) * ((1 - scaleX)))) * scale,
         0.0f,
         0.0f);
     }

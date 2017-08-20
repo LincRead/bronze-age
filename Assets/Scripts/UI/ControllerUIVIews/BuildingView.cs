@@ -14,7 +14,7 @@ public class BuildingView : ControllerUIView
 
         Building buildingsController = controller.GetComponent<Building>();
 
-        ui.ShowHitpoints(buildingsController.hitpoints, buildingsController.maxHitPoints);
+        ui.ShowHitpoints(buildingsController.hitpointsLeft, buildingsController.maxHitPoints);
 
         if (PlayerManager.myPlayerID == _controller.playerID)
         {

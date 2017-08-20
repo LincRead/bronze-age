@@ -97,11 +97,18 @@ public class UnitMoveToController : UnitMoveTo
 
             else if (_targetController.controllerType == BaseController.CONTROLLER_TYPE.BUILDING)
             {
-                if(_controller._unitStats.builder)
+                if(_targetController.playerID == PlayerManager.myPlayerID)
                 {
-                    _controller.TransitionToState(_controller.buildState);
+                    if (_controller._unitStats.builder)
+                    {
+                        _controller.TransitionToState(_controller.buildState);
+                    }
                 }
-                
+
+                else
+                {
+                    _controller.TransitionToState(_controller.attackState);
+                }
             }
 
             else if (_targetController.controllerType == BaseController.CONTROLLER_TYPE.STATIC_RESOURCE)

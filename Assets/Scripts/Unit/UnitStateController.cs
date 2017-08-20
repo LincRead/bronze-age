@@ -66,9 +66,10 @@ public class UnitStateController : BaseController
         _animator = GetComponent<Animator>();
         _pathfinder = GetComponent<Pathfinding>();
 
+        // Setup health
         hitpointsLeft = _unitStats.maxHitpoints;
-        _healthBar = GetComponent<HealthBar>();
-        _healthBar.Init();
+        _healthBar = GetComponentInChildren<HealthBar>();
+        _healthBar.Init(size);
         _healthBar.SetAlignment(playerID == PlayerManager.myPlayerID);
         _healthBar.UpdateHitpointsAmount(hitpointsLeft, _unitStats.maxHitpoints);
 

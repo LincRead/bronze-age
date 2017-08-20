@@ -6,6 +6,9 @@ public class Building : BaseController {
 
     protected int buildState = 0; // Three stages, 2 is fully constructed.
 
+    public GameObject healthBar;
+    HealthBar _healthBar;
+
     [Header("Construction")]
 
     [SerializeField]
@@ -21,7 +24,7 @@ public class Building : BaseController {
     public int maxHitPoints = 200;
 
     [HideInInspector]
-    public int hitpoints = 0;
+    public int hitpointsLeft = 0;
 
     [HideInInspector]
     public bool constructed = false;
@@ -50,7 +53,12 @@ public class Building : BaseController {
 
         // And Kate <3
 
-        hitpoints = maxHitPoints;
+        // Setup health
+        hitpointsLeft = maxHitPoints;
+        _healthBar = GetComponentInChildren<HealthBar>();
+        _healthBar.Init(size);
+        _healthBar.SetAlignment(playerID == PlayerManager.myPlayerID);
+        _healthBar.UpdateHitpointsAmount(hitpointsLeft, maxHitPoints);
 
         SetupTeamColor();
     }
@@ -180,6 +188,48 @@ public class Building : BaseController {
         }
     }
 
+    public override void Hit(int damageValue)
+    {
+        hitpointsLeft -= damageValue;
+
+        if (hitpointsLeft <= 0)
+        {
+            Kill();
+        }
+
+        else
+        {
+            _healthBar.UpdateHitpointsAmount(hitpointsLeft, maxHitPoints);
+        }
+    }
+
+    // Todo change name
+    protected void Kill()
+    {
+        _healthBar.Deactivate();
+
+        RemovePlayerStats();
+
+        Grid.instance.RemoveTilesOccupiedByController(this);
+
+        // Todo add transition that plays animation before calling Destroy
+        Destroy();
+    }
+
+    public override void Select()
+    {
+        base.Select();
+
+        _healthBar.Activate();
+    }
+
+    public override void Deselect()
+    {
+        base.Deselect();
+
+        _healthBar.Deactivate();
+    }
+
     // Unique per building
     protected virtual void AddPlayerStats()
     {
@@ -199,8 +249,6 @@ public class Building : BaseController {
 
     public virtual void Destroy()
     {
-        Grid.instance.RemoveTilesOccupiedByController(this);
-        RemovePlayerStats();
         Destroy(gameObject);
     }
 }
