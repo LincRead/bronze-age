@@ -6,25 +6,25 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "UI/Controller views/building")]
 public class BuildingView : ControllerUIView
 {
-    Building buildingsController;
+    Building buildingController;
 
     public override void OnEnter(ControllerUIManager ui, BaseController controller)
     {
         base.OnEnter(ui, controller);
 
-        Building buildingsController = controller.GetComponent<Building>();
+        buildingController = controller.GetComponent<Building>();
 
-        ui.ShowHitpoints(buildingsController.hitpointsLeft, buildingsController.maxHitPoints);
+        ui.ShowHitpoints(buildingController.hitpointsLeft, buildingController.maxHitPoints);
 
         if (PlayerManager.myPlayerID == _controller.playerID)
         {
-            ui.ShowStats(buildingsController.statSprites, buildingsController.GetUniqueStats());
+            ui.ShowStats(buildingController.statSprites, buildingController.GetUniqueStats());
         }
     }
 
     public override void Update()
     {
-
+        ui.UpdateHitpoints(buildingController.hitpointsLeft, buildingController.maxHitPoints);
     }
 
     public override void OnExit()
