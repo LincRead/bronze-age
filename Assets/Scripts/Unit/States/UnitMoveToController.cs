@@ -62,6 +62,8 @@ public class UnitMoveToController : UnitMoveTo
         {
             nextTargetNode = _pathfinder.path[0];
         }
+
+        _controller.UpdateVisibility();
     }
 
     public override void UpdateState()

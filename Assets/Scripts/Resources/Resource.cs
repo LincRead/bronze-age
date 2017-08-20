@@ -128,6 +128,12 @@ public class Resource : BaseController {
     public virtual void Destroy()
     {
         Grid.instance.RemoveTilesOccupiedByController(this);
+
+        if(selected)
+        {
+            ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.NONE, null);
+        }
+
         Destroy(gameObject);
     }
 }

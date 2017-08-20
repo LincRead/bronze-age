@@ -25,7 +25,6 @@ public class UnitMoveToPosition : UnitMoveTo
 
     public override void CheckTransitions()
     {
-
         // No path to follow
         if (endNode == null || timeSinceRouteBlocked >= timeBeforeGivingUpRoute)
         {
