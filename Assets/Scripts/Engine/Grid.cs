@@ -471,11 +471,6 @@ public class Grid : MonoBehaviour {
                     Tile tileToOccupy = GetTileFromGridPos(tile.gridPosX + i, tile.gridPosY + j);
                     tileToOccupy.SetUnwalkable();
                     tileToOccupy.controllerOccupying = controller;
-
-                    if(controller.controllerType == BaseController.CONTROLLER_TYPE.STATIC_RESOURCE)
-                    {
-                        tileToOccupy.resourceOccypying = controller.GetComponent<Resource>();
-                    }
                 }
             }
         }
@@ -497,11 +492,6 @@ public class Grid : MonoBehaviour {
                     Tile tileToRemoveFrom = GetTileFromGridPos(tile.gridPosX + i, tile.gridPosY + j);
                     tileToRemoveFrom.SetWalkable();
                     tileToRemoveFrom.controllerOccupying = null;
-
-                    if (controller.controllerType == BaseController.CONTROLLER_TYPE.STATIC_RESOURCE)
-                    {
-                        tileToRemoveFrom.resourceOccypying = null; ;
-                    }
                 }
             }
         }
@@ -587,40 +577,6 @@ public class Grid : MonoBehaviour {
 
         return visibleTiles;
     }
-
-
-    /*public List<Tile> GetAllTilesBasedOnVisibilityFromNode(int visiblity, Node node)
-    {
-        Tile primaryTile = node.parentTile;
-        List<Tile> visibleTiles = new List<Tile>();
-
-        Heap<Tile> openSet = new Heap<Tile>(Grid.instance.MaxSize);
-        HashSet<Tile> closedSet = new HashSet<Tile>();
-        openSet.Add(primaryTile);
-
-        while (openSet.Count > 0)
-        {
-            Tile currentTile = openSet.RemoveFirst();
-            closedSet.Add(currentTile);
-
-            List<Tile> neighboursToCheck = GetNeighbourTiles(currentTile);
-            for(int i = 0; i < neighboursToCheck.Count; i++)
-            {
-                if (closedSet.Contains(neighboursToCheck[i]))
-                    continue;
-
-                if (GetDistanceBetweenTiles(primaryTile, neighboursToCheck[i]) <= (visiblity * 10))
-                {
-                    visibleTiles.Add(neighboursToCheck[i]);
-
-                    if (!openSet.Contains(neighboursToCheck[i]))
-                        openSet.Add(neighboursToCheck[i]);
-                }
-            }
-        }
-
-        return visibleTiles;
-    }*/
 
     public int GetDistanceBetweenNodes(Node nodeA, Node nodeB)
     {

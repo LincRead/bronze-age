@@ -29,9 +29,6 @@ public class UnitStateController : BaseController
     public MoveToNearbyEnemy moveToNearbyEnemyState;
 
     [HideInInspector]
-    public FindNearbyResource findNearbyResourceState;
-
-    [HideInInspector]
     public UnitBuild buildState;
 
     [HideInInspector]
@@ -60,6 +57,9 @@ public class UnitStateController : BaseController
     [HideInInspector]
     public List<Tile> visibleTiles = new List<Tile>();
 
+    [HideInInspector]
+    public List<BaseController> ignoreControllers = new List<BaseController>();
+
     protected override void Start()
     {
         base.Start();
@@ -85,7 +85,6 @@ public class UnitStateController : BaseController
         moveToPositionState = ScriptableObject.CreateInstance<UnitMoveToPosition>();
         moveToControllerState = ScriptableObject.CreateInstance<UnitMoveToController>();
         moveToNearbyEnemyState = ScriptableObject.CreateInstance<MoveToNearbyEnemy>();
-        findNearbyResourceState = ScriptableObject.CreateInstance<FindNearbyResource>();
         buildState = ScriptableObject.CreateInstance<UnitBuild>();
         gatherState = ScriptableObject.CreateInstance<UnitGather>();
         attackState = ScriptableObject.CreateInstance<UnitAttack>();
@@ -150,19 +149,21 @@ public class UnitStateController : BaseController
     public void SeekClosestResource(string resourceTitle)
     {
         float closestDistance = 10000;
-        Resource closestResource = null;
+        BaseController closestResource = null;
 
         visibleTiles = Grid.instance.GetAllTilesBasedOnVisibilityFromNode(_unitStats.visionRange, _pathfinder.currentStandingOnNode);
 
-        for(int i = 0; i < visibleTiles.Count; i++)
+        for (int i = 0; i < visibleTiles.Count; i++)
         {
-            if(visibleTiles[i].resourceOccypying != null && visibleTiles[i].resourceOccypying.title == resourceTitle)
+            if (visibleTiles[i].controllerOccupying != null 
+                && visibleTiles[i].controllerOccupying.title == resourceTitle
+                && !ignoreControllers.Contains(visibleTiles[i].controllerOccupying))
             {
                 float dist = Grid.instance.GetDistanceBetweenTiles(_pathfinder.currentStandingOnNode.parentTile, visibleTiles[i]);
                 if (dist < closestDistance)
                 {
                     closestDistance = dist;
-                    closestResource = visibleTiles[i].resourceOccypying;
+                    closestResource = visibleTiles[i].controllerOccupying;
                 }
             }
         }

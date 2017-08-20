@@ -34,7 +34,15 @@ public class UnitMoveToController : UnitMoveTo
         endNode = _targetController.GetPrimaryNode();
 
         if (endNode != null)
+        {
             _pathfinder.FindPath(endNode);
+        }
+            
+
+        if(_pathfinder.path.Count > 0)
+        {
+            _controller.ignoreControllers.Clear();
+        }
 
         // Reset
         if (_targetController.controllerType != BaseController.CONTROLLER_TYPE.UNIT)
@@ -70,7 +78,7 @@ public class UnitMoveToController : UnitMoveTo
     {
         if (nextTargetNode == null)
         {
-            _controller.TransitionToState(_controller.idleState);
+            HandleNoPathToTargetControllerFound();
             return;
         }
 
@@ -130,6 +138,27 @@ public class UnitMoveToController : UnitMoveTo
         // Didn't find path
         // Do this check last
         else if (_pathfinder.path.Count == 0)
+        {
+            HandleNoPathToTargetControllerFound();
+        }
+    }
+
+    void HandleNoPathToTargetControllerFound()
+    {
+        // Only seek resources close by if we are close to target resource
+        if (_targetController.controllerType == BaseController.CONTROLLER_TYPE.STATIC_RESOURCE
+            && Grid.instance.GetDistanceBetweenTiles(
+                _controller._pathfinder.currentStandingOnNode.parentTile, 
+                _targetController.GetPrimaryTile()) <= _controller._unitStats.visionRange * 10)
+        {
+            if (_controller._unitStats.gatherer)
+            {
+                _controller.ignoreControllers.Add(_targetController);
+                _controller.SeekClosestResource(_targetController.title);
+            }
+        }
+
+        else
         {
             _controller.TransitionToState(_controller.idleState);
         }
