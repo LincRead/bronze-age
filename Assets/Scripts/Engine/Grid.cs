@@ -468,9 +468,14 @@ public class Grid : MonoBehaviour {
             {
                 if (i > -1 && j > -1 && i < numTilesX + 1 && j < numTilesY + 1)
                 {
-                    Tile occupyTile = GetTileFromGridPos(tile.gridPosX + i, tile.gridPosY + j);
-                    occupyTile.SetUnwalkable();
-                    occupyTile.controllerOccupying = controller;
+                    Tile tileToOccupy = GetTileFromGridPos(tile.gridPosX + i, tile.gridPosY + j);
+                    tileToOccupy.SetUnwalkable();
+                    tileToOccupy.controllerOccupying = controller;
+
+                    if(controller.controllerType == BaseController.CONTROLLER_TYPE.STATIC_RESOURCE)
+                    {
+                        tileToOccupy.resourceOccypying = controller.GetComponent<Resource>();
+                    }
                 }
             }
         }
@@ -492,6 +497,11 @@ public class Grid : MonoBehaviour {
                     Tile tileToRemoveFrom = GetTileFromGridPos(tile.gridPosX + i, tile.gridPosY + j);
                     tileToRemoveFrom.SetWalkable();
                     tileToRemoveFrom.controllerOccupying = null;
+
+                    if (controller.controllerType == BaseController.CONTROLLER_TYPE.STATIC_RESOURCE)
+                    {
+                        tileToRemoveFrom.resourceOccypying = null; ;
+                    }
                 }
             }
         }

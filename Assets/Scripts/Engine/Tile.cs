@@ -40,6 +40,9 @@ public class Tile : IHeapItem<Tile>
     public BaseController controllerOccupying = null;
 
     [HideInInspector]
+    public Resource resourceOccypying = null;
+
+    [HideInInspector]
     public float fertility = 0;
 
     [HideInInspector]

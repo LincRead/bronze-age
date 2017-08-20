@@ -45,7 +45,7 @@ public class UnitGather : UnitState {
     {
         if(_resource.depleted)
         {
-            _controller.TransitionToState(_controller.idleState);
+            _controller.SeekClosestResource(_resource.title);
         }
     }
 }
