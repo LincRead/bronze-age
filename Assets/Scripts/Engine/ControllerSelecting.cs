@@ -131,14 +131,9 @@ public class ControllerSelecting : MonoBehaviour {
 
     bool FindAndSelectController(Vector2 mousePos)
     {
-        Tile nodeAtMousePos = Grid.instance.GetTileFromWorldPoint(mousePos);
+        BaseController controller = PlayerManager.instance.selectableController;
 
-        if (nodeAtMousePos == null)
-            return false;
-
-        BaseController controller = nodeAtMousePos.controllerOccupying;
-
-        if (controller != null && controller._spriteRenderer.enabled)
+        if (controller != null)
         {
             controller.Select();
             selectedController = controller;
