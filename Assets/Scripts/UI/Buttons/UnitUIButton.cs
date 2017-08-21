@@ -22,15 +22,17 @@ public class UnitUIButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     void Update()
     {
+        // Todo, use event in inspector instead
         if (_button != null 
             && _button.enabled
             && Input.GetKeyDown(hotkey))
             OnClick();
     }
 	
-	protected virtual void OnClick() {
-	
-	}
+	protected virtual void OnClick()
+    {
+        EventManager.TriggerEvent("SetDefaultCursor");
+    }
 
     public void OnPointerEnter(PointerEventData eventData)
     {

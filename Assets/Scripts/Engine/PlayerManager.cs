@@ -11,6 +11,7 @@ public class PlayerManager : MonoBehaviour {
     public enum PLAYER_ACTION_STATE
     {
         DEFAULT,
+        ATTACK_MOVE,
         PLACING_BUILDING,
         MENU
     }
@@ -48,8 +49,9 @@ public class PlayerManager : MonoBehaviour {
 
                 if (!playerManager)
                 {
-                    Debug.LogError("There needs to be one active PlayerManager script on a GameObject in your scene.");
+                    Debug.LogError("There needs to be one active PlayerManager script on a GameObject in the scene.");
                 }
+
                 else
                 {
                     playerManager.Init();
@@ -76,7 +78,9 @@ public class PlayerManager : MonoBehaviour {
     public void CancelPlaceBuildingState()
     {
         if(buildingBeingPlaced != null)
+        {
             buildingBeingPlaced.CancelPlacing();
+        }
 
         buildingBeingPlaced = null;
 
@@ -98,6 +102,18 @@ public class PlayerManager : MonoBehaviour {
         currentUserState = PLAYER_ACTION_STATE.DEFAULT;
     }
 
+    public void SetAttackMoveState()
+    {
+        currentUserState = PLAYER_ACTION_STATE.ATTACK_MOVE;
+        EventManager.TriggerEvent("SetAttackCursor");
+    }
+
+    public void SetDefaultState()
+    {
+        EventManager.TriggerEvent("SetDefaultCursor");
+        currentUserState = PLAYER_ACTION_STATE.DEFAULT;
+    }
+
     void Update ()
     {
         mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -109,7 +125,28 @@ public class PlayerManager : MonoBehaviour {
                 UpdateSelectableController();
 
                 if (Input.GetMouseButtonUp(1))
-                    MoveSelectedUnitsToNewTarget();
+                {
+                    MoveSelectedUnitsToNewTarget(false);
+                }
+
+                break;
+
+            case PLAYER_ACTION_STATE.ATTACK_MOVE:
+
+                if (!CursorHoveringUI.value)
+                {
+                    if (Input.GetMouseButtonUp(0))
+                    {
+                        SetDefaultState();
+                        return;
+                    }
+
+                    else if(Input.GetMouseButtonUp(1))
+                    {
+                        MoveSelectedUnitsToNewTarget(true);
+                        SetDefaultState();
+                    }
+                }
 
                 break;
 
@@ -125,10 +162,14 @@ public class PlayerManager : MonoBehaviour {
 
         // If not found, see if any units occupy nodes in Tiles
         if (newSelectableController == null)
+        {
             newSelectableController = Grid.instance.GetUnitFromWorldPoint(mousePosition);
-
+        }
+            
         if (mouseHoveringController != null)
+        {
             newSelectableController = mouseHoveringController;
+        }
 
         // Only change mouse cursor when selectable controller changes
         if (newSelectableController != selectableController)
@@ -199,7 +240,6 @@ public class PlayerManager : MonoBehaviour {
                     EventManager.TriggerEvent("SetBuildCursor");
                 }
 
-
                 // Repair
                 else if (building.hitpointsLeft < building.maxHitPoints)
                 {
@@ -239,14 +279,16 @@ public class PlayerManager : MonoBehaviour {
         }
     }
 
-    public void MoveSelectedUnitsToNewTarget()
+    public void MoveSelectedUnitsToNewTarget(bool attackMode)
     {
         List<UnitStateController> selectedUnits = _controllerSelecting.GetSelectedUnits();
 
         // No units selected,
         // or enemy unit selected
         if (selectedUnits.Count == 0 || selectedUnits[0].playerID != PlayerManager.myPlayerID)
+        {
             return;
+        }
 
         float averagePositionX = 0;
         float averagePositionY = 0;
@@ -262,8 +304,14 @@ public class PlayerManager : MonoBehaviour {
 
         for (int i = 0; i < selectedUnits.Count; i++)
         {
+            if(attackMode)
+            {
+                Vector2 offset = new Vector2(averagePositionX - selectedUnits[i]._transform.position.x, averagePositionY - selectedUnits[i]._transform.position.y);
+                selectedUnits[i].MoveToInAttackMode(mousePosition - offset);
+            }
+
             // Move to controller on location
-            if(selectableController != null)
+            else if(selectableController != null)
             {
                 selectedUnits[i].MoveTo(selectableController);
             }

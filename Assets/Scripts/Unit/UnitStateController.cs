@@ -29,6 +29,9 @@ public class UnitStateController : BaseController
     public MoveToNearbyEnemy moveToNearbyEnemyState;
 
     [HideInInspector]
+    public UnitAttackMode attackMoveState;
+
+    [HideInInspector]
     public UnitBuild buildState;
 
     [HideInInspector]
@@ -85,6 +88,7 @@ public class UnitStateController : BaseController
         moveToPositionState = ScriptableObject.CreateInstance<UnitMoveToPosition>();
         moveToControllerState = ScriptableObject.CreateInstance<UnitMoveToController>();
         moveToNearbyEnemyState = ScriptableObject.CreateInstance<MoveToNearbyEnemy>();
+        attackMoveState = ScriptableObject.CreateInstance<UnitAttackMode>();
         buildState = ScriptableObject.CreateInstance<UnitBuild>();
         gatherState = ScriptableObject.CreateInstance<UnitGather>();
         attackState = ScriptableObject.CreateInstance<UnitAttack>();
@@ -144,6 +148,16 @@ public class UnitStateController : BaseController
         targetController = null;
 
         TransitionToState(moveToPositionState);
+    }
+
+    public void MoveToInAttackMode(Vector2 targetPosition)
+    {
+        this.targetPosition = targetPosition;
+
+        // No longer targetting a Controller
+        targetController = null;
+
+        TransitionToState(attackMoveState);
     }
 
     public void SeekClosestResource(string resourceTitle)
@@ -296,8 +310,7 @@ public class UnitStateController : BaseController
         }
     }
 
-    // Todo include animals
-    void LookForNearbyEnemies()
+    public void LookForNearbyEnemies()
     {
         List<UnitStateController> enemyUnitsDetected = new List<UnitStateController>();
 

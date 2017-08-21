@@ -37,7 +37,6 @@ public class UnitMoveToController : UnitMoveTo
         {
             _pathfinder.FindPath(endNode);
         }
-            
 
         if(_pathfinder.path.Count > 0)
         {

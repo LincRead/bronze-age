@@ -133,7 +133,7 @@ public class ControllerSelecting : MonoBehaviour {
     {
         BaseController controller = PlayerManager.instance.selectableController;
 
-        if (controller != null)
+        if (controller != null && controller.controllerType != BaseController.CONTROLLER_TYPE.UNIT)
         {
             controller.Select();
             selectedController = controller;

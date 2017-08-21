@@ -13,6 +13,8 @@ public class UnitView : ControllerUIView {
         unitController = controller.GetComponent<UnitStateController>();
         ui.ShowHitpoints(unitController.hitpointsLeft, unitController._unitStats.maxHitpoints);
         ui.ShowStats(_controller.statSprites, _controller.GetUniqueStats());
+
+        EventManager.TriggerEvent("ActivateUnitActionsView");
     }
 
     public override void Update()
@@ -25,5 +27,7 @@ public class UnitView : ControllerUIView {
         ui.HideHitpoints();
         ui.HideStats();
         ui.HideStats();
+
+        EventManager.TriggerEvent("DisableUnitActionsView");
     }
 }

@@ -15,6 +15,8 @@ public class SelectBuildingButton : UnitUIButton {
 
     protected override void OnClick()
     {
+        base.OnClick();
+
         // Cancel placement of another building
         PlayerManager.instance.CancelPlaceBuildingState();
 

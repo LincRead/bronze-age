@@ -11,6 +11,7 @@ public class BuildingsView : UnitView
         base.OnEnter(ui, controller);
 
         EventManager.TriggerEvent("ActivateBuildingsView");
+        EventManager.TriggerEvent("DisableUnitActionsView");
     }
 
     public override void OnExit()

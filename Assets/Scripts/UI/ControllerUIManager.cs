@@ -14,6 +14,7 @@ public class ControllerUIManager : MonoBehaviour {
     [Header("Buttons")]
     public Button[] villagerButtons;
     public Button[] buildingButtons;
+    public Button[] unitActionButtons;
 
     [HideInInspector]
     public enum CONTROLLER_UI_VIEW
@@ -99,6 +100,9 @@ public class ControllerUIManager : MonoBehaviour {
             btn.gameObject.SetActive(false);
 
         foreach (Button btn in buildingButtons)
+            btn.gameObject.SetActive(false);
+
+        foreach (Button btn in unitActionButtons)
             btn.gameObject.SetActive(false);
 
         ChangeView(CONTROLLER_UI_VIEW.NONE, null);
