@@ -17,6 +17,9 @@ public class Building : BaseController {
     [SerializeField]
     public Sprite[] constructionSprites = new Sprite[3];
 
+    [SerializeField]
+    public Sprite[] damagedSprites = new Sprite[2];
+
     public float stepsToConstruct = 3f;
     private float stepsConstructed = 0f;
 
@@ -199,6 +202,20 @@ public class Building : BaseController {
 
         else
         {
+            // Show how damaged the building is visually
+            if (damagedSprites.Length == 2)
+            {
+                if ((float)((float)hitpointsLeft / (float)maxHitPoints) < 0.33f)
+                {
+                    _spriteRenderer.sprite = damagedSprites[1];
+                }
+
+                else if ((float)((float)hitpointsLeft / (float)maxHitPoints) < 0.66f)
+                {
+                    _spriteRenderer.sprite = damagedSprites[0];
+                }
+            }
+
             _healthBar.UpdateHitpointsAmount(hitpointsLeft, maxHitPoints);
         }
     }
