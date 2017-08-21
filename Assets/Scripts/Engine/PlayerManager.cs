@@ -109,7 +109,7 @@ public class PlayerManager : MonoBehaviour {
                 UpdateSelectableController();
 
                 if (Input.GetMouseButtonUp(1))
-                    MoveSelectedUnitsToTarget();
+                    MoveSelectedUnitsToNewTarget();
 
                 break;
 
@@ -145,65 +145,17 @@ public class PlayerManager : MonoBehaviour {
         {
             if (selectableController.controllerType == BaseController.CONTROLLER_TYPE.STATIC_RESOURCE)
             {
-                if (_controllerSelecting.GetSelectedGatherers().Count > 0 
-                    && _controllerSelecting.selectedEnemy == null // Not selected an enemy Villager
-                    && !CursorHoveringUI.value)
-                {
-                    Resource resource = selectableController.GetComponent<Resource>();
-
-                    switch(resource.resourceType)
-                    {
-                        case Resource.HARVEST_TYPE.CHOP: EventManager.TriggerEvent("SetChopCursor"); break;
-                        case Resource.HARVEST_TYPE.MINE: EventManager.TriggerEvent("SetMineCursor"); break;
-                        case Resource.HARVEST_TYPE.GATHER: EventManager.TriggerEvent("SetGatherCursor"); break;
-                        case Resource.HARVEST_TYPE.FARM: EventManager.TriggerEvent("SetFarmCursor"); break;
-                        default: EventManager.TriggerEvent("SetDefaultCursor"); break;
-                    }
-                }
+                HandleMouseOverResource();
             }
 
             else if (selectableController.controllerType == BaseController.CONTROLLER_TYPE.BUILDING)
             {
-                Building building = selectableController.GetComponent<Building>();
-
-                // Player building
-                if(building.playerID == PlayerManager.myPlayerID)
-                {
-                    if (!building.constructed && !CursorHoveringUI.value)
-                    {
-                        EventManager.TriggerEvent("SetBuildCursor");
-                    }
-
-                    else
-                    {
-                        EventManager.TriggerEvent("SetDefaultCursor");
-                    }
-                }
-
-                // Enemy building
-                else if(_controllerSelecting.GetSelectedUnits().Count > 0)
-                {
-                    EventManager.TriggerEvent("SetAttackCursor");
-                }
-
-                else
-                {
-                    EventManager.TriggerEvent("SetDefaultCursor");
-                }
+                HandleMouseOverBuilding();
             }
 
             else if(selectableController.controllerType == BaseController.CONTROLLER_TYPE.UNIT)
             {
-                if (_controllerSelecting.GetSelectedUnits().Count > 0 
-                    && selectableController.playerID != PlayerManager.myPlayerID)
-                {
-                    EventManager.TriggerEvent("SetAttackCursor");
-                }
-
-                else
-                {
-                    EventManager.TriggerEvent("SetDefaultCursor");
-                }
+                HandleMouseOverUnit();
             }
         }
 
@@ -213,7 +165,70 @@ public class PlayerManager : MonoBehaviour {
         }
     }
 
-    public void MoveSelectedUnitsToTarget()
+    void HandleMouseOverResource()
+    {
+        if (_controllerSelecting.GetSelectedGatherers().Count > 0
+            && _controllerSelecting.selectedEnemy == null // Not selected an enemy Villager
+            && !CursorHoveringUI.value)
+        {
+            Resource resource = selectableController.GetComponent<Resource>();
+
+            switch (resource.resourceType)
+            {
+                case Resource.HARVEST_TYPE.CHOP: EventManager.TriggerEvent("SetChopCursor"); break;
+                case Resource.HARVEST_TYPE.MINE: EventManager.TriggerEvent("SetMineCursor"); break;
+                case Resource.HARVEST_TYPE.GATHER: EventManager.TriggerEvent("SetGatherCursor"); break;
+                case Resource.HARVEST_TYPE.FARM: EventManager.TriggerEvent("SetFarmCursor"); break;
+                default: EventManager.TriggerEvent("SetDefaultCursor"); break;
+            }
+        }
+    }
+
+    void HandleMouseOverBuilding()
+    {
+        Building building = selectableController.GetComponent<Building>();
+
+        // Player building
+        if (building.playerID == PlayerManager.myPlayerID)
+        {
+            if (!building.constructed && !CursorHoveringUI.value)
+            {
+                EventManager.TriggerEvent("SetBuildCursor");
+            }
+
+            else
+            {
+                EventManager.TriggerEvent("SetDefaultCursor");
+            }
+        }
+
+        // Enemy building
+        else if (_controllerSelecting.GetSelectedUnits().Count > 0)
+        {
+            EventManager.TriggerEvent("SetAttackCursor");
+        }
+
+        else
+        {
+            EventManager.TriggerEvent("SetDefaultCursor");
+        }
+    }
+
+    void HandleMouseOverUnit()
+    {
+        if (_controllerSelecting.GetSelectedUnits().Count > 0
+            && selectableController.playerID != PlayerManager.myPlayerID)
+        {
+            EventManager.TriggerEvent("SetAttackCursor");
+        }
+
+        else
+        {
+            EventManager.TriggerEvent("SetDefaultCursor");
+        }
+    }
+
+    public void MoveSelectedUnitsToNewTarget()
     {
         List<UnitStateController> selectedUnits = _controllerSelecting.GetSelectedUnits();
 
