@@ -191,9 +191,20 @@ public class PlayerManager : MonoBehaviour {
         // Player building
         if (building.playerID == PlayerManager.myPlayerID)
         {
-            if (!building.constructed && !CursorHoveringUI.value)
+            if (!CursorHoveringUI.value)
             {
-                EventManager.TriggerEvent("SetBuildCursor");
+                // Construct
+                if (!building.constructed)
+                {
+                    EventManager.TriggerEvent("SetBuildCursor");
+                }
+
+
+                // Repair
+                else if (building.hitpointsLeft < building.maxHitPoints)
+                {
+                    EventManager.TriggerEvent("SetBuildCursor");
+                }
             }
 
             else

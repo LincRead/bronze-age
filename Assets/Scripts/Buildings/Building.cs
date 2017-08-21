@@ -62,6 +62,7 @@ public class Building : BaseController {
         _healthBar.Init(size);
         _healthBar.SetAlignment(playerID == PlayerManager.myPlayerID);
         _healthBar.UpdateHitpointsAmount(hitpointsLeft, maxHitPoints);
+        UpdateDamagedSprite();
 
         SetupTeamColor();
     }
@@ -145,22 +146,36 @@ public class Building : BaseController {
 
     public void Build(float buildAmount)
     {
-        stepsConstructed += buildAmount * Time.deltaTime;
-
-        if(stepsConstructed >= stepsToConstruct / 2)
+        // Construct
+        if(!constructed)
         {
-            _spriteRenderer.sprite = constructionSprites[1];
+            stepsConstructed += buildAmount * Time.deltaTime;
 
-            if (stepsConstructed >= stepsToConstruct)
+            if (stepsConstructed >= stepsToConstruct / 2)
             {
-                FinishConstruction();
+                _spriteRenderer.sprite = constructionSprites[1];
+
+                if (stepsConstructed >= stepsToConstruct)
+                {
+                    FinishConstruction();
+                }
             }
         }
-    }
 
-    public float GetPercentageConstructed()
-    {
-        return stepsConstructed / stepsToConstruct;
+        // Repair
+        else if(hitpointsLeft < maxHitPoints)
+        {
+            stepsConstructed += buildAmount * Time.deltaTime;
+
+            // Repair 2 HP per sec
+            if(stepsConstructed > 0.5f)
+            {
+                stepsConstructed = 0.0f;
+                hitpointsLeft += 1;
+                _healthBar.UpdateHitpointsAmount(hitpointsLeft, maxHitPoints);
+                UpdateDamagedSprite();
+            }
+        }
     }
 
     protected virtual void FinishConstruction()
@@ -202,21 +217,30 @@ public class Building : BaseController {
 
         else
         {
-            // Show how damaged the building is visually
-            if (damagedSprites.Length == 2)
-            {
-                if ((float)((float)hitpointsLeft / (float)maxHitPoints) < 0.33f)
-                {
-                    _spriteRenderer.sprite = damagedSprites[1];
-                }
+            _healthBar.UpdateHitpointsAmount(hitpointsLeft, maxHitPoints);
+            UpdateDamagedSprite();
+        }
+    }
 
-                else if ((float)((float)hitpointsLeft / (float)maxHitPoints) < 0.66f)
-                {
-                    _spriteRenderer.sprite = damagedSprites[0];
-                }
+    // Show how damaged the building is visually
+    void UpdateDamagedSprite()
+    {
+        if (damagedSprites.Length == 2 && damagedSprites[0] != null)
+        {
+            if ((float)((float)hitpointsLeft / (float)maxHitPoints) < 0.33f)
+            {
+                _spriteRenderer.sprite = damagedSprites[1];
             }
 
-            _healthBar.UpdateHitpointsAmount(hitpointsLeft, maxHitPoints);
+            else if ((float)((float)hitpointsLeft / (float)maxHitPoints) < 0.66f)
+            {
+                _spriteRenderer.sprite = damagedSprites[0];
+            }
+
+            else
+            {
+                _spriteRenderer.sprite = constructionSprites[2];
+            }
         }
     }
 
@@ -264,8 +288,18 @@ public class Building : BaseController {
         Destroy(gameObject);
     }
 
+    public float GetPercentageConstructed()
+    {
+        return stepsConstructed / stepsToConstruct;
+    }
+
     public virtual void Destroy()
     {
+        if (selected)
+        {
+            ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.NONE, null);
+        }
+
         Destroy(gameObject);
     }
 }
