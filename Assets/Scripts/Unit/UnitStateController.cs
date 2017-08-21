@@ -151,7 +151,7 @@ public class UnitStateController : BaseController
         float closestDistance = 10000;
         BaseController closestResource = null;
 
-        visibleTiles = Grid.instance.GetAllTilesBasedOnVisibilityFromNode(_unitStats.visionRange, _pathfinder.currentStandingOnNode);
+        //visibleTiles = Grid.instance.GetAllTilesBasedOnVisibilityFromNode(_unitStats.visionRange, _pathfinder.currentStandingOnNode);
 
         for (int i = 0; i < visibleTiles.Count; i++)
         {
@@ -299,7 +299,6 @@ public class UnitStateController : BaseController
     // Todo include animals
     void LookForNearbyEnemies()
     {
-        Node currentNode = _pathfinder.currentStandingOnNode;
         List<UnitStateController> enemyUnitsDetected = new List<UnitStateController>();
 
         for (int i = 0; i < visibleTiles.Count; i++)

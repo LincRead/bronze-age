@@ -91,50 +91,8 @@ public class UnitMoveToController : UnitMoveTo
         }
 
         if (_controller.targetController.IntersectsPoint(nextTargetNode.gridPosPoint))
-        { 
-            if (_targetController.controllerType == BaseController.CONTROLLER_TYPE.UNIT)
-            {
-                if (_targetController.playerID != _controller.playerID)
-                {
-                    _controller.TransitionToState(_controller.attackState);
-                }
-
-                else
-                {
-                    _controller.TransitionToState(_controller.idleState);
-                }
-            }
-
-            else if (_targetController.controllerType == BaseController.CONTROLLER_TYPE.BUILDING)
-            {
-                if(_targetController.playerID == PlayerManager.myPlayerID)
-                {
-                    if (_controller._unitStats.builder)
-                    {
-                        _controller.TransitionToState(_controller.buildState);
-                    }
-                }
-
-                else
-                {
-                    _controller.TransitionToState(_controller.attackState);
-                }
-            }
-
-            else if (_targetController.controllerType == BaseController.CONTROLLER_TYPE.STATIC_RESOURCE)
-            {
-                if(_controller._unitStats.gatherer)
-                {
-                    _controller.TransitionToState(_controller.gatherState);
-                }
-            }
-
-            else
-            {
-                _controller.TransitionToState(_controller.idleState);
-            }
-
-            _controller.FaceController(_targetController);
+        {
+            ReachedTarget();
         }
 
         // Didn't find path
@@ -142,6 +100,68 @@ public class UnitMoveToController : UnitMoveTo
         else if (_pathfinder.path.Count == 0)
         {
             HandleNoPathToTargetControllerFound();
+        }
+    }
+
+    void ReachedTarget()
+    {
+        if (_targetController.controllerType == BaseController.CONTROLLER_TYPE.UNIT)
+        {
+            ReachedTargetUnit();
+        }
+
+        else if (_targetController.controllerType == BaseController.CONTROLLER_TYPE.BUILDING)
+        {
+            ReachedTargetBuilding();
+        }
+
+        else if (_targetController.controllerType == BaseController.CONTROLLER_TYPE.STATIC_RESOURCE)
+        {
+            ReachedTargetStaticResource();
+        }
+
+        else
+        {
+            _controller.TransitionToState(_controller.idleState);
+        }
+
+        _controller.FaceController(_targetController);
+    }
+
+    void ReachedTargetUnit()
+    {
+        if (_targetController.playerID != _controller.playerID)
+        {
+            _controller.TransitionToState(_controller.attackState);
+        }
+
+        else
+        {
+            _controller.TransitionToState(_controller.idleState);
+        }
+    }
+
+    void ReachedTargetBuilding()
+    {
+        if (_targetController.playerID == PlayerManager.myPlayerID)
+        {
+            if (_controller._unitStats.builder)
+            {
+                _controller.TransitionToState(_controller.buildState);
+            }
+        }
+
+        else
+        {
+            _controller.TransitionToState(_controller.attackState);
+        }
+    }
+
+    void ReachedTargetStaticResource()
+    {
+        if (_controller._unitStats.gatherer)
+        {
+            _controller.TransitionToState(_controller.gatherState);
         }
     }
 
