@@ -327,6 +327,16 @@ public class PlayerManager : MonoBehaviour {
         EventManager.TriggerEvent("ActivateMoveUnitsIndicator");
     }
 
+    public void StopAction()
+    {
+        List<UnitStateController> selectedUnits = _controllerSelecting.GetSelectedUnits();
+
+        for (int i = 0; i < selectedUnits.Count; i++)
+        {
+            selectedUnits[i].TransitionToState(selectedUnits[i].idleState);
+        }
+    }
+
     public void AddFriendlyUnitReference(UnitStateController unit, int player)
     {
         friendlyUnits.Add(unit);
