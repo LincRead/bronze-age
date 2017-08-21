@@ -14,7 +14,10 @@ public class UnitView : ControllerUIView {
         ui.ShowHitpoints(unitController.hitpointsLeft, unitController._unitStats.maxHitpoints);
         ui.ShowStats(_controller.statSprites, _controller.GetUniqueStats());
 
-        EventManager.TriggerEvent("ActivateUnitActionsView");
+        if(_controller.playerID == PlayerManager.myPlayerID)
+        {
+            EventManager.TriggerEvent("ActivateUnitActionsView");
+        }
     }
 
     public override void Update()
@@ -28,6 +31,9 @@ public class UnitView : ControllerUIView {
         ui.HideStats();
         ui.HideStats();
 
-        EventManager.TriggerEvent("DisableUnitActionsView");
+        if (_controller.playerID == PlayerManager.myPlayerID)
+        {
+            EventManager.TriggerEvent("DisableUnitActionsView");
+        }
     }
 }

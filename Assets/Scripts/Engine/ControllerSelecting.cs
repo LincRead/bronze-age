@@ -115,8 +115,8 @@ public class ControllerSelecting : MonoBehaviour {
 
         if(selectedGatherers.Count > 0)
             ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.VILLAGER, selectedGatherers[0]);
-        else
-            ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.NONE, null);
+        else if(selectedUnits.Count > 0)
+            ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.WARRIOR, selectedUnits[0]);
     }
 
     void SelectUnits(Rect selectionBox)
@@ -125,8 +125,8 @@ public class ControllerSelecting : MonoBehaviour {
 
         if(selectedGatherers.Count > 0)
             ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.VILLAGER, selectedGatherers[0]);
-        else
-            ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.NONE, null);
+        else if (selectedUnits.Count > 0)
+            ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.WARRIOR, selectedUnits[0]);
     }
 
     bool FindAndSelectController(Vector2 mousePos)

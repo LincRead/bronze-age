@@ -24,7 +24,8 @@ public class ControllerUIManager : MonoBehaviour {
         BUILDINGS,
         BUILDING_INFO,
         CONSTRUCTION_PROGRESS,
-        RECOURSE_INFO
+        RECOURSE_INFO,
+        WARRIOR
     }
 
     [Header("Hitpoints bar")]
@@ -57,6 +58,7 @@ public class ControllerUIManager : MonoBehaviour {
     [Header("Views")]
     public ControllerUIView nothingSelectedView;
     public VillagerView villagerView;
+    public UnitView warriorView;
     public BuildingsView buildingsView;
     public BuildingView buildingView;
     public ResourceView resourceView;
@@ -105,6 +107,8 @@ public class ControllerUIManager : MonoBehaviour {
         foreach (Button btn in unitActionButtons)
             btn.gameObject.SetActive(false);
 
+        warriorView = ScriptableObject.CreateInstance<UnitView>();
+
         ChangeView(CONTROLLER_UI_VIEW.NONE, null);
         HideTooltip();
         HideHitpoints();
@@ -134,6 +138,10 @@ public class ControllerUIManager : MonoBehaviour {
 
             case CONTROLLER_UI_VIEW.VILLAGER:
                 currentView = villagerView;
+                break;
+
+            case CONTROLLER_UI_VIEW.WARRIOR:
+                currentView = warriorView;
                 break;
 
             case CONTROLLER_UI_VIEW.BUILDINGS:

@@ -148,6 +148,11 @@ public class UnitMoveToController : UnitMoveTo
             {
                 _controller.TransitionToState(_controller.buildState);
             }
+
+            else
+            {
+                _controller.TransitionToState(_controller.idleState);
+            }
         }
 
         else
@@ -161,6 +166,11 @@ public class UnitMoveToController : UnitMoveTo
         if (_controller._unitStats.gatherer)
         {
             _controller.TransitionToState(_controller.gatherState);
+        }
+
+        else
+        {
+            _controller.TransitionToState(_controller.idleState);
         }
     }
 

@@ -43,6 +43,7 @@ public class UnitStateController : BaseController
     [HideInInspector]
     public UnitDie dieState;
 
+    //[HideInInspector]
     public UnitState currentState;
 
     //[HideInInspector]
@@ -130,6 +131,8 @@ public class UnitStateController : BaseController
 
     public void MoveTo(BaseController targetController)
     {
+
+
         // Don't do anything if target is already set
         // Don't target self
         if (this.targetController == targetController || this  == targetController)

@@ -10,7 +10,9 @@ public class VillagerView : UnitView
         base.OnEnter(ui, controller);
 
         if(_controller.playerID == PlayerManager.myPlayerID)
+        {
             EventManager.TriggerEvent("ActivateVillagerView");
+        }
     }
 
     public override void OnExit()
@@ -18,6 +20,8 @@ public class VillagerView : UnitView
         base.OnExit();
 
         if (_controller.playerID == PlayerManager.myPlayerID)
+        {
             EventManager.TriggerEvent("DisableVillagerView");
+        }
     }
 }
