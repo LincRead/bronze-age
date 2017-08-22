@@ -1,40 +1,47 @@
 fileFormatVersion: 2
-guid: 77d6596e935a0b943bc525b8de1414bc
-timeCreated: 1503371273
+guid: 31653b2da68c0294db56c01e2c5dbc8b
+timeCreated: 1503378013
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Club man_0
-    21300002: Club man_1
-    21300004: Club man_2
-    21300006: Club man_3
-    21300008: Club man_4
-    21300010: Club man_5
-    21300012: Club man_6
-    21300014: Club man_7
-    21300016: Club man_8
-    21300018: Club man_9
-    21300020: Club man_10
-    21300022: Club man_11
-    21300024: Club man_12
-    21300026: Club man_13
-    21300028: Club man_14
-    21300030: Club man_15
-    21300032: Club man_16
-    21300034: Club man_17
-    21300036: Club man_18
-    21300038: Club man_19
-    21300040: Club man_20
-    21300042: Club man_21
-    21300044: Club man_22
-    21300046: Club man_23
-    21300048: Club man_24
-    21300050: Club man_25
-    21300052: Club man_26
-    21300054: Club man_27
-    21300056: Club man_28
-    21300058: Club man_29
-    21300060: Club man_30
+    21300000: Archer_0
+    21300002: Archer_1
+    21300004: Archer_2
+    21300006: Archer_3
+    21300008: Archer_4
+    21300010: Archer_5
+    21300012: Archer_6
+    21300014: Archer_7
+    21300016: Archer_8
+    21300018: Archer_9
+    21300020: Archer_10
+    21300022: Archer_11
+    21300024: Archer_12
+    21300026: Archer_13
+    21300028: Archer_14
+    21300030: Archer_15
+    21300032: Archer_16
+    21300034: Archer_17
+    21300036: Archer_18
+    21300038: Archer_19
+    21300040: Archer_20
+    21300042: Archer_21
+    21300044: Archer_22
+    21300046: Archer_23
+    21300048: Archer_24
+    21300050: Archer_25
+    21300052: Archer_26
+    21300054: Archer_27
+    21300056: Archer_28
+    21300058: Archer_29
+    21300060: Archer_30
+    21300062: Archer_31
+    21300064: Archer_32
+    21300066: Archer_33
+    21300068: Archer_34
+    21300070: Archer_35
+    21300072: Archer_36
+    21300074: Archer_37
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -73,7 +80,7 @@ TextureImporter:
   spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 0
+  alignment: 7
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
@@ -96,12 +103,12 @@ TextureImporter:
     overridden: 0
   - buildTarget: Standalone
     maxTextureSize: 2048
-    textureFormat: -1
-    textureCompression: 0
+    textureFormat: 2
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
-    overridden: 0
+    overridden: 1
   - buildTarget: Windows Store Apps
     maxTextureSize: 2048
     textureFormat: -1
@@ -114,7 +121,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Club man_0
+      name: Archer_0
       rect:
         serializedVersion: 2
         x: 0
@@ -128,7 +135,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Club man_1
+      name: Archer_1
       rect:
         serializedVersion: 2
         x: 26
@@ -142,7 +149,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Club man_2
+      name: Archer_2
       rect:
         serializedVersion: 2
         x: 52
@@ -156,7 +163,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Club man_3
+      name: Archer_3
       rect:
         serializedVersion: 2
         x: 78
@@ -170,7 +177,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Club man_4
+      name: Archer_4
       rect:
         serializedVersion: 2
         x: 104
@@ -184,7 +191,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Club man_5
+      name: Archer_5
       rect:
         serializedVersion: 2
         x: 130
@@ -198,7 +205,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Club man_6
+      name: Archer_6
       rect:
         serializedVersion: 2
         x: 156
@@ -212,7 +219,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Club man_7
+      name: Archer_7
       rect:
         serializedVersion: 2
         x: 182
@@ -226,7 +233,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Club man_8
+      name: Archer_8
       rect:
         serializedVersion: 2
         x: 208
@@ -240,7 +247,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Club man_9
+      name: Archer_9
       rect:
         serializedVersion: 2
         x: 234
@@ -254,7 +261,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Club man_10
+      name: Archer_10
       rect:
         serializedVersion: 2
         x: 0
@@ -268,7 +275,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Club man_11
+      name: Archer_11
       rect:
         serializedVersion: 2
         x: 26
@@ -282,7 +289,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Club man_12
+      name: Archer_12
       rect:
         serializedVersion: 2
         x: 52
@@ -296,7 +303,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Club man_13
+      name: Archer_13
       rect:
         serializedVersion: 2
         x: 78
@@ -310,7 +317,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Club man_14
+      name: Archer_14
       rect:
         serializedVersion: 2
         x: 104
@@ -324,7 +331,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Club man_15
+      name: Archer_15
       rect:
         serializedVersion: 2
         x: 130
@@ -338,7 +345,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Club man_16
+      name: Archer_16
       rect:
         serializedVersion: 2
         x: 156
@@ -352,7 +359,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Club man_17
+      name: Archer_17
       rect:
         serializedVersion: 2
         x: 182
@@ -366,7 +373,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Club man_18
+      name: Archer_18
       rect:
         serializedVersion: 2
         x: 208
@@ -380,7 +387,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Club man_19
+      name: Archer_19
       rect:
         serializedVersion: 2
         x: 234
@@ -394,7 +401,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Club man_20
+      name: Archer_20
       rect:
         serializedVersion: 2
         x: 0
@@ -408,7 +415,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Club man_21
+      name: Archer_21
       rect:
         serializedVersion: 2
         x: 26
@@ -422,7 +429,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Club man_22
+      name: Archer_22
       rect:
         serializedVersion: 2
         x: 52
@@ -436,7 +443,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Club man_23
+      name: Archer_23
       rect:
         serializedVersion: 2
         x: 78
@@ -450,7 +457,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Club man_24
+      name: Archer_24
       rect:
         serializedVersion: 2
         x: 104
@@ -464,7 +471,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Club man_25
+      name: Archer_25
       rect:
         serializedVersion: 2
         x: 130
@@ -478,7 +485,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Club man_26
+      name: Archer_26
       rect:
         serializedVersion: 2
         x: 156
@@ -492,7 +499,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Club man_27
+      name: Archer_27
       rect:
         serializedVersion: 2
         x: 182
@@ -506,7 +513,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Club man_28
+      name: Archer_28
       rect:
         serializedVersion: 2
         x: 208
@@ -520,7 +527,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Club man_29
+      name: Archer_29
       rect:
         serializedVersion: 2
         x: 234
@@ -534,10 +541,108 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Club man_30
+      name: Archer_30
       rect:
         serializedVersion: 2
         x: 0
+        y: 0
+        width: 26
+        height: 20
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Archer_31
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 0
+        width: 26
+        height: 20
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Archer_32
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 0
+        width: 26
+        height: 20
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Archer_33
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 0
+        width: 26
+        height: 20
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Archer_34
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 0
+        width: 26
+        height: 20
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Archer_35
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 0
+        width: 26
+        height: 20
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Archer_36
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 0
+        width: 26
+        height: 20
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Archer_37
+      rect:
+        serializedVersion: 2
+        x: 182
         y: 0
         width: 26
         height: 20

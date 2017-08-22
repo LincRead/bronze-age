@@ -45,24 +45,28 @@ public class UnitMoveToController : UnitMoveTo
 
         // Reset
         if (_targetController.controllerType != BaseController.CONTROLLER_TYPE.UNIT)
+        {
             Grid.instance.SetWalkableValueForTiles(_targetController.GetPosition(), _targetController.size, false);
+        }
     }
 
     protected override void ReachedNextTargetNode()
     {
+        _controller.UpdateVisibility();
+
         _pathfinder.path.Remove(nextTargetNode);
 
         // Did controller move?
         if (endNode != _controller.targetController.GetPrimaryNode())
+        {
             FindPathToTarget();
+        }
 
         // Fetch next target node
         if (_pathfinder.path.Count > 0)
         {
             nextTargetNode = _pathfinder.path[0];
         }
-
-        _controller.UpdateVisibility();
     }
 
     public override void UpdateState()

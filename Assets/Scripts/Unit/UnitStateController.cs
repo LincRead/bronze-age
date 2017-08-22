@@ -26,6 +26,9 @@ public class UnitStateController : BaseController
     public UnitMoveToController moveToControllerState;
 
     [HideInInspector]
+    public RangedMoveToController rangedMoveToControllerState;
+
+    [HideInInspector]
     public MoveToNearbyEnemy moveToNearbyEnemyState;
 
     [HideInInspector]
@@ -90,10 +93,22 @@ public class UnitStateController : BaseController
         moveToControllerState = ScriptableObject.CreateInstance<UnitMoveToController>();
         moveToNearbyEnemyState = ScriptableObject.CreateInstance<MoveToNearbyEnemy>();
         attackMoveState = ScriptableObject.CreateInstance<UnitAttackMode>();
-        buildState = ScriptableObject.CreateInstance<UnitBuild>();
-        gatherState = ScriptableObject.CreateInstance<UnitGather>();
+
         attackState = ScriptableObject.CreateInstance<UnitAttack>();
         dieState = ScriptableObject.CreateInstance<UnitDie>();
+
+        // Villager states
+        if (_unitStats.isVillager)
+        {
+            buildState = ScriptableObject.CreateInstance<UnitBuild>();
+            gatherState = ScriptableObject.CreateInstance<UnitGather>();
+        }
+
+        // Special states
+        if (_unitStats.isRanged)
+        {
+            rangedMoveToControllerState = ScriptableObject.CreateInstance<RangedMoveToController>();
+        }
 
         // Initial state
         currentState = idleState;
@@ -129,14 +144,33 @@ public class UnitStateController : BaseController
         base.Update();
     }
 
-    public void MoveTo(BaseController targetController)
+    public void RangedMoveTo(BaseController targetController)
     {
-
+        if(!_unitStats.isRanged)
+        {
+            return;
+        }
 
         // Don't do anything if target is already set
         // Don't target self
-        if (this.targetController == targetController || this  == targetController)
+        if (this.targetController == targetController || this == targetController)
+        {
             return;
+        }
+
+        this.targetController = targetController;
+
+        TransitionToState(rangedMoveToControllerState);
+    }
+
+    public void MoveTo(BaseController targetController)
+    {
+        // Don't do anything if target is already set
+        // Don't target self
+        if (this.targetController == targetController || this  == targetController)
+        {
+            return;
+        }
 
         this.targetController = targetController;
 
@@ -236,12 +270,17 @@ public class UnitStateController : BaseController
         }
     }
 
-    public void Attack()
+    public void AttackTarget()
     {
         if (targetController == null || targetController.dead)
             return;
          
         targetController.Hit(_unitStats.damage);
+    }
+
+    public void FireProjectileTowards(Node node)
+    {
+
     }
 
     public override void Hit(int damageValue)
@@ -350,11 +389,21 @@ public class UnitStateController : BaseController
             }
         }
 
-        if(closestDistance <= (_unitStats.visionRange * 10))
+        if (closestDistance <= (_unitStats.visionRange * 10))
         {
-            // Chase closest enemy
             targetController = closestEnemy;
-            TransitionToState(moveToNearbyEnemyState);
+
+            // Chase closest enemy
+            if (_unitStats.isRanged)
+            {
+                TransitionToState(rangedMoveToControllerState);
+            }
+
+            else
+            {
+                
+                TransitionToState(moveToNearbyEnemyState);
+            }
         }
     }
 

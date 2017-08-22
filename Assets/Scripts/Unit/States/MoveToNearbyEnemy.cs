@@ -13,7 +13,7 @@ public class MoveToNearbyEnemy : UnitMoveToController
         // Find path
         endNode = _targetController.GetPrimaryNode();
 
-        _pathfinder.maxDistanceToTargetNode = _controller._unitStats.attackRange * 2;
+        _pathfinder.maxDistanceToTargetNode = _controller._unitStats.attackDetectionRange * 2;
 
         if (endNode != null)
             _pathfinder.FindPath(endNode);

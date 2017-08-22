@@ -32,7 +32,9 @@ public class UnitMoveTo : UnitState
         if (_pathfinder.path.Count > 0)
         {
             if (!_controller._animator.GetCurrentAnimatorStateInfo(0).IsName("run"))
+            {
                 _controller._animator.Play("run");
+            }
         }
     }
 
