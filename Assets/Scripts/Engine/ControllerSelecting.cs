@@ -160,7 +160,7 @@ public class ControllerSelecting : MonoBehaviour {
             else
                 selectedEnemy = unit;
 
-            if(unit._unitStats.gatherer)
+            if(unit._unitStats.isVillager)
             {
                 selectedGatherers.Add(unit);
             }
@@ -179,7 +179,7 @@ public class ControllerSelecting : MonoBehaviour {
 
                 selectedUnits.Add(friendlyUnits[i]);
 
-                if (friendlyUnits[i]._unitStats.gatherer)
+                if (friendlyUnits[i]._unitStats.isVillager)
                 {
                     selectedGatherers.Add(friendlyUnits[i]);
                 }

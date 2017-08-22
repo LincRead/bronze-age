@@ -12,6 +12,5 @@ public class UnitStats : ScriptableObject {
     public int visionRange = 8;
     public int attackRange = 5;
 
-    public bool builder = false;
-    public bool gatherer = false;
+    public bool isVillager = false;
 }

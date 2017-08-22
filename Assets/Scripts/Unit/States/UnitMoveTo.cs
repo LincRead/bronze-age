@@ -33,8 +33,6 @@ public class UnitMoveTo : UnitState
         {
             if (!_controller._animator.GetCurrentAnimatorStateInfo(0).IsName("run"))
                 _controller._animator.Play("run");
-            else
-                _controller._animator.Play("run", -1, 0.0f);
         }
     }
 

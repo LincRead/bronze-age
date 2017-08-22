@@ -144,7 +144,7 @@ public class UnitMoveToController : UnitMoveTo
     {
         if (_targetController.playerID == PlayerManager.myPlayerID)
         {
-            if (_controller._unitStats.builder)
+            if (_controller._unitStats.isVillager)
             {
                 _controller.TransitionToState(_controller.buildState);
             }
@@ -163,7 +163,7 @@ public class UnitMoveToController : UnitMoveTo
 
     void ReachedTargetStaticResource()
     {
-        if (_controller._unitStats.gatherer)
+        if (_controller._unitStats.isVillager)
         {
             _controller.TransitionToState(_controller.gatherState);
         }
@@ -182,7 +182,7 @@ public class UnitMoveToController : UnitMoveTo
                 _controller._pathfinder.currentStandingOnNode.parentTile, 
                 _targetController.GetPrimaryTile()) <= _controller._unitStats.visionRange * 10)
         {
-            if (_controller._unitStats.gatherer)
+            if (_controller._unitStats.isVillager)
             {
                 _controller.ignoreControllers.Add(_targetController);
                 _controller.SeekClosestResource(_targetController.title);
