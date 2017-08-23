@@ -2,17 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnitModeToAttackMode : UnitMoveToController
+public class UnitAttackMode : UnitMoveToPosition
 {
     protected override void ReachedNextTargetNode()
     {
         base.ReachedNextTargetNode();
 
         _controller.LookForNearbyEnemies();
-    }
-
-    protected override void IntersectingTarget()
-    {
-        // No target
     }
 }
