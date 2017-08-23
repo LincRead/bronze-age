@@ -550,25 +550,21 @@ public class Grid : MonoBehaviour {
         return false;
     }
 
-    public List<Tile> GetAllTilesBasedOnVisibilityFromNode(int visiblity, Node node)
+    public List<Tile> GetAllTilesBasedOnVisibilityFromNode(float visibilityValue, Node node)
     {
         List<Tile> visibleTiles = new List<Tile>();
         Tile primaryTile = node.parentTile;
+        int visibility = (int)(visibilityValue / 2);
 
-        for (int i = -visiblity; i < visiblity; i++)
+        for (int i = -visibility; i < visibility; i++)
         {
-            for (int j = -visiblity; j < visiblity; j++)
+            for (int j = -visibility; j < visibility; j++)
             {
-                if (primaryTile.gridPosX + i < 0
+                if (!(primaryTile.gridPosX + i < 0
                     || primaryTile.gridPosY + j < 0
                     || primaryTile.gridPosX + i > numTilesX - 1
                     || primaryTile.gridPosY + j > numTilesY - 1
-                    || GetDistanceBetweenTiles(primaryTile, tiles[primaryTile.gridPosX + i, primaryTile.gridPosY + j]) >= (visiblity * 10))
-                {
-
-                }
-
-                else
+                    || GetDistanceBetweenTiles(primaryTile, tiles[primaryTile.gridPosX + i, primaryTile.gridPosY + j]) >= (visibility * 10)))
                 {
                     visibleTiles.Add(tiles[primaryTile.gridPosX + i, primaryTile.gridPosY + j]);
                 }

@@ -107,7 +107,9 @@ public class BaseController : MonoBehaviour {
     protected void CheckTileAndSetVisibility()
     {
         if (playerID != PlayerManager.myPlayerID && !GetPrimaryTile().explored)
+        {
             _spriteRenderer.enabled = false;
+        }
     }
 
     public virtual Vector2 GetPosition()
@@ -118,6 +120,11 @@ public class BaseController : MonoBehaviour {
     public virtual Node GetPrimaryNode()
     {
         return Grid.instance.GetNodeFromWorldPoint(_transform.position + new Vector3(0.0f, 0.04f));
+    }
+
+    public Node GetMiddleNode()
+    {
+        return Grid.instance.GetNodeFromWorldPoint(_transform.position + new Vector3(0.0f, size * Grid.instance.tileHeight));
     }
 
     public virtual Tile GetPrimaryTile()

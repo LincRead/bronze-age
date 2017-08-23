@@ -152,7 +152,7 @@ public class Pathfinding : MonoBehaviour {
                     neighbour.hCost = GetDistanceBetweenNodes(neighbour, destinationNode);
                     neighbour.parent = currentNode;
 
-                    if(maxDistanceToTargetNode != -1 && neighbour.hCost > maxDistanceToTargetNode * 10)
+                    if(maxDistanceToTargetNode != -1 && neighbour.hCost > maxDistanceToTargetNode)
                     {
                         continue;
                     }

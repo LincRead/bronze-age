@@ -47,13 +47,21 @@ public class UnitMoveTo : UnitState
     {
         // Fetch next target node
         if (_pathfinder.path.Count > 0)
+        {
             nextTargetNode = _pathfinder.path[0];
-        else return;
+        }
+
+        else
+        {
+            velocity = Vector2.zero;
+            return;
+        }
 
         // Reached next target node
         if (Vector2.Distance(_transform.position, nextTargetNode.worldPosition) < 0.01f)
         {
             ReachedNextTargetNode();
+            _controller.UpdateVisibility();
         }
 
         // Another unit is blocking the path
@@ -107,8 +115,6 @@ public class UnitMoveTo : UnitState
         {
             nextTargetNode = _pathfinder.path[0];
         }
-
-        _controller.UpdateVisibility();
     }
 
     protected void FindPathToTargetAvoidingUnit(UnitStateController unitToAvoid)

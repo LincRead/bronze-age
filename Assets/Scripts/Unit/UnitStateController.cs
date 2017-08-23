@@ -26,22 +26,28 @@ public class UnitStateController : BaseController
     public UnitMoveToController moveToControllerState;
 
     [HideInInspector]
-    public RangedMoveToController rangedMoveToControllerState;
+    public RangedUnitMoveToController rangedMoveToControllerState;
 
     [HideInInspector]
-    public MoveToNearbyEnemy moveToNearbyEnemyState;
+    public UnitMoveToNearbyEnemy moveToNearbyEnemyState;
+
+    [HideInInspector]
+    public RangedUnitMoveToNearbyEnemy rangedMoveToNearbyEnemyState;
 
     [HideInInspector]
     public UnitAttackMode attackMoveState;
+
+    [HideInInspector]
+    public UnitAttack attackState;
+
+    [HideInInspector]
+    public RangedUnitAttack rangedAttackState;
 
     [HideInInspector]
     public UnitBuild buildState;
 
     [HideInInspector]
     public UnitGather gatherState;
-
-    [HideInInspector]
-    public UnitAttack attackState;
 
     [HideInInspector]
     public UnitDie dieState;
@@ -67,6 +73,9 @@ public class UnitStateController : BaseController
     [HideInInspector]
     public List<BaseController> ignoreControllers = new List<BaseController>();
 
+    [HideInInspector]
+    public float distanceToTarget = 10000;
+
     protected override void Start()
     {
         base.Start();
@@ -91,7 +100,7 @@ public class UnitStateController : BaseController
         idleState = ScriptableObject.CreateInstance<UnitIdle>();
         moveToPositionState = ScriptableObject.CreateInstance<UnitMoveToPosition>();
         moveToControllerState = ScriptableObject.CreateInstance<UnitMoveToController>();
-        moveToNearbyEnemyState = ScriptableObject.CreateInstance<MoveToNearbyEnemy>();
+        moveToNearbyEnemyState = ScriptableObject.CreateInstance<UnitMoveToNearbyEnemy>();
         attackMoveState = ScriptableObject.CreateInstance<UnitAttackMode>();
 
         attackState = ScriptableObject.CreateInstance<UnitAttack>();
@@ -107,7 +116,9 @@ public class UnitStateController : BaseController
         // Special states
         if (_unitStats.isRanged)
         {
-            rangedMoveToControllerState = ScriptableObject.CreateInstance<RangedMoveToController>();
+            rangedMoveToControllerState = ScriptableObject.CreateInstance<RangedUnitMoveToController>();
+            rangedMoveToNearbyEnemyState = ScriptableObject.CreateInstance<RangedUnitMoveToNearbyEnemy>();
+            rangedAttackState = ScriptableObject.CreateInstance<RangedUnitAttack>();
         }
 
         // Initial state
@@ -144,13 +155,8 @@ public class UnitStateController : BaseController
         base.Update();
     }
 
-    public void RangedMoveTo(BaseController targetController)
+    public void MoveTo(BaseController targetController)
     {
-        if(!_unitStats.isRanged)
-        {
-            return;
-        }
-
         // Don't do anything if target is already set
         // Don't target self
         if (this.targetController == targetController || this == targetController)
@@ -160,19 +166,16 @@ public class UnitStateController : BaseController
 
         this.targetController = targetController;
 
-        TransitionToState(rangedMoveToControllerState);
-    }
-
-    public void MoveTo(BaseController targetController)
-    {
-        // Don't do anything if target is already set
-        // Don't target self
-        if (this.targetController == targetController || this  == targetController)
+        // Special cases for ranged units
+        if (_unitStats.isRanged)
         {
-            return;
+            if (targetController.controllerType != CONTROLLER_TYPE.STATIC_RESOURCE
+                && targetController.playerID != PlayerManager.myPlayerID)
+            {
+                TransitionToState(rangedMoveToControllerState);
+                return;
+            }
         }
-
-        this.targetController = targetController;
 
         TransitionToState(moveToControllerState);
     }
@@ -202,7 +205,7 @@ public class UnitStateController : BaseController
         float closestDistance = 10000;
         BaseController closestResource = null;
 
-        //visibleTiles = Grid.instance.GetAllTilesBasedOnVisibilityFromNode(_unitStats.visionRange, _pathfinder.currentStandingOnNode);
+        visibleTiles = Grid.instance.GetAllTilesBasedOnVisibilityFromNode(_unitStats.visionRange, _pathfinder.currentStandingOnNode);
 
         for (int i = 0; i < visibleTiles.Count; i++)
         {
@@ -232,6 +235,7 @@ public class UnitStateController : BaseController
 
     public void TransitionToState(UnitState nextState)
     {
+        distanceToTarget = 1000; //  Reset
         currentState.OnExit();
         currentState = nextState;
         currentState.OnEnter(this);
@@ -331,7 +335,9 @@ public class UnitStateController : BaseController
         visibleTiles = Grid.instance.GetAllTilesBasedOnVisibilityFromNode(_unitStats.visionRange, currentNode);
 
         if (playerID == PlayerManager.myPlayerID)
+        {
             ExploreFogOfWar();
+        }
     }
 
     void ExploreFogOfWar()
@@ -339,7 +345,9 @@ public class UnitStateController : BaseController
         for (int i = 0; i < visibleTiles.Count; i++)
         {
             if (!visibleTiles[i].explored)
+            {
                 visibleTiles[i].SetExplored();
+            }
         }
     }
 
@@ -381,7 +389,6 @@ public class UnitStateController : BaseController
         for(int i = 0; i < enemyUnits.Count; i++)
         {
             float distance = Grid.instance.GetDistanceBetweenNodes(enemyUnits[i].GetPrimaryNode(), _pathfinder.currentStandingOnNode);
-
             if (distance < closestDistance)
             {
                 closestDistance = distance;
@@ -389,19 +396,18 @@ public class UnitStateController : BaseController
             }
         }
 
-        if (closestDistance <= (_unitStats.visionRange * 10))
+        if (closestDistance <= (_unitStats.attackTriggerRadius * 10))
         {
             targetController = closestEnemy;
 
             // Chase closest enemy
             if (_unitStats.isRanged)
             {
-                TransitionToState(rangedMoveToControllerState);
+                TransitionToState(rangedMoveToNearbyEnemyState);
             }
 
             else
             {
-                
                 TransitionToState(moveToNearbyEnemyState);
             }
         }

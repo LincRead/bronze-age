@@ -10,7 +10,7 @@ public class UnitStats : ScriptableObject {
     public float attackSpeed = 1f;
     public float moveSpeed = 20f;
     public int visionRange = 8;
-    public int attackDetectionRange = 5;
+    public int attackTriggerRadius = 6;
 
     [Header("Ranged")]
     public bool isRanged = false;

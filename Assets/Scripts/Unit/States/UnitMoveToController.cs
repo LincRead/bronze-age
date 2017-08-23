@@ -17,11 +17,14 @@ public class UnitMoveToController : UnitMoveTo
 
         FindPathToTarget();
         PlayRunAnimation();
+
+        // Already intersecting target?
+        IntersectingTarget();
     }
 
     protected override void FindPathToTarget()
     {
-        if (_targetController == null)
+        if (_controller.targetController == null)
             return;
 
         // Make sure unit can use pathfinding to controller
@@ -41,6 +44,11 @@ public class UnitMoveToController : UnitMoveTo
         if(_pathfinder.path.Count > 0)
         {
             _controller.ignoreControllers.Clear();
+
+            // Set distance based on first Node
+            _controller.distanceToTarget = Grid.instance.GetDistanceBetweenNodes(
+                _controller._pathfinder.path[0],
+                _controller.targetController.GetPrimaryNode());
         }
 
         // Reset
@@ -52,7 +60,10 @@ public class UnitMoveToController : UnitMoveTo
 
     protected override void ReachedNextTargetNode()
     {
-        _controller.UpdateVisibility();
+        // Set distance based on the Node just reached - nextTargetNode
+        _controller.distanceToTarget = Grid.instance.GetDistanceBetweenNodes(
+            _controller._pathfinder.currentStandingOnNode,
+            _controller.targetController.GetPrimaryNode());
 
         _pathfinder.path.Remove(nextTargetNode);
 
@@ -67,11 +78,16 @@ public class UnitMoveToController : UnitMoveTo
         {
             nextTargetNode = _pathfinder.path[0];
         }
+
+        // Based on new nextTargetNode
+        IntersectingTarget();
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
+
+        _targetController = _controller.targetController;
 
         if (_targetController != null)
         {
@@ -93,11 +109,6 @@ public class UnitMoveToController : UnitMoveTo
             return;
         }
 
-        if (_controller.targetController.IntersectsPoint(nextTargetNode.gridPosPoint))
-        {
-            ReachedTarget();
-        }
-
         // Didn't find path
         // Do this check last
         else if (_pathfinder.path.Count == 0)
@@ -106,7 +117,18 @@ public class UnitMoveToController : UnitMoveTo
         }
     }
 
-    void ReachedTarget()
+    protected virtual void IntersectingTarget()
+    {
+        if (nextTargetNode == null)
+            return;
+
+        if (_controller.targetController.IntersectsPoint(nextTargetNode.gridPosPoint))
+        {
+            ReachTarget();
+        }
+    }
+
+    void ReachTarget()
     {
         if (_targetController.controllerType == BaseController.CONTROLLER_TYPE.UNIT)
         {
@@ -182,9 +204,9 @@ public class UnitMoveToController : UnitMoveTo
     {
         // Only seek resources close by if we are close to target resource
         if (_targetController.controllerType == BaseController.CONTROLLER_TYPE.STATIC_RESOURCE
-            && Grid.instance.GetDistanceBetweenTiles(
-                _controller._pathfinder.currentStandingOnNode.parentTile, 
-                _targetController.GetPrimaryTile()) <= _controller._unitStats.visionRange * 10)
+            && Grid.instance.GetDistanceBetweenNodes(
+                _controller._pathfinder.currentStandingOnNode, 
+                _targetController.GetPrimaryNode()) <= _controller._unitStats.visionRange * 10)
         {
             if (_controller._unitStats.isVillager)
             {

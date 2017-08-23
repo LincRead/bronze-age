@@ -7,8 +7,7 @@ public class UnitIdle : UnitState
     public override void OnEnter(UnitStateController controller)
     {
         base.OnEnter(controller);
-
-        controller._animator.Play("idle");
+        controller._animator.Play("idle", -1, 0.0f);
         controller.targetController = null;
         _controller.StartCoroutine("DetectNearbyEnemies");
     }

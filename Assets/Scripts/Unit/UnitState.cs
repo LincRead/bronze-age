@@ -18,8 +18,13 @@ public class UnitState : ScriptableObject
     public virtual void UpdateState()
     {
         timeSinceStateChange += Time.deltaTime;
+
         DoActions();
-        CheckTransitions();
+
+        if(_controller.currentState == this)
+        {
+            CheckTransitions();
+        }
     }
 
     public virtual void DoActions()

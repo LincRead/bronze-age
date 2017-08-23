@@ -8,9 +8,9 @@ public class UnitAttackMode : UnitMoveToPosition
     {
         base.ReachedNextTargetNode();
 
-        if(Grid.instance.GetDistanceBetweenTiles(
-            _controller._pathfinder.currentStandingOnNode.parentTile, 
-            endNode.parentTile) <= _controller._unitStats.visionRange * 10)
-        _controller.LookForNearbyEnemies();
+        if(_controller.distanceToTarget <= _controller._unitStats.attackTriggerRadius * 10)
+        {
+            _controller.LookForNearbyEnemies();
+        }
     }
 }

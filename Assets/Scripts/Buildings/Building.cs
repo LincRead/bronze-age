@@ -184,16 +184,22 @@ public class Building : BaseController {
         _spriteRenderer.sprite = constructionSprites[2];
 
         AddPlayerStats();
-        SetVisibility();
+
+        if(playerID == PlayerManager.myPlayerID)
+        {
+            SetVisibility();
+        }
 
         if (selected)
+        {
             ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.BUILDING_INFO, this);
+        }
     }
 
     public void SetVisibility()
     {
-        Node currentNode = GetPrimaryNode();
-        List<Tile> visibleTiles = Grid.instance.GetAllTilesBasedOnVisibilityFromNode(10, currentNode);
+        Node currentNode = GetMiddleNode();
+        List<Tile> visibleTiles = Grid.instance.GetAllTilesBasedOnVisibilityFromNode(3 + size, currentNode);
 
         if (!currentNode.parentTile.traversed)
         {

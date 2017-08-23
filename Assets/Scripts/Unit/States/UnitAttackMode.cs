@@ -10,4 +10,9 @@ public class UnitModeToAttackMode : UnitMoveToController
 
         _controller.LookForNearbyEnemies();
     }
+
+    protected override void IntersectingTarget()
+    {
+        // No target
+    }
 }
