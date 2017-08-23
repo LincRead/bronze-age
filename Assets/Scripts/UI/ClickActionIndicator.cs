@@ -48,6 +48,8 @@ public class ClickActionIndicator : MonoBehaviour
         _spriteRenderer.sprite = sprite;
         _spriteRenderer.enabled = true;
 
+        LeanTween.cancel(gameObject);
+        LeanTween.scale(gameObject, new Vector3(1.0f, 1.0f, 1.0f), 0.0f);
         LeanTween.scale(gameObject, new Vector3(0.75f, 0.75f, 1.0f), bounceTime);
         LeanTween.scale(gameObject, new Vector3(1.0f, 1.0f, 1.0f), bounceTime).setDelay(bounceTime);
 

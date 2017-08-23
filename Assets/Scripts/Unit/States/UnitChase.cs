@@ -16,7 +16,6 @@ public class UnitChase : UnitMoveTo
         _targetControllerPosition = _targetController.GetPosition();
 
         FindPathToTarget();
-        PlayRunAnimation();
     }
 
     protected override void FindPathToTarget()

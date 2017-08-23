@@ -26,14 +26,14 @@ public class UnitMoveTo : UnitState
         velocity = Vector2.zero;
     }
 
-    protected void PlayRunAnimation()
+    protected override void PlayAnimation()
     {
         // Only play if path found
         if (_pathfinder.path.Count > 0)
         {
             if (!_controller._animator.GetCurrentAnimatorStateInfo(0).IsName("run"))
             {
-                _controller._animator.Play("run");
+                _controller._animator.Play("run", -1, 0.0f);
             }
         }
     }
@@ -65,8 +65,7 @@ public class UnitMoveTo : UnitState
         }
 
         // Another unit is blocking the path
-        if (nextTargetNode.unitControllerStandingHere
-            && nextTargetNode.unitControllerStandingHere != _controller)
+        if (nextTargetNode.unitControllerStandingHere && nextTargetNode.unitControllerStandingHere != _controller)
         {
             UnitStateController unitBlocking = nextTargetNode.unitControllerStandingHere;
 

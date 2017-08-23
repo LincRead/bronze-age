@@ -10,7 +10,6 @@ public class UnitMoveToPosition : UnitMoveTo
         base.OnEnter(controller);
 
         FindPathToTarget();
-        PlayRunAnimation();
     }
 
     protected override void FindPathToTarget()
@@ -18,7 +17,9 @@ public class UnitMoveToPosition : UnitMoveTo
         endNode = _pathfinder.GetNodeFromPoint(_controller.targetPosition);
 
         if (endNode == null || !endNode.walkable)
+        {
             return;
+        }
 
         _pathfinder.FindPath(endNode);
     }
@@ -41,8 +42,7 @@ public class UnitMoveToPosition : UnitMoveTo
 
         // Didn't find path
         // Do this check last
-        else if (_pathfinder.path.Count == 0 
-            && endNode != _pathfinder.currentStandingOnNode)
+        else if (_pathfinder.path.Count == 0 && endNode != _pathfinder.currentStandingOnNode)
         {
             _controller.TransitionToState(_controller.idleState);
         }

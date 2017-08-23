@@ -16,7 +16,6 @@ public class UnitMoveToController : UnitMoveTo
         _targetControllerPosition = _targetController.GetPosition();
 
         FindPathToTarget();
-        PlayRunAnimation();
 
         // Already intersecting target?
         IntersectingTarget();
