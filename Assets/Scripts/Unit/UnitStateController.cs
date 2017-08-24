@@ -479,8 +479,20 @@ public class UnitStateController : BaseController
 
     public override int[] GetUniqueStats()
     {
-        int[] stats = new int[1];
-        stats[0] = _unitStats.damage;
+        int[] stats;
+        if (_unitStats.isRanged)
+        {
+            stats = new int[2];
+            stats[0] = _unitStats.damage;
+            stats[1] = _unitStats.range;
+        }
+
+        else
+        {
+            stats = new int[1];
+            stats[0] = _unitStats.damage;
+        }
+
         return stats;
     }
 }
