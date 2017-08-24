@@ -17,8 +17,14 @@ public class UnitMoveToController : UnitMoveTo
 
         FindPathToTarget();
 
-        // Already intersecting target?
-        IntersectingTarget();
+        if(_pathfinder.path.Count > 0)
+        {
+            // Fetch this for initial intersect target node check
+            nextTargetNode = _pathfinder.path[0];
+
+            // Already intersecting target?
+            IntersectingTarget();
+        }
     }
 
     protected override void FindPathToTarget()
@@ -119,7 +125,9 @@ public class UnitMoveToController : UnitMoveTo
     protected virtual void IntersectingTarget()
     {
         if (nextTargetNode == null)
+        {
             return;
+        }
 
         if (_controller.targetController.IntersectsPoint(nextTargetNode.gridPosPoint))
         {

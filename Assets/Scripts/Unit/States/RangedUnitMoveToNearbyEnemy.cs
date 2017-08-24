@@ -4,6 +4,16 @@ using UnityEngine;
 
 public class RangedUnitMoveToNearbyEnemy : UnitMoveToNearbyEnemy
 {
+    protected override void FindPathToTarget()
+    {
+        _pathfinder.maxDistanceToTargetNode = _controller._unitStats.visionRange * 10;
+
+        base.FindPathToTarget();
+
+        // Reset
+        _pathfinder.maxDistanceToTargetNode = -1;
+    }
+
     public override void CheckTransitions()
     {
         if (_controller.targetController == null)

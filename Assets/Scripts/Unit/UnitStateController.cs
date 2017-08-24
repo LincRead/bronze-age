@@ -277,9 +277,21 @@ public class UnitStateController : BaseController
     public void AttackTarget()
     {
         if (targetController == null || targetController.dead)
+        {
             return;
+        }
          
         targetController.Hit(_unitStats.damage);
+    }
+
+    public void FireProjectile()
+    {
+        GameObject newProjectile = GameObject.Instantiate(
+            _unitStats.projectile, 
+            transform.position + new Vector3(0.0f, (_spriteRenderer.bounds.size.y / 2)), 
+            Quaternion.identity);
+        Projectile p = newProjectile.GetComponent<Projectile>();
+        p.SetTarget(targetController, targetController.GetPrimaryNode(), _unitStats.damage);
     }
 
     public void FireProjectileTowards(Node node)

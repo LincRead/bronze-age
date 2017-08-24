@@ -12,10 +12,8 @@ public class UnitAttack : UnitState
         base.OnEnter(controller);
 
         attackSpeed = _controller._unitStats.attackSpeed;
-
+        _controller.distanceToTarget = Grid.instance.GetDistanceBetweenNodes(_controller._pathfinder.currentStandingOnNode, _targetStandingOnNode);
         _controller.FaceController(_controller.targetController);
-
-        PlayAttackAnimation();
     }
 
     public override void UpdateState()
@@ -30,7 +28,7 @@ public class UnitAttack : UnitState
 
             if (ContinueToAttack())
             {
-                PlayAttackAnimation();
+                PlayAnimation();
             }
                
             else
@@ -53,7 +51,7 @@ public class UnitAttack : UnitState
         _controller.TransitionToState(_controller.idleState);
     }
 
-    void PlayAttackAnimation()
+    protected override void PlayAnimation()
     {
         _controller._animator.Play("attack", -1, 0.0f);
     }

@@ -7,7 +7,9 @@ public class RangedUnitAttack : UnitAttack
     protected override bool ContinueToAttack()
     {
         // Destroyed, dead or moved
-        return _controller.distanceToTarget <= (_controller._unitStats.attackTriggerRadius * 10);
+        return _controller.targetController != null
+            && !_controller.targetController.dead
+            && _controller.distanceToTarget <= (_controller._unitStats.range * 10);
     }
 
     protected override void StopAttack()

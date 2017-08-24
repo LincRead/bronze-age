@@ -65,7 +65,7 @@ public class UnitMoveTo : UnitState
         }
 
         // Another unit is blocking the path
-        if (nextTargetNode.unitControllerStandingHere && nextTargetNode.unitControllerStandingHere != _controller)
+        else if (nextTargetNode.unitControllerStandingHere && nextTargetNode.unitControllerStandingHere != _controller)
         {
             UnitStateController unitBlocking = nextTargetNode.unitControllerStandingHere;
 

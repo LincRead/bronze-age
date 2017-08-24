@@ -71,7 +71,9 @@ public class BaseController : MonoBehaviour {
     protected virtual void Update()
     {
         if (_spriteRenderer != null)
+        {
             zIndex = _transform.position.y;
+        }
     }
 
     void OnMouseEnter()

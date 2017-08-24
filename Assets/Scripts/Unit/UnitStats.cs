@@ -15,7 +15,7 @@ public class UnitStats : ScriptableObject {
     [Header("Ranged")]
     public bool isRanged = false;
     public int range = 0;
-
+    public GameObject projectile;
 
     [Header("Vilager")]
     public bool isVillager = false;
