@@ -134,6 +134,13 @@ public class UnitStateController : BaseController
         SetupTeamColor();
     }
 
+    protected override void SetupSelectIndicator()
+    {
+        selectionIndicator = GameObject.Instantiate(_unitStats.selectionCircle, transform.position, Quaternion.identity);
+
+        base.SetupSelectIndicator();
+    }
+
     void SetupTeamColor()
     {
         if(playerID > -1)

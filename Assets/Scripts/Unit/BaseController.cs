@@ -40,7 +40,7 @@ public class BaseController : MonoBehaviour {
     public Sprite[] statSprites = new Sprite[4];
 
     [Header("Selection indicator")]
-    public GameObject selectionIndicator;
+    protected GameObject selectionIndicator;
     protected SpriteRenderer _selectedIndicatorRenderer;
 
     [HideInInspector]
@@ -59,10 +59,11 @@ public class BaseController : MonoBehaviour {
         SetupSelectIndicator();
     }
 
-    void SetupSelectIndicator()
+    protected virtual void SetupSelectIndicator()
     {
         if(selectionIndicator != null)
         {
+            selectionIndicator.transform.parent = gameObject.transform;
             _selectedIndicatorRenderer = selectionIndicator.GetComponent<SpriteRenderer>();
             _selectedIndicatorRenderer.enabled = false;
         }

@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[CreateAssetMenu(menuName = "Stats/Unit stats")]
-public class UnitStats : ScriptableObject {
-
-    public string title = "Unit";
+[CreateAssetMenu(menuName = "Stats/Unit")]
+public class UnitStats : DefaultStats
+{
+    [Header("Unit stats")]
     public int maxHitpoints = 3;
     public int damage = 1;
     public float attackSpeed = 1f;

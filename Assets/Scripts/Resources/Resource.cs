@@ -18,7 +18,8 @@ public class Resource : BaseController {
     [SerializeField]
     public Sprite[] harvestStagesSprites = new Sprite[0];
 
-    [Header("Resource stats")]
+    [Header("Stats")]
+    public ResourceStats _resourceStats;
     public int amount = 10;
     public float harvestDifficulty = 1;
 
@@ -46,6 +47,13 @@ public class Resource : BaseController {
         _spriteRenderer.sortingLayerName = "Object";
 
         amountLeft = amount;
+    }
+
+    protected override void SetupSelectIndicator()
+    {
+        selectionIndicator = GameObject.Instantiate(_resourceStats.selectionCircle, transform.position, Quaternion.identity);
+
+        base.SetupSelectIndicator();
     }
 
     protected override void Update()

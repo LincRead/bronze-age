@@ -23,7 +23,9 @@ public class Building : BaseController {
     public float stepsToConstruct = 3f;
     private float stepsConstructed = 0f;
 
-    [Header("Building stats")]
+    [Header("Stats")]
+    public BuildingStats _buildingStats;
+
     public int maxHitPoints = 200;
 
     [HideInInspector]
@@ -65,6 +67,13 @@ public class Building : BaseController {
         UpdateDamagedSprite();
 
         SetupTeamColor();
+    }
+
+    protected override void SetupSelectIndicator()
+    {
+        selectionIndicator = GameObject.Instantiate(_buildingStats.selectionCircle, transform.position, Quaternion.identity);
+
+        base.SetupSelectIndicator();
     }
 
     void SetupTeamColor()
