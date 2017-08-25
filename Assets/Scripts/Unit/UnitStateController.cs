@@ -4,16 +4,17 @@ using UnityEngine;
 
 public class UnitStateController : BaseController
 {
+    public UnitStats _unitStats;
+
     [HideInInspector]
     public Animator _animator;
 
     [HideInInspector]
     public Pathfinding _pathfinder;
 
+    [HideInInspector]
     public GameObject healthBar;
     HealthBar _healthBar;
-
-    public UnitStats _unitStats;
 
     [HideInInspector]
     public UnitIdle idleState;
@@ -64,6 +65,9 @@ public class UnitStateController : BaseController
     public Vector2 targetPosition;
 
     [HideInInspector]
+    public int maxHitpoints;
+
+    [HideInInspector]
     public int hitpointsLeft = 0;
 
     [HideInInspector]
@@ -84,12 +88,8 @@ public class UnitStateController : BaseController
         _animator = GetComponent<Animator>();
         _pathfinder = GetComponent<Pathfinding>();
 
-        // Setup health
-        hitpointsLeft = _unitStats.maxHitpoints;
-        _healthBar = GetComponentInChildren<HealthBar>();
-        _healthBar.Init(size);
-        _healthBar.SetAlignment(playerID == PlayerManager.myPlayerID);
-        _healthBar.UpdateHitpointsAmount(hitpointsLeft, _unitStats.maxHitpoints);
+        maxHitpoints = _unitStats.maxHitpoints;
+        hitpointsLeft = maxHitpoints;
 
         SetupPathfinding();
         CheckTileAndSetVisibility();
@@ -125,12 +125,27 @@ public class UnitStateController : BaseController
         currentState.OnEnter(this);
 
         if(playerID == PlayerManager.myPlayerID)
+        {
             PlayerManager.instance.AddFriendlyUnitReference(this, playerID);
+        }
 
         if(playerID > -1)
+        {
             PlayerDataManager.instance.AddPopulationForPlayer(1, playerID);
+        }
 
+        SetupHealthBar();
         SetupTeamColor();
+    }
+
+    void SetupHealthBar()
+    {
+        // Setup health
+        GameObject healthBar = GameObject.Instantiate(_unitStats.healthBar, _transform.position, Quaternion.identity);
+        _healthBar = healthBar.GetComponent<HealthBar>();
+        _healthBar.Init(size);
+        _healthBar.SetAlignment(playerID == PlayerManager.myPlayerID);
+        _healthBar.UpdateHitpointsAmount(hitpointsLeft, maxHitpoints);
     }
 
     void SetupTeamColor()
@@ -309,7 +324,7 @@ public class UnitStateController : BaseController
 
         else
         {
-            _healthBar.UpdateHitpointsAmount(hitpointsLeft, _unitStats.maxHitpoints);
+            _healthBar.UpdateHitpointsAmount(hitpointsLeft, maxHitpoints);
         }
     }
 

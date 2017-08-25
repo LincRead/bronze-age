@@ -4,6 +4,9 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Stats/Building")]
 public class BuildingStats : DefaultStats
 {
+    [Header("Health bar")]
+    public GameObject healthBar;
+
     [Header("Building stats")]
     public int maxHitpoints = 100;
     public int visionRange = 10;

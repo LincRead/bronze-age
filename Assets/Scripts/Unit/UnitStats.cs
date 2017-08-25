@@ -4,6 +4,9 @@ using System.Collections;
 [CreateAssetMenu(menuName = "Stats/Unit")]
 public class UnitStats : DefaultStats
 {
+    [Header("Health bar")]
+    public GameObject healthBar;
+
     [Header("Unit stats")]
     public int maxHitpoints = 3;
     public int damage = 1;

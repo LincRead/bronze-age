@@ -16,6 +16,7 @@ public class HealthBar : MonoBehaviour {
 
     public void Init (int size)
     {
+        gameObject.transform.position += new Vector3(0.0f, 0.12f + (size * 0.16f)); 
         _barSpriteRenderer = bar.GetComponent<SpriteRenderer>();
         _barTransform = bar.GetComponent<Transform>();
         scale = size;
@@ -30,9 +31,14 @@ public class HealthBar : MonoBehaviour {
     public void SetAlignment(bool friendlyUnit)
     {
         if(friendlyUnit)
+        {
             _barSpriteRenderer.color = Color.green;
+        }
+            
         else
+        {
             _barSpriteRenderer.color = Color.red;
+        }
     }
 	
     public void Activate()

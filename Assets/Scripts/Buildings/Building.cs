@@ -4,15 +4,14 @@ using System.Collections.Generic;
 
 public class Building : BaseController {
 
-    protected int buildState = 0; // Three stages, 2 is fully constructed.
-
-    public GameObject healthBar;
-    HealthBar _healthBar;
-
     [SerializeField]
     bool hasBeenPlaced = false;
 
     public BuildingStats _buildingStats;
+
+        [HideInInspector]
+    public GameObject healthBar;
+    HealthBar _healthBar;
 
     [HideInInspector]
     public float stepsToConstruct = 3f;
@@ -33,6 +32,9 @@ public class Building : BaseController {
     [HideInInspector]
     public int visionRange;
 
+    // Three stages, 2 is fully constructed.
+    protected int buildState = 0; 
+
     [HideInInspector]
     public bool constructed = false;
 
@@ -43,10 +45,12 @@ public class Building : BaseController {
 
         base.Start();
 
+        // Set stats
         stepsToConstruct = _buildingStats.stepsToConstruct;
         constructionSprites = _buildingStats.constructionSprites;
         damagedSprites = _buildingStats.damagedSprites;
         maxHitPoints = _buildingStats.maxHitpoints;
+        hitpointsLeft = maxHitPoints;
         visionRange = _buildingStats.visionRange;
 
         if (!hasBeenPlaced)
@@ -68,15 +72,18 @@ public class Building : BaseController {
 
         // And Kate <3
 
-        // Setup health
-        hitpointsLeft = maxHitPoints;
-        _healthBar = GetComponentInChildren<HealthBar>();
+        SetupHealthBar();
+        SetupTeamColor();
+    }
+    
+    void SetupHealthBar()
+    {
+        GameObject healthBar = GameObject.Instantiate(_buildingStats.healthBar, _transform.position, Quaternion.identity);
+        _healthBar = healthBar.GetComponent<HealthBar>();
         _healthBar.Init(size);
         _healthBar.SetAlignment(playerID == PlayerManager.myPlayerID);
         _healthBar.UpdateHitpointsAmount(hitpointsLeft, maxHitPoints);
         UpdateDamagedSprite();
-
-        SetupTeamColor();
     }
 
     void SetupTeamColor()
