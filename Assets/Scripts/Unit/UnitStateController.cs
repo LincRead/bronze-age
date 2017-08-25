@@ -13,7 +13,6 @@ public class UnitStateController : BaseController
     public GameObject healthBar;
     HealthBar _healthBar;
 
-    [Header("Stats")]
     public UnitStats _unitStats;
 
     [HideInInspector]
@@ -52,10 +51,10 @@ public class UnitStateController : BaseController
     [HideInInspector]
     public UnitDie dieState;
 
-    //[HideInInspector]
+    [HideInInspector]
     public UnitState currentState;
 
-    //[HideInInspector]
+    [HideInInspector]
     public bool isMoving = false;
 
     [HideInInspector]
@@ -78,9 +77,9 @@ public class UnitStateController : BaseController
 
     protected override void Start()
     {
-        base.Start();
+        _basicStats = _unitStats;
 
-        title = _unitStats.title;
+        base.Start();
 
         _animator = GetComponent<Animator>();
         _pathfinder = GetComponent<Pathfinding>();
@@ -132,13 +131,6 @@ public class UnitStateController : BaseController
             PlayerDataManager.instance.AddPopulationForPlayer(1, playerID);
 
         SetupTeamColor();
-    }
-
-    protected override void SetupSelectIndicator()
-    {
-        selectionIndicator = GameObject.Instantiate(_unitStats.selectionCircle, transform.position, Quaternion.identity);
-
-        base.SetupSelectIndicator();
     }
 
     void SetupTeamColor()

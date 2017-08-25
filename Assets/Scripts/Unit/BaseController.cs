@@ -1,21 +1,27 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BaseController : MonoBehaviour {
+public enum CONTROLLER_TYPE
+{
+    UNIT,
+    ANIMAL,
+    STATIC_RESOURCE,
+    BUILDING
+};
 
-    public string title = "Title";
+public class BaseController : MonoBehaviour {
 
     public int playerID = 0;
 
-    public enum CONTROLLER_TYPE
-    {
-        UNIT,
-        ANIMAL,
-        STATIC_RESOURCE,
-        BUILDING
-    };
+    protected float zIndex = 0;
 
-    public CONTROLLER_TYPE controllerType;
+    [HideInInspector]
+    public bool selected = false;
+
+    [HideInInspector]
+    public bool dead = false;
+
+    protected DefaultStats _basicStats;
 
     [HideInInspector]
     public Transform _transform;
@@ -26,25 +32,23 @@ public class BaseController : MonoBehaviour {
     [HideInInspector]
     public Collider2D _collider;
 
-    protected float zIndex = 0;
+    [HideInInspector]
+    public CONTROLLER_TYPE controllerType;
 
+    [HideInInspector]
+    public string title = "Default title";
+
+    [HideInInspector]
     public int size = 1;
 
     [HideInInspector]
-    public bool selected = false;
-
-    [Header("UI icon")]
     public Sprite iconSprite;
 
-    [Header("Stats icons")]
+    [HideInInspector]
     public Sprite[] statSprites = new Sprite[4];
 
-    [Header("Selection indicator")]
-    protected GameObject selectionIndicator;
+    protected GameObject _selectionIndicator;
     protected SpriteRenderer _selectedIndicatorRenderer;
-
-    [HideInInspector]
-    public bool dead = false;
 
     protected virtual void Awake()
     {
@@ -53,6 +57,13 @@ public class BaseController : MonoBehaviour {
 
     protected virtual void Start ()
     {
+        title = _basicStats.title;
+
+        size = _basicStats.size;
+        iconSprite = _basicStats.iconSprite;
+        statSprites = _basicStats.statSprites;
+        controllerType = _basicStats.controllerType;
+
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _collider = GetComponent<Collider2D>();
 
@@ -61,10 +72,11 @@ public class BaseController : MonoBehaviour {
 
     protected virtual void SetupSelectIndicator()
     {
-        if(selectionIndicator != null)
+        if(_basicStats != null)
         {
-            selectionIndicator.transform.parent = gameObject.transform;
-            _selectedIndicatorRenderer = selectionIndicator.GetComponent<SpriteRenderer>();
+            _selectionIndicator = GameObject.Instantiate(_basicStats.selectionCircle, transform.position, Quaternion.identity);
+            _selectionIndicator.transform.parent = gameObject.transform;
+            _selectedIndicatorRenderer = _selectionIndicator.GetComponent<SpriteRenderer>();
             _selectedIndicatorRenderer.enabled = false;
         }
     }
@@ -147,7 +159,9 @@ public class BaseController : MonoBehaviour {
 
         if (point.x >= myNodePoint.x && point.x < myNodePoint.x + (size * 2)
             && point.y >= myNodePoint.y && point.y < myNodePoint.y + (size * 2))
+        {
             return true;
+        }
 
         return false;
     }

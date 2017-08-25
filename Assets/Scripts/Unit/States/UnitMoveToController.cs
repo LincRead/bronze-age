@@ -33,7 +33,7 @@ public class UnitMoveToController : UnitMoveTo
             return;
 
         // Make sure unit can use pathfinding to controller
-        if(_targetController.controllerType != BaseController.CONTROLLER_TYPE.UNIT)
+        if(_targetController.controllerType != CONTROLLER_TYPE.UNIT)
         {
             Grid.instance.SetWalkableValueForTiles(_targetController, true);
         }
@@ -57,7 +57,7 @@ public class UnitMoveToController : UnitMoveTo
         }
 
         // Reset
-        if (_targetController.controllerType != BaseController.CONTROLLER_TYPE.UNIT)
+        if (_targetController.controllerType != CONTROLLER_TYPE.UNIT)
         {
             Grid.instance.SetWalkableValueForTiles(_targetController.GetPosition(), _targetController.size, false);
         }
@@ -137,17 +137,17 @@ public class UnitMoveToController : UnitMoveTo
 
     void ReachTarget()
     {
-        if (_targetController.controllerType == BaseController.CONTROLLER_TYPE.UNIT)
+        if (_targetController.controllerType == CONTROLLER_TYPE.UNIT)
         {
             ReachedTargetUnit();
         }
 
-        else if (_targetController.controllerType == BaseController.CONTROLLER_TYPE.BUILDING)
+        else if (_targetController.controllerType == CONTROLLER_TYPE.BUILDING)
         {
             ReachedTargetBuilding();
         }
 
-        else if (_targetController.controllerType == BaseController.CONTROLLER_TYPE.STATIC_RESOURCE)
+        else if (_targetController.controllerType == CONTROLLER_TYPE.STATIC_RESOURCE)
         {
             ReachedTargetStaticResource();
         }
@@ -210,7 +210,7 @@ public class UnitMoveToController : UnitMoveTo
     void HandleNoPathToTargetControllerFound()
     {
         // Only seek resources close by if we are close to target resource
-        if (_targetController.controllerType == BaseController.CONTROLLER_TYPE.STATIC_RESOURCE
+        if (_targetController.controllerType == CONTROLLER_TYPE.STATIC_RESOURCE
             && Grid.instance.GetDistanceBetweenNodes(
                 _controller._pathfinder.currentStandingOnNode, 
                 _targetController.GetPrimaryNode()) <= _controller._unitStats.visionRange * 10)

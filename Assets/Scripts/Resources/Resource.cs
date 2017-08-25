@@ -1,26 +1,28 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public enum HARVEST_TYPE
+{
+    GATHER,
+    CHOP,
+    MINE,
+    FARM
+}
+
 public class Resource : BaseController {
 
-    public enum HARVEST_TYPE
-    {
-        GATHER,
-        CHOP,
-        MINE,
-        FARM
-    }
+    public ResourceStats _resourceStats;
 
-    [Header("Type")]
+    [HideInInspector]
     public HARVEST_TYPE resourceType;
 
-    [Header("Stages")]
-    [SerializeField]
+    [HideInInspector]
     public Sprite[] harvestStagesSprites = new Sprite[0];
 
-    [Header("Stats")]
-    public ResourceStats _resourceStats;
+    [HideInInspector]
     public int amount = 10;
+
+    [HideInInspector]
     public float harvestDifficulty = 1;
 
     protected int amountLeft = 0;
@@ -31,7 +33,14 @@ public class Resource : BaseController {
 
     protected override void Start()
     {
+        _basicStats = _resourceStats;
+
         base.Start();
+
+        resourceType = _resourceStats.resourceType;
+        harvestStagesSprites = _resourceStats.harvestStagesSprites;
+        amount = _resourceStats.amount;
+        harvestDifficulty = _resourceStats.harvestDifficulty;
 
         // Center resource based on number of tiles resource occupies in each directions.
         transform.position += new Vector3(0.0f, 0.08f * (size - 1));
@@ -47,13 +56,6 @@ public class Resource : BaseController {
         _spriteRenderer.sortingLayerName = "Object";
 
         amountLeft = amount;
-    }
-
-    protected override void SetupSelectIndicator()
-    {
-        selectionIndicator = GameObject.Instantiate(_resourceStats.selectionCircle, transform.position, Quaternion.identity);
-
-        base.SetupSelectIndicator();
     }
 
     protected override void Update()

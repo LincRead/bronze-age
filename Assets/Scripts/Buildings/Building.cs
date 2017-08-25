@@ -9,27 +9,29 @@ public class Building : BaseController {
     public GameObject healthBar;
     HealthBar _healthBar;
 
-    [Header("Construction")]
-
     [SerializeField]
     bool hasBeenPlaced = false;
 
-    [SerializeField]
-    public Sprite[] constructionSprites = new Sprite[3];
+    public BuildingStats _buildingStats;
 
-    [SerializeField]
-    public Sprite[] damagedSprites = new Sprite[2];
-
+    [HideInInspector]
     public float stepsToConstruct = 3f;
     private float stepsConstructed = 0f;
 
-    [Header("Stats")]
-    public BuildingStats _buildingStats;
+    [HideInInspector]
+    public Sprite[] constructionSprites = new Sprite[3];
 
+    [HideInInspector]
+    public Sprite[] damagedSprites = new Sprite[2];
+
+    [HideInInspector]
     public int maxHitPoints = 200;
 
     [HideInInspector]
     public int hitpointsLeft = 0;
+
+    [HideInInspector]
+    public int visionRange;
 
     [HideInInspector]
     public bool constructed = false;
@@ -37,7 +39,15 @@ public class Building : BaseController {
     // Use this for initialization
     protected override void Start ()
     {
+        _basicStats = _buildingStats;
+
         base.Start();
+
+        stepsToConstruct = _buildingStats.stepsToConstruct;
+        constructionSprites = _buildingStats.constructionSprites;
+        damagedSprites = _buildingStats.damagedSprites;
+        maxHitPoints = _buildingStats.maxHitpoints;
+        visionRange = _buildingStats.visionRange;
 
         if (!hasBeenPlaced)
         {
@@ -67,13 +77,6 @@ public class Building : BaseController {
         UpdateDamagedSprite();
 
         SetupTeamColor();
-    }
-
-    protected override void SetupSelectIndicator()
-    {
-        selectionIndicator = GameObject.Instantiate(_buildingStats.selectionCircle, transform.position, Quaternion.identity);
-
-        base.SetupSelectIndicator();
     }
 
     void SetupTeamColor()
@@ -208,7 +211,7 @@ public class Building : BaseController {
     public void SetVisibility()
     {
         Node currentNode = GetMiddleNode();
-        List<Tile> visibleTiles = Grid.instance.GetAllTilesBasedOnVisibilityFromNode(3 + size, currentNode);
+        List<Tile> visibleTiles = Grid.instance.GetAllTilesBasedOnVisibilityFromNode(visionRange, currentNode);
 
         if (!currentNode.parentTile.traversed)
         {

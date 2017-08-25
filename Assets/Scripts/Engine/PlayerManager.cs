@@ -184,17 +184,17 @@ public class PlayerManager : MonoBehaviour {
         // Don't select invisible controllers
         if (selectableController != null && selectableController._spriteRenderer.enabled)
         {
-            if (selectableController.controllerType == BaseController.CONTROLLER_TYPE.STATIC_RESOURCE)
+            if (selectableController.controllerType == CONTROLLER_TYPE.STATIC_RESOURCE)
             {
                 HandleMouseOverResource();
             }
 
-            else if (selectableController.controllerType == BaseController.CONTROLLER_TYPE.BUILDING)
+            else if (selectableController.controllerType == CONTROLLER_TYPE.BUILDING)
             {
                 HandleMouseOverBuilding();
             }
 
-            else if(selectableController.controllerType == BaseController.CONTROLLER_TYPE.UNIT)
+            else if(selectableController.controllerType == CONTROLLER_TYPE.UNIT)
             {
                 HandleMouseOverUnit();
             }
@@ -216,10 +216,10 @@ public class PlayerManager : MonoBehaviour {
 
             switch (resource.resourceType)
             {
-                case Resource.HARVEST_TYPE.CHOP: EventManager.TriggerEvent("SetChopCursor"); break;
-                case Resource.HARVEST_TYPE.MINE: EventManager.TriggerEvent("SetMineCursor"); break;
-                case Resource.HARVEST_TYPE.GATHER: EventManager.TriggerEvent("SetGatherCursor"); break;
-                case Resource.HARVEST_TYPE.FARM: EventManager.TriggerEvent("SetFarmCursor"); break;
+                case HARVEST_TYPE.CHOP: EventManager.TriggerEvent("SetChopCursor"); break;
+                case HARVEST_TYPE.MINE: EventManager.TriggerEvent("SetMineCursor"); break;
+                case HARVEST_TYPE.GATHER: EventManager.TriggerEvent("SetGatherCursor"); break;
+                case HARVEST_TYPE.FARM: EventManager.TriggerEvent("SetFarmCursor"); break;
                 default: EventManager.TriggerEvent("SetDefaultCursor"); break;
             }
         }

@@ -6,6 +6,7 @@ public class BuildingStats : DefaultStats
 {
     [Header("Building stats")]
     public int maxHitpoints = 100;
+    public int visionRange = 10;
 
     [Header("Construction")]
     [SerializeField]

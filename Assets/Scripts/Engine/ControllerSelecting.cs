@@ -92,7 +92,7 @@ public class ControllerSelecting : MonoBehaviour {
 
         else
         {
-            if (selectedController.controllerType == BaseController.CONTROLLER_TYPE.BUILDING)
+            if (selectedController.controllerType == CONTROLLER_TYPE.BUILDING)
             {
                 Building selectedBuilding = selectedController.GetComponent<Building>();
 
@@ -102,7 +102,7 @@ public class ControllerSelecting : MonoBehaviour {
                     ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.CONSTRUCTION_PROGRESS, selectedBuilding);
             }
 
-            if(selectedController.controllerType == BaseController.CONTROLLER_TYPE.STATIC_RESOURCE)
+            if(selectedController.controllerType == CONTROLLER_TYPE.STATIC_RESOURCE)
             {
                 ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.RECOURSE_INFO, selectedController);
             }
@@ -133,7 +133,7 @@ public class ControllerSelecting : MonoBehaviour {
     {
         BaseController controller = PlayerManager.instance.selectableController;
 
-        if (controller != null && controller.controllerType != BaseController.CONTROLLER_TYPE.UNIT)
+        if (controller != null && controller.controllerType != CONTROLLER_TYPE.UNIT)
         {
             controller.Select();
             selectedController = controller;
@@ -147,7 +147,7 @@ public class ControllerSelecting : MonoBehaviour {
     {
         if(PlayerManager.instance.selectableController != null
             && PlayerManager.instance.selectableController._spriteRenderer.enabled
-            && PlayerManager.instance.selectableController.controllerType == BaseController.CONTROLLER_TYPE.UNIT
+            && PlayerManager.instance.selectableController.controllerType == CONTROLLER_TYPE.UNIT
             && !PlayerManager.instance.selectableController.dead)
         {
             UnitStateController unit = PlayerManager.instance.selectableController.GetComponent<UnitStateController>();
