@@ -34,7 +34,7 @@ public class UnitUIButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         EventManager.TriggerEvent("SetDefaultCursor");
     }
 
-    public void OnPointerEnter(PointerEventData eventData)
+    public virtual void OnPointerEnter(PointerEventData eventData)
     {
         ControllerUIManager.instance.ShowTooltip(tooltip);
     }

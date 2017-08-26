@@ -130,9 +130,9 @@ public class ControllerUIManager : MonoBehaviour {
     {
         selectedUnitsView = ScriptableObject.CreateInstance<UnitsView>();
 
-        for(int i = 0; i < 12; i ++)
+        for (int j = 0; j < 2; j++)
         {
-            for(int j = 0; j < 2; j++)
+            for (int i = 0; i < 9; i ++)
             {
                 CreateUnitSelectedBotton(i, j);
             }
@@ -142,7 +142,7 @@ public class ControllerUIManager : MonoBehaviour {
     public void CreateUnitSelectedBotton(int i, int j)
     {
         Button newButton = Button.Instantiate(selectedUnitButton, selectedUnitsPrefab.GetComponent<RectTransform>()) as Button;
-        newButton.GetComponent<RectTransform>().localPosition = new Vector3(i * 22f, j * -32f, 0.0f);
+        newButton.GetComponent<RectTransform>().localPosition = new Vector3(i * 21f, j * -32f, 0.0f);
 
         SelectedUnitButton buttonScript = newButton.GetComponent<SelectedUnitButton>();
         buttonScript.Clear();

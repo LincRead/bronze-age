@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class ControllerSelecting : MonoBehaviour {
 
+    public static int maxUnitsSelected = 18;
+
     Vector3 mousePosStart;
     Vector3 mousePosScreenToWorldPointStart;
     Vector3 mousePosScreenToWorldPointEnd;
@@ -116,18 +118,39 @@ public class ControllerSelecting : MonoBehaviour {
         SetUnitAsSelected();
 
         if(selectedGatherers.Count > 0)
+        {
             ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.VILLAGER, selectedGatherers[0]);
+        }
+            
         else if(selectedUnits.Count > 0)
+        {
             ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.WARRIOR, selectedUnits[0]);
+        }
+            
         else
+        {
             ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.NONE, null);
+        }
     }
 
     void SelectUnits(Rect selectionBox)
     {
         SetUnitsAsSelected(selectionBox);
 
-        ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.SELECTED_UNITS, null);
+        if (selectedUnits.Count > 1)
+        {
+            ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.SELECTED_UNITS, null);
+        }
+            
+        else if (selectedGatherers.Count > 0)
+        {
+            ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.VILLAGER, selectedGatherers[0]);
+        }
+            
+        else if (selectedUnits.Count > 0)
+        {
+            ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.WARRIOR, selectedUnits[0]);
+        }
     }
 
     bool FindAndSelectController(Vector2 mousePos)
@@ -172,8 +195,8 @@ public class ControllerSelecting : MonoBehaviour {
     {
         List<UnitStateController> friendlyUnits = PlayerManager.instance.GetAllFriendlyUnits();
 
-        // Can select max 24 units atm
-        for (int i = 0; i < friendlyUnits.Count && i < 24; i++)
+        // Can select max 18 units atm
+        for (int i = 0; i < friendlyUnits.Count && i < maxUnitsSelected; i++)
         {
             if (!friendlyUnits[i].dead && friendlyUnits[i].IntersectsRectangle(collisionBox))
             {

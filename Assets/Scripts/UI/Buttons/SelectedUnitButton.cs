@@ -2,43 +2,37 @@
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
+using System.Text;
+using UnityEngine.EventSystems;
 
 public class SelectedUnitButton : UnitUIButton
 {
     public Image controllerIcon;
     public Image healthBar;
 
-    UnitStateController controller;
+    UnitStateController _controller;
     RectTransform healthBarRectTransform;
-
-    public void Clear()
-    {
-        gameObject.SetActive(false);
-        this.controller = null;
-    }
 
     public void UpdateButton(UnitStateController controller)
     {
         gameObject.SetActive(true);
-        this.controller = controller;
-        tooltip = title + controller.title; // Stringbuilder
+        _controller = controller;
         controllerIcon.sprite = controller._unitStats.iconSprite;
 
         healthBarRectTransform = healthBar.GetComponent<RectTransform>();
-        Debug.Log(controller.hitpointsLeft / controller.maxHitpoints);
         healthBarRectTransform.localScale = new Vector3((float)((float)controller.hitpointsLeft / (float)controller.maxHitpoints), 1.0f, 1.0f);
     }
 
     public void UpdateHealth()
     {
-        if(controller == null || controller.dead)
+        if(_controller == null || _controller.dead)
         {
             Clear();
         }
 
         else
         {
-            healthBarRectTransform.localScale = new Vector3((float)((float)controller.hitpointsLeft / (float)controller.maxHitpoints), 1.0f, 1.0f);
+            healthBarRectTransform.localScale = new Vector3((float)((float)_controller.hitpointsLeft / (float)_controller.maxHitpoints), 1.0f, 1.0f);
         }
     }
 
@@ -46,17 +40,30 @@ public class SelectedUnitButton : UnitUIButton
     {
         ControllerSelecting controllerSelection = PlayerManager.instance._controllerSelecting;
         controllerSelection.ResetSelection();
-        PlayerManager.instance.selectableController = controller;
+        PlayerManager.instance.selectableController = _controller;
         controllerSelection.SetUnitAsSelected();
 
-        if (controller._unitStats.isVillager)
+        if (_controller._unitStats.isVillager)
         {
-            ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.VILLAGER, controller);
+            ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.VILLAGER, _controller);
         }
 
         else
         {
-            ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.WARRIOR, controller);
+            ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.WARRIOR, _controller);
         }
+    }
+
+    // Had to override and create the string here, ...
+    // ...or it wouldn't work first time the button got activated
+    public override void OnPointerEnter(PointerEventData eventData)
+    {
+        ControllerUIManager.instance.ShowTooltip(new StringBuilder(title + _controller.title).ToString());
+    }
+
+    public void Clear()
+    {
+        gameObject.SetActive(false);
+        _controller = null;
     }
 }

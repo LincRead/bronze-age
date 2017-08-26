@@ -10,8 +10,15 @@ public class UnitsView : ControllerUIView
     {
         base.OnEnter(ui, controller);
 
+        ShowSelectedUnits();
+        EventManager.TriggerEvent("ActivateUnitActionsView");
+    }
+
+    void ShowSelectedUnits()
+    {
+        // Show selected units
         List<UnitStateController> selectedUnits = PlayerManager.instance._controllerSelecting.selectedUnits;
-        for (int i = 0; i < selectedUnits.Count && i < 24; i++)
+        for (int i = 0; i < selectedUnits.Count && i < ControllerSelecting.maxUnitsSelected; i++)
         {
             ui._selectedUnitButtons[i].UpdateButton(selectedUnits[i]);
             numButtonsActivated++;
@@ -28,6 +35,8 @@ public class UnitsView : ControllerUIView
 
     public override void OnExit()
     {
+        numButtonsActivated = 0;
         ui.HideSelectedUnitsButtons();
+        EventManager.TriggerEvent("DisableUnitActionsView");
     }
 }
