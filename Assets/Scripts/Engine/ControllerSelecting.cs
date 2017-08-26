@@ -13,7 +13,9 @@ public class ControllerSelecting : MonoBehaviour {
     public bool showSelectBox = false;
 
     private List<UnitStateController> selectedGatherers = new List<UnitStateController>();
-    private List<UnitStateController> selectedUnits = new List<UnitStateController>();
+
+    [HideInInspector]
+    public List<UnitStateController> selectedUnits = new List<UnitStateController>();
 
     [HideInInspector]
     public UnitStateController selectedEnemy = null;
@@ -111,22 +113,21 @@ public class ControllerSelecting : MonoBehaviour {
 
     void SelectUnit(Rect selectionBox)
     {
-        SetUnitAsSelected(selectionBox);
+        SetUnitAsSelected();
 
         if(selectedGatherers.Count > 0)
             ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.VILLAGER, selectedGatherers[0]);
         else if(selectedUnits.Count > 0)
             ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.WARRIOR, selectedUnits[0]);
+        else
+            ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.NONE, null);
     }
 
     void SelectUnits(Rect selectionBox)
     {
         SetUnitsAsSelected(selectionBox);
 
-        if(selectedGatherers.Count > 0)
-            ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.VILLAGER, selectedGatherers[0]);
-        else if (selectedUnits.Count > 0)
-            ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.WARRIOR, selectedUnits[0]);
+        ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.SELECTED_UNITS, null);
     }
 
     bool FindAndSelectController(Vector2 mousePos)
@@ -143,7 +144,7 @@ public class ControllerSelecting : MonoBehaviour {
         return false;
     }
 
-    void SetUnitAsSelected(Rect collisionBox)
+    public void SetUnitAsSelected()
     {
         if(PlayerManager.instance.selectableController != null
             && PlayerManager.instance.selectableController._spriteRenderer.enabled
@@ -171,7 +172,8 @@ public class ControllerSelecting : MonoBehaviour {
     {
         List<UnitStateController> friendlyUnits = PlayerManager.instance.GetAllFriendlyUnits();
 
-        for (int i = 0; i < friendlyUnits.Count; i++)
+        // Can select max 24 units atm
+        for (int i = 0; i < friendlyUnits.Count && i < 24; i++)
         {
             if (!friendlyUnits[i].dead && friendlyUnits[i].IntersectsRectangle(collisionBox))
             {
@@ -187,7 +189,7 @@ public class ControllerSelecting : MonoBehaviour {
         }
     }
 
-    void ResetSelection()
+    public void ResetSelection()
     {
         DeselectAllFriendlyUnits();
 
@@ -244,7 +246,15 @@ public class ControllerSelecting : MonoBehaviour {
             selectedGatherers.Remove(unit);
 
         if (selectedUnits.Count == 0)
+        {
             ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.NONE, null);
+        }
+
+        // Reset Units View
+        else
+        {
+            ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.SELECTED_UNITS, null);
+        }
     }
 
     public List<UnitStateController> GetSelectedGatherers()

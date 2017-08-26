@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 using System.Text;
 
@@ -15,17 +16,19 @@ public class ControllerUIManager : MonoBehaviour {
     public Button[] villagerButtons;
     public Button[] buildingButtons;
     public Button[] unitActionButtons;
+    public Button selectedUnitButton;
 
     [HideInInspector]
     public enum CONTROLLER_UI_VIEW
     {
         NONE,
         VILLAGER,
+        WARRIOR,
+        SELECTED_UNITS,
         BUILDINGS,
         BUILDING_INFO,
         CONSTRUCTION_PROGRESS,
-        RECOURSE_INFO,
-        WARRIOR
+        RECOURSE_INFO
     }
 
     [Header("Hitpoints bar")]
@@ -39,6 +42,9 @@ public class ControllerUIManager : MonoBehaviour {
     public GameObject constructionProgressPrefab;
     public Image constructionProgressBarImage;
     public Text constructionProgressText;
+
+    [Header("Units")]
+    public GameObject selectedUnitsPrefab;
 
     [Header("Stats")]
     public GameObject statsInfoPrefab;
@@ -59,10 +65,14 @@ public class ControllerUIManager : MonoBehaviour {
     public ControllerUIView nothingSelectedView;
     public VillagerView villagerView;
     public UnitView warriorView;
+    public UnitsView selectedUnitsView;
     public BuildingsView buildingsView;
     public BuildingView buildingView;
     public ResourceView resourceView;
     public ConstructionView constructionView;
+
+    [HideInInspector]
+    public List<SelectedUnitButton> _selectedUnitButtons = new List<SelectedUnitButton>();
 
     private static ControllerUIManager controllerUIManager;
 
@@ -91,7 +101,7 @@ public class ControllerUIManager : MonoBehaviour {
 
     void Init()
     {
-        
+        // ...
     }
 
     void Start () {
@@ -108,11 +118,35 @@ public class ControllerUIManager : MonoBehaviour {
             btn.gameObject.SetActive(false);
 
         warriorView = ScriptableObject.CreateInstance<UnitView>();
+        SetupSelectedUnitsView();
 
         ChangeView(CONTROLLER_UI_VIEW.NONE, null);
         HideTooltip();
         HideHitpoints();
         HideStats();
+    }
+
+    void SetupSelectedUnitsView()
+    {
+        selectedUnitsView = ScriptableObject.CreateInstance<UnitsView>();
+
+        for(int i = 0; i < 12; i ++)
+        {
+            for(int j = 0; j < 2; j++)
+            {
+                CreateUnitSelectedBotton(i, j);
+            }
+        }
+    }
+
+    public void CreateUnitSelectedBotton(int i, int j)
+    {
+        Button newButton = Button.Instantiate(selectedUnitButton, selectedUnitsPrefab.GetComponent<RectTransform>()) as Button;
+        newButton.GetComponent<RectTransform>().localPosition = new Vector3(i * 22f, j * -32f, 0.0f);
+
+        SelectedUnitButton buttonScript = newButton.GetComponent<SelectedUnitButton>();
+        buttonScript.Clear();
+        _selectedUnitButtons.Add(buttonScript);
     }
 
     public void ShowDefaultUI()
@@ -142,6 +176,10 @@ public class ControllerUIManager : MonoBehaviour {
 
             case CONTROLLER_UI_VIEW.WARRIOR:
                 currentView = warriorView;
+                break;
+
+            case CONTROLLER_UI_VIEW.SELECTED_UNITS:
+                currentView = selectedUnitsView;
                 break;
 
             case CONTROLLER_UI_VIEW.BUILDINGS:
@@ -249,5 +287,13 @@ public class ControllerUIManager : MonoBehaviour {
     public void HideTooltip()
     {
         tooltipText.enabled = false;
+    }
+
+    public void HideSelectedUnitsButtons()
+    {
+        for(int i = 0; i < _selectedUnitButtons.Count; i++)
+        {
+            _selectedUnitButtons[i].Clear();
+        }
     }
 }

@@ -11,8 +11,8 @@ public class UnitUIButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     Button _button;
     protected string tooltip;
 
-    protected virtual void Start () {
-
+    protected virtual void Start ()
+    {
         // Todo make tooltip system
         tooltip = title;
 

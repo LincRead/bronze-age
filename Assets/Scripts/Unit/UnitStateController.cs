@@ -142,6 +142,7 @@ public class UnitStateController : BaseController
     {
         // Setup health
         GameObject healthBar = GameObject.Instantiate(_unitStats.healthBar, _transform.position, Quaternion.identity);
+        healthBar.transform.parent = gameObject.transform;
         _healthBar = healthBar.GetComponent<HealthBar>();
         _healthBar.Init(size);
         _healthBar.SetAlignment(playerID == PlayerManager.myPlayerID);
