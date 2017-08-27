@@ -22,7 +22,12 @@ public class ControllerSelecting : MonoBehaviour {
     [HideInInspector]
     public UnitStateController selectedEnemy = null;
 
-    BaseController selectedController = null;
+    protected BaseController selectedController = null;
+
+    protected float timeSinceLastSingleUnitSelected = 0.0f;
+    protected float doubleClickUnitTime = 1.0f;
+    protected UnitStateController lastSelectedUnit;
+    protected float maxDistanceToFindUnitsOfSameType = 300;
 
     void Update()
     {
@@ -34,6 +39,8 @@ public class ControllerSelecting : MonoBehaviour {
 
     void UpdateSelecting()
     {
+        timeSinceLastSingleUnitSelected += Time.deltaTime;
+
         // If we press the left mouse button, save mouse location and begin controller selection
         if (Input.GetMouseButtonDown(0))
         {
@@ -71,7 +78,7 @@ public class ControllerSelecting : MonoBehaviour {
 
         else
         {
-            SelectUnits(selectionRect);
+            FindUnitsToSelect(selectionRect);
         }
 
         showSelectBox = false;
@@ -88,8 +95,8 @@ public class ControllerSelecting : MonoBehaviour {
 
     void SelectController()
     {
-        // Try to select unit if tile is not occupied
-        if (!FindAndSelectController(mousePosScreenToWorldPointEnd))
+        // Select unit if Tile is not occupied by a controller
+        if (!FindAndSelectControllerOccupyingTile(mousePosScreenToWorldPointEnd))
         {
             SelectUnit(selectionRect);
         }
@@ -98,17 +105,12 @@ public class ControllerSelecting : MonoBehaviour {
         {
             if (selectedController.controllerType == CONTROLLER_TYPE.BUILDING)
             {
-                Building selectedBuilding = selectedController.GetComponent<Building>();
-
-                if (selectedBuilding.constructed)
-                    ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.BUILDING_INFO, selectedBuilding);
-                else
-                    ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.CONSTRUCTION_PROGRESS, selectedBuilding);
+                SelectBuilding();
             }
 
             if(selectedController.controllerType == CONTROLLER_TYPE.STATIC_RESOURCE)
             {
-                ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.RECOURSE_INFO, selectedController);
+                SelectResource();
             }
         }
     }
@@ -116,44 +118,65 @@ public class ControllerSelecting : MonoBehaviour {
     void SelectUnit(Rect selectionBox)
     {
         SetUnitAsSelected();
+        ChangeToUnitView();
+    }
 
-        if(selectedGatherers.Count > 0)
+    void FindUnitsToSelect(Rect selectionBox)
+    {
+        SetUnitsAsSelected(selectionBox);
+        ChangeToUnitView();
+    }
+
+    void FindUnitsOfSameTypeToSelect(UnitStateController unit)
+    {
+        SetUnitsOfSameTypeAsSelected(unit);
+        ChangeToUnitView();
+    }
+
+    void ChangeToUnitView()
+    {
+        if (selectedUnits.Count > 1)
+        {
+            ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.SELECTED_UNITS, null);
+        }
+
+        else if (selectedGatherers.Count > 0)
         {
             ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.VILLAGER, selectedGatherers[0]);
         }
-            
-        else if(selectedUnits.Count > 0)
+
+        else if (selectedUnits.Count > 0)
         {
             ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.WARRIOR, selectedUnits[0]);
         }
-            
+
         else
         {
             ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.NONE, null);
         }
     }
 
-    void SelectUnits(Rect selectionBox)
+    void SelectBuilding()
     {
-        SetUnitsAsSelected(selectionBox);
+        Building selectedBuilding = selectedController.GetComponent<Building>();
 
-        if (selectedUnits.Count > 1)
+        if (selectedBuilding.constructed)
         {
-            ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.SELECTED_UNITS, null);
+            ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.BUILDING_INFO, selectedBuilding);
         }
-            
-        else if (selectedGatherers.Count > 0)
+
+        else
         {
-            ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.VILLAGER, selectedGatherers[0]);
-        }
-            
-        else if (selectedUnits.Count > 0)
-        {
-            ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.WARRIOR, selectedUnits[0]);
+            ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.CONSTRUCTION_PROGRESS, selectedBuilding);
         }
     }
 
-    bool FindAndSelectController(Vector2 mousePos)
+    void SelectResource()
+    {
+        ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.RECOURSE_INFO, selectedController);
+    }
+
+    bool FindAndSelectControllerOccupyingTile(Vector2 mousePos)
     {
         BaseController controller = PlayerManager.instance.selectableController;
 
@@ -176,18 +199,36 @@ public class ControllerSelecting : MonoBehaviour {
         {
             UnitStateController unit = PlayerManager.instance.selectableController.GetComponent<UnitStateController>();
 
-            unit.Select();
-
-            // Store unit selected
-            if (unit.playerID == PlayerManager.myPlayerID)
-                selectedUnits.Add(unit);
-            else
-                selectedEnemy = unit;
-
-            if(unit._unitStats.isVillager)
+            // Double clicked unit
+            if (timeSinceLastSingleUnitSelected <= doubleClickUnitTime
+                && unit == lastSelectedUnit)
             {
-                selectedGatherers.Add(unit);
+                FindUnitsOfSameTypeToSelect(unit);
             }
+
+            else
+            {
+                unit.Select();
+                lastSelectedUnit = unit;
+
+                // Store unit selected
+                if (unit.playerID == PlayerManager.myPlayerID)
+                {
+                    selectedUnits.Add(unit);
+                }
+
+                else
+                {
+                    selectedEnemy = unit;
+                }
+
+                if (unit._unitStats.isVillager)
+                {
+                    selectedGatherers.Add(unit);
+                }
+            }
+
+            timeSinceLastSingleUnitSelected = 0.0f;
         }
     }
 
@@ -199,6 +240,31 @@ public class ControllerSelecting : MonoBehaviour {
         for (int i = 0; i < friendlyUnits.Count && i < maxUnitsSelected; i++)
         {
             if (!friendlyUnits[i].dead && friendlyUnits[i].IntersectsRectangle(collisionBox))
+            {
+                friendlyUnits[i].Select();
+
+                selectedUnits.Add(friendlyUnits[i]);
+
+                if (friendlyUnits[i]._unitStats.isVillager)
+                {
+                    selectedGatherers.Add(friendlyUnits[i]);
+                }
+            }
+        }
+    }
+
+    void SetUnitsOfSameTypeAsSelected(UnitStateController unit)
+    {
+        List<UnitStateController> friendlyUnits = PlayerManager.instance.GetAllFriendlyUnits();
+
+        // Can select max 18 units atm
+        for (int i = 0; i < friendlyUnits.Count && i < maxUnitsSelected; i++)
+        {
+            Debug.Log(selectedController);
+            if (friendlyUnits[i] != null
+                && !friendlyUnits[i].dead
+                && unit.title.Equals(friendlyUnits[i].title)
+                && Grid.instance.GetDistanceBetweenNodes(unit.GetPrimaryNode(), friendlyUnits[i].GetPrimaryNode()) <= maxDistanceToFindUnitsOfSameType)
             {
                 friendlyUnits[i].Select();
 

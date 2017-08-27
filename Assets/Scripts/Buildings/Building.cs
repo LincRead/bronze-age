@@ -45,13 +45,12 @@ public class Building : BaseController {
     [HideInInspector]
     public int visionRange;
 
-    // Three stages, 2 is fully constructed.
+    // Three stages, 2 is fully constructed
     protected int buildState = 0; 
 
     [HideInInspector]
     public bool constructed = false;
 
-    // Use this for initialization
     protected override void Start ()
     {
         _basicStats = _buildingStats;
@@ -126,7 +125,6 @@ public class Building : BaseController {
         PlayerManager.instance.PlacedBuilding(this);
     }
 
-    // Update is called once per frame
     protected override void Update ()
     {
         if (!hasBeenPlaced)
