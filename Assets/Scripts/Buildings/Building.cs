@@ -4,18 +4,31 @@ using System.Collections.Generic;
 
 public class Building : BaseController {
 
-    [SerializeField]
-    bool hasBeenPlaced = false;
+    // Set to true at:
+    // 1. Scene start-up or
+    // 2. When Player has successfully placed the building to be constructed
+    private bool hasBeenPlaced = false;
 
     public BuildingStats _buildingStats;
 
-        [HideInInspector]
+    [HideInInspector]
     public GameObject healthBar;
     HealthBar _healthBar;
 
     [HideInInspector]
     public float stepsToConstruct = 3f;
     private float stepsConstructed = 0f;
+
+    // Need this to caulcate efficieny of construction
+    // Every number added to this float decreases efficient
+    // Reason: avoid lots of Villagers constructing the same building being too efficient
+    private float villagersWhoHasDoneActionThisUpdate = 0;
+
+    // Decrease efficient for every Villager constructing Building at the same time
+    private float decreaseActionEfficientPerVillager = 0.2f;
+
+    // Don't decrease villagersWhoHasBuiltThisUpdate to less than this value
+    private float minVillagerActionEfficiency = 0.2f;
 
     [HideInInspector]
     public Sprite[] constructionSprites = new Sprite[3];
@@ -53,22 +66,19 @@ public class Building : BaseController {
         hitpointsLeft = maxHitPoints;
         visionRange = _buildingStats.visionRange;
 
-        if (!hasBeenPlaced)
-        {
-            _spriteRenderer.sprite = constructionSprites[2];
-            _transform.position = PlayerManager.mousePosition - new Vector2(0.0f, _spriteRenderer.bounds.size.y / 2);
-            _spriteRenderer.color = new Color(1f, 1f, 1f, 0.5f);
-            _spriteRenderer.sortingLayerName = "Placing Building";
-
-            _selectedIndicatorRenderer.enabled = true;
-            _selectedIndicatorRenderer.color = new Color(1f, 1f, 1f, 0.5f);
-        } // I love my daughter Ivy. <3
-
-        else
+        // Buildings in Scene at Scene start-up are placed
+        if (WorldManager.firstUpdate)
         {
             Place();
             FinishConstruction();
         }
+
+        else
+        {
+            SetupBuildingPlacement();
+        }
+
+        // I love my daughter Ivy. <3
 
         // And Kate <3
 
@@ -123,7 +133,25 @@ public class Building : BaseController {
         {
             HandlePlacingBuilding();
         }
+
+        else
+        {
+            // Reset
+            villagersWhoHasDoneActionThisUpdate = 0;
+        }
 	}
+
+    void SetupBuildingPlacement()
+    {
+        hasBeenPlaced = false;
+        _spriteRenderer.sprite = constructionSprites[2];
+        _transform.position = PlayerManager.mousePosition - new Vector2(0.0f, _spriteRenderer.bounds.size.y / 2);
+        _spriteRenderer.color = new Color(1f, 1f, 1f, 0.5f);
+        _spriteRenderer.sortingLayerName = "Placing Building";
+
+        _selectedIndicatorRenderer.enabled = true;
+        _selectedIndicatorRenderer.color = new Color(1f, 1f, 1f, 0.5f);
+    }
 
     void HandlePlacingBuilding()
     {
@@ -163,38 +191,66 @@ public class Building : BaseController {
         }
     }
 
-    public void Build(float buildAmount)
+    public void Build(float amount)
     {
         // Construct
         if(!constructed)
         {
-            stepsConstructed += buildAmount * Time.deltaTime;
-
-            if (stepsConstructed >= stepsToConstruct / 2)
-            {
-                _spriteRenderer.sprite = constructionSprites[1];
-
-                if (stepsConstructed >= stepsToConstruct)
-                {
-                    FinishConstruction();
-                }
-            }
+            Construct(amount);
         }
 
         // Repair
         else if(hitpointsLeft < maxHitPoints)
         {
-            stepsConstructed += buildAmount * Time.deltaTime;
+            Repair(amount);
+        }
+    }
 
-            // Repair 2 HP per sec
-            if(stepsConstructed > 0.5f)
+    void Construct(float buildAmount)
+    {
+        buildAmount *= (1 - (decreaseActionEfficientPerVillager * villagersWhoHasDoneActionThisUpdate));
+
+        if(buildAmount < minVillagerActionEfficiency)
+        {
+            buildAmount = minVillagerActionEfficiency;
+        }
+
+        stepsConstructed += buildAmount * Time.deltaTime;
+
+        if (stepsConstructed >= stepsToConstruct / 2)
+        {
+            _spriteRenderer.sprite = constructionSprites[1];
+
+            if (stepsConstructed >= stepsToConstruct)
             {
-                stepsConstructed = 0.0f;
-                hitpointsLeft += 1;
-                _healthBar.UpdateHitpointsAmount(hitpointsLeft, maxHitPoints);
-                UpdateDamagedSprite();
+                FinishConstruction();
             }
         }
+
+        villagersWhoHasDoneActionThisUpdate++;
+    }
+
+    void Repair(float repairAmount)
+    {
+        repairAmount *= (1 - (decreaseActionEfficientPerVillager * villagersWhoHasDoneActionThisUpdate));
+
+        if (repairAmount < minVillagerActionEfficiency)
+        {
+            repairAmount = minVillagerActionEfficiency;
+        }
+
+        stepsConstructed += repairAmount * Time.deltaTime;
+
+        // Repair 2 HP per sec
+        if (stepsConstructed > 0.5f)
+        {
+            stepsConstructed = 0.0f;
+            hitpointsLeft += 1;
+            _healthBar.UpdateHitpointsAmount(hitpointsLeft, maxHitPoints);
+            UpdateDamagedSprite();
+        }
+
+        villagersWhoHasDoneActionThisUpdate++;
     }
 
     protected virtual void FinishConstruction()

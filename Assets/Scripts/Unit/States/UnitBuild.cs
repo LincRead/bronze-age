@@ -18,7 +18,7 @@ public class UnitBuild : UnitState
 
     public override void DoActions()
     {
-        _building.Build(1); // todo: * efficiency
+        _building.Build(1);
     }
 
     public override void CheckTransitions()

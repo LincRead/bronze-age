@@ -7,6 +7,8 @@ public class WorldManager : MonoBehaviour {
     // 1 for singleplayer, more for multiplayer
     public static int numPlayers = 4;
 
+    public static bool firstUpdate = true;
+
     private static WorldManager worldManager;
 
     public static WorldManager instance
@@ -34,5 +36,10 @@ public class WorldManager : MonoBehaviour {
     void Init()
     {
 
+    }
+
+    public void Update()
+    {
+        firstUpdate = false;
     }
 }
