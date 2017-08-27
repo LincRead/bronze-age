@@ -306,8 +306,7 @@ public class PlayerManager : MonoBehaviour {
         {
             if(attackMode)
             {
-                Vector2 offset = new Vector2(averagePositionX - selectedUnits[i]._transform.position.x, averagePositionY - selectedUnits[i]._transform.position.y);
-                selectedUnits[i].MoveToInAttackMode(mousePosition - offset);
+                selectedUnits[i].MoveToInAttackMode(mousePosition);
             }
 
             // Move to controller on location
