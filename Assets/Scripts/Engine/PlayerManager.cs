@@ -174,7 +174,18 @@ public class PlayerManager : MonoBehaviour {
         // Only change mouse cursor when selectable controller changes
         if (newSelectableController != selectableController)
         {
-            selectableController = newSelectableController;
+            if(newSelectableController != null
+                && newSelectableController.IsVisible()
+                && !newSelectableController.dead)
+            {
+                selectableController = newSelectableController;
+            }
+
+            else
+            {
+                selectableController = null;
+            }
+            
             UpdateMouseCursor();
         }
     }

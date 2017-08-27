@@ -301,6 +301,11 @@ public class UnitStateController : BaseController
 
     public void FireProjectile()
     {
+        if (targetController == null || targetController.dead)
+        {
+            return;
+        }
+
         GameObject newProjectile = GameObject.Instantiate(
             _unitStats.projectile, 
             transform.position + new Vector3(0.0f, (_spriteRenderer.bounds.size.y / 2)), 

@@ -184,4 +184,9 @@ public class BaseController : MonoBehaviour {
     {
         return new int[0];
     }
+
+    public bool IsVisible()
+    {
+        return _spriteRenderer.enabled;
+    }
 }
