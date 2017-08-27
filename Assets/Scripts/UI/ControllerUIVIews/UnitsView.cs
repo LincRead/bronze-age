@@ -11,18 +11,31 @@ public class UnitsView : ControllerUIView
         base.OnEnter(ui, controller);
 
         ShowSelectedUnits();
-        EventManager.TriggerEvent("ActivateUnitActionsView");
     }
 
     void ShowSelectedUnits()
     {
+        bool onlyVillagersSelected = true;
+
         // Show selected units
         List<UnitStateController> selectedUnits = PlayerManager.instance._controllerSelecting.selectedUnits;
         for (int i = 0; i < selectedUnits.Count && i < ControllerSelecting.maxUnitsSelected; i++)
         {
             ui._selectedUnitButtons[i].UpdateButton(selectedUnits[i]);
             numButtonsActivated++;
+
+            if (!selectedUnits[i]._unitStats.isVillager)
+            {
+                onlyVillagersSelected = false;
+            }
         }
+
+        if(onlyVillagersSelected)
+        {
+            EventManager.TriggerEvent("ActivateVillagerView");
+        }
+
+        EventManager.TriggerEvent("ActivateUnitActionsView");
     }
 
     public override void Update()
@@ -37,6 +50,7 @@ public class UnitsView : ControllerUIView
     {
         numButtonsActivated = 0;
         ui.HideSelectedUnitsButtons();
+        EventManager.TriggerEvent("DisableVillagerView");
         EventManager.TriggerEvent("DisableUnitActionsView");
     }
 }

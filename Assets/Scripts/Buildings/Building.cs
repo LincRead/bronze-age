@@ -25,10 +25,10 @@ public class Building : BaseController {
     private float villagersWhoHasDoneActionThisUpdate = 0;
 
     // Decrease efficient for every Villager constructing Building at the same time
-    private float decreaseActionEfficientPerVillager = 0.2f;
+    private float decreaseActionEfficientPerVillager = 0.25f;
 
     // Don't decrease villagersWhoHasBuiltThisUpdate to less than this value
-    private float minVillagerActionEfficiency = 0.2f;
+    private float minVillagerActionEfficiency = 0.25f;
 
     [HideInInspector]
     public Sprite[] constructionSprites = new Sprite[3];

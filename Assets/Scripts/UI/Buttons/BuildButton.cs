@@ -7,6 +7,16 @@ public class BuildButton : UnitUIButton
     {
         base.OnClick();
 
-        ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.BUILDINGS, null);
+        if(PlayerManager.instance._controllerSelecting.selectedUnits.Count == 1)
+        {
+            ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.BUILDINGS, null);
+        }
+
+        else
+        {
+            EventManager.TriggerEvent("ActivateBuildingsView");
+            EventManager.TriggerEvent("DisableUnitActionsView");
+            EventManager.TriggerEvent("DisableVillagerView");
+        }
     }
 }

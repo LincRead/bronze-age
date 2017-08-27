@@ -10,13 +10,16 @@ public class UnitView : ControllerUIView {
     {
         base.OnEnter(ui, controller);
 
-        unitController = controller.GetComponent<UnitStateController>();
-        ui.ShowHitpoints(unitController.hitpointsLeft, unitController._unitStats.maxHitpoints);
-        ui.ShowStats(_controller.statSprites, _controller.GetUniqueStats());
-
-        if(_controller.playerID == PlayerManager.myPlayerID)
+        if(controller != null)
         {
-            EventManager.TriggerEvent("ActivateUnitActionsView");
+            unitController = controller.GetComponent<UnitStateController>();
+            ui.ShowHitpoints(unitController.hitpointsLeft, unitController._unitStats.maxHitpoints);
+            ui.ShowStats(_controller.statSprites, _controller.GetUniqueStats());
+
+            if (_controller.playerID == PlayerManager.myPlayerID)
+            {
+                EventManager.TriggerEvent("ActivateUnitActionsView");
+            }
         }
     }
 
