@@ -11,6 +11,12 @@ public class UnitAttack : UnitState
     {
         base.OnEnter(controller);
 
+        if(_controller._unitStats.damage == 0)
+        {
+            _controller.TransitionToState(_controller.idleState);
+            return;
+        }
+
         attackSpeed = _controller._unitStats.attackSpeed;
         _controller.distanceToTarget = Grid.instance.GetDistanceBetweenNodes(_controller._pathfinder.currentStandingOnNode, _targetStandingOnNode);
         _controller.FaceController(_controller.targetController);

@@ -7,6 +7,11 @@ public class SetActiveEvent : MonoBehaviour
     public string activateEventName;
     public string disableEventName;
 
+    private void Start()
+    {
+        Disable();
+    }
+
     private void OnEnable()
     {
         EventManager.StartListening(this.activateEventName, Activate);

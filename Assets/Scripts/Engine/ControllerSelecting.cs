@@ -34,7 +34,9 @@ public class ControllerSelecting : MonoBehaviour {
         // Don't select anything unless player is in default state
         if (PlayerManager.instance.currentUserState == PlayerManager.PLAYER_ACTION_STATE.DEFAULT
             && !CursorHoveringUI.value)
+        {
             UpdateSelecting();
+        }
     }
 
     void UpdateSelecting()
@@ -140,14 +142,27 @@ public class ControllerSelecting : MonoBehaviour {
             ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.SELECTED_UNITS, null);
         }
 
-        else if (selectedGatherers.Count > 0)
+        else if(selectedUnits.Count > 0)
         {
-            ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.VILLAGER, selectedGatherers[0]);
-        }
+            if(selectedUnits[0]._unitStats.isVillager)
+            {
+                ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.VILLAGER, selectedUnits[0]);
+            }
 
-        else if (selectedUnits.Count > 0)
-        {
-            ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.WARRIOR, selectedUnits[0]);
+            else if(!selectedUnits[0]._unitStats.canAttack)
+            {
+                if(selectedUnits[0].title.Equals("Tribe"))
+                {
+                    ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.TRIBE, selectedUnits[0]);
+                }
+
+                // Other units who can't attack
+            }
+
+            else
+            {
+                ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.WARRIOR, selectedUnits[0]);
+            }
         }
 
         else
@@ -332,7 +347,9 @@ public class ControllerSelecting : MonoBehaviour {
         selectedUnits.Remove(unit);
 
         if (selectedGatherers.Contains(unit))
+        {
             selectedGatherers.Remove(unit);
+        }
 
         if (selectedUnits.Count == 0)
         {
@@ -344,6 +361,19 @@ public class ControllerSelecting : MonoBehaviour {
         {
             ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.SELECTED_UNITS, null);
         }
+    }
+
+    public bool SelectedUnitWhoCanAttack()
+    {
+        for (int i = 0; i < selectedUnits.Count; i++)
+        {
+            if (selectedUnits[i]._unitStats.canAttack)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public List<UnitStateController> GetSelectedGatherers()

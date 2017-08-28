@@ -8,14 +8,17 @@ public class UnitStats : DefaultStats
     public GameObject healthBar;
 
     [Header("Unit stats")]
-    public int maxHitpoints = 3;
+    public int maxHitpoints = 20;
+    public float moveSpeed = 0.5f;
+    public int visionRange = 8;
+
+    [Header("Attack stats")]
+    public bool canAttack = true;
     public int damage = 1;
     public float attackSpeed = 1f;
-    public float moveSpeed = 20f;
-    public int visionRange = 8;
     public int attackTriggerRadius = 6;
 
-    [Header("Ranged")]
+    [Header("Ranged attack")]
     public bool isRanged = false;
     public int range = 0;
     public GameObject projectile;

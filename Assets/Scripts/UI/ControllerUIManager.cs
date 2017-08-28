@@ -24,6 +24,7 @@ public class ControllerUIManager : MonoBehaviour {
         NONE,
         VILLAGER,
         WARRIOR,
+        TRIBE,
         SELECTED_UNITS,
         BUILDINGS,
         BUILDING_INFO,
@@ -65,6 +66,7 @@ public class ControllerUIManager : MonoBehaviour {
     public ControllerUIView nothingSelectedView;
     public VillagerView villagerView;
     public UnitView warriorView;
+    private TribeView tribeView;
     public UnitsView selectedUnitsView;
     public BuildingsView buildingsView;
     public BuildingView buildingView;
@@ -118,6 +120,7 @@ public class ControllerUIManager : MonoBehaviour {
             btn.gameObject.SetActive(false);
 
         warriorView = ScriptableObject.CreateInstance<UnitView>();
+        tribeView = ScriptableObject.CreateInstance<TribeView>();
         SetupSelectedUnitsView();
 
         ChangeView(CONTROLLER_UI_VIEW.NONE, null);
@@ -176,6 +179,10 @@ public class ControllerUIManager : MonoBehaviour {
 
             case CONTROLLER_UI_VIEW.WARRIOR:
                 currentView = warriorView;
+                break;
+
+            case CONTROLLER_UI_VIEW.TRIBE:
+                currentView = tribeView;
                 break;
 
             case CONTROLLER_UI_VIEW.SELECTED_UNITS:

@@ -16,7 +16,8 @@ public class UnitView : ControllerUIView {
             ui.ShowHitpoints(unitController.hitpointsLeft, unitController._unitStats.maxHitpoints);
             ui.ShowStats(_controller.statSprites, _controller.GetUniqueStats());
 
-            if (_controller.playerID == PlayerManager.myPlayerID)
+            if (_controller.playerID == PlayerManager.myPlayerID
+                && unitController._unitStats.canAttack)
             {
                 EventManager.TriggerEvent("ActivateUnitActionsView");
             }

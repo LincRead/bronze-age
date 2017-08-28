@@ -265,7 +265,7 @@ public class PlayerManager : MonoBehaviour {
         }
 
         // Enemy building
-        else if (_controllerSelecting.GetSelectedUnits().Count > 0)
+        else if (_controllerSelecting.SelectedUnitWhoCanAttack())
         {
             EventManager.TriggerEvent("SetAttackCursor");
         }
@@ -279,7 +279,8 @@ public class PlayerManager : MonoBehaviour {
     void HandleMouseOverUnit()
     {
         if (_controllerSelecting.GetSelectedUnits().Count > 0
-            && selectableController.playerID != PlayerManager.myPlayerID)
+            && selectableController.playerID != PlayerManager.myPlayerID
+            && _controllerSelecting.SelectedUnitWhoCanAttack())
         {
             EventManager.TriggerEvent("SetAttackCursor");
         }
