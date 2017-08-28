@@ -207,6 +207,12 @@ public class ControllerSelecting : MonoBehaviour {
         return false;
     }
 
+    public void SetControllerAsSelected(BaseController controller)
+    {
+        controller.Select();
+        selectedController = controller;
+    }
+
     public void SetUnitAsSelected()
     {
         if(PlayerManager.instance.selectableController != null

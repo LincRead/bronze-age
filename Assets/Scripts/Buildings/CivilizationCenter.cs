@@ -24,7 +24,6 @@ public class CivilizationCenter : Building
         PlayerDataManager.instance.AddHousingForPlayer(-housing, playerID);
     }
 
-
     public override int[] GetUniqueStats()
     {
         int[] stats = new int[1];

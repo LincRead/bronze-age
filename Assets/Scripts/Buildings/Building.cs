@@ -77,6 +77,9 @@ public class Building : BaseController {
         {
             Place();
             FinishConstruction();
+
+            // Make sure we show full hitpoints since building is already constructed
+            _healthBar.UpdateHitpointsPercent(hitpointsLeft, maxHitPoints);
         }
 
         else
@@ -92,17 +95,7 @@ public class Building : BaseController {
         _healthBar = healthBar.GetComponent<HealthBar>();
         _healthBar.Init(size);
         _healthBar.SetAlignment(playerID == PlayerManager.myPlayerID);
-
-        if(constructed)
-        {
-            _healthBar.UpdateHitpointsPercent(hitpointsLeft, maxHitPoints);
-        }
-       
-        else
-        {
-            hitpointsLeft = (int)(maxHitPoints * GetPercentageConstructed());
-            _healthBar.UpdateHitpointsPercent((int)stepsConstructed, (int)stepsToConstruct);
-        }
+        _healthBar.UpdateHitpointsPercent(0, (int)stepsToConstruct);
 
         UpdateDamagedSprite();
     }
