@@ -16,6 +16,13 @@ public class Camp : CivilizationCenter
         // Instantly constructed, so update hitpoints instantly too
         hitpointsLeft = maxHitPoints;
 
+        title = "Camp";
+
+        if(selected)
+        {
+            ControllerUIManager.instance.UpdateTitle(title);
+        }
+
         base.FinishConstruction();
     }
 }

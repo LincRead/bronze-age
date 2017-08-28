@@ -229,6 +229,11 @@ public class ControllerUIManager : MonoBehaviour {
         currentView.Update();
     }
 
+    public void UpdateTitle(string newTitle)
+    {
+        title.text = newTitle;
+    }
+
     public void ShowHitpoints(int hp, int max)
     {
         hitpointsPrefab.gameObject.SetActive(true);
