@@ -181,6 +181,7 @@ public class ControllerSelecting : MonoBehaviour {
             ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.BUILDING_INFO, selectedBuilding);
         }
 
+        // Show construction progress for all other buildings being constructed
         else
         {
             ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.CONSTRUCTION_PROGRESS, selectedBuilding);
@@ -214,6 +215,11 @@ public class ControllerSelecting : MonoBehaviour {
             && !PlayerManager.instance.selectableController.dead)
         {
             UnitStateController unit = PlayerManager.instance.selectableController.GetComponent<UnitStateController>();
+
+            if(unit._unitStats.isTribe && unit.GetComponent<TribeController>().movingTowarsCamp)
+            {
+                return;
+            }
 
             // Double clicked unit
             if (timeSinceLastSingleUnitSelected <= doubleClickUnitTime

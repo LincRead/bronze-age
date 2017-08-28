@@ -14,7 +14,7 @@ public class UnitStateController : BaseController
 
     [HideInInspector]
     public GameObject healthBar;
-    HealthBar _healthBar;
+    protected HealthBar _healthBar;
 
     [HideInInspector]
     public UnitIdle idleState;
@@ -170,7 +170,7 @@ public class UnitStateController : BaseController
         base.Update();
     }
 
-    public void MoveTo(BaseController targetController)
+    public virtual void MoveTo(BaseController targetController)
     {
         // Don't do anything if target is already set
         // Don't target self
@@ -195,7 +195,7 @@ public class UnitStateController : BaseController
         TransitionToState(moveToControllerState);
     }
 
-    public void MoveTo(Vector2 targetPosition)
+    public virtual void MoveTo(Vector2 targetPosition)
     {
         this.targetPosition = targetPosition;
 

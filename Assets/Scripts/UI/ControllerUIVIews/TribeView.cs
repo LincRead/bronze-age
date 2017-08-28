@@ -8,7 +8,8 @@ public class TribeView : UnitView
     {
         base.OnEnter(ui, controller);
 
-        if (_controller.playerID == PlayerManager.myPlayerID)
+        if (_controller.playerID == PlayerManager.myPlayerID
+            && !_controller.GetComponent<TribeController>().movingTowarsCamp)
         {
             EventManager.TriggerEvent("ActivateTribeView");
         }

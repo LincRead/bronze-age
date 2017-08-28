@@ -48,6 +48,11 @@ public class SelectedUnitButton : UnitUIButton
             ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.VILLAGER, _controller);
         }
 
+        else if(_controller._unitStats.isTribe)
+        {
+            ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.TRIBE, _controller);
+        }
+
         else
         {
             ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.WARRIOR, _controller);

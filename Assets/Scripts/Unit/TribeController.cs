@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class TribeController : UnitStateController {
 
-    bool movingTowarsCamp = false;
+    [HideInInspector]
+    public bool movingTowarsCamp = false;
 
 	protected override void Update ()
     {
@@ -18,6 +19,8 @@ public class TribeController : UnitStateController {
 
                 movingTowarsCamp = true;
 
+                Deselect();
+
                 // Can't control Tribe anymore
                 if (PlayerManager.myPlayerID == playerID)
                 {
@@ -29,6 +32,12 @@ public class TribeController : UnitStateController {
                 {
                     PlayerManager.instance._controllerSelecting.RemoveFromSelectedUnits(this);
                 }
+
+                // Don't show Tribe actions anymore
+                ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.NONE, null);
+
+                // Make sure we don't keep on showing build cursor
+                EventManager.TriggerEvent("SetDefaultCursor");
             }
         }
 	}

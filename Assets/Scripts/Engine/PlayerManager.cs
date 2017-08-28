@@ -246,19 +246,21 @@ public class PlayerManager : MonoBehaviour {
         // Player building
         if (building.playerID == PlayerManager.myPlayerID)
         {
-
             if (!CursorHoveringUI.value)
             {
-                // Construct
-                // Never show any build cursor over civilization building,
-                // since it's only placed and instantly constructed by Tribe unit
-                if (!building.constructed && !building._buildingStats.isCivilizationCenter)
+                if (!building.constructed)
                 {
-                    EventManager.TriggerEvent("SetBuildCursor");
+                    // Construct
+                    // Never show any build cursor over civilization building,
+                    // since it's only placed and instantly constructed by Tribe unit
+                    if (!building._buildingStats.isCivilizationCenter)
+                    {
+                        EventManager.TriggerEvent("SetBuildCursor");
+                    }
                 }
 
                 // Repair
-                else if (building.hitpointsLeft < building.maxHitPoints)
+                else if (building.hitpointsLeft < building.maxHitPoints && _controllerSelecting.GetSelectedGatherers().Count > 0)
                 {
                     EventManager.TriggerEvent("SetBuildCursor");
                 }
@@ -322,7 +324,7 @@ public class PlayerManager : MonoBehaviour {
 
         for (int i = 0; i < selectedUnits.Count; i++)
         {
-            if(attackMode)
+            if(attackMode && selectedUnits[i]._unitStats.canAttack)
             {
                 selectedUnits[i].MoveToInAttackMode(mousePosition);
             }
