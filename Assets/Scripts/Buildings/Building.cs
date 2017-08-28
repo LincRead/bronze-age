@@ -241,6 +241,7 @@ public class Building : BaseController {
             }
         }
 
+        hitpointsLeft = (int)(maxHitPoints * GetPercentageConstructed());
         _healthBar.UpdateHitpointsPercent((int)stepsConstructed, (int)stepsToConstruct);
         villagersWhoHasDoneActionThisUpdate++;
     }
@@ -272,6 +273,7 @@ public class Building : BaseController {
     {
         constructed = true;
         _spriteRenderer.sprite = constructionSprites[2];
+
         _healthBar.UpdateHitpointsPercent(hitpointsLeft, maxHitPoints);
 
         AddPlayerStats();
