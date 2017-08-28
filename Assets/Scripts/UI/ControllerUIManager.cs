@@ -63,15 +63,15 @@ public class ControllerUIManager : MonoBehaviour {
     ControllerUIView lastView;
 
     [Header("Views")]
-    public ControllerUIView nothingSelectedView;
-    public VillagerView villagerView;
-    public UnitView warriorView;
+    private ControllerUIView nothingSelectedView;
+    private VillagerView villagerView;
+    private UnitView warriorView;
     private TribeView tribeView;
-    public UnitsView selectedUnitsView;
-    public BuildingsView buildingsView;
-    public BuildingView buildingView;
-    public ResourceView resourceView;
-    public ConstructionView constructionView;
+    private UnitsView selectedUnitsView;
+    private BuildingsView buildingsView;
+    private BuildingView buildingView;
+    private ResourceView resourceView;
+    private ConstructionView constructionView;
 
     [HideInInspector]
     public List<SelectedUnitButton> _selectedUnitButtons = new List<SelectedUnitButton>();
@@ -119,9 +119,15 @@ public class ControllerUIManager : MonoBehaviour {
         foreach (Button btn in unitActionButtons)
             btn.gameObject.SetActive(false);
 
+        nothingSelectedView = ScriptableObject.CreateInstance<ControllerUIView>();
+        villagerView = ScriptableObject.CreateInstance<VillagerView>();
         warriorView = ScriptableObject.CreateInstance<UnitView>();
         tribeView = ScriptableObject.CreateInstance<TribeView>();
         SetupSelectedUnitsView();
+        buildingsView = ScriptableObject.CreateInstance<BuildingsView>();
+        buildingView = ScriptableObject.CreateInstance<BuildingView>();
+        resourceView = ScriptableObject.CreateInstance<ResourceView>();
+        constructionView = ScriptableObject.CreateInstance<ConstructionView>();
 
         ChangeView(CONTROLLER_UI_VIEW.NONE, null);
         HideTooltip();
