@@ -100,6 +100,7 @@ public class Building : BaseController {
        
         else
         {
+            hitpointsLeft = (int)(maxHitPoints * GetPercentageConstructed());
             _healthBar.UpdateHitpointsPercent((int)stepsConstructed, (int)stepsToConstruct);
         }
 
@@ -272,6 +273,7 @@ public class Building : BaseController {
     public virtual void FinishConstruction()
     {
         constructed = true;
+
         _spriteRenderer.sprite = constructionSprites[2];
 
         _healthBar.UpdateHitpointsPercent(hitpointsLeft, maxHitPoints);

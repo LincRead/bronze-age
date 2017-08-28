@@ -246,7 +246,7 @@ public class PlayerManager : MonoBehaviour {
         // Player building
         if (building.playerID == PlayerManager.myPlayerID)
         {
-            if (!CursorHoveringUI.value)
+            if (!CursorHoveringUI.value && !building._buildingStats.isCivilizationCenter)
             {
                 // Construct
                 if (!building.constructed)
@@ -357,11 +357,6 @@ public class PlayerManager : MonoBehaviour {
         {
             selectedUnits[i].Cancel();
         }
-    }
-
-    void CancelCurrentBuildingAction()
-    {
-
     }
 
     public void AddFriendlyUnitReference(UnitStateController unit, int player)

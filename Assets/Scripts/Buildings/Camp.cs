@@ -8,7 +8,14 @@ public class Camp : CivilizationCenter
     {
         base.Place();
 
-        constructed = true;
         PlayerDataManager.instance.GetPlayerData(playerID).placedCamp = true;
+    }
+
+    public override void FinishConstruction()
+    {
+        // Instantly constructed, so update hitpoints instantly too
+        hitpointsLeft = maxHitPoints;
+
+        base.FinishConstruction();
     }
 }

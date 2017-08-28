@@ -12,6 +12,12 @@ public class UnitBuild : UnitState
 
         _building = _controller.targetController.GetComponent<Building>();
 
+        if(_building._buildingStats.isCivilizationCenter)
+        {
+            _controller.TransitionToState(_controller.idleState);
+            return;
+        }
+
         if(!_building.constructed || _building.hitpointsLeft < _building.maxHitPoints)
         {
             _controller._animator.Play("build");

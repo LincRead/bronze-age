@@ -18,4 +18,7 @@ public class BuildingStats : DefaultStats
 
     [Header("Damaged visuals")]
     public Sprite[] damagedSprites = new Sprite[2];
+
+    [Header("Main building")]
+    public bool isCivilizationCenter = false;
 }
