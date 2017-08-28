@@ -12,7 +12,9 @@ public class UnitBuild : UnitState
 
         _building = _controller.targetController.GetComponent<Building>();
 
-        if(_building._buildingStats.isCivilizationCenter)
+        // If we reach main civilization building, make sure don't do any construction work
+        // Repair work is allowed
+        if(_building._buildingStats.isCivilizationCenter && !_building.constructed)
         {
             _controller.TransitionToState(_controller.idleState);
             return;

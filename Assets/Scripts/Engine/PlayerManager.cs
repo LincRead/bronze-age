@@ -246,10 +246,13 @@ public class PlayerManager : MonoBehaviour {
         // Player building
         if (building.playerID == PlayerManager.myPlayerID)
         {
-            if (!CursorHoveringUI.value && !building._buildingStats.isCivilizationCenter)
+
+            if (!CursorHoveringUI.value)
             {
                 // Construct
-                if (!building.constructed)
+                // Never show any build cursor over civilization building,
+                // since it's only placed and instantly constructed by Tribe unit
+                if (!building.constructed && !building._buildingStats.isCivilizationCenter)
                 {
                     EventManager.TriggerEvent("SetBuildCursor");
                 }
