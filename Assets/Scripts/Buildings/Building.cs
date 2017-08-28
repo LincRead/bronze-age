@@ -65,6 +65,13 @@ public class Building : BaseController {
         hitpointsLeft = maxHitPoints;
         visionRange = _buildingStats.visionRange;
 
+        // I love my daughter Ivy. <3
+
+        // And Kate <3
+
+        SetupHealthBar();
+        SetupTeamColor();
+
         // Buildings in Scene at Scene start-up are placed
         if (WorldManager.firstUpdate)
         {
@@ -76,13 +83,6 @@ public class Building : BaseController {
         {
             SetupBuildingPlacement();
         }
-
-        // I love my daughter Ivy. <3
-
-        // And Kate <3
-
-        SetupHealthBar();
-        SetupTeamColor();
     }
     
     void SetupHealthBar()
@@ -92,7 +92,17 @@ public class Building : BaseController {
         _healthBar = healthBar.GetComponent<HealthBar>();
         _healthBar.Init(size);
         _healthBar.SetAlignment(playerID == PlayerManager.myPlayerID);
-        _healthBar.UpdateHitpointsAmount(hitpointsLeft, maxHitPoints);
+
+        if(constructed)
+        {
+            _healthBar.UpdateHitpointsPercent(hitpointsLeft, maxHitPoints);
+        }
+       
+        else
+        {
+            _healthBar.UpdateHitpointsPercent((int)stepsConstructed, (int)stepsToConstruct);
+        }
+
         UpdateDamagedSprite();
     }
 
@@ -231,6 +241,7 @@ public class Building : BaseController {
             }
         }
 
+        _healthBar.UpdateHitpointsPercent((int)stepsConstructed, (int)stepsToConstruct);
         villagersWhoHasDoneActionThisUpdate++;
     }
 
@@ -250,7 +261,7 @@ public class Building : BaseController {
         {
             stepsConstructed = 0.0f;
             hitpointsLeft += 1;
-            _healthBar.UpdateHitpointsAmount(hitpointsLeft, maxHitPoints);
+            _healthBar.UpdateHitpointsPercent(hitpointsLeft, maxHitPoints);
             UpdateDamagedSprite();
         }
 
@@ -261,6 +272,7 @@ public class Building : BaseController {
     {
         constructed = true;
         _spriteRenderer.sprite = constructionSprites[2];
+        _healthBar.UpdateHitpointsPercent(hitpointsLeft, maxHitPoints);
 
         AddPlayerStats();
 
@@ -302,7 +314,7 @@ public class Building : BaseController {
 
         else
         {
-            _healthBar.UpdateHitpointsAmount(hitpointsLeft, maxHitPoints);
+            _healthBar.UpdateHitpointsPercent(hitpointsLeft, maxHitPoints);
             UpdateDamagedSprite();
         }
     }

@@ -53,7 +53,7 @@ public class HealthBar : MonoBehaviour {
         _outlineSpriteRenderer.enabled = false;
     }
 
-    public void UpdateHitpointsAmount(int currHP, int maxHP)
+    public void UpdateHitpointsPercent(int currHP, int maxHP)
     {
         float scaleX = (float)(currHP / (float)maxHP);
         _barTransform.localScale = new Vector3(scaleX * scale,  1.0f, 1.0f);

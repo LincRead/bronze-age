@@ -146,7 +146,7 @@ public class UnitStateController : BaseController
         _healthBar = healthBar.GetComponent<HealthBar>();
         _healthBar.Init(size);
         _healthBar.SetAlignment(playerID == PlayerManager.myPlayerID);
-        _healthBar.UpdateHitpointsAmount(hitpointsLeft, maxHitpoints);
+        _healthBar.UpdateHitpointsPercent(hitpointsLeft, maxHitpoints);
     }
 
     void SetupTeamColor()
@@ -330,7 +330,7 @@ public class UnitStateController : BaseController
 
         else
         {
-            _healthBar.UpdateHitpointsAmount(hitpointsLeft, maxHitpoints);
+            _healthBar.UpdateHitpointsPercent(hitpointsLeft, maxHitpoints);
         }
     }
 
