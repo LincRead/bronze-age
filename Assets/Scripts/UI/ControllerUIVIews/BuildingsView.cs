@@ -16,6 +16,8 @@ public class BuildingsView : UnitView
 
     public override void OnExit()
     {
+        base.OnExit();
+
         EventManager.TriggerEvent("DisableBuildingsView");
     }
 }

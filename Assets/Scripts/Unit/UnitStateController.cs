@@ -334,6 +334,11 @@ public class UnitStateController : BaseController
         }
     }
 
+    public override void Cancel()
+    {
+        TransitionToState(idleState);
+    }
+
     protected void Kill()
     {
         hitpointsLeft = 0;
@@ -353,12 +358,15 @@ public class UnitStateController : BaseController
         {
             PlayerManager.instance._controllerSelecting.RemoveFromSelectedUnits(this);
         }
-            
-        // Remove from path finding
+
+        RemoveFromPathfinding();
+        TransitionToState(dieState);
+    }
+
+    protected void RemoveFromPathfinding()
+    {
         _pathfinder.currentStandingOnNode.parentTile.unitsStandingHere.Remove(this);
         _pathfinder.currentStandingOnNode.unitControllerStandingHere = null;
-
-        TransitionToState(dieState);
     }
 
     public void UpdateVisibility()

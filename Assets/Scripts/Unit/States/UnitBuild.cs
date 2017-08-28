@@ -23,6 +23,12 @@ public class UnitBuild : UnitState
 
     public override void CheckTransitions()
     {
+        // Todo: add being destroyed value
+        if(_building == null)
+        {
+            _controller.TransitionToState(_controller.idleState);
+        }
+
         if (_building.constructed && _building.hitpointsLeft == _building.maxHitPoints)
         {
             _controller.TransitionToState(_controller.idleState);

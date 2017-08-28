@@ -35,6 +35,9 @@ public class PlayerManager : MonoBehaviour {
     public BaseController selectableController = null;
 
     [HideInInspector]
+    public CivilizationCenter civilizationCenter = null;
+
+    [HideInInspector]
     public static Vector2 mousePosition;
 
     private static PlayerManager playerManager;
@@ -70,7 +73,7 @@ public class PlayerManager : MonoBehaviour {
     public void SetBuildingPlacementState(Building building)
     {
         buildingBeingPlaced = building;
-
+        buildingBeingPlaced.GetComponent<Building>().playerID = PlayerManager.myPlayerID;
         currentUserState = PLAYER_ACTION_STATE.PLACING_BUILDING;
         EventManager.TriggerEvent("SetBuildCursor");
     }
@@ -340,12 +343,25 @@ public class PlayerManager : MonoBehaviour {
 
     public void StopAction()
     {
+        if (_controllerSelecting.selectedController != null)
+        {
+            if(_controllerSelecting.selectedController.controllerType == CONTROLLER_TYPE.BUILDING)
+            {
+                _controllerSelecting.selectedController.Cancel();
+            }
+        }
+
         List<UnitStateController> selectedUnits = _controllerSelecting.GetSelectedUnits();
 
         for (int i = 0; i < selectedUnits.Count; i++)
         {
-            selectedUnits[i].TransitionToState(selectedUnits[i].idleState);
+            selectedUnits[i].Cancel();
         }
+    }
+
+    void CancelCurrentBuildingAction()
+    {
+
     }
 
     public void AddFriendlyUnitReference(UnitStateController unit, int player)

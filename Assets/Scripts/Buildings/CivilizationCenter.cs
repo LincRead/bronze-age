@@ -1,10 +1,18 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class VillageCenter : Building
+public class CivilizationCenter : Building
 {
-    [Header("Village Center stats")]
-    public int housing = 5;
+    [Header("Unique Stats")]
+    public int housing = 10;
+
+    protected override void Start()
+    {
+        base.Start();
+
+        PlayerManager.instance.civilizationCenter = this;
+    }
 
     protected override void AddPlayerStats()
     {
@@ -16,11 +24,11 @@ public class VillageCenter : Building
         PlayerDataManager.instance.AddHousingForPlayer(-housing, playerID);
     }
 
+
     public override int[] GetUniqueStats()
     {
-        int[] stats = new int[2];
+        int[] stats = new int[1];
         stats[0] = housing;
-        stats[1] = 0; // Todo show available villagers resource?
         return stats;
     }
 }

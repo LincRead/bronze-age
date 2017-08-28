@@ -25,4 +25,7 @@ public class UnitStats : DefaultStats
 
     [Header("Vilager")]
     public bool isVillager = false;
+
+    [Header("Tribe")]
+    public bool isTribe = false;
 }

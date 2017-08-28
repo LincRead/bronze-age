@@ -22,7 +22,8 @@ public class ControllerSelecting : MonoBehaviour {
     [HideInInspector]
     public UnitStateController selectedEnemy = null;
 
-    protected BaseController selectedController = null;
+    [HideInInspector]
+    public BaseController selectedController = null;
 
     protected float timeSinceLastSingleUnitSelected = 0.0f;
     protected float doubleClickUnitTime = 1.0f;
@@ -275,7 +276,6 @@ public class ControllerSelecting : MonoBehaviour {
         // Can select max 18 units atm
         for (int i = 0; i < friendlyUnits.Count && i < maxUnitsSelected; i++)
         {
-            Debug.Log(selectedController);
             if (friendlyUnits[i] != null
                 && !friendlyUnits[i].dead
                 && unit.title.Equals(friendlyUnits[i].title)

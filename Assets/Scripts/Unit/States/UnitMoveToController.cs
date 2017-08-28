@@ -182,6 +182,13 @@ public class UnitMoveToController : UnitMoveTo
                 _controller.TransitionToState(_controller.buildState);
             }
 
+            // Special case for Tribe unit reaching Camp building
+            else if(_controller._unitStats.isTribe 
+                && _targetController == PlayerManager.instance.civilizationCenter)
+            {
+                _controller.GetComponent<TribeController>().SetupCamp(_targetController.GetComponent<Camp>());
+            }
+
             else
             {
                 _controller.TransitionToState(_controller.idleState);

@@ -88,6 +88,7 @@ public class Building : BaseController {
     void SetupHealthBar()
     {
         GameObject healthBar = GameObject.Instantiate(_buildingStats.healthBar, _transform.position, Quaternion.identity);
+        healthBar.transform.parent = transform;
         _healthBar = healthBar.GetComponent<HealthBar>();
         _healthBar.Init(size);
         _healthBar.SetAlignment(playerID == PlayerManager.myPlayerID);
@@ -98,12 +99,17 @@ public class Building : BaseController {
     void SetupTeamColor()
     {
         if (playerID > -1)
+        {
             _spriteRenderer.material.SetColor("_TeamColor", PlayerDataManager.instance.playerData[playerID].teamColor);
+        }
+
         else
+        {
             _spriteRenderer.material.SetColor("_TeamColor", PlayerDataManager.neutralPlayerColor);
+        }
     }
 
-    public void Place()
+    protected virtual void Place()
     {
         hasBeenPlaced = true;
 
@@ -251,7 +257,7 @@ public class Building : BaseController {
         villagersWhoHasDoneActionThisUpdate++;
     }
 
-    protected virtual void FinishConstruction()
+    public virtual void FinishConstruction()
     {
         constructed = true;
         _spriteRenderer.sprite = constructionSprites[2];
@@ -320,6 +326,16 @@ public class Building : BaseController {
             {
                 _spriteRenderer.sprite = constructionSprites[2];
             }
+        }
+    }
+
+    public override void Cancel()
+    {
+        if(!constructed)
+        {
+            // Todo: give back resources
+
+            Kill();
         }
     }
 

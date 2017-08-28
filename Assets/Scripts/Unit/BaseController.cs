@@ -127,6 +127,12 @@ public class BaseController : MonoBehaviour {
         }
     }
 
+    // Cancel whatever action is being done
+    public virtual void Cancel()
+    {
+
+    }
+
     public virtual Vector2 GetPosition()
     {
         return _transform.position + new Vector3(0.04f, 0.04f);

@@ -52,5 +52,6 @@ public class UnitsView : ControllerUIView
         ui.HideSelectedUnitsButtons();
         EventManager.TriggerEvent("DisableVillagerView");
         EventManager.TriggerEvent("DisableUnitActionsView");
+        EventManager.TriggerEvent("DisableBuildingsView");
     }
 }

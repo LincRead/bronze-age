@@ -111,4 +111,9 @@ public class PlayerDataManager : MonoBehaviour
         playerData[player].stone += value;
         EventManager.TriggerEvent("UpdateStoneStockUI");
     }
+
+    public PlayerData GetPlayerData(int player)
+    {
+        return playerData[player];
+    }
 }

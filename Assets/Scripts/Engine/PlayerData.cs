@@ -17,4 +17,6 @@ public class PlayerData {
 
     [HideInInspector]
     public Color teamColor = Color.white;
+
+    public bool placedCamp = false;
 }
