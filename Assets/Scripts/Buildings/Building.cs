@@ -65,6 +65,8 @@ public class Building : BaseController {
         hitpointsLeft = maxHitPoints;
         visionRange = _buildingStats.visionRange;
 
+        _selectionIndicator.GetComponent<Transform>().localPosition = new Vector3(0.0f, size * 0.08f, 0.0f);
+
         // I love my daughter Ivy. <3
 
         // And Kate <3
