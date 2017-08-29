@@ -194,15 +194,29 @@ public class Tile : IHeapItem<Tile>
     // Set everything on tile to visible
     public void SetExplored()
     {
+        if (!explored && _tile)
+        {
+            _tile.GetComponent<SpriteRenderer>().color = Color.white;
+            SetUnitsStandingOnTileAsVisible();
+        }
+
         explored = true;
 
-        if (_tile)
-            _tile.GetComponent<SpriteRenderer>().color = Color.white;
-
         if (controllerOccupying)
-            controllerOccupying._spriteRenderer.enabled = true;
+        {
+            List<Tile> tiles = Grid.instance.GetTilesOccupiedByController(controllerOccupying);
 
-        SetUnitsStandingOnTileAsVisible();
+            for (int j = 0; j < tiles.Count; j++)
+            {
+                if(!tiles[j].explored)
+                {
+                    tiles[j].SetExplored();
+                }
+                    
+            }
+
+            controllerOccupying._spriteRenderer.enabled = true;
+        }
     }
 
     public bool IsEmpty()

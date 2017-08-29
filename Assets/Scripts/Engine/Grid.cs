@@ -460,8 +460,10 @@ public class Grid : MonoBehaviour {
         Tile tile = GetTileFromWorldPoint(controller.GetPosition() + new Vector2(0.04f, 0.04f));
 
         if (tile == null)
+        {
             return;
-
+        }
+            
         for (int i = 0; i < controller.size; i++)
         {
             for (int j = 0; j < controller.size; j++)
@@ -474,6 +476,26 @@ public class Grid : MonoBehaviour {
                 }
             }
         }
+    }
+
+    public List<Tile> GetTilesOccupiedByController(BaseController controller)
+    {
+        // Adding offset since building pivot point (buttom of sprite) is in the middle of two tiles.
+        Tile tile = GetTileFromWorldPoint(controller.GetPosition() + new Vector2(0.04f, 0.04f));
+        List<Tile> tilesToReturn = new List<Tile>();
+
+        for (int i = 0; i < controller.size; i++)
+        {
+            for (int j = 0; j < controller.size; j++)
+            {
+                if (i > -1 && j > -1 && i < numTilesX + 1 && j < numTilesY + 1)
+                {
+                    tilesToReturn.Add(GetTileFromGridPos(tile.gridPosX + i, tile.gridPosY + j));
+                }
+            }
+        }
+
+        return tilesToReturn;
     }
 
     public void RemoveTilesOccupiedByController(BaseController controller)

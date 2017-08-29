@@ -89,7 +89,7 @@ public class Building : BaseController {
             SetupBuildingPlacement();
         }
     }
-    
+
     void SetupHealthBar()
     {
         GameObject healthBar = GameObject.Instantiate(_buildingStats.healthBar, _transform.position, Quaternion.identity);
@@ -291,14 +291,12 @@ public class Building : BaseController {
         Node currentNode = GetMiddleNode();
         List<Tile> visibleTiles = Grid.instance.GetAllTilesBasedOnVisibilityFromNode(visionRange, currentNode);
 
-        if (!currentNode.parentTile.traversed)
+        for (int i = 0; i < visibleTiles.Count; i++)
         {
-            for (int i = 0; i < visibleTiles.Count; i++)
+            if (!visibleTiles[i].explored)
             {
                 visibleTiles[i].SetExplored();
             }
-
-            currentNode.parentTile.traversed = true;
         }
     }
 

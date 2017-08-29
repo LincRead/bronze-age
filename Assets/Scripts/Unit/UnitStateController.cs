@@ -386,7 +386,23 @@ public class UnitStateController : BaseController
         {
             if (!visibleTiles[i].explored)
             {
-                visibleTiles[i].SetExplored();
+                BaseController controllerOccupying = visibleTiles[i].controllerOccupying;
+
+                if (controllerOccupying != null)
+                {
+                    Debug.Log(visibleTiles[i].controllerOccupying.title);
+                    List<Tile> tiles = Grid.instance.GetTilesOccupiedByController(controllerOccupying);
+
+                    for (int j = 0; j < tiles.Count; j++)
+                    {
+                        tiles[j].SetExplored();
+                    }
+                }
+
+                else
+                {
+                    visibleTiles[i].SetExplored();
+                }
             }
         }
     }

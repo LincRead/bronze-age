@@ -125,6 +125,12 @@ public class BaseController : MonoBehaviour {
         {
             _spriteRenderer.enabled = false;
         }
+
+        else
+        {
+            // SetExplored makes sure all tiles occupied by controller gets set to explored
+            GetPrimaryTile().SetExplored();
+        }
     }
 
     // Cancel whatever action is being done
