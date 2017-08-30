@@ -47,20 +47,21 @@ Shader "Sprites/TeamColor"
 			fixed4 frag(v2f IN) : SV_Target
 			{
 				fixed4 c = SampleSpriteTexture(IN.texcoord) * IN.color;
-				c.rgb *= c.a;
 
 				// Apply team color on Magenta pixels
 				if (c.r == 1.0 && c.g == 0.0 && c.b == 1.0)
 				{
-					c = _TeamColor;
+					c = _TeamColor * c.a;;
 				}
 
 				if (c.r > 0.49 && c.r < 0.51 && c.g == 0.0 && c.b > 0.49 && c.b < 0.51)
 				{
-					c.r = _TeamColor.r * 0.6;
-					c.g = _TeamColor.g * 0.6;
-					c.b = _TeamColor.b * 0.6;
+					c.r = _TeamColor.r * 0.6 * c.a;
+					c.g = _TeamColor.g * 0.6 * c.a;
+					c.b = _TeamColor.b * 0.6 * c.a;
 				}
+
+				c.rgb *= c.a;
 					
 				UNITY_APPLY_FOG(IN.fogCoord, c);
 				return c;
