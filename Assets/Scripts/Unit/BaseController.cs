@@ -86,6 +86,7 @@ public class BaseController : MonoBehaviour {
         if (_spriteRenderer != null)
         {
             zIndex = _transform.position.y;
+            _transform.position = new Vector3(_transform.position.x, _transform.position.y, zIndex);
         }
     }
 
@@ -97,7 +98,9 @@ public class BaseController : MonoBehaviour {
     void OnMouseExit()
     {
         if (PlayerManager.instance.mouseHoveringController == this)
+        {
             PlayerManager.instance.mouseHoveringController = null;
+        }
     }
 
     public virtual void Select()

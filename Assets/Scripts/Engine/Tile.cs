@@ -89,10 +89,12 @@ public class Tile : IHeapItem<Tile>
         if (walkable)
         {
             float spawnValue = 0.0f;
-            if (tileIndex == 0) spawnValue = 0.005f;
-            if (tileIndex == 1) spawnValue = 0.01f;
-            if (tileIndex == 2) spawnValue = 0.05f;
+
+            if (tileIndex == 0) spawnValue = 0.02f;
+            if (tileIndex == 1) spawnValue = 0.05f;
+            if (tileIndex == 2) spawnValue = 0.15f;
             if (tileIndex == 3) spawnValue = 0.3f;
+
             if (Random.value < spawnValue)
             {
                 grid.SpawnTree(this);

@@ -127,6 +127,11 @@ public class PlayerManager : MonoBehaviour {
 
                 UpdateSelectableController();
 
+                if (Input.GetMouseButtonUp(0))
+                {
+                    UpdateMouseCursor();
+                }
+
                 if (Input.GetMouseButtonUp(1))
                 {
                     MoveSelectedUnitsToNewTarget(false);
@@ -188,7 +193,7 @@ public class PlayerManager : MonoBehaviour {
             {
                 selectableController = null;
             }
-            
+
             UpdateMouseCursor();
         }
     }
@@ -222,8 +227,9 @@ public class PlayerManager : MonoBehaviour {
 
     void HandleMouseOverResource()
     {
+        // A Villager is selected
         if (_controllerSelecting.GetSelectedGatherers().Count > 0
-            && _controllerSelecting.selectedEnemy == null // Not selected an enemy Villager
+            && _controllerSelecting.selectedEnemy == null
             && !CursorHoveringUI.value)
         {
             Resource resource = selectableController.GetComponent<Resource>();
@@ -236,6 +242,11 @@ public class PlayerManager : MonoBehaviour {
                 case HARVEST_TYPE.FARM: EventManager.TriggerEvent("SetFarmCursor"); break;
                 default: EventManager.TriggerEvent("SetDefaultCursor"); break;
             }
+        }
+
+        else
+        {
+            EventManager.TriggerEvent("SetDefaultCursor");
         }
     }
 
