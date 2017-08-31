@@ -181,6 +181,11 @@ public class ControllerSelecting : MonoBehaviour {
             ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.BUILDING_INFO, selectedBuilding);
         }
 
+        else if(selectedBuilding.producing)
+        {
+            ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.CONSTRUCTION_PROGRESS, selectedBuilding);
+        }
+
         // Show construction progress for all other buildings being constructed
         else
         {

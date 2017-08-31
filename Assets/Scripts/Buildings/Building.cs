@@ -19,8 +19,13 @@ public class Building : BaseController {
     public float stepsToConstruct = 3f;
     private float stepsConstructed = 0f;
 
-    protected bool producing = false;
+    [HideInInspector]
+    public bool producing = false;
+
     protected FinishedProductionAction _finishedProductionAction;
+
+    [HideInInspector]
+    public ProductionButtonData[] productionButtonsData;
 
     // Need this to caulcate efficieny of construction
     // Every number added to this float decreases efficient
@@ -67,6 +72,7 @@ public class Building : BaseController {
         maxHitPoints = _buildingStats.maxHitpoints;
         hitpointsLeft = maxHitPoints;
         visionRange = _buildingStats.visionRange;
+        productionButtonsData = _buildingStats.productionButtons;
 
         _selectionIndicator.GetComponent<Transform>().localPosition = new Vector3(0.0f, size * 0.08f, 0.0f);
 
@@ -340,8 +346,6 @@ public class Building : BaseController {
         }
     }
 
-
-
     public override void Cancel()
     {
         if(!constructed)
@@ -368,8 +372,6 @@ public class Building : BaseController {
     public override void Select()
     {
         base.Select();
-
-
 
         _healthBar.Activate();
     }

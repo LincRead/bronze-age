@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Text;
 
+[CreateAssetMenu(menuName = "UI/Production Button")]
 public class ProductionButton : UnitUIButton {
 
     public ProductionButtonData data;
@@ -25,8 +26,23 @@ public class ProductionButton : UnitUIButton {
         data = newData;
         icon.sprite = newData.icon;
         prefab = newData.productionPrefab;
-        script = prefab.GetComponent<BaseController>();
+
+        if(prefab != null)
+        {
+            script = prefab.GetComponent<BaseController>();
+        }
+        
         UpdateTooltip();
+    }
+
+    public void Show()
+    {
+        gameObject.SetActive(true);
+    }
+
+    public void Hide()
+    {
+        gameObject.SetActive(false);
     }
 
     void UpdateTooltip()
@@ -38,6 +54,10 @@ public class ProductionButton : UnitUIButton {
             {
                 case PRODUCTION_TYPE.BUILDING:
                     tooltip = new StringBuilder("Advance your civilization to " + WorldManager.civAgeNames[data.age] + " to construct " + script.title).ToString();
+                    break;
+
+                case PRODUCTION_TYPE.TECHNOLOGY:
+                    tooltip = new StringBuilder("Advance your civilization to " + WorldManager.civAgeNames[data.age] + " to " + data.title).ToString();
                     break;
             }
             
@@ -52,6 +72,10 @@ public class ProductionButton : UnitUIButton {
                 case PRODUCTION_TYPE.BUILDING:
                     tooltip = new StringBuilder("Construct " + script.title).ToString();
                     break;
+
+                case PRODUCTION_TYPE.TECHNOLOGY:
+                    tooltip = data.tooltip;
+                    break;
             }
                     
         }
@@ -59,18 +83,11 @@ public class ProductionButton : UnitUIButton {
 
     public void UpdatedCivAge()
     {
-
         if (!_button.interactable && data.age > PlayerManager.instance.currentAge)
         {
             icon.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
 
-            switch (data.type)
-            {
-                case PRODUCTION_TYPE.BUILDING:
-                    tooltip = new StringBuilder("Construct " + script.title).ToString();
-                    break;
-            }
-
+            UpdateTooltip();
         }
     }
 }

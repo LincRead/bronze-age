@@ -19,6 +19,8 @@ public class ControllerUIManager : MonoBehaviour {
     public UnitUIButton[] productionBottons;
     public Button selectedUnitButton;
 
+    protected ProductionButton[] _productionButtonScripts = new ProductionButton[6];
+
     [HideInInspector]
     public enum CONTROLLER_UI_VIEW
     {
@@ -129,6 +131,7 @@ public class ControllerUIManager : MonoBehaviour {
         buildingView = ScriptableObject.CreateInstance<BuildingView>();
         resourceView = ScriptableObject.CreateInstance<ResourceView>();
         constructionView = ScriptableObject.CreateInstance<ConstructionView>();
+        SetupProductionButtonsView();
 
         ChangeView(CONTROLLER_UI_VIEW.NONE, null);
         HideTooltip();
@@ -157,6 +160,16 @@ public class ControllerUIManager : MonoBehaviour {
         SelectedUnitButton buttonScript = newButton.GetComponent<SelectedUnitButton>();
         buttonScript.Clear();
         _selectedUnitButtons.Add(buttonScript);
+    }
+
+    void SetupProductionButtonsView()
+    {
+        for(int i = 0; i < productionBottons.Length; i++)
+        {
+            _productionButtonScripts[i] = productionBottons[i].GetComponent<ProductionButton>();
+        }
+
+        HideProductionButtons();
     }
 
     public void ShowDefaultUI()
@@ -316,17 +329,23 @@ public class ControllerUIManager : MonoBehaviour {
         }
     }
 
-    public void ResetProductionButtons(ProductionButton[] setToTheseProductionButtons)
+    public void ShowProductionButtons(ProductionButtonData[] data)
     {
-        for(int i = 0; i < productionBottons.Length; i++)
+        HideProductionButtons();
+
+        for(int i = 0; i < data.Length; i++)
         {
-            if(setToTheseProductionButtons == null)
-            {
-                // Get buttons and set as not active.
-                // productionBottons[i].
-                // else
-                productionBottons[i] = setToTheseProductionButtons[i];
-            }
+            // Todo make condition for required technology
+            _productionButtonScripts[data[i].index].SetData(data[i]);
+            _productionButtonScripts[data[i].index].Show();
+        }
+    }
+
+    public void HideProductionButtons()
+    {
+        for (int i = 0; i < productionBottons.Length; i++)
+        {
+            _productionButtonScripts[i].Hide();
         }
     }
 }

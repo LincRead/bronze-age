@@ -10,22 +10,34 @@ public enum PRODUCTION_TYPE
     UNIT
 }
 
-[CreateAssetMenu(menuName = "Stats/Production Data")]
+[CreateAssetMenu(menuName = "UI/Production Button Data")]
 public class ProductionButtonData : ScriptableObject {
 
     public PRODUCTION_TYPE type = PRODUCTION_TYPE.DEFAULT;
 
-    [Header("Execute code on action")]
+    [Header("Title")]
+    public string title;
+
+    [Header("Tooltip")]
+    public string tooltip;
+
+    [Header("Execute when production finishes")]
     public FinishedProductionAction executeScript;
 
-    [Header("Building")]
+    [Header("Produce")]
     public GameObject productionPrefab;
 
     [Header("Icon")]
     public Sprite icon;
 
-    [Header("Civilization Age")]
-    public int age;
+    [Header("View position")]
+    public int index = 0;
+
+    [Header("Required Civilization Age")]
+    public int age = 0;
+
+    [Header("Required technology")]
+    public string technology;
 
     [Header("Required resources")]
     public int timber = 0;

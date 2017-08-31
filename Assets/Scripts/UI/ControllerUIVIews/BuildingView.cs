@@ -19,7 +19,10 @@ public class BuildingView : ControllerUIView
         if (PlayerManager.myPlayerID == _controller.playerID)
         {
             ui.ShowStats(buildingController.statSprites, buildingController.GetUniqueStats());
+            ui.ShowProductionButtons(buildingController.productionButtonsData);
         }
+
+        EventManager.TriggerEvent("ActivateProductionButtonsView");
     }
 
     public override void Update()
@@ -31,5 +34,8 @@ public class BuildingView : ControllerUIView
     {
         ui.HideStats();
         ui.HideHitpoints();
+        ui.HideProductionButtons();
+
+        EventManager.TriggerEvent("DisableProductionButtonsView");
     }
 }
