@@ -16,6 +16,7 @@ public class ControllerUIManager : MonoBehaviour {
     public Button[] villagerButtons;
     public Button[] buildingButtons;
     public Button[] unitActionButtons;
+    public UnitUIButton[] productionBottons;
     public Button selectedUnitButton;
 
     [HideInInspector]
@@ -312,6 +313,20 @@ public class ControllerUIManager : MonoBehaviour {
         for(int i = 0; i < _selectedUnitButtons.Count; i++)
         {
             _selectedUnitButtons[i].Clear();
+        }
+    }
+
+    public void ResetProductionButtons(ProductionButton[] setToTheseProductionButtons)
+    {
+        for(int i = 0; i < productionBottons.Length; i++)
+        {
+            if(setToTheseProductionButtons == null)
+            {
+                // Get buttons and set as not active.
+                // productionBottons[i].
+                // else
+                productionBottons[i] = setToTheseProductionButtons[i];
+            }
         }
     }
 }

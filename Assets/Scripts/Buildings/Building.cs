@@ -19,6 +19,9 @@ public class Building : BaseController {
     public float stepsToConstruct = 3f;
     private float stepsConstructed = 0f;
 
+    protected bool producing = false;
+    protected FinishedProductionAction _finishedProductionAction;
+
     // Need this to caulcate efficieny of construction
     // Every number added to this float decreases efficient
     // Reason: avoid lots of Villagers constructing the same building being too efficient
@@ -337,6 +340,8 @@ public class Building : BaseController {
         }
     }
 
+
+
     public override void Cancel()
     {
         if(!constructed)
@@ -363,6 +368,8 @@ public class Building : BaseController {
     public override void Select()
     {
         base.Select();
+
+
 
         _healthBar.Activate();
     }
