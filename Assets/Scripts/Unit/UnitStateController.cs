@@ -220,7 +220,7 @@ public class UnitStateController : BaseController
         float closestDistance = 10000;
         BaseController closestResource = null;
 
-        visibleTiles = Grid.instance.GetAllTilesBasedOnVisibilityFromNode(_unitStats.visionRange, _pathfinder.currentStandingOnNode);
+        visibleTiles = Grid.instance.GetAllTilesBasedOnVisibilityFromNode(_unitStats.visionRange, _pathfinder.currentStandingOnNode, size);
 
         for (int i = 0; i < visibleTiles.Count; i++)
         {
@@ -372,7 +372,7 @@ public class UnitStateController : BaseController
     public void UpdateVisibility()
     {
         Node currentNode = _pathfinder.currentStandingOnNode;
-        visibleTiles = Grid.instance.GetAllTilesBasedOnVisibilityFromNode(_unitStats.visionRange, currentNode);
+        visibleTiles = Grid.instance.GetAllTilesBasedOnVisibilityFromNode(_unitStats.visionRange, currentNode, size);
 
         if (playerID == PlayerManager.myPlayerID)
         {

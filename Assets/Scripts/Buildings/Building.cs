@@ -199,6 +199,8 @@ public class Building : BaseController {
             CancelPlacing();
             PlayerManager.instance.CancelPlaceBuildingState();
         }
+
+        SetVisibility();
     }
 
     public void Build(float amount)
@@ -289,7 +291,7 @@ public class Building : BaseController {
     public void SetVisibility()
     {
         Node currentNode = GetMiddleNode();
-        List<Tile> visibleTiles = Grid.instance.GetAllTilesBasedOnVisibilityFromNode(visionRange, currentNode);
+        List<Tile> visibleTiles = Grid.instance.GetAllTilesBasedOnVisibilityFromNode(visionRange, currentNode, size);
 
         for (int i = 0; i < visibleTiles.Count; i++)
         {

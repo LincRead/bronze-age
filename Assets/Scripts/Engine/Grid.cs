@@ -219,7 +219,7 @@ public class Grid : MonoBehaviour {
 
         List<Tile> tiles = GetAllTilesFromBox(tile.worldPosition, 2);
 
-        for(int i = 0; i < tiles.Count; i++)
+        for (int i = 0; i < tiles.Count; i++)
         {
             if (tiles[i].fertility > 1)
                 tiles[i].fertility = 1;
@@ -372,6 +372,19 @@ public class Grid : MonoBehaviour {
         return neighbours;
     }
 
+    public Tile GetNeighbourTileAbove(Tile tile)
+    {
+        int checkX = tile.gridPosX - 1;
+        int checkY = tile.gridPosY - 1;
+
+        if (checkX > -1 && checkX < numTilesX && checkY > -1 && checkY < numTilesY)
+        {
+            return tiles[checkX, checkY];
+        }
+
+        return null;
+    }
+
     public List<Node> GetNeighbourNodes(Node node)
     {
         List<Node> neighbours = new List<Node>();
@@ -463,7 +476,7 @@ public class Grid : MonoBehaviour {
         {
             return;
         }
-            
+
         for (int i = 0; i < controller.size; i++)
         {
             for (int j = 0; j < controller.size; j++)
@@ -572,7 +585,33 @@ public class Grid : MonoBehaviour {
         return false;
     }
 
-    public List<Tile> GetAllTilesBasedOnVisibilityFromNode(float visibilityValue, Node node)
+    public List<Node> GetAllNodesBasedOnVisibilityFromNode(float visibilityValue, Node node, int size)
+    {
+        List<Node> visibleNodes = new List<Node>();
+        int visibility = (int)(visibilityValue);
+
+        for (int i = -visibility; i < visibility; i++)
+        {
+            for (int j = -visibility; j < visibility; j++)
+            {
+                if (!(node.gridPosX + i < 0
+                    || node.gridPosY + j < 0
+                    || node.gridPosX + i > numNodesX - 1
+                    || node.gridPosY + j > numNodesY - 1))
+                {
+                    Debug.Log(GetDistanceBetweenNodes(node, nodes[node.gridPosX + i, node.gridPosY + j]));
+                    if (GetDistanceBetweenNodes(node, nodes[node.gridPosX + i, node.gridPosY + j]) < (visibility * 10))
+                    {
+                        visibleNodes.Add(nodes[node.gridPosX + i, node.gridPosY + j]);
+                    }
+                }
+            }
+        }
+
+        return visibleNodes;
+    }
+
+    public List<Tile> GetAllTilesBasedOnVisibilityFromNode(float visibilityValue, Node node, int size)
     {
         List<Tile> visibleTiles = new List<Tile>();
         Tile primaryTile = node.parentTile;
@@ -585,10 +624,23 @@ public class Grid : MonoBehaviour {
                 if (!(primaryTile.gridPosX + i < 0
                     || primaryTile.gridPosY + j < 0
                     || primaryTile.gridPosX + i > numTilesX - 1
-                    || primaryTile.gridPosY + j > numTilesY - 1
-                    || GetDistanceBetweenTiles(primaryTile, tiles[primaryTile.gridPosX + i, primaryTile.gridPosY + j]) >= (visibility * 10)))
+                    || primaryTile.gridPosY + j > numTilesY - 1))
                 {
-                    visibleTiles.Add(tiles[primaryTile.gridPosX + i, primaryTile.gridPosY + j]);
+                    if(size % 2 == 0)
+                    {
+                        if (GetDistanceBetweenTileTopPosAndTile(primaryTile, tiles[primaryTile.gridPosX + i, primaryTile.gridPosY + j]) <= (visibility * 10))
+                        {
+                            visibleTiles.Add(tiles[primaryTile.gridPosX + i, primaryTile.gridPosY + j]);
+                        }
+                    }
+
+                    else
+                    {
+                        if (GetDistanceBetweenTiles(primaryTile, tiles[primaryTile.gridPosX + i, primaryTile.gridPosY + j]) <= (visibility * 10))
+                        {
+                            visibleTiles.Add(tiles[primaryTile.gridPosX + i, primaryTile.gridPosY + j]);
+                        }
+                    }
                 }
             }
         }
@@ -610,6 +662,16 @@ public class Grid : MonoBehaviour {
     {
         int distX = Mathf.Abs(tileA.gridPosX - tileB.gridPosX);
         int distY = Mathf.Abs(tileA.gridPosY - tileB.gridPosY);
+
+        if (distX > distY)
+            return 14 * distY + 10 * (distX - distY);
+        return 14 * distX + 10 * (distY - distX);
+    }
+
+    public float GetDistanceBetweenTileTopPosAndTile(Tile tileA, Tile tileB)
+    {
+        float distX = Mathf.Abs(tileA.gridPosX - tileB.gridPosX - 0.5f);
+        float distY = Mathf.Abs(tileA.gridPosY - tileB.gridPosY - 0.5f);
 
         if (distX > distY)
             return 14 * distY + 10 * (distX - distY);
