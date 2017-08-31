@@ -9,9 +9,11 @@ public class RangedUnitAttack : UnitAttack
         // Is enemy still close enught?
         // Buildings never move
         // Use different logic to calculate distance to buildings
-        if(_controller.controllerType == CONTROLLER_TYPE.BUILDING)
+        if(_controller.targetController.controllerType == CONTROLLER_TYPE.BUILDING)
         {
-            _controller.distanceToTarget = Grid.instance.GetDistanceBetweenControllers(_controller, _controller.targetController);
+            _controller.distanceToTarget = Grid.instance.GetDistanceBetweenNodes(
+                _controller._pathfinder.currentStandingOnNode,
+                _controller.targetNode);
         }
 
         // Destroyed, dead or moved too far away

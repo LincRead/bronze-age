@@ -65,6 +65,9 @@ public class UnitStateController : BaseController
     public Vector2 targetPosition;
 
     [HideInInspector]
+    public Node targetNode;
+
+    [HideInInspector]
     public int maxHitpoints;
 
     [HideInInspector]

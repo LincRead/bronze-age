@@ -57,13 +57,15 @@ public class UnitMoveToController : UnitMoveTo
             _controller.ignoreControllers.Clear();
 
             // Ignore unwalkable nodes
-            while (_pathfinder.path.Count > 0 && !_pathfinder.path[_pathfinder.path.Count - 1].walkable)
+            while (_pathfinder.path.Count > 1 && !_pathfinder.path[_pathfinder.path.Count - 1].walkable)
             {
                 _pathfinder.path.Remove(_pathfinder.path[_pathfinder.path.Count - 1]);
             }
 
             // endNode is last node in path
             endNode = _controller._pathfinder.path[_controller._pathfinder.path.Count - 1];
+
+            _controller.targetNode = endNode;
 
             // Set distance based on first node to end node
             _controller.distanceToTarget = Grid.instance.GetDistanceBetweenNodes(

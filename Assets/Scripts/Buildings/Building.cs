@@ -199,8 +199,6 @@ public class Building : BaseController {
             CancelPlacing();
             PlayerManager.instance.CancelPlaceBuildingState();
         }
-
-        SetVisibility();
     }
 
     public void Build(float amount)

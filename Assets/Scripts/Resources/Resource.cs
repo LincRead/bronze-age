@@ -135,6 +135,12 @@ public class Resource : BaseController {
         return transform.position - new Vector3(0.0f, 0.08f * (size - 1));
     }
 
+    public override Node GetMiddleNode()
+    {
+        // Take centering position into account
+        return Grid.instance.GetNodeFromWorldPoint(transform.position - new Vector3(0.0f, 0.08f * (size - 1)));
+    }
+
     public override int[] GetUniqueStats()
     {
         int[] stats = new int[1];

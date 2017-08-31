@@ -18,6 +18,7 @@ public class UnitAttack : UnitState
         }
 
         attackSpeed = _controller._unitStats.attackSpeed;
+        _targetStandingOnNode = controller.targetController.GetPrimaryNode();
         _controller.FaceController(_controller.targetController);
     }
 
@@ -45,7 +46,7 @@ public class UnitAttack : UnitState
 
     protected virtual bool ContinueToAttack()
     {
-        // Destroyed, dead or moved
+        // Destroyed, dead or moved?
         return _controller.targetController != null
             && !_controller.targetController.dead
             && _controller.targetController.GetPrimaryNode() == _targetStandingOnNode;
