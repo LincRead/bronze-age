@@ -7,11 +7,12 @@ public class UnitUIButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public string title = "?";
     public KeyCode hotkey;
+    public Image icon;
 
-    Button _button;
+    protected Button _button;
     protected string tooltip;
 
-    protected virtual void Start ()
+    protected virtual void Awake()
     {
         // Todo make tooltip system
         tooltip = title;

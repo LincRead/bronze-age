@@ -16,12 +16,18 @@ public class CivilizationCenter : Building
 
     protected override void AddPlayerStats()
     {
-        PlayerDataManager.instance.AddHousingForPlayer(housing, playerID);
+        if(playerID != -1)
+        {
+            PlayerDataManager.instance.AddHousingForPlayer(housing, playerID);
+        }
     }
 
     protected override void RemovePlayerStats()
     {
-        PlayerDataManager.instance.AddHousingForPlayer(-housing, playerID);
+        if (playerID != -1)
+        {
+            PlayerDataManager.instance.AddHousingForPlayer(-housing, playerID);
+        }
     }
 
     public override int[] GetUniqueStats()

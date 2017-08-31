@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class PlayerData {
+
     public int population = 0;
     public int housing = 0;
     public int newVillagers = 0;

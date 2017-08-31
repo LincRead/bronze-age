@@ -8,6 +8,14 @@ public class PlayerManager : MonoBehaviour {
     [HideInInspector]
     public static int myPlayerID = 0;
 
+    // 0 - Paleolithic
+    // 1 - Mesolithic
+    // 2 - Neolithic
+    // 3 - Calcholithic
+    // 4 - Early Bronze Age
+    // 5 - Bronze Age
+    public int currentAge = 0;
+
     public enum PLAYER_ACTION_STATE
     {
         DEFAULT,
