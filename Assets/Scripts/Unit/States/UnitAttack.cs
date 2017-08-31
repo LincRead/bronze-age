@@ -18,7 +18,6 @@ public class UnitAttack : UnitState
         }
 
         attackSpeed = _controller._unitStats.attackSpeed;
-        _controller.distanceToTarget = Grid.instance.GetDistanceBetweenNodes(_controller._pathfinder.currentStandingOnNode, _targetStandingOnNode);
         _controller.FaceController(_controller.targetController);
     }
 

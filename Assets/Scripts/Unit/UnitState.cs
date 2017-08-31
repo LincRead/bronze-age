@@ -12,9 +12,6 @@ public class UnitState : ScriptableObject
     {
         _controller = controller;
         playAnimation = true;
-
-        if(_controller.targetController)
-            _targetStandingOnNode = _controller.targetController.GetPrimaryNode();
     }
 
     protected virtual void PlayAnimation()

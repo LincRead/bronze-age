@@ -6,7 +6,15 @@ public class RangedUnitAttack : UnitAttack
 {
     protected override bool ContinueToAttack()
     {
-        // Destroyed, dead or moved
+        // Is enemy still close enught?
+        // Buildings never move
+        // Use different logic to calculate distance to buildings
+        if(_controller.controllerType == CONTROLLER_TYPE.BUILDING)
+        {
+            _controller.distanceToTarget = Grid.instance.GetDistanceBetweenControllers(_controller, _controller.targetController);
+        }
+
+        // Destroyed, dead or moved too far away
         return _controller.targetController != null
             && !_controller.targetController.dead
             && _controller.distanceToTarget <= (_controller._unitStats.range * 10);

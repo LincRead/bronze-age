@@ -152,7 +152,7 @@ public class BaseController : MonoBehaviour {
         return Grid.instance.GetNodeFromWorldPoint(_transform.position + new Vector3(0.0f, 0.04f));
     }
 
-    public Node GetMiddleNode()
+    public virtual Node GetMiddleNode()
     {
         return Grid.instance.GetNodeFromWorldPoint(_transform.position + new Vector3(0.0f, size * Grid.instance.tileHeight));
     }

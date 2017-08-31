@@ -290,8 +290,7 @@ public class Building : BaseController {
 
     public void SetVisibility()
     {
-        Node currentNode = GetMiddleNode();
-        List<Tile> visibleTiles = Grid.instance.GetAllTilesBasedOnVisibilityFromNode(visionRange, currentNode, size);
+        List<Tile> visibleTiles = Grid.instance.GetAllTilesBasedOnVisibilityFromNode(visionRange, GetMiddleNode(), size);
 
         for (int i = 0; i < visibleTiles.Count; i++)
         {

@@ -38,28 +38,37 @@ public class UnitMoveToController : UnitMoveTo
             Grid.instance.SetWalkableValueForTiles(_targetController, true);
         }
 
-        // Find path
-        endNode = _targetController.GetPrimaryNode();
+        endNode = _targetController.GetMiddleNode();
 
         if (endNode != null)
         {
             _pathfinder.FindPath(endNode);
         }
 
-        if(_pathfinder.path.Count > 0)
-        {
-            _controller.ignoreControllers.Clear();
-
-            // Set distance based on first Node
-            _controller.distanceToTarget = Grid.instance.GetDistanceBetweenNodes(
-                _controller._pathfinder.path[0],
-                _controller.targetController.GetPrimaryNode());
-        }
-
         // Reset
         if (_targetController.controllerType != CONTROLLER_TYPE.UNIT)
         {
             Grid.instance.SetWalkableValueForTiles(_targetController.GetPosition(), _targetController.size, false);
+        }
+
+        // Found path
+        if (_pathfinder.path.Count > 0)
+        {
+            _controller.ignoreControllers.Clear();
+
+            // Ignore unwalkable nodes
+            while (_pathfinder.path.Count > 0 && !_pathfinder.path[_pathfinder.path.Count - 1].walkable)
+            {
+                _pathfinder.path.Remove(_pathfinder.path[_pathfinder.path.Count - 1]);
+            }
+
+            // endNode is last node in path
+            endNode = _controller._pathfinder.path[_controller._pathfinder.path.Count - 1];
+
+            // Set distance based on first node to end node
+            _controller.distanceToTarget = Grid.instance.GetDistanceBetweenNodes(
+                _controller._pathfinder.currentStandingOnNode,
+                endNode);
         }
     }
 
@@ -68,7 +77,7 @@ public class UnitMoveToController : UnitMoveTo
         // Set distance based on the Node just reached - nextTargetNode
         _controller.distanceToTarget = Grid.instance.GetDistanceBetweenNodes(
             _controller._pathfinder.currentStandingOnNode,
-            _controller.targetController.GetPrimaryNode());
+            endNode);
 
         _pathfinder.path.Remove(nextTargetNode);
 

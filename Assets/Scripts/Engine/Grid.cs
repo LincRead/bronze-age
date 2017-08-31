@@ -628,7 +628,7 @@ public class Grid : MonoBehaviour {
                 {
                     if(size % 2 == 0)
                     {
-                        if (GetDistanceBetweenTileTopPosAndTile(primaryTile, tiles[primaryTile.gridPosX + i, primaryTile.gridPosY + j]) <= (visibility * 10))
+                        if (GetDistanceBetweenTileAndTileTopPos(tiles[primaryTile.gridPosX + i, primaryTile.gridPosY + j], primaryTile) <= (visibility * 10))
                         {
                             visibleTiles.Add(tiles[primaryTile.gridPosX + i, primaryTile.gridPosY + j]);
                         }
@@ -636,7 +636,7 @@ public class Grid : MonoBehaviour {
 
                     else
                     {
-                        if (GetDistanceBetweenTiles(primaryTile, tiles[primaryTile.gridPosX + i, primaryTile.gridPosY + j]) <= (visibility * 10))
+                        if (GetDistanceBetweenTiles(tiles[primaryTile.gridPosX + i, primaryTile.gridPosY + j], primaryTile) <= (visibility * 10))
                         {
                             visibleTiles.Add(tiles[primaryTile.gridPosX + i, primaryTile.gridPosY + j]);
                         }
@@ -648,15 +648,50 @@ public class Grid : MonoBehaviour {
         return visibleTiles;
     }
 
+    public float GetDistanceBetweenControllers(BaseController controllerA, BaseController controllerB)
+    {
+        if ((controllerA.size % 2 == 0 || controllerB.size % 2 == 0) && (controllerA.size % 2 != controllerB.size % 2))
+        {
+            Debug.Log(GetDistanceBetweenNodeTopPosAndNodeTopPos(controllerA.GetMiddleNode(), controllerB.GetMiddleNode())
+                - (((controllerA.size - 1)) * 10f)
+                - (((controllerB.size - 1)) * 10f));
+            return GetDistanceBetweenNodeTopPosAndNodeTopPos(controllerA.GetMiddleNode(), controllerB.GetMiddleNode()) 
+                - (((controllerA.size - 1)) * 10f)
+                - (((controllerB.size - 1)) * 10f);
+        }
+
+        else
+        {
+            return GetDistanceBetweenNodes(controllerA.GetMiddleNode(), controllerB.GetMiddleNode());
+        }
+    }
+
     public int GetDistanceBetweenNodes(Node nodeA, Node nodeB)
     {
         int distX = Mathf.Abs(nodeA.gridPosX - nodeB.gridPosX);
         int distY = Mathf.Abs(nodeA.gridPosY - nodeB.gridPosY);
 
         if (distX > distY)
+        {
             return 14 * distY + 10 * (distX - distY);
+        }
+            
         return 14 * distX + 10 * (distY - distX);
     }
+
+    public float GetDistanceBetweenNodeTopPosAndNodeTopPos(Node nodeA, Node nodeB)
+    {
+        float distX = Mathf.Abs(nodeA.gridPosX - nodeB.gridPosX + 0.5f);
+        float distY = Mathf.Abs(nodeA.gridPosY - nodeB.gridPosY + 0.5f);
+
+        if (distX > distY)
+        {
+            return 14 * distY + 10 * (distX - distY);
+        }
+
+        return 14 * distX + 10 * (distY - distX);
+    }
+
 
     public int GetDistanceBetweenTiles(Tile tileA, Tile tileB)
     {
@@ -664,17 +699,23 @@ public class Grid : MonoBehaviour {
         int distY = Mathf.Abs(tileA.gridPosY - tileB.gridPosY);
 
         if (distX > distY)
+        {
             return 14 * distY + 10 * (distX - distY);
+        }
+            
         return 14 * distX + 10 * (distY - distX);
     }
 
-    public float GetDistanceBetweenTileTopPosAndTile(Tile tileA, Tile tileB)
+    public float GetDistanceBetweenTileAndTileTopPos(Tile tileA, Tile tileB)
     {
-        float distX = Mathf.Abs(tileA.gridPosX - tileB.gridPosX - 0.5f);
-        float distY = Mathf.Abs(tileA.gridPosY - tileB.gridPosY - 0.5f);
+        float distX = Mathf.Abs(tileA.gridPosX - tileB.gridPosX + 0.5f);
+        float distY = Mathf.Abs(tileA.gridPosY - tileB.gridPosY + 0.5f);
 
         if (distX > distY)
+        {
             return 14 * distY + 10 * (distX - distY);
+        }
+            
         return 14 * distX + 10 * (distY - distX);
     }
 

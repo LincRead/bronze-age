@@ -500,6 +500,11 @@ public class UnitStateController : BaseController
         return _pathfinder.currentStandingOnNode;
     }
 
+    public override Node GetMiddleNode()
+    {
+        return _pathfinder.currentStandingOnNode;
+    }
+
     public override Tile GetPrimaryTile()
     {
         return _pathfinder.currentStandingOnNode.parentTile;
