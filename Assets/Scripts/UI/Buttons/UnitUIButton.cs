@@ -7,7 +7,7 @@ public class UnitUIButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public string title = "?";
     public KeyCode hotkey;
-    public Image icon;
+    public Image _icon;
 
     protected Button _button;
     protected string tooltip;

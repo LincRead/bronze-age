@@ -19,7 +19,7 @@ public class ControllerUIManager : MonoBehaviour {
     public UnitUIButton[] productionBottons;
     public Button selectedUnitButton;
 
-    protected ProductionButton[] _productionButtonScripts = new ProductionButton[6];
+    protected ProductionButton[] _productionButtonScripts = new ProductionButton[10];
 
     [HideInInspector]
     public enum CONTROLLER_UI_VIEW
@@ -42,10 +42,10 @@ public class ControllerUIManager : MonoBehaviour {
     public Text hitpointsText;
     HealthBarUI _healthBar;
 
-    [Header("Constrcution progress")]
-    public GameObject constructionProgressPrefab;
-    public Image constructionProgressBarImage;
-    public Text constructionProgressText;
+    [Header("Production progress")]
+    public GameObject productionProgressPrefab;
+    public Image productionProgressBarImage;
+    public Text productionProgressText;
 
     [Header("Units")]
     public GameObject selectedUnitsPrefab;
@@ -337,7 +337,7 @@ public class ControllerUIManager : MonoBehaviour {
         {
             // Todo make condition for required technology
             _productionButtonScripts[data[i].index].SetData(data[i]);
-            _productionButtonScripts[data[i].index].Show();
+            _productionButtonScripts[data[i].index].Activate();
         }
     }
 
@@ -345,7 +345,7 @@ public class ControllerUIManager : MonoBehaviour {
     {
         for (int i = 0; i < productionBottons.Length; i++)
         {
-            _productionButtonScripts[i].Hide();
+            _productionButtonScripts[i].Deactivate();
         }
     }
 }

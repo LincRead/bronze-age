@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "UI/Controller views/construction")]
-public class ConstructionView : ControllerUIView
+[CreateAssetMenu(menuName = "UI/Controller views/production")]
+public class ProductionView : ControllerUIView
 {
     Building _buildingController;
 
@@ -17,10 +17,10 @@ public class ConstructionView : ControllerUIView
         // Since Camp is instantly constructed when Tribe reached building,
         // don't show construction progress for Camp
         // Show for all other buildings being constructed
-        if(!_buildingController._buildingStats.isCivilizationCenter)
+        if (!_buildingController._buildingStats.isCivilizationCenter)
         {
             EventManager.TriggerEvent("ActivateConstructionView");
-            UpdatePercentConstructedVisuals();
+            UpdatePercentProductionVisuals();
         }
     }
 
@@ -28,11 +28,11 @@ public class ConstructionView : ControllerUIView
     {
         if (!_buildingController._buildingStats.isCivilizationCenter)
         {
-            UpdatePercentConstructedVisuals();
+            UpdatePercentProductionVisuals();
         }
     }
 
-    void UpdatePercentConstructedVisuals()
+    void UpdatePercentProductionVisuals()
     {
         float percent = _buildingController.GetPercentageConstructed();
         ui.productionProgressText.text = new StringBuilder((int)(percent * 100) + "%").ToString();

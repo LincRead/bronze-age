@@ -1,6 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public enum FACTION
+{
+    SUMERIA,
+    ASSYRIAN,
+    BABYLONIAN,
+    EGYPTIAN,
+    HITTIAN,
+    MINOAN,
+    MYCENEAEN
+}
+
 public class PlayerData {
 
     public int population = 0;
@@ -18,6 +29,9 @@ public class PlayerData {
 
     [HideInInspector]
     public Color teamColor = Color.white;
+
+    [HideInInspector]
+    public FACTION faction = FACTION.SUMERIA;
 
     public bool placedCamp = false;
 }

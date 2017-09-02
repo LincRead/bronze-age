@@ -23,8 +23,15 @@ public class ProductionButton : UnitUIButton {
 
     public void SetData(ProductionButtonData newData)
     {
+        Debug.Log(newData);
+
         data = newData;
-        icon.sprite = newData.icon;
+
+        if(newData.icon != null)
+        {
+            _icon.sprite = newData.icon;
+        }
+        
         prefab = newData.productionPrefab;
 
         if(prefab != null)
@@ -35,12 +42,12 @@ public class ProductionButton : UnitUIButton {
         UpdateTooltip();
     }
 
-    public void Show()
+    public void Activate()
     {
         gameObject.SetActive(true);
     }
 
-    public void Hide()
+    public void Deactivate()
     {
         gameObject.SetActive(false);
     }
@@ -62,7 +69,7 @@ public class ProductionButton : UnitUIButton {
             }
             
             _button.interactable = false;
-            icon.color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
+            _icon.color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
         }
 
         else
@@ -85,7 +92,7 @@ public class ProductionButton : UnitUIButton {
     {
         if (!_button.interactable && data.age > PlayerManager.instance.currentAge)
         {
-            icon.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+            _icon.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
 
             UpdateTooltip();
         }
