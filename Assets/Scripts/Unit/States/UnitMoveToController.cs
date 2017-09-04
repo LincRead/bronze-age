@@ -30,7 +30,9 @@ public class UnitMoveToController : UnitMoveTo
     protected override void FindPathToTarget()
     {
         if (_controller.targetController == null)
+        {
             return;
+        }
 
         // Make sure unit can use pathfinding to controller
         if(_targetController.controllerType != CONTROLLER_TYPE.UNIT)

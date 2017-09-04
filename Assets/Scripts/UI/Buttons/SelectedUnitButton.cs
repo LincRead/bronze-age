@@ -61,7 +61,7 @@ public class SelectedUnitButton : UnitUIButton
 
     // Had to override and create the string here, ...
     // ...or it wouldn't work first time the button got activated
-    public override void OnPointerEnter(PointerEventData eventData)
+    public void OnPointerOver(PointerEventData eventData)
     {
         ControllerUIManager.instance.ShowTooltip(new StringBuilder(title + _controller.title).ToString());
     }

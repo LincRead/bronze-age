@@ -732,6 +732,52 @@ public class Grid : MonoBehaviour {
         return 14 * distX + 10 * (distY - distX);
     }
 
+    public Node FindClosestWalkableNode(Node node)
+    {
+        if (node == null)
+        {
+            return null;
+        }
+            
+        if (node.walkable && node.unitControllerStandingHere == null)
+        {
+            return node;
+        }
+
+        Node startNode = node;
+        Heap<Node> openSet = new Heap<Node>(MaxSize);
+        HashSet<Node> closedSet = new HashSet<Node>();
+        openSet.Add(startNode);
+
+        while (openSet.Count > 0)
+        {
+            Node currentNode = openSet.RemoveFirst();
+            closedSet.Add(currentNode);
+
+            List<Node> nodesToCheck = GetNeighbourNodes(currentNode);
+
+            foreach (Node neighbour in nodesToCheck)
+            {
+                if (closedSet.Contains(neighbour))
+                {
+                    continue;
+                }
+
+                if (neighbour.walkable && neighbour.unitControllerStandingHere == null)
+                {
+                    return neighbour;
+                }
+
+                if (!openSet.Contains(neighbour))
+                {
+                    openSet.Add(neighbour);
+                }
+            }
+        }
+
+        return null;
+    }
+
     public float GetGridWorldSizeX()
     {
         return numTilesX * tileWidth * 2;

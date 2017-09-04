@@ -11,6 +11,7 @@ public class UnitUIButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     protected Button _button;
     protected string tooltip;
+    protected bool hovered = false;
 
     protected virtual void Awake()
     {
@@ -38,10 +39,12 @@ public class UnitUIButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     public virtual void OnPointerEnter(PointerEventData eventData)
     {
         ControllerUIManager.instance.ShowTooltip(tooltip);
+        hovered = true;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         ControllerUIManager.instance.HideTooltip();
+        hovered = false;
     }
 }

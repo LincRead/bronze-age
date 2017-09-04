@@ -14,11 +14,17 @@ public class UnitMoveToPosition : UnitMoveTo
 
     protected override void FindPathToTarget()
     {
-        endNode = _pathfinder.GetNodeFromPoint(_controller.targetPosition);
+         endNode = Grid.instance.GetNodeFromWorldPoint(_controller.targetPosition);
 
-        if (endNode == null || !endNode.walkable)
+        if (!endNode.walkable)
         {
+            endNode = Grid.instance.FindClosestWalkableNode(Grid.instance.GetNodeFromWorldPoint(_controller.targetPosition));
             return;
+        }
+
+        if(endNode == null)
+        {
+
         }
 
         _pathfinder.FindPath(endNode);

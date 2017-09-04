@@ -184,7 +184,9 @@ public class Tile : IHeapItem<Tile>
         for (int i = 0; i < nodes.Length; i++)
         {
             if (nodes[i].unitControllerStandingHere != null)
+            {
                 nodes[i].unitControllerStandingHere._spriteRenderer.enabled = true;
+            }
         }
     }
 

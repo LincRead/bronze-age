@@ -18,5 +18,7 @@ public class AdvanceAgeAction : FinishedProductionAction
         PlayerManager.instance.civilizationCenter.Upgrade();
 
         ControllerUIManager.instance.ageText.text = WorldManager.civAgeNames[newAge];
+
+        EventManager.TriggerEvent("AdvancedCivilizationAge");
     }
 }
