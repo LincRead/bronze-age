@@ -7,12 +7,16 @@ public class AdvanceAgeAction : FinishedProductionAction
 {
     public override void Action(Building building)
     {
+        int newAge = PlayerDataManager.instance.GetPlayerData(PlayerManager.myPlayerID).age + 1;
+
         // Update age for my player
-        PlayerDataManager.instance.GetPlayerData(PlayerManager.myPlayerID).age++;
+        PlayerDataManager.instance.GetPlayerData(PlayerManager.myPlayerID).age = newAge;
 
         // Keep in synch
         PlayerManager.instance.currentAge++;
 
         PlayerManager.instance.civilizationCenter.Upgrade();
+
+        ControllerUIManager.instance.ageText.text = WorldManager.civAgeNames[newAge];
     }
 }
