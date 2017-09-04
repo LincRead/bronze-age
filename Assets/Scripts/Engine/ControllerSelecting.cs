@@ -176,14 +176,14 @@ public class ControllerSelecting : MonoBehaviour {
     {
         Building selectedBuilding = selectedController.GetComponent<Building>();
 
-        if (selectedBuilding.constructed)
-        {
-            ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.BUILDING_INFO, selectedBuilding);
-        }
-
-        else if(selectedBuilding.producing)
+        if (selectedBuilding.producing)
         {
             ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.PRODUCTION_PROGRESS, selectedBuilding);
+        }
+
+        else if (selectedBuilding.constructed)
+        {
+            ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.BUILDING_INFO, selectedBuilding);
         }
 
         // Show construction progress for all other buildings being constructed
@@ -195,7 +195,7 @@ public class ControllerSelecting : MonoBehaviour {
 
     void SelectResource()
     {
-        ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.RECOURSE_INFO, selectedController);
+        ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.RESOURCE_INFO, selectedController);
     }
 
     bool FindAndSelectControllerOccupyingTile(Vector2 mousePos)

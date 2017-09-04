@@ -59,9 +59,4 @@ public class CivilizationCenter : Building
         stats[0] = housing;
         return stats;
     }
-
-    public override void Destroy()
-    {
-        base.Destroy();
-    }
 }

@@ -35,7 +35,7 @@ public class ControllerUIManager : MonoBehaviour {
         BUILDING_INFO,
         CONSTRUCTION_PROGRESS,
         PRODUCTION_PROGRESS,
-        RECOURSE_INFO
+        RESOURCE_INFO
     }
 
     [Header("Hitpoints bar")]
@@ -231,7 +231,7 @@ public class ControllerUIManager : MonoBehaviour {
                 currentView = productionView;
                 break;
 
-            case CONTROLLER_UI_VIEW.RECOURSE_INFO:
+            case CONTROLLER_UI_VIEW.RESOURCE_INFO:
                 currentView = resourceView;
                 break;
         }
