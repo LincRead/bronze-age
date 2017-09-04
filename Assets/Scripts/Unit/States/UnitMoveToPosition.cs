@@ -22,11 +22,6 @@ public class UnitMoveToPosition : UnitMoveTo
             return;
         }
 
-        if(endNode == null)
-        {
-
-        }
-
         _pathfinder.FindPath(endNode);
     }
 

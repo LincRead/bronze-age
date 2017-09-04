@@ -320,6 +320,12 @@ public class PlayerManager : MonoBehaviour {
 
     public void MoveSelectedUnitsToNewTarget(bool attackMode)
     {
+        // Ignore clicks outside Grid
+        if(Grid.instance.GetNodeFromWorldPoint(mousePosition) == null)
+        {
+            return;
+        }
+
         List<UnitStateController> selectedUnits = _controllerSelecting.GetSelectedUnits();
 
         // No units selected,
@@ -358,7 +364,16 @@ public class PlayerManager : MonoBehaviour {
             else
             {
                 Vector2 offset = new Vector2(averagePositionX - selectedUnits[i]._transform.position.x, averagePositionY - selectedUnits[i]._transform.position.y);
-                selectedUnits[i].MoveTo(mousePosition - offset);
+
+                if (Grid.instance.GetNodeFromWorldPoint(mousePosition - offset) != null)
+                {
+                    selectedUnits[i].MoveTo(mousePosition - offset);
+                }
+
+                else
+                {
+                    selectedUnits[i].MoveTo(mousePosition);
+                }
             }
         }
 
