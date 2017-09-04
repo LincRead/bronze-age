@@ -14,33 +14,26 @@ public class ProductionView : ControllerUIView
 
         _buildingController = controller.GetComponent<Building>();
 
-        // Since Camp is instantly constructed when Tribe reached building,
-        // don't show construction progress for Camp
-        // Show for all other buildings being constructed
-        if (!_buildingController._buildingStats.isCivilizationCenter)
-        {
-            EventManager.TriggerEvent("ActivateConstructionView");
-            UpdatePercentProductionVisuals();
-        }
+        EventManager.TriggerEvent("ActivateProgressView");
+        EventManager.TriggerEvent("ActivateQueueSlotsView");
+        UpdatePercentProductionVisuals();
     }
 
     public override void Update()
     {
-        if (!_buildingController._buildingStats.isCivilizationCenter)
-        {
-            UpdatePercentProductionVisuals();
-        }
+        UpdatePercentProductionVisuals();
     }
 
     void UpdatePercentProductionVisuals()
     {
-        float percent = _buildingController.GetPercentageConstructed();
+        float percent = _buildingController.GetPercentageProduced();
         ui.productionProgressText.text = new StringBuilder((int)(percent * 100) + "%").ToString();
         ui.productionProgressBarImage.fillAmount = percent;
     }
 
     public override void OnExit()
     {
-        EventManager.TriggerEvent("DisableConstructionView");
+        EventManager.TriggerEvent("DisableProgressView");
+        EventManager.TriggerEvent("DisableQueueSlotsView");
     }
 }

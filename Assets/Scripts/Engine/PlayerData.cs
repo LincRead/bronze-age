@@ -33,5 +33,7 @@ public class PlayerData {
     [HideInInspector]
     public FACTION faction = FACTION.SUMERIA;
 
+    public int age = 0;
+
     public bool placedCamp = false;
 }

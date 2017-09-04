@@ -37,7 +37,7 @@ public class TribeController : UnitStateController {
                 }
 
                 // Don't show Tribe actions anymore
-                ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.CONSTRUCTION_PROGRESS, camp);
+                ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.PRODUCTION_PROGRESS, camp);
 
                 // Make sure we don't keep on showing build cursor
                 EventManager.TriggerEvent("SetDefaultCursor");

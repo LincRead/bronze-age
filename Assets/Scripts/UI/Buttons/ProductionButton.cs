@@ -4,7 +4,6 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Text;
 
-[CreateAssetMenu(menuName = "UI/Production Button")]
 public class ProductionButton : UnitUIButton {
 
     public ProductionButtonData data;
@@ -23,16 +22,14 @@ public class ProductionButton : UnitUIButton {
 
     public void SetData(ProductionButtonData newData)
     {
-        Debug.Log(newData);
-
         data = newData;
 
-        if(newData.icon != null)
+        if(data.icon != null)
         {
-            _icon.sprite = newData.icon;
+            _icon.sprite = data.icon;
         }
         
-        prefab = newData.productionPrefab;
+        prefab = data.productionPrefab;
 
         if(prefab != null)
         {
@@ -77,7 +74,7 @@ public class ProductionButton : UnitUIButton {
             switch (data.type)
             {
                 case PRODUCTION_TYPE.BUILDING:
-                    tooltip = new StringBuilder("Construct " + script.title).ToString();
+                    tooltip = new StringBuilder("Construct " + data.title).ToString();
                     break;
 
                 case PRODUCTION_TYPE.TECHNOLOGY:
@@ -95,6 +92,17 @@ public class ProductionButton : UnitUIButton {
             _icon.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
 
             UpdateTooltip();
+        }
+    }
+
+    protected override void OnClick()
+    {
+        base.OnClick();
+
+        if (PlayerManager.instance._controllerSelecting.selectedController != null
+            && PlayerManager.instance._controllerSelecting.selectedController.controllerType == CONTROLLER_TYPE.BUILDING)
+        {
+            PlayerManager.instance._controllerSelecting.selectedController.GetComponent<Building>().Produce(data.index);
         }
     }
 }

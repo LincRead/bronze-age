@@ -32,6 +32,7 @@ public class ControllerUIManager : MonoBehaviour {
         BUILDINGS,
         BUILDING_INFO,
         CONSTRUCTION_PROGRESS,
+        PRODUCTION_PROGRESS,
         RECOURSE_INFO
     }
 
@@ -75,6 +76,7 @@ public class ControllerUIManager : MonoBehaviour {
     private BuildingView buildingView;
     private ResourceView resourceView;
     private ConstructionView constructionView;
+    private ProductionView productionView;
 
     [HideInInspector]
     public List<SelectedUnitButton> _selectedUnitButtons = new List<SelectedUnitButton>();
@@ -131,6 +133,7 @@ public class ControllerUIManager : MonoBehaviour {
         buildingView = ScriptableObject.CreateInstance<BuildingView>();
         resourceView = ScriptableObject.CreateInstance<ResourceView>();
         constructionView = ScriptableObject.CreateInstance<ConstructionView>();
+        productionView = ScriptableObject.CreateInstance<ProductionView>();
         SetupProductionButtonsView();
 
         ChangeView(CONTROLLER_UI_VIEW.NONE, null);
@@ -222,6 +225,10 @@ public class ControllerUIManager : MonoBehaviour {
                 currentView = constructionView;
                 break;
 
+            case CONTROLLER_UI_VIEW.PRODUCTION_PROGRESS:
+                currentView = productionView;
+                break;
+
             case CONTROLLER_UI_VIEW.RECOURSE_INFO:
                 currentView = resourceView;
                 break;
@@ -246,6 +253,11 @@ public class ControllerUIManager : MonoBehaviour {
     public void UpdateTitle(string newTitle)
     {
         title.text = newTitle;
+    }
+
+    public void UpdateIcon(Sprite newSprite)
+    {
+        icon.sprite = newSprite;
     }
 
     public void ShowHitpoints(int hp, int max)
@@ -335,9 +347,12 @@ public class ControllerUIManager : MonoBehaviour {
 
         for(int i = 0; i < data.Length; i++)
         {
-            // Todo make condition for required technology
-            _productionButtonScripts[data[i].index].SetData(data[i]);
-            _productionButtonScripts[data[i].index].Activate();
+            if(!Technologies.instance.GetTechnologyCompleted(data[i].title))
+            {
+                // Todo make condition for required technology
+                _productionButtonScripts[data[i].index].SetData(data[i]);
+                _productionButtonScripts[data[i].index].Activate();
+            }
         }
     }
 

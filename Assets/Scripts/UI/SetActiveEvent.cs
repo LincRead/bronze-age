@@ -15,13 +15,21 @@ public class SetActiveEvent : MonoBehaviour
     private void OnEnable()
     {
         EventManager.StartListening(this.activateEventName, Activate);
-        EventManager.StartListening(this.disableEventName, Disable);
+
+        if(!this.disableEventName.Equals(""))
+        {
+            EventManager.StartListening(this.disableEventName, Disable);
+        }
     }
 
     private void OnDisable()
     {
         EventManager.StopListening(this.activateEventName, Activate);
-        EventManager.StopListening(this.disableEventName, Disable);
+
+        if (!this.disableEventName.Equals(""))
+        {
+            EventManager.StopListening(this.disableEventName, Disable);
+        }
     }
 
     private void Activate()

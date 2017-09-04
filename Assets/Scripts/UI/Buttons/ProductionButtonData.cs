@@ -33,6 +33,9 @@ public class ProductionButtonData : ScriptableObject {
     [Header("View position")]
     public int index = 0;
 
+    [Header("Production time")]
+    public int stepsRequired = 3;
+
     [Header("Required Civilization Age")]
     public int age = 0;
 

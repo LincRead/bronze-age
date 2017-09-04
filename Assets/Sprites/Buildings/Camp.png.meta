@@ -1,11 +1,12 @@
 fileFormatVersion: 2
 guid: 0405f32ddb0adde42bc938c1901349f9
-timeCreated: 1503990673
+timeCreated: 1504480301
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
     21300000: Camp_0
     21300002: Camp_1
+    21300004: Camp_2
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -103,6 +104,20 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 128
+        y: 0
+        width: 128
+        height: 96
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Camp_2
+      rect:
+        serializedVersion: 2
+        x: 256
         y: 0
         width: 128
         height: 96

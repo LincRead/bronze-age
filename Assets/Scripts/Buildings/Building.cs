@@ -16,8 +16,8 @@ public class Building : BaseController {
     HealthBar _healthBar;
 
     [HideInInspector]
-    public float stepsToConstruct = 3f;
-    private float stepsConstructed = 0f;
+    public float stepsToProduce = 3f;
+    private float stepsProduced = 0f;
 
     [HideInInspector]
     public bool producing = false;
@@ -26,6 +26,9 @@ public class Building : BaseController {
 
     [HideInInspector]
     public ProductionButtonData[] productionButtonsData;
+
+    // Store current production
+    int productionIndex = -1;
 
     // Need this to caulcate efficieny of construction
     // Every number added to this float decreases efficient
@@ -39,10 +42,10 @@ public class Building : BaseController {
     private float minVillagerActionEfficiency = 0.25f;
 
     [HideInInspector]
-    public Sprite[] constructionSprites = new Sprite[3];
+    public Sprite[] constructionSprites = new Sprite[2];
 
     [HideInInspector]
-    public Sprite[] damagedSprites = new Sprite[2];
+    public Sprite damagedSprite;
 
     [HideInInspector]
     public int maxHitPoints = 200;
@@ -65,13 +68,14 @@ public class Building : BaseController {
 
         base.Start();
 
-        // Set stats
-        stepsToConstruct = _buildingStats.stepsToConstruct;
+        stepsToProduce = _buildingStats.stepsToConstruct;
         constructionSprites = _buildingStats.constructionSprites;
-        damagedSprites = _buildingStats.damagedSprites;
+        damagedSprite = _buildingStats.damagedSprite;
         maxHitPoints = _buildingStats.maxHitpoints;
         hitpointsLeft = maxHitPoints;
         visionRange = _buildingStats.visionRange;
+
+        // Only set once
         productionButtonsData = _buildingStats.productionButtons;
 
         _selectionIndicator.GetComponent<Transform>().localPosition = new Vector3(0.0f, size * 0.08f, 0.0f);
@@ -99,6 +103,25 @@ public class Building : BaseController {
         }
     }
 
+    public void SetNewBuildingStats()
+    {
+        // Set stats
+        title = _buildingStats.title;
+        stepsToProduce = _buildingStats.stepsToConstruct;
+        constructionSprites = _buildingStats.constructionSprites;
+        damagedSprite = _buildingStats.damagedSprite;
+        maxHitPoints = _buildingStats.maxHitpoints;
+        hitpointsLeft = maxHitPoints;
+        visionRange = _buildingStats.visionRange;
+        iconSprite = _buildingStats.iconSprite;
+
+        // Update constructed
+        _spriteRenderer.sprite = constructionSprites[1];
+
+        // Update damaged art
+        UpdateDamagedSprite();
+    }
+
     void SetupHealthBar()
     {
         GameObject healthBar = GameObject.Instantiate(_buildingStats.healthBar, _transform.position, Quaternion.identity);
@@ -106,7 +129,7 @@ public class Building : BaseController {
         _healthBar = healthBar.GetComponent<HealthBar>();
         _healthBar.Init(size);
         _healthBar.SetAlignment(playerID == PlayerManager.myPlayerID);
-        _healthBar.UpdateHitpointsPercent(0, (int)stepsToConstruct);
+        _healthBar.UpdateHitpointsPercent(0, (int)stepsToProduce);
 
         UpdateDamagedSprite();
     }
@@ -148,22 +171,35 @@ public class Building : BaseController {
 
     protected override void Update ()
     {
-        if (!hasBeenPlaced)
+        if(!constructed)
         {
-            HandlePlacingBuilding();
+            if (!hasBeenPlaced)
+            {
+                HandlePlacingBuilding();
+            }
+
+            else
+            {
+                // Reset
+                villagersWhoHasDoneActionThisUpdate = 0;
+            }
         }
 
-        else
+        else if(producing)
         {
-            // Reset
-            villagersWhoHasDoneActionThisUpdate = 0;
+            stepsProduced += 1 * Time.deltaTime;
+
+            if(stepsProduced >= stepsToProduce)
+            {
+                FinishedProduction();
+            }
         }
 	}
 
     void SetupBuildingPlacement()
     {
         hasBeenPlaced = false;
-        _spriteRenderer.sprite = constructionSprites[2];
+        _spriteRenderer.sprite = constructionSprites[0];
         _transform.position = PlayerManager.mousePosition - new Vector2(0.0f, _spriteRenderer.bounds.size.y / 2);
         _spriteRenderer.color = new Color(1f, 1f, 1f, 0.5f);
         _spriteRenderer.sortingLayerName = "Placing Building";
@@ -234,20 +270,25 @@ public class Building : BaseController {
             buildAmount = minVillagerActionEfficiency;
         }
 
-        stepsConstructed += buildAmount * Time.deltaTime;
+        stepsProduced += buildAmount * Time.deltaTime;
 
-        if (stepsConstructed >= stepsToConstruct / 2)
+        if (stepsProduced >= stepsToProduce / 2)
         {
             _spriteRenderer.sprite = constructionSprites[1];
 
-            if (stepsConstructed >= stepsToConstruct)
+            if (stepsProduced >= stepsToProduce)
             {
                 FinishConstruction();
             }
         }
 
-        hitpointsLeft = (int)(maxHitPoints * GetPercentageConstructed());
-        _healthBar.UpdateHitpointsPercent((int)stepsConstructed, (int)stepsToConstruct);
+        else
+        {
+            _spriteRenderer.sprite = constructionSprites[0];
+        }
+
+        hitpointsLeft = (int)(maxHitPoints * GetPercentageProduced());
+        _healthBar.UpdateHitpointsPercent((int)stepsProduced, (int)stepsToProduce);
         villagersWhoHasDoneActionThisUpdate++;
     }
 
@@ -260,12 +301,12 @@ public class Building : BaseController {
             repairAmount = minVillagerActionEfficiency;
         }
 
-        stepsConstructed += repairAmount * Time.deltaTime;
+        stepsProduced += repairAmount * Time.deltaTime;
 
         // Repair 2 HP per sec
-        if (stepsConstructed > 0.5f)
+        if (stepsProduced > 0.5f)
         {
-            stepsConstructed = 0.0f;
+            stepsProduced = 0.0f;
             hitpointsLeft += 1;
             _healthBar.UpdateHitpointsPercent(hitpointsLeft, maxHitPoints);
             UpdateDamagedSprite();
@@ -278,7 +319,7 @@ public class Building : BaseController {
     {
         constructed = true;
 
-        _spriteRenderer.sprite = constructionSprites[2];
+        _spriteRenderer.sprite = constructionSprites[1];
 
         _healthBar.UpdateHitpointsPercent(hitpointsLeft, maxHitPoints);
 
@@ -288,6 +329,49 @@ public class Building : BaseController {
         {
             SetVisibility();
         }
+
+        if (selected)
+        {
+            ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.BUILDING_INFO, this);
+        }
+    }
+
+    public void Produce(int buttonIndex)
+    {
+        productionIndex = buttonIndex;
+        stepsToProduce = productionButtonsData[buttonIndex].stepsRequired;
+        producing = true;
+
+        if (selected)
+        {
+            ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.PRODUCTION_PROGRESS, this);
+        }
+    }
+
+    public void FinishedProduction()
+    {
+        stepsProduced = 0.0f;
+        stepsToProduce = 0.0f;
+        producing = false;
+
+        productionButtonsData[productionIndex].executeScript.Action(this);
+
+        if(productionButtonsData[productionIndex].type == PRODUCTION_TYPE.TECHNOLOGY)
+        {
+            Technologies.instance.CompleteTechnology(productionButtonsData[productionIndex].title);
+        }
+
+        if (selected)
+        {
+            ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.BUILDING_INFO, this);
+        }
+    }
+
+    void CancelProduction()
+    {
+        producing = false;
+        stepsProduced = 0.0f;
+        stepsToProduce = 0.0f;
 
         if (selected)
         {
@@ -327,21 +411,16 @@ public class Building : BaseController {
     // Show how damaged the building is visually
     void UpdateDamagedSprite()
     {
-        if (damagedSprites.Length == 2 && damagedSprites[0] != null)
+        if (damagedSprite != null)
         {
-            if ((float)((float)hitpointsLeft / (float)maxHitPoints) < 0.33f)
+            if ((float)((float)hitpointsLeft / (float)maxHitPoints) < 0.5f)
             {
-                _spriteRenderer.sprite = damagedSprites[1];
-            }
-
-            else if ((float)((float)hitpointsLeft / (float)maxHitPoints) < 0.66f)
-            {
-                _spriteRenderer.sprite = damagedSprites[0];
+                _spriteRenderer.sprite = damagedSprite;
             }
 
             else
             {
-                _spriteRenderer.sprite = constructionSprites[2];
+                _spriteRenderer.sprite = constructionSprites[1];
             }
         }
     }
@@ -353,6 +432,11 @@ public class Building : BaseController {
             // Todo: give back resources
 
             Kill();
+        }
+
+        else if(producing)
+        {
+            CancelProduction();
         }
     }
 
@@ -400,9 +484,9 @@ public class Building : BaseController {
         Destroy(gameObject);
     }
 
-    public float GetPercentageConstructed()
+    public float GetPercentageProduced()
     {
-        return stepsConstructed / stepsToConstruct;
+        return stepsProduced / stepsToProduce;
     }
 
     public virtual void Destroy()

@@ -14,10 +14,10 @@ public class BuildingStats : DefaultStats
     [Header("Construction")]
     [SerializeField]
     public float stepsToConstruct = 3f;
-    public Sprite[] constructionSprites = new Sprite[3];
+    public Sprite[] constructionSprites = new Sprite[2];
 
     [Header("Damaged visuals")]
-    public Sprite[] damagedSprites = new Sprite[2];
+    public Sprite damagedSprite;
 
     [Header("Production")]
     public ProductionButtonData[] productionButtons;

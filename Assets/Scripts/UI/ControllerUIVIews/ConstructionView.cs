@@ -19,7 +19,7 @@ public class ConstructionView : ControllerUIView
         // Show for all other buildings being constructed
         if(!_buildingController._buildingStats.isCivilizationCenter)
         {
-            EventManager.TriggerEvent("ActivateConstructionView");
+            EventManager.TriggerEvent("ActivateProgressView");
             UpdatePercentConstructedVisuals();
         }
     }
@@ -34,13 +34,13 @@ public class ConstructionView : ControllerUIView
 
     void UpdatePercentConstructedVisuals()
     {
-        float percent = _buildingController.GetPercentageConstructed();
+        float percent = _buildingController.GetPercentageProduced();
         ui.productionProgressText.text = new StringBuilder((int)(percent * 100) + "%").ToString();
         ui.productionProgressBarImage.fillAmount = percent;
     }
 
     public override void OnExit()
     {
-        EventManager.TriggerEvent("DisableConstructionView");
+        EventManager.TriggerEvent("DisableProgressView");
     }
 }

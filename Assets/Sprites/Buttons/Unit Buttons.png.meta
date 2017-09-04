@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: ba24593a1f1e5a645a720966e3210547
-timeCreated: 1504320869
+timeCreated: 1504481399
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -289,6 +289,34 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Unit Buttons_14
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Unit Buttons_15
+      rect:
+        serializedVersion: 2
+        x: 96
         y: 64
         width: 32
         height: 32
