@@ -408,6 +408,19 @@ public class Grid : MonoBehaviour {
         return neighbours;
     }
 
+    public Node GetNeighbourNodeBelow(Node node)
+    {
+        int checkX = node.gridPosX - 1;
+        int checkY = node.gridPosY - 1;
+
+        if (checkX > -1 && checkX < numTilesX && checkY > -1 && checkY < numTilesY)
+        {
+            return nodes[checkX, checkY];
+        }
+
+        return null;
+    }
+
     public Vector2 SnapToGrid(Vector2 posToSnap)
     {
         float w = tileWidth * 2;

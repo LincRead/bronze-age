@@ -354,11 +354,20 @@ public class Building : BaseController {
         stepsToProduce = 0.0f;
         producing = false;
 
-        productionButtonsData[productionIndex].executeScript.Action(this);
+        // Only attempt to execute if script has been attached
+        if(productionButtonsData[productionIndex].executeScript != null)
+        {
+            productionButtonsData[productionIndex].executeScript.Action(this);
+        }
 
         if(productionButtonsData[productionIndex].type == PRODUCTION_TYPE.TECHNOLOGY)
         {
             Technologies.instance.CompleteTechnology(productionButtonsData[productionIndex].title);
+        }
+
+        else if(productionButtonsData[productionIndex].type == PRODUCTION_TYPE.UNIT)
+        {
+            Instantiate(productionButtonsData[productionIndex].productionPrefab, transform.position - new Vector3(0.0f, (Grid.instance.tileHeight / 4)), Quaternion.identity);
         }
 
         if (selected)

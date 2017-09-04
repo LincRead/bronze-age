@@ -56,6 +56,10 @@ public class ProductionButton : UnitUIButton {
         {
             switch(data.type)
             {
+                case PRODUCTION_TYPE.UNIT:
+                    tooltip = new StringBuilder("Advance your civilization to " + WorldManager.civAgeNames[data.age] + " to train " + script.title).ToString();
+                    break;
+
                 case PRODUCTION_TYPE.BUILDING:
                     tooltip = new StringBuilder("Advance your civilization to " + WorldManager.civAgeNames[data.age] + " to construct " + script.title).ToString();
                     break;
@@ -73,6 +77,10 @@ public class ProductionButton : UnitUIButton {
         {
             switch (data.type)
             {
+                case PRODUCTION_TYPE.UNIT:
+                    tooltip = new StringBuilder("Train " + script.title).ToString();
+                    break;
+
                 case PRODUCTION_TYPE.BUILDING:
                     tooltip = new StringBuilder("Construct " + data.title).ToString();
                     break;

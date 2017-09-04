@@ -349,7 +349,8 @@ public class ControllerUIManager : MonoBehaviour {
 
         for(int i = 0; i < data.Length; i++)
         {
-            if(!Technologies.instance.GetTechnologyCompleted(data[i].title))
+            if(data[i].type != PRODUCTION_TYPE.TECHNOLOGY ||
+                !Technologies.instance.GetTechnologyCompleted(data[i].title))
             {
                 // Todo make condition for required technology
                 _productionButtonScripts[data[i].index].SetData(data[i]);
