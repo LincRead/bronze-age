@@ -272,14 +272,10 @@ public class Building : BaseController {
 
         stepsProduced += buildAmount * Time.deltaTime;
 
-        if (stepsProduced >= stepsToProduce / 2)
+        if (stepsProduced >= stepsToProduce)
         {
             _spriteRenderer.sprite = constructionSprites[1];
-
-            if (stepsProduced >= stepsToProduce)
-            {
-                FinishConstruction();
-            }
+            FinishConstruction();
         }
 
         else
@@ -363,6 +359,7 @@ public class Building : BaseController {
         if(productionButtonsData[productionIndex].type == PRODUCTION_TYPE.TECHNOLOGY)
         {
             Technologies.instance.CompleteTechnology(productionButtonsData[productionIndex].title);
+            ControllerUIManager.instance.UpdateProductionButtons();
         }
 
         else if(productionButtonsData[productionIndex].type == PRODUCTION_TYPE.UNIT)

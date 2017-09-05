@@ -44,7 +44,8 @@ public class Technologies : MonoBehaviour
         AddTechnology("Mesolithic Age");
         AddTechnology("Stone Axe");
         AddTechnology("Weaving");
-        AddTechnology("Archery");
+        AddTechnology("Sedentism");
+        AddTechnology("Microliths");
     }
 
     public void AddTechnology(string title)
@@ -64,6 +65,11 @@ public class Technologies : MonoBehaviour
             return technology.completed;
         }
 
+        else
+        {
+            Debug.LogError("Trying to get completed value of technology not added to Dictionary: " + key);
+        }
+
         return true;
     }
 
@@ -74,6 +80,11 @@ public class Technologies : MonoBehaviour
         if(technologyDictionary.TryGetValue(key, out technology))
         {
             technology.completed = true;
+        }
+
+        else
+        {
+            Debug.LogError("Trying to set completed value for technology not added to Dictionary: " + key);
         }
     }
 }

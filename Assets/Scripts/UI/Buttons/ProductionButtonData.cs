@@ -40,7 +40,7 @@ public class ProductionButtonData : ScriptableObject {
     public int age = 0;
 
     [Header("Required technology")]
-    public string technology;
+    public string requiredTechnology;
 
     [Header("Required resources")]
     public int timber = 0;

@@ -27,6 +27,7 @@ public class UnitUIButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         // Todo, use event in inspector instead
         if (_button != null 
             && _button.enabled
+            && _button.interactable
             && Input.GetKeyDown(hotkey))
             OnClick();
     }

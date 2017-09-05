@@ -37,13 +37,14 @@ public class ProductionButton : UnitUIButton {
         {
             script = prefab.GetComponent<BaseController>();
         }
-        
-        UpdateTooltip();
+
+        UpdateCanBeProduced();
     }
 
     public void Activate()
     {
         gameObject.SetActive(true);
+        UpdateCanBeProduced();
     }
 
     public void Deactivate()
@@ -51,7 +52,7 @@ public class ProductionButton : UnitUIButton {
         gameObject.SetActive(false);
     }
 
-    void UpdateTooltip()
+    public void UpdateCanBeProduced()
     {
         // Haven't reached required Age
         if (data.age > PlayerManager.instance.currentAge)
@@ -59,18 +60,40 @@ public class ProductionButton : UnitUIButton {
             switch(data.type)
             {
                 case PRODUCTION_TYPE.UNIT:
-                    tooltip = new StringBuilder("Advance your civilization to " + WorldManager.civAgeNames[data.age] + " to train " + script.title).ToString();
+                    tooltip = new StringBuilder("Advance your civilization to " + WorldManager.civAgeNames[data.age] + " to train " + data.title).ToString();
                     break;
 
                 case PRODUCTION_TYPE.BUILDING:
-                    tooltip = new StringBuilder("Advance your civilization to " + WorldManager.civAgeNames[data.age] + " to construct " + script.title).ToString();
+                    tooltip = new StringBuilder("Advance your civilization to " + WorldManager.civAgeNames[data.age] + " to construct " + data.title).ToString();
                     break;
 
                 case PRODUCTION_TYPE.TECHNOLOGY:
-                    tooltip = new StringBuilder("Advance your civilization to " + WorldManager.civAgeNames[data.age] + " to " + data.title).ToString();
+                    tooltip = new StringBuilder("Advance your civilization to " + WorldManager.civAgeNames[data.age] + " to research " + data.title).ToString();
                     break;
             }
             
+            _button.interactable = false;
+            _icon.color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
+        }
+
+        // Requires technology not yet researched
+        else if(!data.requiredTechnology.Equals("") && !Technologies.instance.GetTechnologyCompleted(data.requiredTechnology))
+        {
+            switch (data.type)
+            {
+                case PRODUCTION_TYPE.UNIT:
+                    tooltip = new StringBuilder("Research " + data.requiredTechnology + " to to train " + data.title).ToString();
+                    break;
+
+                case PRODUCTION_TYPE.BUILDING:
+                    tooltip = new StringBuilder("Research " + data.requiredTechnology + " to construct " + data.title).ToString();
+                    break;
+
+                case PRODUCTION_TYPE.TECHNOLOGY:
+                    tooltip = new StringBuilder("Research " + data.requiredTechnology + " to research " + data.title).ToString();
+                    break;
+            }
+
             _button.interactable = false;
             _icon.color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
         }
@@ -80,7 +103,7 @@ public class ProductionButton : UnitUIButton {
             switch (data.type)
             {
                 case PRODUCTION_TYPE.UNIT:
-                    tooltip = new StringBuilder("Train " + script.title).ToString();
+                    tooltip = new StringBuilder("Train " + data.title).ToString();
                     break;
 
                 case PRODUCTION_TYPE.BUILDING:
@@ -88,10 +111,17 @@ public class ProductionButton : UnitUIButton {
                     break;
 
                 case PRODUCTION_TYPE.TECHNOLOGY:
-                    tooltip = data.tooltip;
+                    tooltip = new StringBuilder("Research " + data.title).ToString();
                     break;
             }
-                    
+
+            _button.interactable = true;
+            _icon.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+        }
+
+        if (hovered)
+        {
+            ControllerUIManager.instance.ShowTooltip(tooltip);
         }
     }
 
@@ -102,7 +132,7 @@ public class ProductionButton : UnitUIButton {
             EventManager.StopListening("AdvancedCivilizationAge", UpdatedCivAge);
             _icon.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
             _button.interactable = true;
-            UpdateTooltip();
+            UpdateCanBeProduced();
 
             if(hovered)
             {

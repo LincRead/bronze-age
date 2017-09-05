@@ -359,6 +359,27 @@ public class ControllerUIManager : MonoBehaviour {
         }
     }
 
+    public void UpdateProductionButtons()
+    {
+        for (int i = 0; i < _productionButtonScripts.Length; i++)
+        {
+            if(_productionButtonScripts[i].isActiveAndEnabled)
+            {
+                _productionButtonScripts[i].UpdateCanBeProduced();
+            }
+        }
+
+        foreach (Button btn in buildingButtons)
+        {
+            ProductionButton _script = btn.gameObject.GetComponent<ProductionButton>();
+
+            if (_script != null)
+            {
+                _script.UpdateCanBeProduced();
+            }
+        }
+    }
+
     public void HideProductionButtons()
     {
         for (int i = 0; i < productionBottons.Length; i++)
