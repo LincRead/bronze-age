@@ -341,6 +341,7 @@ public class Building : BaseController {
         if (selected)
         {
             ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.PRODUCTION_PROGRESS, this);
+            ControllerUIManager.instance.productionControllererIcon.sprite = productionButtonsData[buttonIndex].icon;
         }
     }
 

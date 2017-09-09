@@ -49,6 +49,7 @@ public class ControllerUIManager : MonoBehaviour {
     public GameObject productionProgressPrefab;
     public Image productionProgressBarImage;
     public Text productionProgressText;
+    public Image productionControllererIcon;
 
     [Header("Units")]
     public GameObject selectedUnitsPrefab;

@@ -53,6 +53,7 @@ public class ProductionButton : UnitUIButton {
         _icon.enabled = false;
         _button.interactable = false;
         _icon.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+        tooltip = new StringBuilder("?").ToString();
     }
 
     public void UpdateCanBeProduced()

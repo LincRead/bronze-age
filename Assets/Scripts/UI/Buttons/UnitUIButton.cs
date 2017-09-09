@@ -41,7 +41,7 @@ public class UnitUIButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     {      
         hovered = true;
 
-        if (_button.interactable)
+        if (!tooltip.Equals("?"))
         {
             ControllerUIManager.instance.ShowTooltip(tooltip);
         }
@@ -51,7 +51,7 @@ public class UnitUIButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     {
         hovered = false;
 
-        if (_button.interactable)
+        if (!tooltip.Equals("?"))
         {
             ControllerUIManager.instance.HideTooltip();
         }
