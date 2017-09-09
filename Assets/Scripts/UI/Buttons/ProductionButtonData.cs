@@ -18,8 +18,8 @@ public class ProductionButtonData : ScriptableObject {
     [Header("Title")]
     public string title;
 
-    [Header("Tooltip")]
-    public string tooltip;
+    [Header("Description")]
+    public string description;
 
     [Header("Execute when production finishes")]
     public FinishedProductionAction executeScript;

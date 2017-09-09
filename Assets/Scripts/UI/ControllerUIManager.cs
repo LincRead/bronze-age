@@ -63,6 +63,9 @@ public class ControllerUIManager : MonoBehaviour {
     [HideInInspector]
     public Text[] statTexts = new Text[4];
 
+    [HideInInspector]
+    public ProductionTooltip productionTooltip;
+
     CONTROLLER_UI_VIEW currentViewType = CONTROLLER_UI_VIEW.NONE;
     CONTROLLER_UI_VIEW lastViewType = CONTROLLER_UI_VIEW.NONE;
 
@@ -138,10 +141,14 @@ public class ControllerUIManager : MonoBehaviour {
         constructionView = ScriptableObject.CreateInstance<ConstructionView>();
         productionView = ScriptableObject.CreateInstance<ProductionView>();
 
+        productionTooltip = GetComponentInChildren<ProductionTooltip>();
+
         ChangeView(CONTROLLER_UI_VIEW.NONE, null);
         HideTooltip();
         HideHitpoints();
         HideStats();
+
+        HideProductionTooltip();
     }
 
     void SetupSelectedUnitsView()
@@ -321,8 +328,20 @@ public class ControllerUIManager : MonoBehaviour {
         statsInfoPrefab.gameObject.SetActive(false);
     }
 
+    public void ShowProductionTooltip(ProductionButtonData data)
+    {
+        productionTooltip.gameObject.SetActive(true);
+        productionTooltip.UpdateData(data);
+    }
+
+    public void HideProductionTooltip()
+    {
+        productionTooltip.gameObject.SetActive(false);
+    }
+
     public void ShowTooltip(string tip)
     {
+
         tooltipText.enabled = true;
         tooltipText.text = tip;
     }

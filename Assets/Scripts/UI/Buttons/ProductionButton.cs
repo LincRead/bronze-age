@@ -125,7 +125,7 @@ public class ProductionButton : UnitUIButton {
 
         if (hovered)
         {
-            ControllerUIManager.instance.ShowTooltip(tooltip);
+            ControllerUIManager.instance.ShowProductionTooltip(data);
         }
     }
 
@@ -140,7 +140,7 @@ public class ProductionButton : UnitUIButton {
 
             if(hovered)
             {
-                ControllerUIManager.instance.ShowTooltip(tooltip);
+                ControllerUIManager.instance.ShowProductionTooltip(data);
             }
         }
     }
@@ -153,6 +153,26 @@ public class ProductionButton : UnitUIButton {
             && PlayerManager.instance._controllerSelecting.selectedController.controllerType == CONTROLLER_TYPE.BUILDING)
         {
             PlayerManager.instance._controllerSelecting.selectedController.GetComponent<Building>().Produce(data.index);
+        }
+    }
+
+    public override void OnPointerEnter(PointerEventData eventData)
+    {
+        hovered = true;
+
+        if (!tooltip.Equals("?"))
+        {
+            ControllerUIManager.instance.ShowProductionTooltip(data);
+        }
+    }
+
+    public override void OnPointerExit(PointerEventData eventData)
+    {
+        hovered = false;
+
+        if (!tooltip.Equals("?"))
+        {
+            ControllerUIManager.instance.HideProductionTooltip();
         }
     }
 }
