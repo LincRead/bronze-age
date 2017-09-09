@@ -38,14 +38,22 @@ public class UnitUIButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     }
 
     public virtual void OnPointerEnter(PointerEventData eventData)
-    {
-        ControllerUIManager.instance.ShowTooltip(tooltip);
+    {      
         hovered = true;
+
+        if (_button.interactable)
+        {
+            ControllerUIManager.instance.ShowTooltip(tooltip);
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        ControllerUIManager.instance.HideTooltip();
         hovered = false;
+
+        if (_button.interactable)
+        {
+            ControllerUIManager.instance.HideTooltip();
+        }
     }
 }

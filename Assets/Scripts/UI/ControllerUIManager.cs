@@ -18,10 +18,10 @@ public class ControllerUIManager : MonoBehaviour {
     public Button[] villagerButtons;
     public Button[] buildingButtons;
     public Button[] unitActionButtons;
-    public UnitUIButton[] productionBottons;
+
     public Button selectedUnitButton;
 
-    protected ProductionButton[] _productionButtonScripts = new ProductionButton[10];
+    protected ProductionButton[] _productionButtonScripts;
 
     [HideInInspector]
     public enum CONTROLLER_UI_VIEW
@@ -136,7 +136,6 @@ public class ControllerUIManager : MonoBehaviour {
         resourceView = ScriptableObject.CreateInstance<ResourceView>();
         constructionView = ScriptableObject.CreateInstance<ConstructionView>();
         productionView = ScriptableObject.CreateInstance<ProductionView>();
-        SetupProductionButtonsView();
 
         ChangeView(CONTROLLER_UI_VIEW.NONE, null);
         HideTooltip();
@@ -167,12 +166,9 @@ public class ControllerUIManager : MonoBehaviour {
         _selectedUnitButtons.Add(buttonScript);
     }
 
-    void SetupProductionButtonsView()
+    public void SetupProductionButtonsView(ProductionButton[] buttons)
     {
-        for(int i = 0; i < productionBottons.Length; i++)
-        {
-            _productionButtonScripts[i] = productionBottons[i].GetComponent<ProductionButton>();
-        }
+        _productionButtonScripts = buttons;
 
         HideProductionButtons();
     }
@@ -349,8 +345,9 @@ public class ControllerUIManager : MonoBehaviour {
 
         for(int i = 0; i < data.Length; i++)
         {
-            if(data[i].type != PRODUCTION_TYPE.TECHNOLOGY ||
-                !Technologies.instance.GetTechnologyCompleted(data[i].title))
+            if(data != null
+                && data[i] != null
+                && (data[i].type != PRODUCTION_TYPE.TECHNOLOGY || !Technologies.instance.GetTechnologyCompleted(data[i].title)))
             {
                 // Todo make condition for required technology
                 _productionButtonScripts[data[i].index].SetData(data[i]);
@@ -382,7 +379,7 @@ public class ControllerUIManager : MonoBehaviour {
 
     public void HideProductionButtons()
     {
-        for (int i = 0; i < productionBottons.Length; i++)
+        for (int i = 0; i < _productionButtonScripts.Length; i++)
         {
             _productionButtonScripts[i].Deactivate();
         }

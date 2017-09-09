@@ -43,13 +43,16 @@ public class ProductionButton : UnitUIButton {
 
     public void Activate()
     {
-        gameObject.SetActive(true);
+        _icon.enabled = true;
+        _button.interactable = true;
         UpdateCanBeProduced();
     }
 
     public void Deactivate()
     {
-        gameObject.SetActive(false);
+        _icon.enabled = false;
+        _button.interactable = false;
+        _icon.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
     }
 
     public void UpdateCanBeProduced()
