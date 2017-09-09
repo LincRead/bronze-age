@@ -16,6 +16,7 @@ public class ProductionView : ControllerUIView
 
         EventManager.TriggerEvent("ActivateProgressView");
         EventManager.TriggerEvent("ActivateQueueSlotsView");
+
         UpdatePercentProductionVisuals();
     }
 

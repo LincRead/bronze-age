@@ -27,6 +27,7 @@ public class BuildingView : ControllerUIView
 
     public override void Update()
     {
+        // TODO DON'T HIDE IF OPENING PRODUCTiON VIEW
         ui.UpdateHitpoints(buildingController.hitpointsLeft, buildingController.maxHitPoints);
     }
 
@@ -34,6 +35,8 @@ public class BuildingView : ControllerUIView
     {
         ui.HideStats();
         ui.HideHitpoints();
+
+        // TODO DON'T HIDE IF OPENING PRODUCTiON VIEW
         ui.HideProductionButtons();
 
         EventManager.TriggerEvent("DisableProductionButtonsView");

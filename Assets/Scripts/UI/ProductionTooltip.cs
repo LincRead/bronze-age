@@ -11,7 +11,7 @@ public class ProductionTooltip : MonoBehaviour {
     public Image[] resourceIcons;
     public Text[] resourceAmounts;
 
-	public void UpdateData(ProductionButtonData data)
+    public void UpdateData(ProductionButtonData data)
     {
         title.text = data.title;
         description.text = data.description;
