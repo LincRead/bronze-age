@@ -365,7 +365,7 @@ public class Building : BaseController {
 
         else if(productionButtonsData[productionIndex].type == PRODUCTION_TYPE.UNIT)
         {
-            Node spawnToNode = Grid.instance.FindClosestWalkableNode(Grid.instance.GetNodeFromWorldPoint(transform.position - new Vector3(0.0f, (Grid.instance.tileHeight / 4))));
+            Node spawnToNode = Grid.instance.FindClosestWalkableNode(Grid.instance.GetNodeFromWorldPoint(transform.position + new Vector3(0.0f, (Grid.instance.tileHeight / 4))));
             Instantiate(productionButtonsData[productionIndex].productionPrefab, spawnToNode.worldPosition, Quaternion.identity);
         }
 
