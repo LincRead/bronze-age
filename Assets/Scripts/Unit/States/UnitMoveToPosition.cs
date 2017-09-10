@@ -19,7 +19,6 @@ public class UnitMoveToPosition : UnitMoveTo
         if (!endNode.walkable)
         {
             endNode = Grid.instance.FindClosestWalkableNode(Grid.instance.GetNodeFromWorldPoint(_controller.targetPosition));
-            return;
         }
 
         _pathfinder.FindPath(endNode);
