@@ -246,7 +246,7 @@ public class ControllerUIManager : MonoBehaviour {
 
         if(currentViewType == CONTROLLER_UI_VIEW.NONE)
         {
-            controllerInfoBackground.GetComponent<Image>().enabled = false;
+            controllerInfoBackground.GetComponent<Image>().enabled = true;
         }
 
         else

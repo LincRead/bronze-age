@@ -86,9 +86,14 @@ public class BaseController : MonoBehaviour {
     {
         if (_spriteRenderer != null)
         {
-            zIndex = _transform.position.y;
-            _transform.position = new Vector3(_transform.position.x, _transform.position.y, zIndex);
+            UpdateZIndex();
         }
+    }
+
+    void UpdateZIndex()
+    {
+        zIndex = _transform.position.y;
+        _transform.position = new Vector3(_transform.position.x, _transform.position.y, zIndex);
     }
 
     void OnMouseEnter()

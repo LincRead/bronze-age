@@ -153,7 +153,7 @@ public class Building : BaseController {
 
         // Position
         Vector3 positionToPlace = Grid.instance.SnapToGrid(_transform.position);
-        zIndex = _transform.position.y + size * (Grid.instance.tileHeight / 2);
+        zIndex = GetMiddleNode().worldPosition.y;
         _transform.position = new Vector3(positionToPlace.x, positionToPlace.y, zIndex);
 
         // Constructed sprite
