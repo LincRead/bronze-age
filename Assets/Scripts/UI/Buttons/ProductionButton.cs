@@ -44,16 +44,23 @@ public class ProductionButton : UnitUIButton {
     public void Activate()
     {
         _icon.enabled = true;
-        _button.interactable = true;
         UpdateCanBeProduced();
     }
 
     public void Deactivate()
     {
-        _icon.enabled = false;
-        _button.interactable = false;
-        _icon.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
-        tooltip = new StringBuilder("?").ToString();
+        if(_icon.enabled)
+        {
+            _icon.enabled = false;
+
+            if (_button.interactable)
+            {
+                _button.interactable = false;
+            }
+
+            _icon.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+            tooltip = new StringBuilder("?").ToString();
+        }
     }
 
     public void UpdateCanBeProduced()
@@ -75,8 +82,12 @@ public class ProductionButton : UnitUIButton {
                     tooltip = new StringBuilder("Advance your civilization to " + WorldManager.civAgeNames[data.age] + " to research " + data.title).ToString();
                     break;
             }
-            
-            _button.interactable = false;
+
+            if (_button.interactable)
+            {
+                _button.interactable = false;
+            }
+
             _icon.color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
         }
 
@@ -98,7 +109,11 @@ public class ProductionButton : UnitUIButton {
                     break;
             }
 
-            _button.interactable = false;
+            if (_button.interactable)
+            {
+                _button.interactable = false;
+            }
+
             _icon.color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
         }
 
@@ -119,7 +134,11 @@ public class ProductionButton : UnitUIButton {
                     break;
             }
 
-            _button.interactable = true;
+            if (!_button.interactable)
+            {
+                _button.interactable = true;
+            }
+
             _icon.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
         }
 

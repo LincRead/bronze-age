@@ -1,44 +1,82 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 // Show info about selected building
 [CreateAssetMenu(menuName = "UI/Controller views/building")]
 public class BuildingView : ControllerUIView
 {
-    Building buildingController;
+    Building _buildingController;
 
     public override void OnEnter(ControllerUIManager ui, BaseController controller)
     {
         base.OnEnter(ui, controller);
 
-        buildingController = controller.GetComponent<Building>();
+        _buildingController = controller.GetComponent<Building>();
 
-        ui.ShowHitpoints(buildingController.hitpointsLeft, buildingController.maxHitPoints);
+        ui.ShowHitpoints(_buildingController.hitpointsLeft, _buildingController.maxHitPoints);
 
         if (PlayerManager.myPlayerID == _controller.playerID)
         {
-            ui.ShowStats(buildingController.statSprites, buildingController.GetUniqueStats());
-            ui.ShowProductionButtons(buildingController.productionButtonsData);
+            ui.ShowProductionButtons(_buildingController.productionButtonsData);
         }
 
-        EventManager.TriggerEvent("ActivateProductionButtonsView");
+        if(_buildingController.producing)
+        {
+            ShowProduction();
+        }
+
+        else
+        {
+            ShowBuildingStats();
+        }
+    }
+
+    public void ShowBuildingStats()
+    {
+        if (PlayerManager.myPlayerID == _controller.playerID)
+        {
+            ui.ShowStats(_buildingController.statSprites, _buildingController.GetUniqueStats());
+        }
+
+        EventManager.TriggerEvent("DisableProgressView");
+        EventManager.TriggerEvent("DisableQueueSlotsView");
+    }
+
+    public void ShowProduction()
+    {
+        ui.HideStats();
+
+        EventManager.TriggerEvent("ActivateProgressView");
+        EventManager.TriggerEvent("ActivateQueueSlotsView");
+        UpdatePercentProductionVisuals();
     }
 
     public override void Update()
     {
-        // TODO DON'T HIDE IF OPENING PRODUCTiON VIEW
-        ui.UpdateHitpoints(buildingController.hitpointsLeft, buildingController.maxHitPoints);
+        if (_buildingController.producing)
+        {
+            UpdatePercentProductionVisuals();
+        }
+
+         ui.UpdateHitpoints(_buildingController.hitpointsLeft, _buildingController.maxHitPoints);
+    }
+
+    void UpdatePercentProductionVisuals()
+    {
+        float percent = _buildingController.GetPercentageProduced();
+        ui.productionProgressText.text = new StringBuilder((int)(percent * 100) + "%").ToString();
+        ui.productionProgressBarImage.fillAmount = percent;
     }
 
     public override void OnExit()
     {
         ui.HideStats();
         ui.HideHitpoints();
-
-        // TODO DON'T HIDE IF OPENING PRODUCTiON VIEW
         ui.HideProductionButtons();
 
-        EventManager.TriggerEvent("DisableProductionButtonsView");
+        EventManager.TriggerEvent("DisableProgressView");
+        EventManager.TriggerEvent("DisableQueueSlotsView");
     }
 }

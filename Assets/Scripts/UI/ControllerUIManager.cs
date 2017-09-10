@@ -82,7 +82,6 @@ public class ControllerUIManager : MonoBehaviour {
     private BuildingView buildingView;
     private ResourceView resourceView;
     private ConstructionView constructionView;
-    private ProductionView productionView;
 
     [HideInInspector]
     public List<SelectedUnitButton> _selectedUnitButtons = new List<SelectedUnitButton>();
@@ -139,7 +138,6 @@ public class ControllerUIManager : MonoBehaviour {
         buildingView = ScriptableObject.CreateInstance<BuildingView>();
         resourceView = ScriptableObject.CreateInstance<ResourceView>();
         constructionView = ScriptableObject.CreateInstance<ConstructionView>();
-        productionView = ScriptableObject.CreateInstance<ProductionView>();
 
         productionTooltip = GetComponentInChildren<ProductionTooltip>();
 
@@ -192,7 +190,11 @@ public class ControllerUIManager : MonoBehaviour {
 
         if (currentView != null)
         {
-            currentView.OnExit();
+            if(currentViewType != viewType)
+            {
+                currentView.OnExit();
+            }
+            
             lastView = currentView;
         }
 
@@ -229,10 +231,6 @@ public class ControllerUIManager : MonoBehaviour {
 
             case CONTROLLER_UI_VIEW.CONSTRUCTION_PROGRESS:
                 currentView = constructionView;
-                break;
-
-            case CONTROLLER_UI_VIEW.PRODUCTION_PROGRESS:
-                currentView = productionView;
                 break;
 
             case CONTROLLER_UI_VIEW.RESOURCE_INFO:
@@ -361,17 +359,32 @@ public class ControllerUIManager : MonoBehaviour {
 
     public void ShowProductionButtons(ProductionButtonData[] data)
     {
-        HideProductionButtons();
-
-        for(int i = 0; i < data.Length; i++)
+        bool[] buttonWithIndexesActivated = new bool[_productionButtonScripts.Length];
+        for (int i = 0; i < buttonWithIndexesActivated.Length; i++)
         {
-            if(data != null
+            buttonWithIndexesActivated[i] = false;
+        }
+
+        for (int i = 0; i < data.Length; i++)
+        {
+            if (data != null
+                && i < data.Length
                 && data[i] != null
                 && (data[i].type != PRODUCTION_TYPE.TECHNOLOGY || !Technologies.instance.GetTechnologyCompleted(data[i].title)))
             {
                 // Todo make condition for required technology
                 _productionButtonScripts[data[i].index].SetData(data[i]);
                 _productionButtonScripts[data[i].index].Activate();
+                buttonWithIndexesActivated[data[i].index] = true;
+            }
+        }
+
+        // Deactivate buttons what didn't get activated
+        for (int i = 0; i < buttonWithIndexesActivated.Length; i++)
+        {
+            if(!buttonWithIndexesActivated[i])
+            {
+                _productionButtonScripts[i].Deactivate();
             }
         }
     }

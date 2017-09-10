@@ -15,6 +15,5 @@ public class ProductionTooltip : MonoBehaviour {
     {
         title.text = data.title;
         description.text = data.description;
-        Debug.Log(title.text);
     }
 }

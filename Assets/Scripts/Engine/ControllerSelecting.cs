@@ -176,12 +176,7 @@ public class ControllerSelecting : MonoBehaviour {
     {
         Building selectedBuilding = selectedController.GetComponent<Building>();
 
-        if (selectedBuilding.producing)
-        {
-            ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.PRODUCTION_PROGRESS, selectedBuilding);
-        }
-
-        else if (selectedBuilding.constructed)
+        if (selectedBuilding.constructed)
         {
             ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.BUILDING_INFO, selectedBuilding);
         }
