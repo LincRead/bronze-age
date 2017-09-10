@@ -8,6 +8,6 @@ public class UnitAttackMode : UnitMoveToPosition
     {
         base.ReachedNextTargetNode();
 
-        _controller.LookForNearbyEnemies();
+        _controller.LookForNearbyEnemyControllers();
     }
 }

@@ -399,49 +399,66 @@ public class UnitStateController : BaseController
         for (;;)
         {
             yield return new WaitForSeconds(.2f);
-            LookForNearbyEnemies();
+            LookForNearbyEnemyControllers();
         }
     }
 
-    public void LookForNearbyEnemies()
+    public void LookForNearbyEnemyControllers()
     {
-        List<UnitStateController> enemyUnitsDetected = new List<UnitStateController>();
+        List<BaseController> enemyControllersDetected = new List<BaseController>();
 
+        bool unitControllerDetected = false;
         for (int i = 0; i < visibleTiles.Count; i++)
         {
-            List<UnitStateController> units = visibleTiles[i].unitsStandingHere;
-            for(int j = 0; j < units.Count; j++)
+            // Check for building first
+            if(!unitControllerDetected // Only add if no units close by, units are always prioritised targets
+                && visibleTiles[i].controllerOccupying != null
+                && visibleTiles[i].controllerOccupying.controllerType == CONTROLLER_TYPE.BUILDING
+                && visibleTiles[i].controllerOccupying.playerID != this.playerID)
             {
-                if(units[j].playerID != this.playerID)
+                enemyControllersDetected.Add(visibleTiles[i].controllerOccupying);
+            }
+
+            // Check for units
+            else
+            {
+                List<UnitStateController> units = visibleTiles[i].unitsStandingHere;
+                for (int j = 0; j < units.Count; j++)
                 {
-                    enemyUnitsDetected.Add(units[j]);
+                    if (units[j].playerID != this.playerID)
+                    {
+                        enemyControllersDetected.Add(units[j]);
+                        unitControllerDetected = true;
+                    }
                 }
             }
         }
 
-        if(enemyUnitsDetected.Count > 0)
+        if(enemyControllersDetected.Count > 0)
         {
-            ChaseClosestEnemy(enemyUnitsDetected);
+            ChaseClosestEnemyController(enemyControllersDetected, unitControllerDetected);
         }
     }
 
-    void ChaseClosestEnemy(List<UnitStateController> enemyUnits)
+    void ChaseClosestEnemyController(List<BaseController> enemyControllers, bool unitControllerDetected)
     {
         float closestDistance = 10000;
-        UnitStateController closestEnemy = null;
-        for(int i = 0; i < enemyUnits.Count; i++)
+        BaseController closestEnemyController = null;
+        for(int i = 0; i < enemyControllers.Count; i++)
         {
-            float distance = Grid.instance.GetDistanceBetweenNodes(enemyUnits[i].GetPrimaryNode(), _pathfinder.currentStandingOnNode);
-            if (distance < closestDistance)
+            float distance = Grid.instance.GetDistanceBetweenNodes(enemyControllers[i].GetPrimaryNode(), _pathfinder.currentStandingOnNode);
+
+            // If a unit is part of the list, ignore all buildings
+            if (distance < closestDistance && (enemyControllers[i].controllerType != CONTROLLER_TYPE.BUILDING || !unitControllerDetected))
             {
                 closestDistance = distance;
-                closestEnemy = enemyUnits[i];
+                closestEnemyController = enemyControllers[i];
             }
         }
 
         if (closestDistance <= (_unitStats.attackTriggerRadius * 10))
         {
-            targetController = closestEnemy;
+            targetController = closestEnemyController;
 
             // Chase closest enemy
             if (_unitStats.isRanged)
