@@ -11,8 +11,8 @@ public class ControllerUIManager : MonoBehaviour {
     [Header("Controller info")]
     public Text title;
     public Image icon;
-
-    public Text tooltipText;
+    public Text tooltip;
+    public GameObject controllerInfoBackground;
 
     [Header("Buttons")]
     public Button[] villagerButtons;
@@ -190,6 +190,7 @@ public class ControllerUIManager : MonoBehaviour {
 
         if (currentView != null)
         {
+            // Only run exit code if we change view
             if(currentViewType != viewType)
             {
                 currentView.OnExit();
@@ -242,6 +243,16 @@ public class ControllerUIManager : MonoBehaviour {
         currentViewType = viewType;
 
         HideTooltip();
+
+        if(currentViewType == CONTROLLER_UI_VIEW.NONE)
+        {
+            controllerInfoBackground.GetComponent<Image>().enabled = false;
+        }
+
+        else
+        {
+            controllerInfoBackground.GetComponent<Image>().enabled = true;
+        }
     }
 
     public void GoBackToLastView()
@@ -340,13 +351,13 @@ public class ControllerUIManager : MonoBehaviour {
     public void ShowTooltip(string tip)
     {
 
-        tooltipText.enabled = true;
-        tooltipText.text = tip;
+        tooltip.enabled = true;
+        tooltip.text = tip;
     }
 
     public void HideTooltip()
     {
-        tooltipText.enabled = false;
+        tooltip.enabled = false;
     }
 
     public void HideSelectedUnitsButtons()
