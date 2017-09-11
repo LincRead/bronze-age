@@ -22,7 +22,7 @@ public class BuildingView : ControllerUIView
             ui.ShowProductionButtons(_buildingController.productionButtonsData);
         }
 
-        if(_buildingController.producing)
+        if(_buildingController.inProductionProcess)
         {
             ShowProduction();
         }
@@ -61,7 +61,7 @@ public class BuildingView : ControllerUIView
 
     public override void Update()
     {
-        if (_buildingController.producing)
+        if (_buildingController.inProductionProcess)
         {
             UpdatePercentProductionVisuals();
         }

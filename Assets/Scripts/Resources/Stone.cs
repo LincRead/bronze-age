@@ -5,6 +5,6 @@ public class Stone : Resource {
 
     protected override void UpdateResourceAmountForPlayer(int playerID)
     {
-        PlayerDataManager.instance.AddStoneForPlayer(1, playerID);
+        PlayerDataManager.instance.AddStoneToolsForPlayer(1, playerID);
     }
 }

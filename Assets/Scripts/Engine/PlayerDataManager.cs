@@ -108,7 +108,7 @@ public class PlayerDataManager : MonoBehaviour
         EventManager.TriggerEvent("UpdateTimberStockUI");
     }
 
-    public void AddStoneForPlayer(int value, int player)
+    public void AddStoneToolsForPlayer(int value, int player)
     {
         playerData[player].stoneTools += value;
         EventManager.TriggerEvent("UpdateStoneStockUI");

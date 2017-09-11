@@ -20,7 +20,8 @@ public class Building : BaseController {
     private float stepsProduced = 0f;
 
     [HideInInspector]
-    public bool producing = false;
+    public bool inProductionProcess = false;
+    private bool startedProduction = false;
 
     protected FinishedProductionAction _finishedProductionAction;
 
@@ -186,13 +187,25 @@ public class Building : BaseController {
             }
         }
 
-        else if(producing)
+        else if(inProductionProcess)
         {
-            stepsProduced += 1 * Time.deltaTime;
-
-            if(stepsProduced >= stepsToProduce)
+            if(startedProduction)
             {
-                FinishedProduction();
+                stepsProduced += 1 * Time.deltaTime;
+
+                if (stepsProduced >= stepsToProduce)
+                {
+                    FinishedProduction();
+                }
+            }
+
+            else
+            {
+                if(HaveRequiredResources())
+                {
+                    UseResources();
+                    startedProduction = true;
+                }
             }
         }
 	}
@@ -335,11 +348,11 @@ public class Building : BaseController {
 
     public void Produce(int buttonIndex)
     {
-        if(!producing)
+        if (!inProductionProcess)
         {
             productionIndex = buttonIndex;
             stepsToProduce = productionButtonsData[buttonIndex].stepsRequired;
-            producing = true;
+            inProductionProcess = true;
 
             if (selected)
             {
@@ -355,14 +368,38 @@ public class Building : BaseController {
         }
     }
 
+    bool HaveRequiredResources()
+    {
+        ProductionButtonData data = productionButtonsData[productionIndex];
+        PlayerData playerData = PlayerDataManager.instance.GetPlayerData(PlayerManager.myPlayerID);
+
+        return playerData.food >= data.food
+            && playerData.timber >= data.timber
+            && playerData.stoneTools >= data.stoneTools
+            && playerData.copper >= data.copper
+            && playerData.population >= data.population;
+    }
+
+    void UseResources()
+    {
+        int playerID = PlayerManager.myPlayerID;
+
+        ProductionButtonData data = productionButtonsData[productionIndex];
+
+        if (data.food > 0) PlayerDataManager.instance.AddFoodProductionForPlayer(-data.food, playerID);
+        if (data.timber > 0) PlayerDataManager.instance.AddTimberForPlayer(-data.timber, playerID);
+        if (data.stoneTools > 0) PlayerDataManager.instance.AddStoneToolsForPlayer(-data.stoneTools, playerID);
+    }
+
     public void FinishedProduction()
     {
         stepsProduced = 0.0f;
         stepsToProduce = 0.0f;
-        producing = false;
+        inProductionProcess = false;
+        startedProduction = false;
 
         // Only attempt to execute if script has been attached
-        if(productionButtonsData[productionIndex].executeScript != null)
+        if (productionButtonsData[productionIndex].executeScript != null)
         {
             productionButtonsData[productionIndex].executeScript.Action(this);
         }
@@ -393,7 +430,7 @@ public class Building : BaseController {
 
     void CancelProduction()
     {
-        producing = false;
+        inProductionProcess = false;
         stepsProduced = 0.0f;
         stepsToProduce = 0.0f;
 
@@ -474,7 +511,7 @@ public class Building : BaseController {
             Kill();
         }
 
-        else if(producing)
+        else if(inProductionProcess)
         {
             CancelProduction();
         }
@@ -525,8 +562,15 @@ public class Building : BaseController {
     }
 
     public float GetPercentageProduced()
-    {
-        return stepsProduced / stepsToProduce;
+    {   
+        float percent = stepsProduced / stepsToProduce;
+
+        if(percent < 0)
+        {
+            percent = 0;
+        }
+
+        return percent;
     }
 
     public virtual void Destroy()
