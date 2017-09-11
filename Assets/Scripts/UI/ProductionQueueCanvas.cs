@@ -10,8 +10,6 @@ public class ProductionQueueCanvas : MonoBehaviour
     [HideInInspector]
     public static int max = 5;
 
-    public Image icon;
-
     string text;
 
     public void ActivateIcon(Sprite newIconSprite, int index)

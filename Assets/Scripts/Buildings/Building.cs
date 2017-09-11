@@ -201,7 +201,7 @@ public class Building : BaseController {
 
             else
             {
-                if(HaveRequiredResources())
+                if(HaveRequiredResourcesToProduce())
                 {
                     UseResources(-1);
                     startedProduction = true;
@@ -228,9 +228,15 @@ public class Building : BaseController {
 
         bool canPlace = false;
 
+        if (!HaveRequiredResourcesToPlaceBuilding())
+        {
+            _spriteRenderer.color = new Color(1f, 1f, 1f, 0.5f);
+            _selectedIndicatorRenderer.color = new Color(1f, 0.6f, 0.0f, 0.5f);
+        }
+
         // Adding offset since building pivot point (buttom of sprite) is in the middle of two nodes
         // Show that location is suitable
-        if (Grid.instance.GetAllTilesFromBoxArEmpty(_transform.position + new Vector3(0.04f, 0.04f), size))
+        else if (Grid.instance.GetAllTilesFromBoxArEmpty(_transform.position + new Vector3(0.04f, 0.04f), size))
         {
             canPlace = true;
             _spriteRenderer.color = new Color(1f, 1f, 1f, 0.5f);
@@ -368,7 +374,22 @@ public class Building : BaseController {
         }
     }
 
-    bool HaveRequiredResources()
+    public bool HaveRequiredResourcesToPlaceBuilding()
+    {
+        PlayerData playerData = PlayerDataManager.instance.GetPlayerData(PlayerManager.myPlayerID);
+
+        return playerData.food >= _buildingStats.food
+            && playerData.timber >= _buildingStats.timber
+            && playerData.stoneTools >= _buildingStats.stoneTools
+            && playerData.population >= _buildingStats.population;
+    }
+
+    public bool HaveRequiredResourcesToProduce()
+    {
+        return HaveRequiredResourcesToProduce(productionIndex);
+    }
+
+    public bool HaveRequiredResourcesToProduce(int productionIndex)
     {
         ProductionButtonData data = productionButtonsData[productionIndex];
         PlayerData playerData = PlayerDataManager.instance.GetPlayerData(PlayerManager.myPlayerID);
