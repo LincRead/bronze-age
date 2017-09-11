@@ -42,6 +42,9 @@ public class ControllerUIManager : MonoBehaviour {
     public ProductionProgressCanvas productionProgressCanvas;
 
     [HideInInspector]
+    public ProductionQueueCanvas productionQueueCanvas;
+
+    [HideInInspector]
     public HealthBarUI healthBar;
 
     [Header("Units")]
@@ -132,6 +135,8 @@ public class ControllerUIManager : MonoBehaviour {
 
         productionTooltip = GetComponentInChildren<ProductionTooltip>();
         productionProgressCanvas = GetComponentInChildren<ProductionProgressCanvas>();
+        productionQueueCanvas = GetComponentInChildren<ProductionQueueCanvas>();
+
         healthBar = GetComponentInChildren<HealthBarUI>();
 
         ChangeView(CONTROLLER_UI_VIEW.NONE, null);

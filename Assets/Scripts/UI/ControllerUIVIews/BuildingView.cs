@@ -41,7 +41,7 @@ public class BuildingView : ControllerUIView
         }
 
         EventManager.TriggerEvent("DisableProgressView");
-        EventManager.TriggerEvent("DisableQueueSlotsView");
+        EventManager.TriggerEvent("DisableProductionQueueView");
     }
 
     public void ShowProduction()
@@ -49,7 +49,8 @@ public class BuildingView : ControllerUIView
         ui.HideStats();
 
         EventManager.TriggerEvent("ActivateProgressView");
-        EventManager.TriggerEvent("ActivateQueueSlotsView");
+        EventManager.TriggerEvent("ActivateProductionQueueView");
+        _buildingController.UpdateProducionQueue();
         UpdatePercentProductionVisuals();
     }
 
@@ -76,6 +77,6 @@ public class BuildingView : ControllerUIView
         ui.HideProductionButtons();
 
         EventManager.TriggerEvent("DisableProgressView");
-        EventManager.TriggerEvent("DisableQueueSlotsView");
+        EventManager.TriggerEvent("DisableProductionQueueView");
     }
 }

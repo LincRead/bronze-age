@@ -28,6 +28,7 @@ public class Building : BaseController {
     public ProductionButtonData[] productionButtonsData;
 
     // Store current production
+    List<int> productionList = new List<int>();
     int productionIndex = -1;
 
     // Need this to caulcate efficieny of construction
@@ -334,14 +335,23 @@ public class Building : BaseController {
 
     public void Produce(int buttonIndex)
     {
-        productionIndex = buttonIndex;
-        stepsToProduce = productionButtonsData[buttonIndex].stepsRequired;
-        producing = true;
-
-        if (selected)
+        if(!producing)
         {
-            ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.BUILDING_INFO, this);
-            ControllerUIManager.instance.productionProgressCanvas.icon.sprite = productionButtonsData[buttonIndex].icon;
+            productionIndex = buttonIndex;
+            stepsToProduce = productionButtonsData[buttonIndex].stepsRequired;
+            producing = true;
+
+            if (selected)
+            {
+                ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.BUILDING_INFO, this);
+                ControllerUIManager.instance.productionProgressCanvas.icon.sprite = productionButtonsData[buttonIndex].icon;
+            }
+        }
+
+        else if(productionList.Count < ProductionQueueCanvas.max)
+        {
+            productionList.Add(buttonIndex);
+            UpdateProducionQueue();
         }
     }
 
@@ -369,6 +379,12 @@ public class Building : BaseController {
             Instantiate(productionButtonsData[productionIndex].productionPrefab, spawnToNode.worldPosition, Quaternion.identity);
         }
 
+        if (productionList.Count > 0)
+        {
+            Produce(productionList[0]);
+            productionList.RemoveAt(0);
+        }
+
         if (selected)
         {
             ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.BUILDING_INFO, this);
@@ -384,6 +400,22 @@ public class Building : BaseController {
         if (selected)
         {
             ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.BUILDING_INFO, this);
+        }
+    }
+
+    public void UpdateProducionQueue()
+    {
+        for(int i = 0; i < ProductionQueueCanvas.max; i++)
+        {
+            if(i < productionList.Count)
+            {
+                ControllerUIManager.instance.productionQueueCanvas.ActivateIcon(productionButtonsData[productionList[i]].icon, i);
+            }
+
+            else
+            {
+                ControllerUIManager.instance.productionQueueCanvas.DeactivateIcon(i);
+            }
         }
     }
 

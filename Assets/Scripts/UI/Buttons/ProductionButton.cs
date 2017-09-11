@@ -168,10 +168,12 @@ public class ProductionButton : UnitUIButton {
     {
         base.OnClick();
 
-        if (PlayerManager.instance._controllerSelecting.selectedController != null
-            && PlayerManager.instance._controllerSelecting.selectedController.controllerType == CONTROLLER_TYPE.BUILDING)
+        if (PlayerManager.instance._controllerSelecting.selectedController != null)
         {
-            PlayerManager.instance._controllerSelecting.selectedController.GetComponent<Building>().Produce(data.index);
+            if(PlayerManager.instance._controllerSelecting.selectedController.controllerType == CONTROLLER_TYPE.BUILDING)
+            {
+                PlayerManager.instance._controllerSelecting.selectedController.GetComponent<Building>().Produce(data.index);
+            }
         }
     }
 
