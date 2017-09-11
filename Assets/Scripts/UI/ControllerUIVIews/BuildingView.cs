@@ -49,9 +49,14 @@ public class BuildingView : ControllerUIView
         ui.HideStats();
 
         EventManager.TriggerEvent("ActivateProgressView");
-        EventManager.TriggerEvent("ActivateProductionQueueView");
-        _buildingController.UpdateProducionQueue();
+
         UpdatePercentProductionVisuals();
+
+        if (_buildingController.constructed)
+        {
+            EventManager.TriggerEvent("ActivateProductionQueueView");
+            _buildingController.UpdateProducionQueue();
+        }
     }
 
     public override void Update()

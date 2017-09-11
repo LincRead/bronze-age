@@ -11,7 +11,7 @@ public class HealthBarUI : MonoBehaviour
 
     RectTransform _barTransform;
 
-    private void Start()
+    private void Awake()
     {
         _barTransform = hitpointsBar.GetComponent<RectTransform>();
     }

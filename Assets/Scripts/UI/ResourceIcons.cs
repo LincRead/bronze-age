@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour {
+
+public class Icons : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
