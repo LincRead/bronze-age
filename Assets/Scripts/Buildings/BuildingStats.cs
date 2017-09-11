@@ -25,9 +25,15 @@ public class BuildingStats : DefaultStats
     [Header("Main building")]
     public bool isCivilizationCenter = false;
 
-    [Header("Required resources")]
+    [HideInInspector]
     public int food = 0;
+
+    [HideInInspector]
     public int timber = 0;
+
+    [HideInInspector]
     public int stoneTools = 0;
+
+    [HideInInspector]
     public int population = 0;
 }

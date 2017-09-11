@@ -65,6 +65,11 @@ public class ProductionButton : UnitUIButton {
 
     public void UpdateCanBeProduced()
     {
+        if(data == null)
+        {
+            return;
+        }
+
         // Haven't reached required Age
         if (data.age > PlayerManager.instance.currentAge)
         {

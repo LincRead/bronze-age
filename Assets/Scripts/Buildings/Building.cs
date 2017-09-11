@@ -124,6 +124,14 @@ public class Building : BaseController {
         UpdateDamagedSprite();
     }
 
+    public void SetRequiredResources(ProductionButtonData data)
+    {
+        _buildingStats.food = data.food;
+        _buildingStats.timber = data.timber;
+        _buildingStats.stoneTools = data.stoneTools;
+        _buildingStats.population = data.population;
+    }
+
     void SetupHealthBar()
     {
         GameObject healthBar = GameObject.Instantiate(_buildingStats.healthBar, _transform.position, Quaternion.identity);
@@ -374,7 +382,7 @@ public class Building : BaseController {
         }
     }
 
-    public bool HaveRequiredResourcesToPlaceBuilding()
+    bool HaveRequiredResourcesToPlaceBuilding()
     {
         PlayerData playerData = PlayerDataManager.instance.GetPlayerData(PlayerManager.myPlayerID);
 
