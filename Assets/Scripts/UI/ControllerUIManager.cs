@@ -134,8 +134,12 @@ public class ControllerUIManager : MonoBehaviour {
         constructionView = ScriptableObject.CreateInstance<ConstructionView>();
 
         productionTooltip = GetComponentInChildren<ProductionTooltip>();
+
         productionProgressCanvas = GetComponentInChildren<ProductionProgressCanvas>();
+        productionProgressCanvas.gameObject.SetActive(false);
+
         productionQueueCanvas = GetComponentInChildren<ProductionQueueCanvas>();
+        productionQueueCanvas.gameObject.SetActive(false);
 
         healthBar = GetComponentInChildren<HealthBarUI>();
 
@@ -153,7 +157,7 @@ public class ControllerUIManager : MonoBehaviour {
 
         for (int j = 0; j < 2; j++)
         {
-            for (int i = 0; i < 9; i ++)
+            for (int i = 0; i < 11; i ++)
             {
                 CreateUnitSelectedBotton(i, j);
             }

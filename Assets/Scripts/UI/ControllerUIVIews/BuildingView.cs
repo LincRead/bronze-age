@@ -22,7 +22,7 @@ public class BuildingView : ControllerUIView
             ui.ShowProductionButtons(_buildingController.productionButtonsData);
         }
 
-        if(_buildingController.inProductionProcess)
+        if (_buildingController.inProductionProcess)
         {
             ShowProduction();
         }
@@ -40,21 +40,21 @@ public class BuildingView : ControllerUIView
             ui.ShowStats(_buildingController.statSprites, _buildingController.GetUniqueStats());
         }
 
-        EventManager.TriggerEvent("DisableProgressView");
-        EventManager.TriggerEvent("DisableProductionQueueView");
+        ui.productionProgressCanvas.gameObject.SetActive(false);
+        ui.productionQueueCanvas.gameObject.SetActive(false);
     }
 
     public void ShowProduction()
     {
         ui.HideStats();
 
-        EventManager.TriggerEvent("ActivateProgressView");
+        ui.productionProgressCanvas.gameObject.SetActive(true);
 
         UpdatePercentProductionVisuals();
 
         if (_buildingController.constructed)
         {
-            EventManager.TriggerEvent("ActivateProductionQueueView");
+            ui.productionQueueCanvas.gameObject.SetActive(true);
             _buildingController.UpdateProducionQueue();
         }
     }
@@ -81,7 +81,7 @@ public class BuildingView : ControllerUIView
         ui.healthBar.HideHitpoints();
         ui.HideProductionButtons();
 
-        EventManager.TriggerEvent("DisableProgressView");
-        EventManager.TriggerEvent("DisableProductionQueueView");
+        ui.productionProgressCanvas.gameObject.SetActive(false);
+        ui.productionQueueCanvas.gameObject.SetActive(false);
     }
 }

@@ -203,7 +203,7 @@ public class Building : BaseController {
             {
                 if(HaveRequiredResources())
                 {
-                    UseResources();
+                    UseResources(-1);
                     startedProduction = true;
                 }
             }
@@ -380,15 +380,15 @@ public class Building : BaseController {
             && playerData.population >= data.population;
     }
 
-    void UseResources()
+    void UseResources(int factor)
     {
         int playerID = PlayerManager.myPlayerID;
 
         ProductionButtonData data = productionButtonsData[productionIndex];
 
-        if (data.food > 0) PlayerDataManager.instance.AddFoodProductionForPlayer(-data.food, playerID);
-        if (data.timber > 0) PlayerDataManager.instance.AddTimberForPlayer(-data.timber, playerID);
-        if (data.stoneTools > 0) PlayerDataManager.instance.AddStoneToolsForPlayer(-data.stoneTools, playerID);
+        if (data.food > 0) PlayerDataManager.instance.AddFoodProductionForPlayer(data.food * factor, playerID);
+        if (data.timber > 0) PlayerDataManager.instance.AddTimberForPlayer(data.timber * factor, playerID);
+        if (data.stoneTools > 0) PlayerDataManager.instance.AddStoneToolsForPlayer(data.stoneTools * factor, playerID);
     }
 
     public void FinishedProduction()
@@ -430,13 +430,30 @@ public class Building : BaseController {
 
     void CancelProduction()
     {
-        inProductionProcess = false;
         stepsProduced = 0.0f;
-        stepsToProduce = 0.0f;
+        stepsToProduce = 0.1f;
+        inProductionProcess = false;
 
-        if (selected)
+        // Give back resources
+        if(startedProduction)
         {
-            ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.BUILDING_INFO, this);
+            UseResources(1);
+        }
+
+        if (productionList.Count > 0)
+        {
+            startedProduction = false;
+            Produce(productionList[0]);
+            productionList.RemoveAt(0);
+            UpdateProducionQueue();
+        }
+
+        else
+        {
+            if (selected)
+            {
+                ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.BUILDING_INFO, this);
+            }
         }
     }
 
