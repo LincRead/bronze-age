@@ -322,10 +322,10 @@ public class ControllerUIManager : MonoBehaviour {
         statsInfoPrefab.gameObject.SetActive(false);
     }
 
-    public void ShowProductionTooltip(ProductionButtonData data)
+    public void ShowProductionTooltip(ProductionButtonData data, string description)
     {
         productionTooltip.gameObject.SetActive(true);
-        productionTooltip.UpdateData(data);
+        productionTooltip.UpdateData(data, description);
     }
 
     public void HideProductionTooltip()

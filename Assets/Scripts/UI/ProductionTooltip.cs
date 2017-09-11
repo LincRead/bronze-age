@@ -15,10 +15,10 @@ public class ProductionTooltip : MonoBehaviour {
 
     int numItemsRequired = 0;
 
-    public void UpdateData(ProductionButtonData data)
+    public void UpdateData(ProductionButtonData data, string desc)
     {
         title.text = data.title;
-        description.text = data.description;
+        description.text = desc;
         SetRequiredVisuals(data);
     }
 

@@ -124,20 +124,7 @@ public class ProductionButton : UnitUIButton {
 
         else
         {
-            switch (data.type)
-            {
-                case PRODUCTION_TYPE.UNIT:
-                    tooltip = new StringBuilder("Train " + data.title).ToString();
-                    break;
-
-                case PRODUCTION_TYPE.BUILDING:
-                    tooltip = new StringBuilder("Construct " + data.title).ToString();
-                    break;
-
-                case PRODUCTION_TYPE.TECHNOLOGY:
-                    tooltip = new StringBuilder("Research " + data.title).ToString();
-                    break;
-            }
+            tooltip = data.description;
 
             if (!_button.interactable)
             {
@@ -149,7 +136,7 @@ public class ProductionButton : UnitUIButton {
 
         if (hovered)
         {
-            ControllerUIManager.instance.ShowProductionTooltip(data);
+            ControllerUIManager.instance.ShowProductionTooltip(data, tooltip);
         }
     }
 
@@ -160,11 +147,12 @@ public class ProductionButton : UnitUIButton {
             EventManager.StopListening("AdvancedCivilizationAge", UpdatedCivAge);
             _icon.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
             _button.interactable = true;
+
             UpdateCanBeProduced();
 
             if(hovered)
             {
-                ControllerUIManager.instance.ShowProductionTooltip(data);
+                ControllerUIManager.instance.ShowProductionTooltip(data, tooltip);
             }
         }
     }
@@ -188,7 +176,7 @@ public class ProductionButton : UnitUIButton {
 
         if (!tooltip.Equals("?"))
         {
-            ControllerUIManager.instance.ShowProductionTooltip(data);
+            ControllerUIManager.instance.ShowProductionTooltip(data, tooltip);
         }
     }
 
