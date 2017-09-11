@@ -47,8 +47,6 @@ public class ProductionTooltip : MonoBehaviour {
             return;
         }
 
-        Debug.Log(icon);
-
         resourceIcons[numItemsRequired].enabled = true;
         resourceIcons[numItemsRequired].sprite = icon;
 

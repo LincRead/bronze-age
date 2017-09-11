@@ -9,8 +9,9 @@ public class PlayerStartResources : ScriptableObject
 {
     public int food = 0;
     public int timber = 0;
-    public int stone = 0;
+    public int stoneTools = 0;
     public int copper = 0;
     public int tin = 0;
     public int bronze = 0;
+    public int population = 0;
 }

@@ -45,26 +45,28 @@ public class PlayerDataManager : MonoBehaviour
 
     void InitStartingResourcesForAllPlayers()
     {
-        int numPlayers = WorldManager.numPlayers;
+        int numPlayers = WorldManager.instance.numPlayers;
 
         playerData = new List<PlayerData>(numPlayers);
 
-        for (int i = 0; i <numPlayers; i++)
+        for (int i = 0; i < numPlayers; i++)
         {
             PlayerData newPlayerData = new PlayerData();
+            playerData.Add(newPlayerData);
+
             newPlayerData.food = playersStartingResources.food;
             newPlayerData.timber = playersStartingResources.timber;
-            newPlayerData.stone = playersStartingResources.stone;
+            newPlayerData.stoneTools = playersStartingResources.stoneTools;
             newPlayerData.copper = playersStartingResources.copper;
             newPlayerData.tin = playersStartingResources.tin;
             newPlayerData.bronze = playersStartingResources.bronze;
-            playerData.Add(new PlayerData());
+            newPlayerData.population = playersStartingResources.population;
         }
     }
 
     void SetTeamColors()
     {
-        for (int i = 0; i < WorldManager.numPlayers; i++)
+        for (int i = 0; i < WorldManager.instance.numPlayers; i++)
         {
             switch (i)
             {
@@ -108,7 +110,7 @@ public class PlayerDataManager : MonoBehaviour
 
     public void AddStoneForPlayer(int value, int player)
     {
-        playerData[player].stone += value;
+        playerData[player].stoneTools += value;
         EventManager.TriggerEvent("UpdateStoneStockUI");
     }
 

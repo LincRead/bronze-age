@@ -19,13 +19,20 @@ public class StockDataHUD : MonoBehaviour {
         myPlayerData = PlayerDataManager.instance.playerData[PlayerManager.myPlayerID];
     }
 
+    private void Start()
+    {
+        UpdateHousing();
+        UpdateTimber();
+        UpdateStoneTools();
+    }
+
     private void OnEnable()
     {
         EventManager.StartListening("UpdateHousingStockUI", UpdateHousing);
         EventManager.StartListening("UpdateFoodProductionUI", UpdateFoodProduction);
         EventManager.StartListening("UpdateFoodStockUI", UpdateFoodStock);
         EventManager.StartListening("UpdateTimberStockUI", UpdateTimber);
-        EventManager.StartListening("UpdateStoneStockUI", UpdateStone);
+        EventManager.StartListening("UpdateStoneStockUI", UpdateStoneTools);
     }
 
     private void OnDisable()
@@ -34,7 +41,7 @@ public class StockDataHUD : MonoBehaviour {
         EventManager.StopListening("UpdateFoodProductionUI", UpdateFoodProduction);
         EventManager.StopListening("UpdateFoodStockUI", UpdateFoodStock);
         EventManager.StopListening("UpdateTimberStockUI", UpdateTimber);
-        EventManager.StopListening("UpdateStoneStockUI", UpdateStone);
+        EventManager.StopListening("UpdateStoneStockUI", UpdateStoneTools);
     }
 
     void UpdateHousing()
@@ -57,8 +64,8 @@ public class StockDataHUD : MonoBehaviour {
         timber.text = myPlayerData.timber.ToString();
     }
 
-    void UpdateStone()
+    void UpdateStoneTools()
     {
-        stone.text = myPlayerData.stone.ToString();
+        stone.text = myPlayerData.stoneTools.ToString();
     }
 }

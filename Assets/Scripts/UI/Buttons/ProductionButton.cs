@@ -170,11 +170,27 @@ public class ProductionButton : UnitUIButton {
 
         if (PlayerManager.instance._controllerSelecting.selectedController != null)
         {
-            if(PlayerManager.instance._controllerSelecting.selectedController.controllerType == CONTROLLER_TYPE.BUILDING)
+            if(PlayerManager.instance._controllerSelecting.selectedController.controllerType == CONTROLLER_TYPE.BUILDING & HaveRequiredResources())
             {
+                UseResources();
                 PlayerManager.instance._controllerSelecting.selectedController.GetComponent<Building>().Produce(data.index);
             }
         }
+    }
+
+    bool HaveRequiredResources()
+    {
+        PlayerData playerData = PlayerDataManager.instance.GetPlayerData(PlayerManager.myPlayerID);
+        return playerData.food >= data.food
+            && playerData.timber >= data.timber
+            && playerData.stoneTools >= data.stoneTools
+            && playerData.copper >= data.copper
+            && playerData.population >= data.population;
+    }
+
+    void UseResources()
+    {
+
     }
 
     public override void OnPointerEnter(PointerEventData eventData)

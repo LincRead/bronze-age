@@ -5,7 +5,7 @@ using UnityEngine;
 public class WorldManager : MonoBehaviour {
 
     // 1 for singleplayer, more for multiplayer
-    public static int numPlayers = 4;
+    public int numPlayers = 4;
 
     public static bool firstUpdate = true;
 
