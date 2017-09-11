@@ -13,7 +13,7 @@ public class UnitView : ControllerUIView {
         if(controller != null)
         {
             unitController = controller.GetComponent<UnitStateController>();
-            ui.ShowHitpoints(unitController.hitpointsLeft, unitController._unitStats.maxHitpoints);
+            ui.healthBar.ShowHitpoints(unitController.hitpointsLeft, unitController._unitStats.maxHitpoints);
             ui.ShowStats(_controller.statSprites, _controller.GetUniqueStats());
 
             if (_controller.playerID == PlayerManager.myPlayerID
@@ -26,12 +26,12 @@ public class UnitView : ControllerUIView {
 
     public override void Update()
     {
-        ui.UpdateHitpoints(unitController.hitpointsLeft, unitController._unitStats.maxHitpoints);
+        ui.healthBar.UpdateHitpoints(unitController.hitpointsLeft, unitController._unitStats.maxHitpoints);
     }
 
     public override void OnExit()
     {
-        ui.HideHitpoints();
+        ui.healthBar.HideHitpoints();
         ui.HideStats();
         ui.HideStats();
 

@@ -15,7 +15,7 @@ public class BuildingView : ControllerUIView
 
         _buildingController = controller.GetComponent<Building>();
 
-        ui.ShowHitpoints(_buildingController.hitpointsLeft, _buildingController.maxHitPoints);
+        ui.healthBar.ShowHitpoints(_buildingController.hitpointsLeft, _buildingController.maxHitPoints);
 
         if (PlayerManager.myPlayerID == _controller.playerID)
         {
@@ -60,20 +60,19 @@ public class BuildingView : ControllerUIView
             UpdatePercentProductionVisuals();
         }
 
-         ui.UpdateHitpoints(_buildingController.hitpointsLeft, _buildingController.maxHitPoints);
+         ui.healthBar.UpdateHitpoints(_buildingController.hitpointsLeft, _buildingController.maxHitPoints);
     }
 
     void UpdatePercentProductionVisuals()
     {
         float percent = _buildingController.GetPercentageProduced();
-        ui.productionProgressText.text = new StringBuilder((int)(percent * 100) + "%").ToString();
-        ui.productionProgressBarImage.fillAmount = percent;
+        ui.productionProgressCanvas.UpdateProgress(percent);
     }
 
     public override void OnExit()
     {
         ui.HideStats();
-        ui.HideHitpoints();
+        ui.healthBar.HideHitpoints();
         ui.HideProductionButtons();
 
         EventManager.TriggerEvent("DisableProgressView");

@@ -35,8 +35,7 @@ public class ConstructionView : ControllerUIView
     void UpdatePercentConstructedVisuals()
     {
         float percent = _buildingController.GetPercentageProduced();
-        ui.productionProgressText.text = new StringBuilder((int)(percent * 100) + "%").ToString();
-        ui.productionProgressBarImage.fillAmount = percent;
+        ui.productionProgressCanvas.UpdateProgress(percent);
     }
 
     public override void OnExit()

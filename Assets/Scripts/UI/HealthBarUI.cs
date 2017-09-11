@@ -2,15 +2,35 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Text;
 
 public class HealthBarUI : MonoBehaviour
 {
-    public GameObject bar;
+    public Image hitpointsBar;
+    public Text hitpointsText;
+
     RectTransform _barTransform;
 
-    void Start()
+    private void Start()
     {
-        _barTransform = bar.GetComponent<RectTransform>();
+        _barTransform = hitpointsBar.GetComponent<RectTransform>();
+    }
+
+    public void ShowHitpoints(int hp, int max)
+    {
+        gameObject.SetActive(true);
+        UpdateHitpoints(hp, max);
+    }
+
+    public void HideHitpoints()
+    {
+        gameObject.SetActive(false);
+    }
+
+    public void UpdateHitpoints(int hp, int max)
+    {
+        hitpointsText.text = new StringBuilder(hp.ToString() + "/" + max.ToString()).ToString();
+        UpdateHitpointsAmount(hp, max);
     }
 
     public void UpdateHitpointsAmount(int currHP, int maxHP)

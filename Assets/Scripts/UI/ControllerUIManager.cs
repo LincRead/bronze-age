@@ -12,7 +12,7 @@ public class ControllerUIManager : MonoBehaviour {
     public Text title;
     public Image icon;
     public Text tooltip;
-    public GameObject controllerInfoBackground;
+    public GameObject infoBackground;
 
     [Header("Buttons")]
     public Button[] villagerButtons;
@@ -38,18 +38,11 @@ public class ControllerUIManager : MonoBehaviour {
         RESOURCE_INFO
     }
 
-    [Header("Hitpoints bar")]
-    public GameObject hitpointsPrefab;
-    public Image hitpointsBackground;
-    public Image hitpointsBar;
-    public Text hitpointsText;
-    HealthBarUI _healthBar;
+    [HideInInspector]
+    public ProductionProgressCanvas productionProgressCanvas;
 
-    [Header("Production progress")]
-    public GameObject productionProgressPrefab;
-    public Image productionProgressBarImage;
-    public Text productionProgressText;
-    public Image productionControllererIcon;
+    [HideInInspector]
+    public HealthBarUI healthBar;
 
     [Header("Units")]
     public GameObject selectedUnitsPrefab;
@@ -116,10 +109,8 @@ public class ControllerUIManager : MonoBehaviour {
         // ...
     }
 
-    void Start () {
-
-        _healthBar = GetComponent<HealthBarUI>();
-
+    void Start ()
+    {
         foreach (Button btn in villagerButtons)
             btn.gameObject.SetActive(false);
 
@@ -140,10 +131,12 @@ public class ControllerUIManager : MonoBehaviour {
         constructionView = ScriptableObject.CreateInstance<ConstructionView>();
 
         productionTooltip = GetComponentInChildren<ProductionTooltip>();
+        productionProgressCanvas = GetComponentInChildren<ProductionProgressCanvas>();
+        healthBar = GetComponentInChildren<HealthBarUI>();
 
         ChangeView(CONTROLLER_UI_VIEW.NONE, null);
         HideTooltip();
-        HideHitpoints();
+        healthBar.HideHitpoints();
         HideStats();
 
         HideProductionTooltip();
@@ -246,12 +239,12 @@ public class ControllerUIManager : MonoBehaviour {
 
         if(currentViewType == CONTROLLER_UI_VIEW.NONE)
         {
-            controllerInfoBackground.GetComponent<Image>().enabled = true;
+            infoBackground.GetComponent<Image>().enabled = false;
         }
 
         else
         {
-            controllerInfoBackground.GetComponent<Image>().enabled = true;
+            infoBackground.GetComponent<Image>().enabled = true;
         }
     }
 
@@ -273,23 +266,6 @@ public class ControllerUIManager : MonoBehaviour {
     public void UpdateIcon(Sprite newSprite)
     {
         icon.sprite = newSprite;
-    }
-
-    public void ShowHitpoints(int hp, int max)
-    {
-        hitpointsPrefab.gameObject.SetActive(true);
-        UpdateHitpoints(hp, max);
-    }
-
-    public void HideHitpoints()
-    {
-        hitpointsPrefab.gameObject.SetActive(false);
-    }
-
-    public void UpdateHitpoints(int hp, int max)
-    {
-        hitpointsText.text = new StringBuilder(hp.ToString() + "/" + max.ToString()).ToString();
-        _healthBar.UpdateHitpointsAmount(hp, max);
     }
 
     public void ShowStats(Sprite[] icons, int[] stats)
