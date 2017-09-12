@@ -175,8 +175,12 @@ public class Building : BaseController {
         _selectedIndicatorRenderer.enabled = false;
 
         Grid.instance.SetTilesOccupiedByController(this);
-        CheckTileAndSetVisibility();
         PlayerManager.instance.PlacedBuilding(this);
+
+        if (playerID == PlayerManager.myPlayerID)
+        {
+            SetVisibility();
+        }
     }
 
     protected override void Update ()
@@ -349,11 +353,6 @@ public class Building : BaseController {
 
         AddPlayerStats();
 
-        if(playerID == PlayerManager.myPlayerID)
-        {
-            SetVisibility();
-        }
-
         if (selected)
         {
             ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.BUILDING_INFO, this);
@@ -397,6 +396,7 @@ public class Building : BaseController {
     bool HaveRequiredResourcesToPlaceBuilding()
     {
         PlayerData playerData = PlayerDataManager.instance.GetPlayerData(PlayerManager.myPlayerID);
+        Debug.Log(playerData.timber + " "+ _buildingStats.timber);
 
         return playerData.foodStock >= _buildingStats.food
             && playerData.timber >= _buildingStats.timber
@@ -525,10 +525,17 @@ public class Building : BaseController {
 
         for (int i = 0; i < visibleTiles.Count; i++)
         {
-            if (!visibleTiles[i].explored)
-            {
-                visibleTiles[i].SetExplored();
-            }
+            visibleTiles[i].ChangeVisibilityCount(1, true);
+        }
+    }
+
+    public void RemoveVisibility()
+    {
+        List<Tile> visibleTiles = Grid.instance.GetAllTilesBasedOnVisibilityFromNode(visionRange, GetMiddleNode(), size);
+
+        for (int i = 0; i < visibleTiles.Count; i++)
+        {
+            visibleTiles[i].ChangeVisibilityCount(-1, true);
         }
     }
 
@@ -638,6 +645,8 @@ public class Building : BaseController {
 
     public virtual void Destroy()
     {
+        RemoveVisibility();
+
         if (selected)
         {
             ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.NONE, null);

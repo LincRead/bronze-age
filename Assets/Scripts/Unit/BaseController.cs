@@ -128,17 +128,26 @@ public class BaseController : MonoBehaviour {
 
     // If we are not an allied controller and current tile is unexplored,
     // make sure we are not visible
-    protected void CheckTileAndSetVisibility()
+    public virtual void SetVisible(int value)
     {
-        if (playerID != PlayerManager.myPlayerID && !GetPrimaryTile().explored)
+        if (value == 0)
         {
             _spriteRenderer.enabled = false;
         }
 
         else
         {
-            // SetExplored makes sure all tiles occupied by controller gets set to explored
-            GetPrimaryTile().SetExplored();
+            _spriteRenderer.enabled = true;
+
+            if (value == 1)
+            {
+                _spriteRenderer.color = new Color(.5f, .5f, .5f, 1.0f);
+            }
+
+            else
+            {
+                _spriteRenderer.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+            }
         }
     }
 

@@ -628,6 +628,7 @@ public class Grid : MonoBehaviour {
     {
         List<Tile> visibleTiles = new List<Tile>();
         Tile primaryTile = node.parentTile;
+        visibleTiles.Add(primaryTile);
         int visibility = (int)(visibilityValue / 2);
 
         for (int i = -visibility; i < visibility; i++)
@@ -639,6 +640,12 @@ public class Grid : MonoBehaviour {
                     || primaryTile.gridPosX + i > numTilesX - 1
                     || primaryTile.gridPosY + j > numTilesY - 1))
                 {
+                    // Already added primary tile
+                    if(i == 0 && j == 0)
+                    {
+                        continue;
+                    }
+
                     if(size % 2 == 0)
                     {
                         if (GetDistanceBetweenTileAndTileTopPos(tiles[primaryTile.gridPosX + i, primaryTile.gridPosY + j], primaryTile) <= (visibility * 10))

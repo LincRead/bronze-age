@@ -13,6 +13,7 @@ public class VillagerProductionButton : ProductionButton
         PlayerManager.instance.CancelPlaceBuildingState();
 
         GameObject buildingToPlace = GameObject.Instantiate(prefab, PlayerManager.mousePosition, Quaternion.identity) as GameObject;
+        buildingToPlace.GetComponent<Building>().SetRequiredResources(data);
         PlayerManager.instance.SetBuildingPlacementState(buildingToPlace.GetComponent<Building>());
     }
 }

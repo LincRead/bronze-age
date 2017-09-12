@@ -7,6 +7,9 @@ public class Tile : IHeapItem<Tile>
     [HideInInspector]
     public Tile parent;
 
+    [HideInInspector]
+    public SpriteRenderer _tileSpriteRenderer;
+
     // Reference
     Grid grid;
 
@@ -49,7 +52,7 @@ public class Tile : IHeapItem<Tile>
     public bool explored = false;
 
     [HideInInspector]
-    public bool traversed = false;
+    public int visibleForControllerCount = 0;
 
     public Tile(bool _walkable, Vector2 _worldPosition, int _gridPosX, int _gridPosY, Grid grid)
     {
@@ -68,22 +71,27 @@ public class Tile : IHeapItem<Tile>
     public void CreateTile()
     {
         int tileIndex = 0;
+
         if (fertility > 25)
+        {
             tileIndex = 3;
+        }
+            
         else if (fertility > 16)
+        {
             tileIndex = 2;
+        }
+            
         else if (fertility > 0)
+        {
             tileIndex = 1;
+        }
 
         _tile = GameObject.Instantiate(Resources.Load("Tile"), worldPosition, Quaternion.identity) as GameObject;
-
-        if(explored || traversed)
-            _tile.GetComponent<SpriteRenderer>().color = Color.white;
-        else
-            _tile.GetComponent<SpriteRenderer>().color = Color.black;
-
-        _tile.GetComponent<SpriteRenderer>().sprite = Grid.instance.tileSprites[tileIndex];
+        _tileSpriteRenderer = _tile.GetComponent<SpriteRenderer>();
+        _tileSpriteRenderer.sprite = Grid.instance.tileSprites[tileIndex];
         _tile.transform.SetParent(grid.transform);
+        _tileSpriteRenderer.color = Color.black;
 
         // Spawn tree?
         if (walkable)
@@ -126,6 +134,9 @@ public class Tile : IHeapItem<Tile>
                 grid.SpawnFruitBush(this);
             }  
         }
+
+        // Initiate visibility values
+        ChangeVisibilityCount(0, true);
     }
 
     public void SetWalkable()
@@ -179,13 +190,24 @@ public class Tile : IHeapItem<Tile>
         return -compare;
     }
 
-    public void SetUnitsStandingOnTileAsVisible()
+    public void SetVisibilityForUnitsStandingOnTile(int value)
     {
         for (int i = 0; i < nodes.Length; i++)
         {
             if (nodes[i].unitControllerStandingHere != null)
             {
-                nodes[i].unitControllerStandingHere._spriteRenderer.enabled = true;
+                nodes[i].unitControllerStandingHere.SetVisible(value);
+            }
+        }
+    }
+
+    public void SetUnitsStandingOnTileAsInvisible()
+    {
+        for (int i = 0; i < nodes.Length; i++)
+        {
+            if (nodes[i].unitControllerStandingHere != null)
+            {
+                nodes[i].unitControllerStandingHere._spriteRenderer.enabled = false;
             }
         }
     }
@@ -195,31 +217,82 @@ public class Tile : IHeapItem<Tile>
         return unitsStandingHere;
     }
 
-    // Set everything on tile to visible
-    public void SetExplored()
+    // Todo explain recursive!
+    public void ChangeVisibilityCount(int value, bool recursive)
     {
-        if (!explored && _tile)
+        // Check if want to set as explored
+        if (value > 0 && visibleForControllerCount == 0)
         {
-            _tile.GetComponent<SpriteRenderer>().color = Color.white;
-            SetUnitsStandingOnTileAsVisible();
+            if(!explored)
+            {
+                explored = true;
+            }
         }
 
-        explored = true;
+        visibleForControllerCount += value;
 
-        if (controllerOccupying)
+        if (recursive && controllerOccupying != null)
         {
-            List<Tile> tiles = Grid.instance.GetTilesOccupiedByController(controllerOccupying);
+            List<Tile> tilesOccupiedByController = Grid.instance.GetTilesOccupiedByController(controllerOccupying);
 
-            for (int j = 0; j < tiles.Count; j++)
+            for (int i = 0; i < tilesOccupiedByController.Count; i++)
             {
-                if(!tiles[j].explored)
+                if (tilesOccupiedByController[i]._tileSpriteRenderer != null)
                 {
-                    tiles[j].SetExplored();
+                    tilesOccupiedByController[i].ChangeVisibilityCount(value, false);
                 }
-                    
             }
+        }
 
-            controllerOccupying._spriteRenderer.enabled = true;
+        if (!_tileSpriteRenderer)
+        {
+            return;
+        }
+
+        SetVisibilityForControllersStandingHere();
+        ChangeTileVisualsBasedOnVisibility();
+    }
+
+    void SetVisibilityForControllersStandingHere()
+    {
+        // 0 unexplored
+        // 1 explored but not visible
+        // 2 explored and visible
+        int visibilityValue = 0;
+
+        if (explored)
+        {
+            visibilityValue++;
+        }
+
+        if (visibleForControllerCount > 0)
+        {
+            visibilityValue++;
+        }
+
+        if (controllerOccupying != null)
+        {
+            controllerOccupying.SetVisible(visibilityValue);
+        }
+
+        SetVisibilityForUnitsStandingOnTile(visibilityValue);
+    }
+
+    public void ChangeTileVisualsBasedOnVisibility()
+    {
+        if (visibleForControllerCount > 0)
+        {
+            _tileSpriteRenderer.color = Color.white;
+        }
+
+        else if(explored)
+        {
+            _tileSpriteRenderer.color = new Color(0.5f, 0.5f, 0.5f, 1.0f);
+        }
+
+        else
+        {
+            _tileSpriteRenderer.color = Color.black;
         }
     }
 

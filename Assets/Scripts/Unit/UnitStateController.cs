@@ -95,7 +95,6 @@ public class UnitStateController : BaseController
         hitpointsLeft = maxHitpoints;
 
         SetupPathfinding();
-        CheckTileAndSetVisibility();
         UpdateVisibility();
 
         // Init states
@@ -374,6 +373,11 @@ public class UnitStateController : BaseController
 
     public void UpdateVisibility()
     {
+        if (playerID == PlayerManager.myPlayerID)
+        {
+            ResetVisibilityCountForTiles();
+        }
+
         Node currentNode = _pathfinder.currentStandingOnNode;
         visibleTiles = Grid.instance.GetAllTilesBasedOnVisibilityFromNode(_unitStats.visionRange, currentNode, size);
 
@@ -387,10 +391,30 @@ public class UnitStateController : BaseController
     {
         for (int i = 0; i < visibleTiles.Count; i++)
         {
-            if (!visibleTiles[i].explored)
-            {
-                visibleTiles[i].SetExplored();
-            }
+            visibleTiles[i].ChangeVisibilityCount(1, true);
+        }
+    }
+
+    void ResetVisibilityCountForTiles()
+    {
+        for (int i = 0; i < visibleTiles.Count; i++)
+        {
+            visibleTiles[i].ChangeVisibilityCount(-1, true);
+        }
+    }
+
+    // If we are not an allied controller and current tile is unexplored,
+    // make sure we are not visible
+    public override void SetVisible(int value)
+    {
+        if (value == 2)
+        {
+            _spriteRenderer.enabled = true;
+        }
+
+        else
+        {
+            _spriteRenderer.enabled = false;
         }
     }
 
