@@ -33,8 +33,7 @@ public class ControllerSelecting : MonoBehaviour {
     void Update()
     {
         // Don't select anything unless player is in default state
-        if (PlayerManager.instance.currentUserState == PlayerManager.PLAYER_ACTION_STATE.DEFAULT
-            && !CursorHoveringUI.value)
+        if (PlayerManager.instance.currentUserState == PlayerManager.PLAYER_ACTION_STATE.DEFAULT)
         {
             UpdateSelecting();
         }
@@ -45,14 +44,22 @@ public class ControllerSelecting : MonoBehaviour {
         timeSinceLastSingleUnitSelected += Time.deltaTime;
 
         // If we press the left mouse button, save mouse location and begin controller selection
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !CursorHoveringUI.value)
         {
             InitialSelecting();
         }
 
         if (Input.GetMouseButtonUp(0))
         {
-            ExecuteSelecting();
+            if(CursorHoveringUI.value)
+            {
+                showSelectBox = false;
+            }
+
+            else
+            {
+                ExecuteSelecting();
+            }
         }
     }
 
