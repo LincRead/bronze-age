@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Stone : Resource {
+public class Metal : Resource {
 
     protected override void UpdateResourceAmountForPlayer(int playerID)
     {
-        PlayerDataManager.instance.AddStoneToolsForPlayer(1, playerID);
+        PlayerDataManager.instance.AddMetalForPlayer(1, playerID);
     }
 }

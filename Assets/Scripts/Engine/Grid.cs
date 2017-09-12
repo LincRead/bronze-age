@@ -36,7 +36,7 @@ public class Grid : MonoBehaviour {
 
     [Header("Resources")]
     public GameObject treePrefab;
-    public GameObject stonePrefab;
+    public GameObject metalPrefab;
     public GameObject fruitBushPrefab;
 
     public int MaxSize
@@ -213,9 +213,9 @@ public class Grid : MonoBehaviour {
         GameObject.Instantiate(resourcePrefab, tile.worldPosition, Quaternion.identity);
     }
 
-    public void SpawnStone(Tile tile)
+    public void SpawnMetal(Tile tile)
     {
-        SpawnResource(tile, stonePrefab);
+        SpawnResource(tile, metalPrefab);
 
         List<Tile> tiles = GetAllTilesFromBox(tile.worldPosition, 2);
 

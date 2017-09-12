@@ -9,10 +9,10 @@ public class StockDataHUD : MonoBehaviour {
     PlayerData myPlayerData;
 
     public Text housing;
-    public Text foodProduction;
     public Text foodStock;
+    public Text foodIntake;
     public Text timber;
-    public Text stone;
+    public Text metal;
 
     private void Awake()
     {
@@ -23,25 +23,28 @@ public class StockDataHUD : MonoBehaviour {
     {
         UpdateHousing();
         UpdateTimber();
-        UpdateStoneTools();
+        UpdateMetal();
+        UpdateFoodStock();
+        UpdateFoodIntake();
+        UpdateHousing();
     }
 
     private void OnEnable()
     {
         EventManager.StartListening("UpdateHousingStockUI", UpdateHousing);
-        EventManager.StartListening("UpdateFoodProductionUI", UpdateFoodProduction);
         EventManager.StartListening("UpdateFoodStockUI", UpdateFoodStock);
+        EventManager.StartListening("UpdateFoodIntakeUI", UpdateFoodIntake);
         EventManager.StartListening("UpdateTimberStockUI", UpdateTimber);
-        EventManager.StartListening("UpdateStoneStockUI", UpdateStoneTools);
+        EventManager.StartListening("UpdateMetalStockUI", UpdateMetal);
     }
 
     private void OnDisable()
     {
         EventManager.StopListening("UpdateHousingStockUI", UpdateHousing);
-        EventManager.StopListening("UpdateFoodProductionUI", UpdateFoodProduction);
         EventManager.StopListening("UpdateFoodStockUI", UpdateFoodStock);
+        EventManager.StopListening("UpdateFoodIntakeUI", UpdateFoodIntake);
         EventManager.StopListening("UpdateTimberStockUI", UpdateTimber);
-        EventManager.StopListening("UpdateStoneStockUI", UpdateStoneTools);
+        EventManager.StopListening("UpdateMetalStockUI", UpdateMetal);
     }
 
     void UpdateHousing()
@@ -49,14 +52,14 @@ public class StockDataHUD : MonoBehaviour {
         housing.text = new StringBuilder(myPlayerData.housing.ToString() + "/" + myPlayerData.population.ToString()).ToString();
     }
 
-    void UpdateFoodProduction()
+    void UpdateFoodIntake()
     {
-        foodProduction.text = myPlayerData.foodProduction.ToString();
+        foodIntake.text = myPlayerData.foodIntake.ToString();
     }
 
     void UpdateFoodStock()
     {
-        foodStock.text = myPlayerData.food.ToString();
+        foodStock.text = myPlayerData.foodStock.ToString();
     }
 
     void UpdateTimber()
@@ -64,8 +67,8 @@ public class StockDataHUD : MonoBehaviour {
         timber.text = myPlayerData.timber.ToString();
     }
 
-    void UpdateStoneTools()
+    void UpdateMetal()
     {
-        stone.text = myPlayerData.stoneTools.ToString();
+        metal.text = myPlayerData.metal.ToString();
     }
 }

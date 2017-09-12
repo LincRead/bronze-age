@@ -30,7 +30,7 @@ public class ProductionTooltip : MonoBehaviour {
         AddRequired(iconsObject.icons[1], data.population);
         AddRequired(iconsObject.icons[2], data.food);
         AddRequired(iconsObject.icons[3], data.timber);
-        AddRequired(iconsObject.icons[4], data.stoneTools);
+        AddRequired(iconsObject.icons[4], data.metal);
         AddRequired(iconsObject.icons[4], data.copper);
 
         for(int i = numItemsRequired; i < resourceIcons.Length; i++)

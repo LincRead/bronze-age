@@ -44,7 +44,7 @@ public class ProductionButtonData : ScriptableObject {
 
     [Header("Required resources")]
     public int timber = 0;
-    public int stoneTools = 0;
+    public int metal = 0;
     public int food = 0;
     public int copper = 0;
     public int bronze = 0;

@@ -128,7 +128,7 @@ public class Building : BaseController {
     {
         _buildingStats.food = data.food;
         _buildingStats.timber = data.timber;
-        _buildingStats.stoneTools = data.stoneTools;
+        _buildingStats.metal = data.metal;
         _buildingStats.population = data.population;
     }
 
@@ -398,9 +398,9 @@ public class Building : BaseController {
     {
         PlayerData playerData = PlayerDataManager.instance.GetPlayerData(PlayerManager.myPlayerID);
 
-        return playerData.food >= _buildingStats.food
+        return playerData.foodStock >= _buildingStats.food
             && playerData.timber >= _buildingStats.timber
-            && playerData.stoneTools >= _buildingStats.stoneTools
+            && playerData.metal >= _buildingStats.metal
             && playerData.population >= _buildingStats.population;
     }
 
@@ -414,10 +414,9 @@ public class Building : BaseController {
         ProductionButtonData data = productionButtonsData[productionIndex];
         PlayerData playerData = PlayerDataManager.instance.GetPlayerData(PlayerManager.myPlayerID);
 
-        return playerData.food >= data.food
+        return playerData.foodStock >= data.food
             && playerData.timber >= data.timber
-            && playerData.stoneTools >= data.stoneTools
-            && playerData.copper >= data.copper
+            && playerData.metal >= data.metal
             && playerData.population >= data.population;
     }
 
@@ -429,7 +428,7 @@ public class Building : BaseController {
 
         if (data.food > 0) PlayerDataManager.instance.AddFoodProductionForPlayer(data.food * factor, playerID);
         if (data.timber > 0) PlayerDataManager.instance.AddTimberForPlayer(data.timber * factor, playerID);
-        if (data.stoneTools > 0) PlayerDataManager.instance.AddStoneToolsForPlayer(data.stoneTools * factor, playerID);
+        if (data.metal > 0) PlayerDataManager.instance.AddMetalForPlayer(data.metal * factor, playerID);
     }
 
     public void FinishedProduction()

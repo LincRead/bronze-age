@@ -101,7 +101,7 @@ public class Tile : IHeapItem<Tile>
             }
         }
 
-        // Spawn Stone?
+        // Spawn Metal?
         if (walkable)
         {
             float spawnValue = 0.0f;
@@ -111,7 +111,7 @@ public class Tile : IHeapItem<Tile>
             {
                 if (grid.GetAllTilesFromBoxArEmpty(worldPosition, 2))
                 {
-                    grid.SpawnStone(this);
+                    grid.SpawnMetal(this);
                 }
             }
         }

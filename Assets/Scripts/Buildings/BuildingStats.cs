@@ -32,7 +32,7 @@ public class BuildingStats : DefaultStats
     public int timber = 0;
 
     [HideInInspector]
-    public int stoneTools = 0;
+    public int metal = 0;
 
     [HideInInspector]
     public int population = 0;

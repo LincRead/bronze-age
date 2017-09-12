@@ -9,7 +9,7 @@ public class PlayerDataManager : MonoBehaviour
     [HideInInspector]
     public List<PlayerData> playerData;
 
-    public PlayerStartResources playersStartingResources;
+    public PlayerStartResources playerStartingResources;
 
     [HideInInspector]
     public static Color neutralPlayerColor = new Color(0.4f, 0.2f, 0.1f);
@@ -54,13 +54,10 @@ public class PlayerDataManager : MonoBehaviour
             PlayerData newPlayerData = new PlayerData();
             playerData.Add(newPlayerData);
 
-            newPlayerData.food = playersStartingResources.food;
-            newPlayerData.timber = playersStartingResources.timber;
-            newPlayerData.stoneTools = playersStartingResources.stoneTools;
-            newPlayerData.copper = playersStartingResources.copper;
-            newPlayerData.tin = playersStartingResources.tin;
-            newPlayerData.bronze = playersStartingResources.bronze;
-            newPlayerData.population = playersStartingResources.population;
+            newPlayerData.foodStock = playerStartingResources.food;
+            newPlayerData.timber = playerStartingResources.timber;
+            newPlayerData.metal = playerStartingResources.metal;
+            newPlayerData.population = playerStartingResources.population;
         }
     }
 
@@ -92,14 +89,14 @@ public class PlayerDataManager : MonoBehaviour
 
     public void AddFoodStockForPlayer(int value, int player)
     {
-        playerData[player].food += value;
+        playerData[player].foodStock += value;
         EventManager.TriggerEvent("UpdateFoodStockUI");
     }
 
     public void AddFoodProductionForPlayer(int value, int player)
     {
-        playerData[player].foodProduction += value;
-        EventManager.TriggerEvent("UpdateFoodProductionUI");
+        playerData[player].foodIntake += value;
+        EventManager.TriggerEvent("UpdateFoodIntakeUI");
     }
 
     public void AddTimberForPlayer(int value, int player)
@@ -108,10 +105,10 @@ public class PlayerDataManager : MonoBehaviour
         EventManager.TriggerEvent("UpdateTimberStockUI");
     }
 
-    public void AddStoneToolsForPlayer(int value, int player)
+    public void AddMetalForPlayer(int value, int player)
     {
-        playerData[player].stoneTools += value;
-        EventManager.TriggerEvent("UpdateStoneStockUI");
+        playerData[player].metal += value;
+        EventManager.TriggerEvent("UpdateMetalStockUI");
     }
 
     public PlayerData GetPlayerData(int player)
