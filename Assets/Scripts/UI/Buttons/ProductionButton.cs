@@ -80,15 +80,15 @@ public class ProductionButton : UnitUIButton {
             switch(data.type)
             {
                 case PRODUCTION_TYPE.UNIT:
-                    tooltip = new StringBuilder("Advance your civilization to " + WorldManager.civAgeNames[data.age] + " to train " + data.title).ToString();
+                    tooltip = new StringBuilder("Advance your civilization to " + WorldManager.civAgeNames[data.age] + " to train " + data.title + ".").ToString();
                     break;
 
                 case PRODUCTION_TYPE.BUILDING:
-                    tooltip = new StringBuilder("Advance your civilization to " + WorldManager.civAgeNames[data.age] + " to construct " + data.title).ToString();
+                    tooltip = new StringBuilder("Advance your civilization to " + WorldManager.civAgeNames[data.age] + " to construct " + data.title + ".").ToString();
                     break;
 
                 case PRODUCTION_TYPE.TECHNOLOGY:
-                    tooltip = new StringBuilder("Advance your civilization to " + WorldManager.civAgeNames[data.age] + " to research " + data.title).ToString();
+                    tooltip = new StringBuilder("Advance your civilization to " + WorldManager.civAgeNames[data.age] + " to research " + data.title + ".").ToString();
                     break;
             }
 
@@ -106,15 +106,15 @@ public class ProductionButton : UnitUIButton {
             switch (data.type)
             {
                 case PRODUCTION_TYPE.UNIT:
-                    tooltip = new StringBuilder("Research " + data.requiredTechnology + " to to train " + data.title).ToString();
+                    tooltip = new StringBuilder("Research " + data.requiredTechnology + " to to train " + data.title + ".").ToString();
                     break;
 
                 case PRODUCTION_TYPE.BUILDING:
-                    tooltip = new StringBuilder("Research " + data.requiredTechnology + " to construct " + data.title).ToString();
+                    tooltip = new StringBuilder("Research " + data.requiredTechnology + " to construct " + data.title + ".").ToString();
                     break;
 
                 case PRODUCTION_TYPE.TECHNOLOGY:
-                    tooltip = new StringBuilder("Research " + data.requiredTechnology + " to research " + data.title).ToString();
+                    tooltip = new StringBuilder("Research " + data.requiredTechnology + " to research " + data.title + ".").ToString();
                     break;
             }
 

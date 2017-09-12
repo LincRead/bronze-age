@@ -239,7 +239,7 @@ public class Building : BaseController {
         if (!HaveRequiredResourcesToPlaceBuilding())
         {
             _spriteRenderer.color = new Color(1f, 1f, 1f, 0.5f);
-            _selectedIndicatorRenderer.color = new Color(1f, 0.6f, 0.0f, 0.5f);
+            _selectedIndicatorRenderer.color = new Color(1f, 0.5f, 0.0f, 1.0f);
         }
 
         // Adding offset since building pivot point (buttom of sprite) is in the middle of two nodes

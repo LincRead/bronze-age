@@ -333,11 +333,11 @@ public class ControllerUIManager : MonoBehaviour {
         productionTooltip.gameObject.SetActive(false);
     }
 
-    public void ShowTooltip(string tip)
+    public void ShowTooltipDefault(string tip)
     {
-
         tooltip.enabled = true;
         tooltip.text = tip;
+        tooltip.color = Color.white;
     }
 
     public void HideTooltip()

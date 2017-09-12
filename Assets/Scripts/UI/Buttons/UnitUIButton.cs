@@ -43,7 +43,7 @@ public class UnitUIButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
         if (!tooltip.Equals("?"))
         {
-            ControllerUIManager.instance.ShowTooltip(tooltip);
+            ControllerUIManager.instance.ShowTooltipDefault(tooltip);
         }
     }
 
