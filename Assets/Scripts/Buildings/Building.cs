@@ -417,7 +417,7 @@ public class Building : BaseController {
         return playerData.foodStock >= data.food
             && playerData.timber >= data.timber
             && playerData.metal >= data.metal
-            && playerData.population >= data.population;
+            && playerData.newCitizens >= data.population;
     }
 
     void UseResources(int factor)

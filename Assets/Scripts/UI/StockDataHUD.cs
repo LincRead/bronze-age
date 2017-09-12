@@ -8,6 +8,7 @@ public class StockDataHUD : MonoBehaviour {
 
     PlayerData myPlayerData;
 
+    public Text population;
     public Text housing;
     public Text foodStock;
     public Text foodIntake;
@@ -21,7 +22,7 @@ public class StockDataHUD : MonoBehaviour {
 
     private void Start()
     {
-        UpdateHousing();
+        UpdatePopulation();
         UpdateTimber();
         UpdateMetal();
         UpdateFoodStock();
@@ -31,6 +32,7 @@ public class StockDataHUD : MonoBehaviour {
 
     private void OnEnable()
     {
+        EventManager.StartListening("UpdatePopulationStockUI", UpdatePopulation);
         EventManager.StartListening("UpdateHousingStockUI", UpdateHousing);
         EventManager.StartListening("UpdateFoodStockUI", UpdateFoodStock);
         EventManager.StartListening("UpdateFoodIntakeUI", UpdateFoodIntake);
@@ -40,11 +42,17 @@ public class StockDataHUD : MonoBehaviour {
 
     private void OnDisable()
     {
+        EventManager.StopListening("UpdatePopulationStockUI", UpdatePopulation);
         EventManager.StopListening("UpdateHousingStockUI", UpdateHousing);
         EventManager.StopListening("UpdateFoodStockUI", UpdateFoodStock);
         EventManager.StopListening("UpdateFoodIntakeUI", UpdateFoodIntake);
         EventManager.StopListening("UpdateTimberStockUI", UpdateTimber);
         EventManager.StopListening("UpdateMetalStockUI", UpdateMetal);
+    }
+
+    void UpdatePopulation()
+    {
+        population.text = new StringBuilder(myPlayerData.newCitizens.ToString()).ToString();
     }
 
     void UpdateHousing()
