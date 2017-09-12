@@ -10,6 +10,10 @@ public class UnitsView : ControllerUIView
     {
         base.OnEnter(ui, controller);
 
+        // Reset
+        ui.HideSelectedUnitsButtons();
+
+        // Show selected
         ShowSelectedUnits();
     }
 

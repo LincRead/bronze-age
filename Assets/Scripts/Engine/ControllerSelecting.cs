@@ -165,6 +165,8 @@ public class ControllerSelecting : MonoBehaviour {
                 }
 
                 // Other units who can't attack
+
+                // Shaman!
             }
 
             else
