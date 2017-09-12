@@ -17,9 +17,12 @@ public class ProductionButton : UnitUIButton {
         if (data != null)
         {
             SetData(data);
-        }
 
-        EventManager.StartListening("AdvancedCivilizationAge", UpdatedCivAge);
+            if (data.age > 0)
+            {
+                EventManager.StartListening("AdvancedCivilizationAge", UpdatedCivAge);
+            }
+        }
     }
 
     public void SetData(ProductionButtonData newData)
@@ -58,6 +61,7 @@ public class ProductionButton : UnitUIButton {
                 _button.interactable = false;
             }
 
+            data = null;
             _icon.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
             tooltip = new StringBuilder("?").ToString();
         }
@@ -145,6 +149,7 @@ public class ProductionButton : UnitUIButton {
         if (!_button.interactable && data.age == PlayerManager.instance.currentAge)
         {
             EventManager.StopListening("AdvancedCivilizationAge", UpdatedCivAge);
+
             _icon.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
             _button.interactable = true;
 

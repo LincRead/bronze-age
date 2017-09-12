@@ -368,17 +368,29 @@ public class Building : BaseController {
             stepsToProduce = productionButtonsData[buttonIndex].stepsRequired;
             inProductionProcess = true;
 
+            // Change icon to next production item's
+            ControllerUIManager.instance.productionProgressCanvas.icon.sprite = productionButtonsData[buttonIndex].icon;
+
             if (selected)
             {
+                // Update UI
                 ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.BUILDING_INFO, this);
-                ControllerUIManager.instance.productionProgressCanvas.icon.sprite = productionButtonsData[buttonIndex].icon;
             }
         }
 
-        else if(productionList.Count < ProductionQueueCanvas.max)
+        else if (productionList.Count < ProductionQueueCanvas.max)
         {
             productionList.Add(buttonIndex);
             UpdateProducionQueue();
+        }
+
+        // If technology, then remove technology production button and tooltip
+        // Need to store that technology is set in queue, so we can add button again if user cancels production 
+        if (productionButtonsData[buttonIndex].type == PRODUCTION_TYPE.TECHNOLOGY)
+        {
+            ControllerUIManager.instance.DeactivateProductionButton(buttonIndex);
+            ControllerUIManager.instance.productionTooltip.gameObject.SetActive(false);
+            Technologies.instance.SetTechnologyInQueue(productionButtonsData[buttonIndex].title);
         }
     }
 
@@ -467,6 +479,12 @@ public class Building : BaseController {
         if(startedProduction)
         {
             UseResources(1);
+        }
+        
+        // Once off production no longer in queue
+        if (productionButtonsData[productionIndex].type == PRODUCTION_TYPE.TECHNOLOGY)
+        {
+            Technologies.instance.RemoveTechnologyFromQueue(productionButtonsData[productionIndex].title);
         }
 
         if (productionList.Count > 0)

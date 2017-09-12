@@ -366,7 +366,7 @@ public class ControllerUIManager : MonoBehaviour {
             if (data != null
                 && i < data.Length
                 && data[i] != null
-                && (data[i].type != PRODUCTION_TYPE.TECHNOLOGY || !Technologies.instance.GetTechnologyCompleted(data[i].title)))
+                && (data[i].type != PRODUCTION_TYPE.TECHNOLOGY || Technologies.instance.CanProduceTechnology(data[i].title)))
             {
                 // Todo make condition for required technology
                 _productionButtonScripts[data[i].index].SetData(data[i]);
@@ -383,6 +383,11 @@ public class ControllerUIManager : MonoBehaviour {
                 _productionButtonScripts[i].Deactivate();
             }
         }
+    }
+
+    public void DeactivateProductionButton(int index)
+    {
+        _productionButtonScripts[index].Deactivate();
     }
 
     public void UpdateProductionButtons()

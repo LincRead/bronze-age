@@ -34,6 +34,7 @@ public class Technologies : MonoBehaviour
     public class Technology
     {
         public string title;
+        public bool inQueue;
         public bool completed;
     }
 
@@ -53,7 +54,25 @@ public class Technologies : MonoBehaviour
         Technology newTechnology = new Technology();
         newTechnology.title = title;
         newTechnology.completed = false;
+        newTechnology.inQueue = false;
         technologyDictionary.Add(title, newTechnology);
+    }
+
+    public bool CanProduceTechnology(string key)
+    {
+        Technology technology = null;
+
+        if (technologyDictionary.TryGetValue(key, out technology))
+        {
+            return !technology.completed && !technology.inQueue;
+        }
+
+        else
+        {
+            Debug.LogError("Trying to get completed value of technology not added to Dictionary: " + key);
+        }
+
+        return true;
     }
 
     public bool GetTechnologyCompleted(string key)
@@ -71,6 +90,36 @@ public class Technologies : MonoBehaviour
         }
 
         return true;
+    }
+
+    public void SetTechnologyInQueue(string key)
+    {
+        Technology technology = null;
+
+        if (technologyDictionary.TryGetValue(key, out technology))
+        {
+            technology.inQueue = true;
+        }
+
+        else
+        {
+            Debug.LogError("Trying to set inQueue value for technology not added to Dictionary: " + key);
+        }
+    }
+
+    public void RemoveTechnologyFromQueue(string key)
+    {
+        Technology technology = null;
+
+        if (technologyDictionary.TryGetValue(key, out technology))
+        {
+            technology.inQueue = false;
+        }
+
+        else
+        {
+            Debug.LogError("Trying to set inQueue value for technology not added to Dictionary: " + key);
+        }
     }
 
     public void CompleteTechnology(string key)
