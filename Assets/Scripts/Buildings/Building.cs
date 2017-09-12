@@ -55,9 +55,6 @@ public class Building : BaseController {
     [HideInInspector]
     public int hitpointsLeft = 0;
 
-    [HideInInspector]
-    public int visionRange;
-
     // Three stages, 2 is fully constructed
     protected int buildState = 0; 
 
@@ -75,7 +72,6 @@ public class Building : BaseController {
         damagedSprite = _buildingStats.damagedSprite;
         maxHitPoints = _buildingStats.maxHitpoints;
         hitpointsLeft = maxHitPoints;
-        visionRange = _buildingStats.visionRange;
 
         // Only set once
         productionButtonsData = _buildingStats.productionButtons;
@@ -176,14 +172,9 @@ public class Building : BaseController {
 
         Grid.instance.SetTilesOccupiedByController(this);
         PlayerManager.instance.PlacedBuilding(this);
-
-        if (playerID == PlayerManager.myPlayerID)
-        {
-            SetVisibility();
-        }
     }
 
-    protected override void Update ()
+    protected override void Update()
     {
         if(!constructed)
         {
@@ -220,7 +211,13 @@ public class Building : BaseController {
                 }
             }
         }
-	}
+
+        // TEMP! For testing purpose.
+        if (selected && Input.GetKeyUp(KeyCode.Delete))
+        {
+            Kill();
+        }
+    }
 
     void SetupBuildingPlacement()
     {
@@ -356,6 +353,14 @@ public class Building : BaseController {
         if (selected)
         {
             ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.BUILDING_INFO, this);
+        }
+
+        visibleTiles = Grid.instance.GetAllTilesBasedOnVisibilityFromNode(visionRange, GetMiddleNode(), size);
+
+        if (playerID == PlayerManager.myPlayerID)
+        {
+            IncreaseVisibilityOfTiles();
+            UpdateVisibilityOfOccupyingTiles();
         }
     }
 
@@ -519,26 +524,6 @@ public class Building : BaseController {
         }
     }
 
-    public void SetVisibility()
-    {
-        List<Tile> visibleTiles = Grid.instance.GetAllTilesBasedOnVisibilityFromNode(visionRange, GetMiddleNode(), size);
-
-        for (int i = 0; i < visibleTiles.Count; i++)
-        {
-            visibleTiles[i].ChangeVisibilityCount(1, true);
-        }
-    }
-
-    public void RemoveVisibility()
-    {
-        List<Tile> visibleTiles = Grid.instance.GetAllTilesBasedOnVisibilityFromNode(visionRange, GetMiddleNode(), size);
-
-        for (int i = 0; i < visibleTiles.Count; i++)
-        {
-            visibleTiles[i].ChangeVisibilityCount(-1, true);
-        }
-    }
-
     public override void Hit(int damageValue)
     {
         hitpointsLeft -= damageValue;
@@ -594,8 +579,6 @@ public class Building : BaseController {
 
         RemovePlayerStats();
 
-        Grid.instance.RemoveTilesOccupiedByController(this);
-
         // Todo add transition that plays animation before calling Destroy
         Destroy();
     }
@@ -643,15 +626,13 @@ public class Building : BaseController {
         return percent;
     }
 
-    public virtual void Destroy()
+    public override void Destroy()
     {
-        RemoveVisibility();
-
         if (selected)
         {
             ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.NONE, null);
         }
 
-        Destroy(gameObject);
+        base.Destroy();
     }
 }

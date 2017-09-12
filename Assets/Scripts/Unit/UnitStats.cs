@@ -10,7 +10,6 @@ public class UnitStats : DefaultStats
     [Header("Unit stats")]
     public int maxHitpoints = 20;
     public float moveSpeed = 0.5f;
-    public int visionRange = 8;
 
     [Header("Attack stats")]
     public bool canAttack = true;

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Text;
+using System.Collections.Generic;
 
 public enum CONTROLLER_TYPE
 {
@@ -43,6 +44,9 @@ public class BaseController : MonoBehaviour {
     public int size = 1;
 
     [HideInInspector]
+    public int visionRange = 0;
+
+    [HideInInspector]
     public Sprite iconSprite;
 
     [HideInInspector]
@@ -50,6 +54,8 @@ public class BaseController : MonoBehaviour {
 
     protected GameObject _selectionIndicator;
     protected SpriteRenderer _selectedIndicatorRenderer;
+
+    protected List<Tile> visibleTiles = new List<Tile>();
 
     protected virtual void Awake()
     {
@@ -64,8 +70,11 @@ public class BaseController : MonoBehaviour {
         iconSprite = _basicStats.iconSprite;
         statSprites = _basicStats.statSprites;
         controllerType = _basicStats.controllerType;
+        visionRange = _basicStats.visionRange;
 
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        _spriteRenderer.enabled = false;
+
         _collider = GetComponent<Collider2D>();
 
         SetupSelectIndicator();
@@ -126,6 +135,107 @@ public class BaseController : MonoBehaviour {
 
     }
 
+    public void UpdateVisibilityOfOccupyingTiles()
+    {
+        bool visible = false;
+
+        // Small controller
+        if (size == 1)
+        {
+            Tile tile = GetPrimaryTile();
+
+            if (tile.visibleForControllerCount > 0)
+            {
+                visible = true;
+                tile.SetVisible(true);
+            }
+
+            else
+            {
+                tile.SetVisible(false);
+            }
+        }
+
+        // Large controller
+        else
+        {
+            List<Tile> tiles = Grid.instance.GetTilesOccupiedByController(this);
+
+            for (int i = 0; i < tiles.Count; i++)
+            {
+                if (tiles[i].visibleForControllerCount > 0)
+                {
+                    visible = true;
+                }
+            }
+
+            for (int i = 0; i < tiles.Count; i++)
+            {
+                if (visible)
+                {
+                    tiles[i].SetVisible(true);
+                }
+
+                else
+                {
+                    tiles[i].SetVisible(false);
+                }
+            }
+        }
+
+        int visibilityValue = 0;
+
+        if (visible)
+        {
+            // Fully visible
+            visibilityValue = 2;
+        }
+
+        // Explored, but not currently visible
+        else if(GetPrimaryTile().explored)
+        {
+            visibilityValue = 1;
+        }
+
+        SetVisible(visibilityValue);
+    }
+
+    public void IncreaseVisibilityOfTiles()
+    {
+        if (playerID != PlayerManager.myPlayerID)
+        {
+            return;
+        }
+
+        for (int i = 0; i < visibleTiles.Count; i++)
+        {
+            visibleTiles[i].ChangeVisibilityCount(1);
+        }
+
+        for (int i = 0; i < visibleTiles.Count; i++)
+        {
+            visibleTiles[i].ChangeTileVisualsBasedOnVisibility();
+        }
+    }
+
+    public void DecreaseVisibilityOfTiles()
+    {
+        if(playerID != PlayerManager.myPlayerID)
+        {
+            return;
+        }
+
+        for (int i = 0; i < visibleTiles.Count; i++)
+        {
+            visibleTiles[i].ChangeVisibilityCount(-1);
+        }
+
+        for (int i = 0; i < visibleTiles.Count; i++)
+        {
+            visibleTiles[i].ChangeTileVisualsBasedOnVisibility();
+        }
+    }
+
     // If we are not an allied controller and current tile is unexplored,
     // make sure we are not visible
     public virtual void SetVisible(int value)
@@ -133,6 +243,7 @@ public class BaseController : MonoBehaviour {
         if (value == 0)
         {
             _spriteRenderer.enabled = false;
+
         }
 
         else
@@ -148,6 +259,19 @@ public class BaseController : MonoBehaviour {
             {
                 _spriteRenderer.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
             }
+        }
+    }
+
+    public virtual void SetVisible(bool value)
+    {
+        if(value)
+        {
+            _spriteRenderer.enabled = true;
+        }
+
+        else
+        {
+            _spriteRenderer.enabled = false;
         }
     }
 
@@ -218,5 +342,12 @@ public class BaseController : MonoBehaviour {
     public bool IsVisible()
     {
         return _spriteRenderer.enabled;
+    }
+
+    public virtual void Destroy()
+    {
+        DecreaseVisibilityOfTiles();
+        Grid.instance.RemoveTilesOccupiedByController(this);
+        Destroy(gameObject);
     }
 }

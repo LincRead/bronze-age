@@ -96,7 +96,7 @@ public class Grid : MonoBehaviour {
 
         // Create world
         CreateTiles();
-        StartCoroutine(FertilizeTiles(0.1f));
+        FertilizeTiles();
     }
 
     void CreateTiles()
@@ -150,10 +150,8 @@ public class Grid : MonoBehaviour {
         }
     }
 
-    IEnumerator FertilizeTiles(float waitTime)
+    void FertilizeTiles()
     {
-        yield return new WaitForSeconds(waitTime);
-
         for (int x = 0; x < numTilesX; x++)
         {
             for (int y = 0; y < numTilesY; y++)

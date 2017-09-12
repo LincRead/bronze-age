@@ -74,9 +74,6 @@ public class UnitStateController : BaseController
     public int hitpointsLeft = 0;
 
     [HideInInspector]
-    public List<Tile> visibleTiles = new List<Tile>();
-
-    [HideInInspector]
     public List<BaseController> ignoreControllers = new List<BaseController>();
 
     [HideInInspector]
@@ -95,7 +92,6 @@ public class UnitStateController : BaseController
         hitpointsLeft = maxHitpoints;
 
         SetupPathfinding();
-        UpdateVisibility();
 
         // Init states
         idleState = ScriptableObject.CreateInstance<UnitIdle>();
@@ -138,6 +134,9 @@ public class UnitStateController : BaseController
 
         SetupHealthBar();
         SetupTeamColor();
+
+        UpdateVisibility();
+        UpdateVisibilityOfOccupyingTiles();
     }
 
     void SetupHealthBar()
@@ -222,7 +221,7 @@ public class UnitStateController : BaseController
         float closestDistance = 10000;
         BaseController closestResource = null;
 
-        visibleTiles = Grid.instance.GetAllTilesBasedOnVisibilityFromNode(_unitStats.visionRange, _pathfinder.currentStandingOnNode, size);
+        visibleTiles = Grid.instance.GetAllTilesBasedOnVisibilityFromNode(_basicStats.visionRange, _pathfinder.currentStandingOnNode, size);
 
         for (int i = 0; i < visibleTiles.Count; i++)
         {
@@ -375,39 +374,22 @@ public class UnitStateController : BaseController
     {
         if (playerID == PlayerManager.myPlayerID)
         {
-            ResetVisibilityCountForTiles();
+            DecreaseVisibilityOfTiles();
         }
 
         Node currentNode = _pathfinder.currentStandingOnNode;
-        visibleTiles = Grid.instance.GetAllTilesBasedOnVisibilityFromNode(_unitStats.visionRange, currentNode, size);
+
+        visibleTiles = Grid.instance.GetAllTilesBasedOnVisibilityFromNode(_basicStats.visionRange, currentNode, size);
 
         if (playerID == PlayerManager.myPlayerID)
         {
-            ExploreFogOfWar();
+            IncreaseVisibilityOfTiles();
         }
     }
 
-    void ExploreFogOfWar()
+    public override void SetVisible(bool value)
     {
-        for (int i = 0; i < visibleTiles.Count; i++)
-        {
-            visibleTiles[i].ChangeVisibilityCount(1, true);
-        }
-    }
-
-    void ResetVisibilityCountForTiles()
-    {
-        for (int i = 0; i < visibleTiles.Count; i++)
-        {
-            visibleTiles[i].ChangeVisibilityCount(-1, true);
-        }
-    }
-
-    // If we are not an allied controller and current tile is unexplored,
-    // make sure we are not visible
-    public override void SetVisible(int value)
-    {
-        if (value == 2)
+        if (value)
         {
             _spriteRenderer.enabled = true;
         }

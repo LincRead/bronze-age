@@ -52,6 +52,9 @@ public class Resource : BaseController {
         _spriteRenderer.enabled = false;
 
         amountLeft = amount;
+
+        visibleTiles = Grid.instance.GetAllTilesBasedOnVisibilityFromNode(visionRange, GetMiddleNode(), size);
+        UpdateVisibilityOfOccupyingTiles();
     }
 
     protected override void Update()
@@ -148,15 +151,13 @@ public class Resource : BaseController {
         return stats;
     }
 
-    public virtual void Destroy()
+    public override void Destroy()
     {
-        Grid.instance.RemoveTilesOccupiedByController(this);
-
         if(selected)
         {
             ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.NONE, null);
         }
 
-        Destroy(gameObject);
+        base.Destroy();
     }
 }

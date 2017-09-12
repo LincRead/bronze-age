@@ -18,6 +18,7 @@ public class UnitDie : UnitState
         // Let die animation finish
         if (timeSinceStateChange > _controller._animator.GetCurrentAnimatorStateInfo(0).length)
         {
+            _controller.DecreaseVisibilityOfTiles();
             Destroy(_controller.gameObject);
         }
     }
