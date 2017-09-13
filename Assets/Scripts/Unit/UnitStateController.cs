@@ -79,6 +79,8 @@ public class UnitStateController : BaseController
     [HideInInspector]
     public float distanceToTarget = 10000;
 
+    public GameObject shadow;
+
     protected override void Start()
     {
         _basicStats = _unitStats;
@@ -391,12 +393,22 @@ public class UnitStateController : BaseController
     {
         if (value)
         {
-            _spriteRenderer.enabled = true;
+            if(!_spriteRenderer.enabled)
+            {
+                _spriteRenderer.enabled = true;
+
+                shadow.GetComponent<SpriteRenderer>().enabled = true;
+            }
         }
 
         else
         {
-            _spriteRenderer.enabled = false;
+            if (_spriteRenderer.enabled)
+            {
+                _spriteRenderer.enabled = false;
+
+                shadow.GetComponent<SpriteRenderer>().enabled = false;
+            }
         }
     }
 
