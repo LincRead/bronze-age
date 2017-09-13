@@ -208,7 +208,7 @@ public class Grid : MonoBehaviour {
 
     void SpawnResource(Tile tile, GameObject resourcePrefab)
     {
-        GameObject.Instantiate(resourcePrefab, tile.worldPosition, Quaternion.identity);
+        GameObject newResource = GameObject.Instantiate(resourcePrefab, tile.worldPosition, Quaternion.identity) as GameObject;
     }
 
     public void SpawnMetal(Tile tile)
@@ -502,6 +502,26 @@ public class Grid : MonoBehaviour {
         }
     }
 
+    public void SetTilesOccupied(Tile tile, int size)
+    {
+        if (tile == null)
+        {
+            return;
+        }
+
+        for (int i = 0; i < size; i++)
+        {
+            for (int j = 0; j < size; j++)
+            {
+                if (i > -1 && j > -1 && i < numTilesX + 1 && j < numTilesY + 1)
+                {
+                    Tile tileToOccupy = GetTileFromGridPos(tile.gridPosX + i, tile.gridPosY + j);
+                    tileToOccupy.SetUnwalkable();
+                }
+            }
+        }
+    }
+
     public void RemoveControllersFrom(List<Tile> tiles, BaseController ignore)
     {
         for(int i = 0; i < tiles.Count; i++)
@@ -578,6 +598,32 @@ public class Grid : MonoBehaviour {
 
         return true;
     }
+
+    public bool GetAllTilesFromBoxArEmpty(Tile tile, int size)
+    {
+        if (tile == null)
+        {
+            return false;
+        }
+
+        for (int i = 0; i < size; i++)
+        {
+            for (int j = 0; j < size; j++)
+            {
+                if (i > -1 && j > -1 && tile.gridPosX + i < numTilesX && tile.gridPosY + j < numTilesY)
+                {
+                    if (!GetTileFromGridPos(tile.gridPosX + i, tile.gridPosY + j).IsEmpty())
+                        return false;
+                }
+
+                else
+                    return false;
+            }
+        }
+
+        return true;
+    }
+
 
     public List<Tile> GetAllTilesFromBox(Vector2 pos, int size)
     {

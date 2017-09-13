@@ -93,6 +93,19 @@ public class Tile : IHeapItem<Tile>
         _tile.transform.SetParent(grid.transform);
         _tileSpriteRenderer.color = Color.black;
 
+        // Spawn Metal?
+        if (Grid.instance.GetAllTilesFromBoxArEmpty(this, 2))
+        {
+            float spawnValue = 0.0f;
+            if (tileIndex == 0) spawnValue = 0.05f;
+            if (tileIndex == 1) spawnValue = 0.01f;
+            if (Random.value < spawnValue)
+            {
+                grid.SpawnMetal(this);
+                Grid.instance.SetTilesOccupied(this, 2);
+            }
+        }
+
         // Spawn tree?
         if (walkable)
         {
@@ -106,21 +119,7 @@ public class Tile : IHeapItem<Tile>
             if (Random.value < spawnValue)
             {
                 grid.SpawnTree(this);
-            }
-        }
-
-        // Spawn Metal?
-        if (walkable)
-        {
-            float spawnValue = 0.0f;
-            if (tileIndex == 0) spawnValue = 0.05f;
-            if (tileIndex == 1) spawnValue = 0.01f;
-            if (Random.value < spawnValue)
-            {
-                if (grid.GetAllTilesFromBoxArEmpty(worldPosition, 2))
-                {
-                    grid.SpawnMetal(this);
-                }
+                Grid.instance.SetTilesOccupied(this, 1);
             }
         }
 
@@ -132,6 +131,7 @@ public class Tile : IHeapItem<Tile>
             if (Random.value < spawnValue)
             {
                 grid.SpawnFruitBush(this);
+                Grid.instance.SetTilesOccupied(this, 1);
             }  
         }
     }
