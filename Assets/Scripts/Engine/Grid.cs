@@ -495,6 +495,14 @@ public class Grid : MonoBehaviour {
                 if (i > -1 && j > -1 && i < numTilesX + 1 && j < numTilesY + 1)
                 {
                     Tile tileToOccupy = GetTileFromGridPos(tile.gridPosX + i, tile.gridPosY + j);
+
+                    // If a controller already stands here, remove me
+                    if(tileToOccupy.controllerOccupying != null && controller != tileToOccupy.controllerOccupying)
+                    {
+                        controller.Destroy();
+                        return;
+                    }
+
                     tileToOccupy.SetUnwalkable();
                     tileToOccupy.controllerOccupying = controller;
                 }
