@@ -54,7 +54,7 @@ public class Resource : BaseController {
         amountLeft = amount;
 
         visibleTiles = Grid.instance.GetAllTilesBasedOnVisibilityFromNode(visionRange, GetMiddleNode(), size);
-        UpdateVisibilityOfOccupyingTiles();
+        UpdateVisibilityOfAllControllerOccupiedTiles();
     }
 
     protected override void Update()

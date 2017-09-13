@@ -135,7 +135,8 @@ public class BaseController : MonoBehaviour {
 
     }
 
-    public void UpdateVisibilityOfOccupyingTiles()
+    // Make sure all tiles occupied gets the same visibility value
+    public void UpdateVisibilityOfAllControllerOccupiedTiles()
     {
         bool visible = false;
 
@@ -214,7 +215,7 @@ public class BaseController : MonoBehaviour {
 
         for (int i = 0; i < visibleTiles.Count; i++)
         {
-            visibleTiles[i].ChangeTileVisualsBasedOnVisibility();
+            visibleTiles[i].UpdateVisibilityOfTileAndControllers();
         }
     }
 
@@ -232,7 +233,7 @@ public class BaseController : MonoBehaviour {
 
         for (int i = 0; i < visibleTiles.Count; i++)
         {
-            visibleTiles[i].ChangeTileVisualsBasedOnVisibility();
+            visibleTiles[i].UpdateVisibilityOfTileAndControllers();
         }
     }
 

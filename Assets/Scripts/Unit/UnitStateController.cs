@@ -136,7 +136,7 @@ public class UnitStateController : BaseController
         SetupTeamColor();
 
         UpdateVisibility();
-        UpdateVisibilityOfOccupyingTiles();
+        UpdateVisibilityOfAllControllerOccupiedTiles();
     }
 
     void SetupHealthBar()

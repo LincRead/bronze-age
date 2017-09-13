@@ -502,6 +502,17 @@ public class Grid : MonoBehaviour {
         }
     }
 
+    public void RemoveControllersFrom(List<Tile> tiles, BaseController ignore)
+    {
+        for(int i = 0; i < tiles.Count; i++)
+        {
+            if(tiles[i].controllerOccupying != null && tiles[i].controllerOccupying != ignore)
+            {
+                tiles[i].controllerOccupying.Destroy();
+            }
+        }
+    }
+
     public List<Tile> GetTilesOccupiedByController(BaseController controller)
     {
         // Adding offset since building pivot point (buttom of sprite) is in the middle of two tiles.

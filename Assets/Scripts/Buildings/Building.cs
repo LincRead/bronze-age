@@ -360,7 +360,7 @@ public class Building : BaseController {
         if (playerID == PlayerManager.myPlayerID)
         {
             IncreaseVisibilityOfTiles();
-            UpdateVisibilityOfOccupyingTiles();
+            UpdateVisibilityOfAllControllerOccupiedTiles();
         }
     }
 

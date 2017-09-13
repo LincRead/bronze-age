@@ -202,29 +202,21 @@ public class Tile : IHeapItem<Tile>
         }
     }
 
-    public void ChangeTileVisualsBasedOnVisibility()
+    public void UpdateVisibilityOfTileAndControllers()
     {
-        if (visibleForControllerCount > 0)
-        {
-            _tileSpriteRenderer.color = Color.white;
-        }
-
-        else if (explored)
-        {
-            _tileSpriteRenderer.color = new Color(0.5f, 0.5f, 0.5f, 1.0f);
-        }
-
-        else
-        {
-            _tileSpriteRenderer.color = Color.black;
-        }
-
-        // Tell controller standing here to update visibility
+        // Tell controller standing here to update visibility of all tiles it occupies
         if (controllerOccupying != null)
         {
-            controllerOccupying.UpdateVisibilityOfOccupyingTiles();
+            controllerOccupying.UpdateVisibilityOfAllControllerOccupiedTiles();
         }
 
+        // Just update thus tile based on visibility count
+        else
+        {
+            SetVisible(visibleForControllerCount > 0);
+        }
+
+        // Update visibility of units standing on this tile based on tile's visibility
         for(int i = 0; i < unitsStandingHere.Count; i++)
         {
             unitsStandingHere[i].SetVisible(visibleForControllerCount > 0);
