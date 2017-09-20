@@ -32,4 +32,10 @@ public class PlayerData {
     public int age = 0;
 
     public bool placedCamp = false;
+
+    [HideInInspector]
+    public float progressTowardsNewCitizen = 0.0f;
+
+    [HideInInspector]
+    public int realProsperity = 0;
 }

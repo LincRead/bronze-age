@@ -34,7 +34,7 @@ public class StockDataHUD : MonoBehaviour {
 
     private void OnEnable()
     {
-        EventManager.StartListening("UpdatePopulationStockUI", UpdatePopulation);
+        EventManager.StartListening("UpdateNewCitizensStockUI", UpdatePopulation);
         EventManager.StartListening("UpdateHousingStockUI", UpdateHousing);
         EventManager.StartListening("UpdateFoodStockUI", UpdateFoodStock);
         EventManager.StartListening("UpdateFoodIntakeUI", UpdateFoodIntake);
@@ -45,7 +45,7 @@ public class StockDataHUD : MonoBehaviour {
 
     private void OnDisable()
     {
-        EventManager.StopListening("UpdatePopulationStockUI", UpdatePopulation);
+        EventManager.StopListening("UpdateNewCitizensStockUI", UpdatePopulation);
         EventManager.StopListening("UpdateHousingStockUI", UpdateHousing);
         EventManager.StopListening("UpdateFoodStockUI", UpdateFoodStock);
         EventManager.StopListening("UpdateFoodIntakeUI", UpdateFoodIntake);
@@ -134,5 +134,7 @@ public class StockDataHUD : MonoBehaviour {
         {
             prosperity.text = prosperityNumber.ToString();
         }
+
+        myPlayerData.realProsperity = prosperityNumber;
     }
 }
