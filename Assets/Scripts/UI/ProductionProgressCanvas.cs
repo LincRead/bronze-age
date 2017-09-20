@@ -25,7 +25,7 @@ public class ProductionProgressCanvas : MonoBehaviour {
         else
         {
             productionProgressText.text = new StringBuilder("Not enought resources").ToString();
-            productionProgressText.color = Color.red;
+            productionProgressText.color = new Color32(0xE5, 0x48, 0x48, 0xFF);
             productionProgressText.fontSize = 10;
 
             productionProgressBarImage.fillAmount = 0;
