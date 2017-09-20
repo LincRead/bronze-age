@@ -4,6 +4,9 @@ using System.Collections;
 [CreateAssetMenu(menuName = "Stats/Unit")]
 public class UnitStats : DefaultStats
 {
+    [Header("Food consumption")]
+    public int foodConsuming = 1;
+
     [Header("Health bar")]
     public GameObject healthBar;
 

@@ -132,6 +132,7 @@ public class UnitStateController : BaseController
         if(playerID > -1)
         {
             PlayerDataManager.instance.AddPopulationForPlayer(1, playerID);
+            PlayerDataManager.instance.AddFoodIntakeForPlayer(-_unitStats.foodConsuming, playerID);
         }
 
         SetupHealthBar();
@@ -352,9 +353,10 @@ public class UnitStateController : BaseController
             PlayerManager.instance.RemoveFriendlyUnitReference(this, playerID);
         }
 
-        if(playerID > 0)
+        if(playerID > -1)
         {
             PlayerDataManager.instance.AddPopulationForPlayer(-1, playerID);
+            PlayerDataManager.instance.AddFoodIntakeForPlayer(_unitStats.foodConsuming, playerID);
         }
             
         if (selected)

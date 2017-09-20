@@ -57,7 +57,7 @@ public class PlayerDataManager : MonoBehaviour
             newPlayerData.foodStock = playerStartingResources.food;
             newPlayerData.timber = playerStartingResources.timber;
             newPlayerData.metal = playerStartingResources.metal;
-            newPlayerData.population = playerStartingResources.population;
+            newPlayerData.population = playerStartingResources.newCitizens;
         }
     }
 
@@ -93,7 +93,7 @@ public class PlayerDataManager : MonoBehaviour
         EventManager.TriggerEvent("UpdateFoodStockUI");
     }
 
-    public void AddFoodProductionForPlayer(int value, int player)
+    public void AddFoodIntakeForPlayer(int value, int player)
     {
         playerData[player].foodIntake += value;
         EventManager.TriggerEvent("UpdateFoodIntakeUI");

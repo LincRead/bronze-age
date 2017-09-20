@@ -14,6 +14,7 @@ public class StockDataHUD : MonoBehaviour {
     public Text foodIntake;
     public Text timber;
     public Text metal;
+    public Text prosperity;
 
     private void Awake()
     {
@@ -28,6 +29,7 @@ public class StockDataHUD : MonoBehaviour {
         UpdateFoodStock();
         UpdateFoodIntake();
         UpdateHousing();
+        UpdateProsperity();
     }
 
     private void OnEnable()
@@ -38,6 +40,7 @@ public class StockDataHUD : MonoBehaviour {
         EventManager.StartListening("UpdateFoodIntakeUI", UpdateFoodIntake);
         EventManager.StartListening("UpdateTimberStockUI", UpdateTimber);
         EventManager.StartListening("UpdateMetalStockUI", UpdateMetal);
+        EventManager.StartListening("UpdateProsperityStockUI", UpdateProsperity);
     }
 
     private void OnDisable()
@@ -48,6 +51,7 @@ public class StockDataHUD : MonoBehaviour {
         EventManager.StopListening("UpdateFoodIntakeUI", UpdateFoodIntake);
         EventManager.StopListening("UpdateTimberStockUI", UpdateTimber);
         EventManager.StopListening("UpdateMetalStockUI", UpdateMetal);
+        EventManager.StopListening("UpdateProsperityStockUI", UpdateProsperity);
     }
 
     void UpdatePopulation()
@@ -57,17 +61,25 @@ public class StockDataHUD : MonoBehaviour {
 
     void UpdateHousing()
     {
-        housing.text = new StringBuilder(myPlayerData.housing.ToString() + "/" + myPlayerData.population.ToString()).ToString();
+        housing.text = new StringBuilder(myPlayerData.population.ToString() + "/" + myPlayerData.housing.ToString()).ToString();
     }
 
     void UpdateFoodIntake()
     {
-        foodIntake.text = myPlayerData.foodIntake.ToString();
+        if (myPlayerData.foodIntake > -1)
+        {
+            foodIntake.text = new StringBuilder("+" + myPlayerData.foodIntake.ToString()).ToString();
+        }
+
+        else
+        {
+            foodIntake.text = new StringBuilder(myPlayerData.foodIntake.ToString()).ToString();
+        }
     }
 
     void UpdateFoodStock()
     {
-        foodStock.text = myPlayerData.foodStock.ToString();
+        foodStock.text = ((int)myPlayerData.foodStock).ToString();
     }
 
     void UpdateTimber()
@@ -78,5 +90,46 @@ public class StockDataHUD : MonoBehaviour {
     void UpdateMetal()
     {
         metal.text = myPlayerData.metal.ToString();
+    }
+
+    void UpdateProsperity()
+    {
+        int prosperityNumber = myPlayerData.staticProsperity;
+
+        if (myPlayerData.foodStock < 0)
+        {
+            prosperityNumber += (int)(myPlayerData.foodStock / 20);
+        }
+
+        else
+        {
+            prosperityNumber++;
+            prosperityNumber += (int)(myPlayerData.foodStock / 50);
+        }
+
+        if(myPlayerData.housing >= myPlayerData.population)
+        {
+            prosperityNumber++;
+        }
+
+        else
+        {
+            prosperityNumber -= 3;
+        }
+
+        if(myPlayerData.age >= 2)
+        {
+            prosperityNumber -= (int)(myPlayerData.population / 10);
+        }
+
+        if(prosperityNumber > -1)
+        {
+            prosperity.text = new StringBuilder("+" + prosperityNumber.ToString()).ToString();
+        }
+
+        else
+        {
+            prosperity.text = prosperityNumber.ToString();
+        }
     }
 }

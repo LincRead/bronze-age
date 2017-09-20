@@ -431,7 +431,7 @@ public class Building : BaseController {
 
         ProductionButtonData data = productionButtonsData[productionIndex];
 
-        if (data.food > 0) PlayerDataManager.instance.AddFoodProductionForPlayer(data.food * factor, playerID);
+        if (data.food > 0) PlayerDataManager.instance.AddFoodStockForPlayer(data.food * factor, playerID);
         if (data.timber > 0) PlayerDataManager.instance.AddTimberForPlayer(data.timber * factor, playerID);
         if (data.metal > 0) PlayerDataManager.instance.AddMetalForPlayer(data.metal * factor, playerID);
     }

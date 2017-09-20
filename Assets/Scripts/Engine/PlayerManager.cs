@@ -50,6 +50,11 @@ public class PlayerManager : MonoBehaviour {
 
     private static PlayerManager playerManager;
 
+    // Food intake ui update
+    float timeSinceLastFoodUIUpdate = 0.0f;
+    float timeBetweenFoodUIUpdates = 1.0f;
+    float timePerFoodIntakePoint = 30f;
+
     public static PlayerManager instance
     {
         get
@@ -127,6 +132,8 @@ public class PlayerManager : MonoBehaviour {
 
     void Update ()
     {
+        UpdateFoodIntake();
+
         mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         switch (currentUserState)
@@ -411,5 +418,20 @@ public class PlayerManager : MonoBehaviour {
     public List<UnitStateController> GetAllFriendlyUnits()
     {
         return friendlyUnits;
+    }
+
+    void UpdateFoodIntake()
+    {
+        for(int i = 0; i < WorldManager.instance.numPlayers; i++)
+        {
+            PlayerDataManager.instance.playerData[i].foodStock += (Time.deltaTime * PlayerDataManager.instance.playerData[i].foodIntake) / timePerFoodIntakePoint;
+        }
+
+        timeSinceLastFoodUIUpdate += Time.deltaTime;
+        if(timeSinceLastFoodUIUpdate >= timeBetweenFoodUIUpdates)
+        {
+            EventManager.TriggerEvent("UpdateFoodStockUI");
+            EventManager.TriggerEvent("UpdateProsperityStockUI");
+        }
     }
 }
