@@ -21,7 +21,9 @@ public class Building : BaseController {
 
     [HideInInspector]
     public bool inProductionProcess = false;
-    private bool startedProduction = false;
+
+    [HideInInspector]
+    public bool startedProduction = false;
 
     protected FinishedProductionAction _finishedProductionAction;
 
@@ -478,9 +480,10 @@ public class Building : BaseController {
         stepsProduced = 0.0f;
         stepsToProduce = 0.1f;
         inProductionProcess = false;
+        startedProduction = false;
 
         // Give back resources
-        if(startedProduction)
+        if (startedProduction)
         {
             UseResources(1);
         }
@@ -493,7 +496,6 @@ public class Building : BaseController {
 
         if (productionList.Count > 0)
         {
-            startedProduction = false;
             Produce(productionList[0]);
             productionList.RemoveAt(0);
             UpdateProducionQueue();

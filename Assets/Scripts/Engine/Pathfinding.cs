@@ -35,6 +35,15 @@ public class Pathfinding : MonoBehaviour {
         SetGridReference();
         _parentController = unit;
         DetectCurrentPathfindingNode(unit._transform.position);
+
+        // Make sure we never spawn a Controller on the same Tile
+        // This can happen if Unit is placed in Editor, but doesn't get initialised
+        // until Grid has already spawned resources etc.
+        // This is a quick fix: in the future units should always spawn after Grid has been set up!
+        if (currentStandingOnNode.parentTile.controllerOccupying)
+        {
+            currentStandingOnNode.parentTile.controllerOccupying.Destroy();
+        }
     }
 
     public void SetGridReference()

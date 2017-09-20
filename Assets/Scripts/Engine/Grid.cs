@@ -499,8 +499,15 @@ public class Grid : MonoBehaviour {
                     // If a controller already stands here, remove me
                     if(tileToOccupy.controllerOccupying != null && controller != tileToOccupy.controllerOccupying)
                     {
-                        controller.Destroy();
-                        return;
+                        if(controller.controllerType == CONTROLLER_TYPE.BUILDING)
+                        {
+                            tileToOccupy.controllerOccupying.Destroy();
+                        }
+
+                        else
+                        {
+                            controller.Destroy();
+                        }
                     }
 
                     tileToOccupy.SetUnwalkable();

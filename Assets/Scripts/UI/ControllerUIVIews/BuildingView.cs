@@ -25,6 +25,7 @@ public class BuildingView : ControllerUIView
         if (_buildingController.inProductionProcess)
         {
             ShowProduction();
+            UpdatePercentProductionVisuals();
         }
 
         else
@@ -66,13 +67,28 @@ public class BuildingView : ControllerUIView
             UpdatePercentProductionVisuals();
         }
 
-         ui.healthBar.UpdateHitpoints(_buildingController.hitpointsLeft, _buildingController.maxHitPoints);
+        ui.healthBar.UpdateHitpoints(_buildingController.hitpointsLeft, _buildingController.maxHitPoints);
     }
 
     void UpdatePercentProductionVisuals()
     {
-        float percent = _buildingController.GetPercentageProduced();
-        ui.productionProgressCanvas.UpdateProgress(percent);
+        if (_buildingController.startedProduction)
+        {
+            float percent = _buildingController.GetPercentageProduced();
+            ui.productionProgressCanvas.UpdateProgress(percent);
+        }
+
+        else if (!_buildingController.HaveRequiredResourcesToProduce())
+        {
+            // Not enought resources == -1
+            ui.productionProgressCanvas.UpdateProgress(-1);
+        }
+
+        else
+        {
+            float percent = _buildingController.GetPercentageProduced();
+            ui.productionProgressCanvas.UpdateProgress(0);
+        }
     }
 
     public override void OnExit()
