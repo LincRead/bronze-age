@@ -62,6 +62,9 @@ public class ControllerUIManager : MonoBehaviour {
     [HideInInspector]
     public ProductionTooltip productionTooltip;
 
+    [HideInInspector]
+    public ResourceTooltip resourceTooltip;
+
     CONTROLLER_UI_VIEW currentViewType = CONTROLLER_UI_VIEW.NONE;
     CONTROLLER_UI_VIEW lastViewType = CONTROLLER_UI_VIEW.NONE;
 
@@ -133,7 +136,13 @@ public class ControllerUIManager : MonoBehaviour {
         resourceView = ScriptableObject.CreateInstance<ResourceView>();
         constructionView = ScriptableObject.CreateInstance<ConstructionView>();
 
+        // Init production tooltip
         productionTooltip = GetComponentInChildren<ProductionTooltip>();
+        HideProductionTooltip();
+
+        // Init resource tooltip
+        resourceTooltip = GetComponentInChildren<ResourceTooltip>();
+        HideResourceTooltip();
 
         productionProgressCanvas = GetComponentInChildren<ProductionProgressCanvas>();
         productionProgressCanvas.gameObject.SetActive(false);
@@ -147,8 +156,6 @@ public class ControllerUIManager : MonoBehaviour {
         HideTooltip();
         healthBar.HideHitpoints();
         HideStats();
-
-        HideProductionTooltip();
     }
 
     void SetupSelectedUnitsView()
@@ -331,6 +338,17 @@ public class ControllerUIManager : MonoBehaviour {
     public void HideProductionTooltip()
     {
         productionTooltip.gameObject.SetActive(false);
+    }
+
+    public void ShowResourceTooltip(string tip)
+    {
+        resourceTooltip.gameObject.SetActive(true);
+        resourceTooltip.UpdateData(tip);
+    }
+
+    public void HideResourceTooltip()
+    {
+        resourceTooltip.gameObject.SetActive(false);
     }
 
     public void ShowTooltipDefault(string tip)

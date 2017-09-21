@@ -451,7 +451,5 @@ public class PlayerManager : MonoBehaviour {
                 EventManager.TriggerEvent("UpdateNewCitizensStockUI");
             }
         }
-
-        Debug.Log(PlayerDataManager.instance.playerData[0].progressTowardsNewCitizen);
     }
 }

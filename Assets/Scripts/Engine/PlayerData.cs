@@ -17,7 +17,7 @@ public class PlayerData {
     public int newCitizens = 0;
     public int population = 0;
     public int housing = 0;
-    public int staticProsperity = 0;
+    public int staticProsperity = 1;
     public float foodStock;
     public int foodIntake = 0;
     public int timber = 0;
