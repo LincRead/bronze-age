@@ -68,17 +68,6 @@ public class UnitGather : UnitState {
         }
     }
 
-    void UpdateGatherResourceStatIcon()
-    {
-        switch (_resource.resourceType)
-        {
-            case RESOURCE_TYPE.FOOD: _controller.statSprites[2] = ControllerUIManager.instance.foodIcon; break;
-            case RESOURCE_TYPE.WOOD: _controller.statSprites[2] = ControllerUIManager.instance.woodIcon; break;
-            case RESOURCE_TYPE.WEALTH: _controller.statSprites[2] = ControllerUIManager.instance.wealthIcon; break;
-            case RESOURCE_TYPE.METAL: _controller.statSprites[2] = ControllerUIManager.instance.metalIcon; break;
-        }
-    }
-
     void CarryNewResource()
     {
         _controller.resoureAmountCarrying = 0;

@@ -402,6 +402,19 @@ public class ControllerSelecting : MonoBehaviour {
         return selectedGatherers;
     }
 
+    public bool IsAnySelectedGatherersCarryingResources()
+    {
+        for(int i = 0; i < selectedGatherers.Count; i++)
+        {
+            if(selectedGatherers[i].resoureAmountCarrying > 0)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public List<UnitStateController> GetSelectedUnits()
     {
         return selectedUnits;

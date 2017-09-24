@@ -209,9 +209,9 @@ public class PlayerManager : MonoBehaviour {
             {
                 selectableController = null;
             }
-
-            UpdateMouseCursor();
         }
+
+        UpdateMouseCursor();
     }
 
     void UpdateMouseCursor()
@@ -290,6 +290,16 @@ public class PlayerManager : MonoBehaviour {
                 else if (building.hitpointsLeft < building.maxHitPoints && _controllerSelecting.GetSelectedGatherers().Count > 0)
                 {
                     EventManager.TriggerEvent("SetBuildCursor");
+                }
+
+                else if (building._buildingStats.resourceDeliveryPoint && _controllerSelecting.IsAnySelectedGatherersCarryingResources())
+                {
+                    EventManager.TriggerEvent("SetGatherCursor");
+                }
+
+                else
+                {
+                    EventManager.TriggerEvent("SetDefaultCursor");
                 }
             }
 
