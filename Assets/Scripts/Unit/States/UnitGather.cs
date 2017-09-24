@@ -5,6 +5,7 @@ using System.Collections;
 public class UnitGather : UnitState {
 
     Resource _resource;
+    PlayerData data;
 
     float harvestProgress = 0.0f;
 
@@ -15,6 +16,7 @@ public class UnitGather : UnitState {
         harvestProgress = 0.0f;
 
         _resource = _controller.targetController.GetComponent<Resource>();
+        data = PlayerDataManager.instance.GetPlayerData(_controller.playerID);
 
         PlayGatherAnimation();
     }
@@ -83,13 +85,27 @@ public class UnitGather : UnitState {
 
     public override void CheckTransitions()
     {
-        // Todo define value for max carry amount
-        if(_controller.resoureAmountCarrying >= 2)
+        // Halved carry limit for metal
+        if(_resource.resourceType == RESOURCE_TYPE.METAL)
         {
-            _controller.seekClosestResourceDeliveryPoint();
+            if (_controller.resoureAmountCarrying >= (data.villagerCarryLimit / 2))
+            {
+                _controller.seekClosestResourceDeliveryPoint();
+                return;
+            }
         }
 
-        else if(_resource.depleted)
+        else
+        {
+            if (_controller.resoureAmountCarrying >= data.villagerCarryLimit)
+            {
+                _controller.seekClosestResourceDeliveryPoint();
+                return;
+            }
+        }
+
+
+        if(_resource.depleted)
         {
             _controller.SeekClosestResource(_resource.title);
         }
