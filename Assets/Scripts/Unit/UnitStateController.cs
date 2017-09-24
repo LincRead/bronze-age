@@ -649,6 +649,14 @@ public class UnitStateController : BaseController
         if(resoureAmountCarrying > 0)
         {
             stats[2] = resoureAmountCarrying;
+
+            switch (resourceTypeCarrying)
+            {
+                case RESOURCE_TYPE.FOOD: statSprites[2] = ControllerUIManager.instance.foodIcon; break;
+                case RESOURCE_TYPE.WOOD: statSprites[2] = ControllerUIManager.instance.woodIcon; break;
+                case RESOURCE_TYPE.WEALTH: statSprites[2] = ControllerUIManager.instance.wealthIcon; break;
+                case RESOURCE_TYPE.METAL: statSprites[2] = ControllerUIManager.instance.metalIcon; break;
+            }
         }
 
         else

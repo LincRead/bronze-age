@@ -68,19 +68,22 @@ public class UnitGather : UnitState {
         }
     }
 
-    void CarryNewResource()
+    void UpdateGatherResourceStatIcon()
     {
-        _controller.resoureAmountCarrying = 0;
-        _controller.resourceTypeCarrying = _resource.resourceType;
-        _controller.resourceTitleCarrying = _resource.title;
-
-        switch(_resource.resourceType)
+        switch (_resource.resourceType)
         {
             case RESOURCE_TYPE.FOOD: _controller.statSprites[2] = ControllerUIManager.instance.foodIcon; break;
             case RESOURCE_TYPE.WOOD: _controller.statSprites[2] = ControllerUIManager.instance.woodIcon; break;
             case RESOURCE_TYPE.WEALTH: _controller.statSprites[2] = ControllerUIManager.instance.wealthIcon; break;
             case RESOURCE_TYPE.METAL: _controller.statSprites[2] = ControllerUIManager.instance.metalIcon; break;
         }
+    }
+
+    void CarryNewResource()
+    {
+        _controller.resoureAmountCarrying = 0;
+        _controller.resourceTypeCarrying = _resource.resourceType;
+        _controller.resourceTitleCarrying = _resource.title;
     }
 
     public override void CheckTransitions()
@@ -103,7 +106,6 @@ public class UnitGather : UnitState {
                 return;
             }
         }
-
 
         if(_resource.depleted)
         {
