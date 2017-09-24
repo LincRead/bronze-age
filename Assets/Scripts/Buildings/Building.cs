@@ -63,6 +63,10 @@ public class Building : BaseController {
     [HideInInspector]
     public bool constructed = false;
 
+    // Villager can deliver resources to this building
+    [HideInInspector]
+    public bool resourceDeliveryPoint = false;
+
     protected override void Start ()
     {
         _basicStats = _buildingStats;
@@ -77,6 +81,9 @@ public class Building : BaseController {
 
         // Only set once
         productionButtonsData = _buildingStats.productionButtons;
+
+        // Can deliver resources to this building
+        resourceDeliveryPoint = _buildingStats.resourceDeliveryPoint;
 
         _selectionIndicator.GetComponent<Transform>().localPosition = new Vector3(0.0f, size * 0.08f, 0.0f);
 
@@ -352,6 +359,11 @@ public class Building : BaseController {
 
         AddPlayerStats();
 
+        if(resourceDeliveryPoint && playerID == PlayerManager.myPlayerID)
+        {
+            PlayerDataManager.instance.GetPlayerData(playerID).friendlyResourceDeliveryPoints.Add(this);
+        }
+
         if (selected)
         {
             ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.BUILDING_INFO, this);
@@ -580,6 +592,11 @@ public class Building : BaseController {
         _healthBar.Deactivate();
 
         RemovePlayerStats();
+
+        if (_buildingStats.resourceDeliveryPoint && playerID == PlayerManager.myPlayerID)
+        {
+            PlayerDataManager.instance.GetPlayerData(playerID).friendlyResourceDeliveryPoints.Remove(this);
+        }
 
         // Todo add transition that plays animation before calling Destroy
         Destroy();

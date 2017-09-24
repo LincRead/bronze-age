@@ -9,12 +9,23 @@ public enum HARVEST_TYPE
     FARM
 }
 
+public enum RESOURCE_TYPE
+{
+    FOOD,
+    WOOD,
+    WEALTH,
+    METAL
+}
+
 public class Resource : BaseController {
 
     public ResourceStats _resourceStats;
 
     [HideInInspector]
-    public HARVEST_TYPE resourceType;
+    public HARVEST_TYPE harvestType;
+
+    [HideInInspector]
+    public RESOURCE_TYPE resourceType;
 
     [HideInInspector]
     public Sprite[] harvestStagesSprites = new Sprite[0];
@@ -26,7 +37,6 @@ public class Resource : BaseController {
     public float harvestDifficulty = 1;
 
     protected int amountLeft = 0;
-    protected float harvestProgress = 0.0f;
 
     [HideInInspector]
     public bool depleted = false;
@@ -37,6 +47,7 @@ public class Resource : BaseController {
 
         base.Start();
 
+        harvestType = _resourceStats.harvestType;
         resourceType = _resourceStats.resourceType;
         harvestStagesSprites = _resourceStats.harvestStagesSprites;
         amount = _resourceStats.amount;
@@ -67,42 +78,34 @@ public class Resource : BaseController {
         }
     }
 
-    public void Harvest(float harvestRate, int playerID)
+    public void Harvest()
     {
-        harvestProgress += harvestRate * Time.deltaTime;
+        amountLeft--;
 
-        if (harvestProgress >= harvestDifficulty)
+        if(selected)
         {
-            harvestProgress = 0.0f;
-            amountLeft--;
-            UpdateResourceAmountForPlayer(playerID);
-
-            if(selected)
-            {
-                UpdateStat();
-            }
+            UpdateStat();
+        }
  
-            if (amountLeft <= 0)
-            {
-                depleted = true;
-            }
+        if (amountLeft <= 0)
+        {
+            depleted = true;
+        }
 
-            // TODO fade out ??
-            else if (amountLeft < amount / 2.5f && harvestStagesSprites.Length == 2)
-            {
-                _spriteRenderer.sprite = harvestStagesSprites[1];
-            }
+        else if (amountLeft < amount / 2.5f && harvestStagesSprites.Length == 2)
+        {
+            _spriteRenderer.sprite = harvestStagesSprites[1];
+        }
                 
-            else if (amountLeft < amount / 1.4f && harvestStagesSprites.Length == 2)
-            {
-                _spriteRenderer.sprite = harvestStagesSprites[0];
-            }
+        else if (amountLeft < amount / 1.4f && harvestStagesSprites.Length == 2)
+        {
+            _spriteRenderer.sprite = harvestStagesSprites[0];
         }
     }
 
-    protected virtual void UpdateResourceAmountForPlayer(int playerID)
+    protected void UpdateResourceAmountForPlayer(int playerID)
     {
-
+        // Todo remove
     }
 
     public override void Select()

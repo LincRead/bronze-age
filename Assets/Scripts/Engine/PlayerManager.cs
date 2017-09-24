@@ -250,7 +250,7 @@ public class PlayerManager : MonoBehaviour {
         {
             Resource resource = selectableController.GetComponent<Resource>();
 
-            switch (resource.resourceType)
+            switch (resource.harvestType)
             {
                 case HARVEST_TYPE.CHOP: EventManager.TriggerEvent("SetChopCursor"); break;
                 case HARVEST_TYPE.MINE: EventManager.TriggerEvent("SetMineCursor"); break;

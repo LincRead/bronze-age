@@ -35,6 +35,12 @@ public class UnitStateController : BaseController
     public RangedUnitMoveToNearbyEnemy rangedMoveToNearbyEnemyState;
 
     [HideInInspector]
+    public UnitMoveToResourcePosition moveToResourcePositionState;
+
+    [HideInInspector]
+    public UnitMoveBackToResource moveBackToResource;
+
+    [HideInInspector]
     public UnitAttackMode attackMoveState;
 
     [HideInInspector]
@@ -81,6 +87,24 @@ public class UnitStateController : BaseController
 
     public GameObject shadow;
 
+    [HideInInspector]
+    public int resoureAmountCarrying = 0;
+
+    [HideInInspector]
+    public RESOURCE_TYPE resourceTypeCarrying = RESOURCE_TYPE.FOOD;
+
+    [HideInInspector]
+    bool gatheringResources;
+
+    [HideInInspector]
+    public Resource lastResouceGathered;
+
+    [HideInInspector]
+    public Vector3 lastResourceGatheredPosition;
+
+    [HideInInspector]
+    public string resourceTitleCarrying;
+
     protected override void Start()
     {
         _basicStats = _unitStats;
@@ -110,6 +134,8 @@ public class UnitStateController : BaseController
         {
             buildState = ScriptableObject.CreateInstance<UnitBuild>();
             gatherState = ScriptableObject.CreateInstance<UnitGather>();
+            moveToResourcePositionState = ScriptableObject.CreateInstance<UnitMoveToResourcePosition>();
+            moveBackToResource = ScriptableObject.CreateInstance<UnitMoveBackToResource>();
         }
 
         // Special states
@@ -156,9 +182,14 @@ public class UnitStateController : BaseController
     void SetupTeamColor()
     {
         if(playerID > -1)
+        {
             _spriteRenderer.material.SetColor("_TeamColor", PlayerDataManager.instance.playerData[playerID].teamColor);
+        }
+            
         else
+        {
             _spriteRenderer.material.SetColor("_TeamColor", PlayerDataManager.neutralPlayerColor);
+        }
     }
 
     void SetupPathfinding()
@@ -199,6 +230,13 @@ public class UnitStateController : BaseController
         TransitionToState(moveToControllerState);
     }
 
+    public void MoveToResource(BaseController targetController)
+    {
+        this.targetController = targetController;
+
+        TransitionToState(moveBackToResource);
+    }
+
     public virtual void MoveTo(Vector2 targetPosition)
     {
         this.targetPosition = targetPosition;
@@ -207,6 +245,19 @@ public class UnitStateController : BaseController
         targetController = null;
 
         TransitionToState(moveToPositionState);
+    }
+
+    // Need this because:
+    // Sometimes we go back to a resource that has been depleted while delivering resources,
+    // so we go back to the position of the destroyed resource instead.
+    public void MoveToResourcePos(Vector2 targetPosition)
+    {
+        this.targetPosition = targetPosition;
+
+        // No longer targetting a Controller
+        targetController = null;
+
+        TransitionToState(moveToResourcePositionState);
     }
 
     public void MoveToInAttackMode(Vector2 targetPosition)
@@ -219,39 +270,6 @@ public class UnitStateController : BaseController
         TransitionToState(attackMoveState);
     }
 
-    public void SeekClosestResource(string resourceTitle)
-    {
-        float closestDistance = 10000;
-        BaseController closestResource = null;
-
-        visibleTiles = Grid.instance.GetAllTilesBasedOnVisibilityFromNode(_basicStats.visionRange, _pathfinder.currentStandingOnNode, size);
-
-        for (int i = 0; i < visibleTiles.Count; i++)
-        {
-            if (visibleTiles[i].controllerOccupying != null 
-                && visibleTiles[i].controllerOccupying.title == resourceTitle
-                && !ignoreControllers.Contains(visibleTiles[i].controllerOccupying))
-            {
-                float dist = Grid.instance.GetDistanceBetweenTiles(_pathfinder.currentStandingOnNode.parentTile, visibleTiles[i]);
-                if (dist < closestDistance)
-                {
-                    closestDistance = dist;
-                    closestResource = visibleTiles[i].controllerOccupying;
-                }
-            }
-        }
-
-        if (closestResource != null)
-        {
-            MoveTo(closestResource);
-        }
-
-        else
-        {
-            TransitionToState(idleState);
-        }
-    }
-
     public void TransitionToState(UnitState nextState)
     {
         distanceToTarget = 1000; //  Reset
@@ -260,10 +278,11 @@ public class UnitStateController : BaseController
         currentState.OnEnter(this);
     }
 
-    public void ExecuteMovement(Vector2 velocity)
+    public virtual void ExecuteMovement(Vector2 velocity)
     {
         float moveX = velocity.x * _unitStats.moveSpeed * Time.deltaTime;
         float moveY = velocity.y * _unitStats.moveSpeed * Time.deltaTime;
+
         _transform.position = new Vector3(_transform.position.x + moveX, _transform.position.y + moveY, zIndex);
     }
 
@@ -493,6 +512,67 @@ public class UnitStateController : BaseController
         }
     }
 
+    public void SeekClosestResource(string resourceTitle)
+    {
+        float closestDistance = 10000;
+        BaseController closestResource = null;
+
+        visibleTiles = Grid.instance.GetAllTilesBasedOnVisibilityFromNode(_basicStats.visionRange, _pathfinder.currentStandingOnNode, size);
+
+        for (int i = 0; i < visibleTiles.Count; i++)
+        {
+            if (visibleTiles[i].controllerOccupying != null
+                && visibleTiles[i].controllerOccupying.title == resourceTitle
+                && !ignoreControllers.Contains(visibleTiles[i].controllerOccupying))
+            {
+                float dist = Grid.instance.GetDistanceBetweenTiles(_pathfinder.currentStandingOnNode.parentTile, visibleTiles[i]);
+                if (dist < closestDistance)
+                {
+                    closestDistance = dist;
+                    closestResource = visibleTiles[i].controllerOccupying;
+                }
+            }
+        }
+
+        if (closestResource != null)
+        {
+            MoveTo(closestResource);
+        }
+
+        else
+        {
+            TransitionToState(idleState);
+        }
+    }
+
+    public void seekClosestResourceDeliveryPoint()
+    {
+        List<Building> resourcePoints = PlayerDataManager.instance.GetPlayerData(playerID).friendlyResourceDeliveryPoints;
+        float distance = 100000;
+        Building gotoBuilding = null;
+
+        for (int i = 0; i < resourcePoints.Count; i++)
+        {
+            float checkDistance = Grid.instance.GetDistanceBetweenControllers(this, resourcePoints[i]);
+
+            if (checkDistance < distance)
+            {
+                distance = checkDistance;
+                gotoBuilding = resourcePoints[i];
+            }
+        }
+
+        if(gotoBuilding != null)
+        {
+            MoveTo(gotoBuilding);
+        }
+
+        else
+        {
+            TransitionToState(idleState);
+        }
+    }
+
     public bool IntersectsObject(BaseController other)
     {
         if (Grid.instance.GetPositionIntersectsWithTilesFromBox(
@@ -552,18 +632,28 @@ public class UnitStateController : BaseController
 
     public override int[] GetUniqueStats()
     {
-        int[] stats;
+        int[] stats =  new int[3];
+
+        stats[0] = _unitStats.damage;
+
         if (_unitStats.isRanged)
         {
-            stats = new int[2];
-            stats[0] = _unitStats.damage;
             stats[1] = _unitStats.range;
         }
 
         else
         {
-            stats = new int[1];
-            stats[0] = _unitStats.damage;
+            stats[1] = -1;
+        }
+
+        if(resoureAmountCarrying > 0)
+        {
+            stats[2] = resoureAmountCarrying;
+        }
+
+        else
+        {
+            stats[2] = -1;
         }
 
         return stats;

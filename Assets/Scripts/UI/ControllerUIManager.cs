@@ -290,7 +290,7 @@ public class ControllerUIManager : MonoBehaviour {
 
         for (int i = 0; i < 4; i++)
         {
-            if (i < stats.Length)
+            if (i < stats.Length && stats[i] != -1)
             {
                 statIcons[i].enabled = true;
                 statIcons[i].sprite = icons[i];

@@ -31,6 +31,10 @@ public class UnitMoveTo : UnitState
         // Only play if path found
         if (_pathfinder.path.Count > 0)
         {
+            // Carrying resource
+
+
+            // Not carrying resources
             if (!_controller._animator.GetCurrentAnimatorStateInfo(0).IsName("run"))
             {
                 _controller._animator.Play("run", -1, 0.0f);

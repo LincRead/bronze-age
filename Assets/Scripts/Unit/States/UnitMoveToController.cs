@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 
-[CreateAssetMenu(menuName = "States/Unit states/move to controller")]
 public class UnitMoveToController : UnitMoveTo
 {
     protected BaseController _targetController;
@@ -78,6 +77,12 @@ public class UnitMoveToController : UnitMoveTo
 
     protected override void ReachedNextTargetNode()
     {
+        if (_controller.targetController == null)
+        {
+            _controller.MoveTo(_targetControllerPosition);
+            return;
+        }
+
         // Set distance based on the Node just reached - nextTargetNode
         _controller.distanceToTarget = Grid.instance.GetDistanceBetweenNodes(
             _controller._pathfinder.currentStandingOnNode,
@@ -118,12 +123,6 @@ public class UnitMoveToController : UnitMoveTo
         if (nextTargetNode == null)
         {
             HandleNoPathToTargetControllerFound();
-            return;
-        }
-
-        if (_controller.targetController == null)
-        {
-            _controller.MoveTo(_targetControllerPosition);
             return;
         }
 
@@ -190,13 +189,44 @@ public class UnitMoveToController : UnitMoveTo
     {
         if (_targetController.playerID == PlayerManager.myPlayerID)
         {
-            if (_controller._unitStats.isVillager)
+            Building targetBuilding = _targetController.GetComponent<Building>();
+
+            // Not yet constructed
+            if (!targetBuilding.constructed)
             {
-                _controller.TransitionToState(_controller.buildState);
+                if (_controller._unitStats.isVillager)
+                {
+                    _controller.TransitionToState(_controller.buildState);
+                }
+            }
+
+            // Drop resources?
+            else if(_controller.resoureAmountCarrying > 0 && targetBuilding.resourceDeliveryPoint)
+            {
+                // Drop resources
+                PlayerDataManager.instance.AddResourceForPlayer(
+                    _controller.resoureAmountCarrying,
+                    _controller.playerID,
+                    _controller.resourceTypeCarrying);
+
+                // Go back to target resource
+                if(_controller.lastResouceGathered != null)
+                {
+                    _controller.MoveToResource(_controller.lastResouceGathered);
+                }
+               
+                // Move to position
+                else
+                {
+                    _controller.MoveToResourcePos(_controller.lastResourceGatheredPosition);
+                }
+
+                // Reset
+                _controller.resoureAmountCarrying = 0;
             }
 
             // Special case for Tribe unit reaching Camp building
-            else if(_controller._unitStats.isTribe 
+            else if (_controller._unitStats.isTribe
                 && _targetController == PlayerManager.instance.civilizationCenter)
             {
                 _controller.GetComponent<TribeController>().SetupCamp(_targetController.GetComponent<Camp>());
@@ -227,7 +257,7 @@ public class UnitMoveToController : UnitMoveTo
         }
     }
 
-    void HandleNoPathToTargetControllerFound()
+    protected void HandleNoPathToTargetControllerFound()
     {
         // Only seek resources close by if we are close to target resource
         if (_targetController.controllerType == CONTROLLER_TYPE.STATIC_RESOURCE

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public enum FACTION
 {
@@ -38,4 +39,7 @@ public class PlayerData {
 
     [HideInInspector]
     public int realProsperity = 0;
+
+    [HideInInspector]
+    public List<Building> friendlyResourceDeliveryPoints = new List<Building>();
 }

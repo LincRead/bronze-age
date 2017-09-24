@@ -742,9 +742,6 @@ public class Grid : MonoBehaviour {
     {
         if ((controllerA.size % 2 == 0 || controllerB.size % 2 == 0) && (controllerA.size % 2 != controllerB.size % 2))
         {
-            Debug.Log(GetDistanceBetweenNodeTopPosAndNodeTopPos(controllerA.GetMiddleNode(), controllerB.GetMiddleNode())
-                - (((controllerA.size - 1)) * 10f)
-                - (((controllerB.size - 1)) * 10f));
             return GetDistanceBetweenNodeTopPosAndNodeTopPos(controllerA.GetMiddleNode(), controllerB.GetMiddleNode()) 
                 - (((controllerA.size - 1)) * 10f)
                 - (((controllerB.size - 1)) * 10f);

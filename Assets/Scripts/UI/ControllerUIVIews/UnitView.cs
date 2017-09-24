@@ -27,6 +27,11 @@ public class UnitView : ControllerUIView {
     public override void Update()
     {
         ui.healthBar.UpdateHitpoints(unitController.hitpointsLeft, unitController._unitStats.maxHitpoints);
+
+        if(unitController._unitStats.isVillager)
+        {
+            ui.ShowStats(_controller.statSprites, _controller.GetUniqueStats());
+        }
     }
 
     public override void OnExit()

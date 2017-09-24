@@ -115,4 +115,15 @@ public class PlayerDataManager : MonoBehaviour
     {
         return playerData[player];
     }
+
+    public void AddResourceForPlayer(int value, int player, RESOURCE_TYPE type)
+    {
+        switch(type)
+        {
+            case RESOURCE_TYPE.FOOD: AddFoodStockForPlayer(value, player); break;
+            case RESOURCE_TYPE.WOOD: AddTimberForPlayer(value, player); break;
+            case RESOURCE_TYPE.METAL: AddMetalForPlayer(value, player); break;
+            //case RESOURCE_TYPE.FOOD: AddWealthForPlayer(value, player); break;
+        }
+    }
 }
