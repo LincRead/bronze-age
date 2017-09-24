@@ -59,13 +59,25 @@ public class UnitGather : UnitState {
 
             if(_controller.resourceTypeCarrying != _resource.resourceType)
             {
-                // Reset
-                _controller.resoureAmountCarrying = 0;
-                _controller.resourceTypeCarrying = _resource.resourceType;
-                _controller.resourceTitleCarrying = _resource.title;
+                CarryNewResource();
             }
 
             _controller.resoureAmountCarrying++;
+        }
+    }
+
+    void CarryNewResource()
+    {
+        _controller.resoureAmountCarrying = 0;
+        _controller.resourceTypeCarrying = _resource.resourceType;
+        _controller.resourceTitleCarrying = _resource.title;
+
+        switch(_resource.resourceType)
+        {
+            case RESOURCE_TYPE.FOOD: _controller.statSprites[2] = ControllerUIManager.instance.foodIcon; break;
+            case RESOURCE_TYPE.WOOD: _controller.statSprites[2] = ControllerUIManager.instance.woodIcon; break;
+            case RESOURCE_TYPE.WEALTH: _controller.statSprites[2] = ControllerUIManager.instance.wealthIcon; break;
+            case RESOURCE_TYPE.METAL: _controller.statSprites[2] = ControllerUIManager.instance.metalIcon; break;
         }
     }
 

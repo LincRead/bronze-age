@@ -85,6 +85,12 @@ public class ControllerUIManager : MonoBehaviour {
     [HideInInspector]
     public List<SelectedUnitButton> _selectedUnitButtons = new List<SelectedUnitButton>();
 
+    [Header("Resource icons")]
+    public Sprite foodIcon;
+    public Sprite woodIcon;
+    public Sprite metalIcon;
+    public Sprite wealthIcon;
+
     private static ControllerUIManager controllerUIManager;
 
     public static ControllerUIManager instance
