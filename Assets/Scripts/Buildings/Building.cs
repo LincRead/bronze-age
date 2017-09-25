@@ -166,7 +166,10 @@ public class Building : BaseController {
     {
         hasBeenPlaced = true;
 
-        SetVisible(true);
+        if(playerID == PlayerManager.myPlayerID)
+        {
+            SetVisible(true);
+        }
 
         // Position
         Vector3 positionToPlace = Grid.instance.SnapToGrid(_transform.position);
