@@ -132,6 +132,7 @@ public class Building : BaseController {
     public void SetRequiredResources(ProductionButtonData data)
     {
         _buildingStats.food = data.food;
+
         _buildingStats.timber = data.timber;
         _buildingStats.metal = data.metal;
         _buildingStats.population = data.population;

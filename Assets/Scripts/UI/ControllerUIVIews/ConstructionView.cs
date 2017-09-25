@@ -19,9 +19,11 @@ public class ConstructionView : ControllerUIView
         // Show for all other buildings being constructed
         if (!_buildingController._buildingStats.isCivilizationCenter)
         {
-            EventManager.TriggerEvent("ActivateProgressView");
+            ui.productionProgressCanvas.gameObject.SetActive(true);
             UpdatePercentConstructedVisuals();
         }
+
+        ui.healthBar.ShowHitpoints(_buildingController.hitpointsLeft, _buildingController.maxHitPoints);
     }
 
     public override void Update()
@@ -30,6 +32,8 @@ public class ConstructionView : ControllerUIView
         {
             UpdatePercentConstructedVisuals();
         }
+
+        ui.healthBar.UpdateHitpoints(_buildingController.hitpointsLeft, _buildingController.maxHitPoints);
     }
 
     void UpdatePercentConstructedVisuals()
@@ -40,6 +44,7 @@ public class ConstructionView : ControllerUIView
 
     public override void OnExit()
     {
-        EventManager.TriggerEvent("DisableProgressView");
+        ui.productionProgressCanvas.gameObject.SetActive(false);
+        ui.healthBar.HideHitpoints();
     }
 }
