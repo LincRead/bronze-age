@@ -187,6 +187,8 @@ public class UnitMoveToController : UnitMoveTo
 
     void ReachedTargetBuilding()
     {
+        Debug.Log("DDD");
+
         if (_targetController.playerID == PlayerManager.myPlayerID)
         {
             Building targetBuilding = _targetController.GetComponent<Building>();
@@ -197,6 +199,13 @@ public class UnitMoveToController : UnitMoveTo
                 if (_controller._unitStats.isVillager)
                 {
                     _controller.TransitionToState(_controller.buildState);
+                }
+
+                // Special case for Tribe unit reaching Camp building
+                else if (_controller._unitStats.isTribe
+                    && _targetController == PlayerManager.instance.civilizationCenter)
+                {
+                    _controller.GetComponent<TribeController>().SetupCamp(_targetController.GetComponent<Camp>());
                 }
             }
 
@@ -223,13 +232,6 @@ public class UnitMoveToController : UnitMoveTo
 
                 // Reset
                 _controller.resoureAmountCarrying = 0;
-            }
-
-            // Special case for Tribe unit reaching Camp building
-            else if (_controller._unitStats.isTribe
-                && _targetController == PlayerManager.instance.civilizationCenter)
-            {
-                _controller.GetComponent<TribeController>().SetupCamp(_targetController.GetComponent<Camp>());
             }
 
             else

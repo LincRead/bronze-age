@@ -415,7 +415,6 @@ public class Building : BaseController {
     bool HaveRequiredResourcesToPlaceBuilding()
     {
         PlayerData playerData = PlayerDataManager.instance.GetPlayerData(PlayerManager.myPlayerID);
-        Debug.Log(playerData.timber + " "+ _buildingStats.timber);
 
         return playerData.foodStock >= _buildingStats.food
             && playerData.timber >= _buildingStats.timber
