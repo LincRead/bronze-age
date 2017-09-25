@@ -166,6 +166,8 @@ public class Building : BaseController {
     {
         hasBeenPlaced = true;
 
+        SetVisible(true);
+
         // Position
         Vector3 positionToPlace = Grid.instance.SnapToGrid(_transform.position);
         zIndex = GetMiddleNode().worldPosition.y;
