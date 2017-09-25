@@ -13,6 +13,7 @@ public class StockDataHUD : MonoBehaviour {
     public Text foodStock;
     public Text foodIntake;
     public Text timber;
+    public Text wealth;
     public Text metal;
     public Text prosperity;
 
@@ -25,6 +26,7 @@ public class StockDataHUD : MonoBehaviour {
     {
         UpdatePopulation();
         UpdateTimber();
+        UpdateWealth();
         UpdateMetal();
         UpdateFoodStock();
         UpdateFoodIntake();
@@ -39,6 +41,7 @@ public class StockDataHUD : MonoBehaviour {
         EventManager.StartListening("UpdateFoodStockUI", UpdateFoodStock);
         EventManager.StartListening("UpdateFoodIntakeUI", UpdateFoodIntake);
         EventManager.StartListening("UpdateTimberStockUI", UpdateTimber);
+        EventManager.StartListening("UpdateWealthStockUI", UpdateWealth);
         EventManager.StartListening("UpdateMetalStockUI", UpdateMetal);
         EventManager.StartListening("UpdateProsperityStockUI", UpdateProsperity);
     }
@@ -50,6 +53,7 @@ public class StockDataHUD : MonoBehaviour {
         EventManager.StopListening("UpdateFoodStockUI", UpdateFoodStock);
         EventManager.StopListening("UpdateFoodIntakeUI", UpdateFoodIntake);
         EventManager.StopListening("UpdateTimberStockUI", UpdateTimber);
+        EventManager.StopListening("UpdateWealthStockUI", UpdateWealth);
         EventManager.StopListening("UpdateMetalStockUI", UpdateMetal);
         EventManager.StopListening("UpdateProsperityStockUI", UpdateProsperity);
     }
@@ -85,6 +89,11 @@ public class StockDataHUD : MonoBehaviour {
     void UpdateTimber()
     {
         timber.text = myPlayerData.timber.ToString();
+    }
+
+    void UpdateWealth()
+    {
+        wealth.text = myPlayerData.wealth.ToString();
     }
 
     void UpdateMetal()

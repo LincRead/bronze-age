@@ -56,6 +56,7 @@ public class PlayerDataManager : MonoBehaviour
 
             newPlayerData.foodStock = playerStartingResources.food;
             newPlayerData.timber = playerStartingResources.timber;
+            newPlayerData.wealth = playerStartingResources.wealth;
             newPlayerData.metal = playerStartingResources.metal;
             newPlayerData.population = playerStartingResources.newCitizens;
         }
@@ -78,37 +79,71 @@ public class PlayerDataManager : MonoBehaviour
     public void AddPopulationForPlayer(int value, int player)
     {
         playerData[player].population += value;
-        EventManager.TriggerEvent("UpdateHousingStockUI");
+
+        if(player == PlayerManager.myPlayerID)
+        {
+            EventManager.TriggerEvent("UpdateHousingStockUI");
+        }
     }
 
     public void AddHousingForPlayer(int value, int player)
     {
         playerData[player].housing += value;
-        EventManager.TriggerEvent("UpdateHousingStockUI");
+
+        if (player == PlayerManager.myPlayerID)
+        {
+            EventManager.TriggerEvent("UpdateHousingStockUI");
+        }
     }
 
     public void AddFoodStockForPlayer(int value, int player)
     {
         playerData[player].foodStock += value;
-        EventManager.TriggerEvent("UpdateFoodStockUI");
+
+        if (player == PlayerManager.myPlayerID)
+        {
+            EventManager.TriggerEvent("UpdateFoodStockUI");
+        }
     }
 
     public void AddFoodIntakeForPlayer(int value, int player)
     {
         playerData[player].foodIntake += value;
-        EventManager.TriggerEvent("UpdateFoodIntakeUI");
+
+        if (player == PlayerManager.myPlayerID)
+        {
+            EventManager.TriggerEvent("UpdateFoodIntakeUI");
+        }
     }
 
     public void AddTimberForPlayer(int value, int player)
     {
         playerData[player].timber += value;
-        EventManager.TriggerEvent("UpdateTimberStockUI");
+
+        if (player == PlayerManager.myPlayerID)
+        {
+            EventManager.TriggerEvent("UpdateTimberStockUI");
+        }
+    }
+
+    public void AddWealthForPlayer(int value, int player)
+    {
+        playerData[player].wealth += value;
+
+        if (player == PlayerManager.myPlayerID)
+        {
+            EventManager.TriggerEvent("UpdateWealthStockUI");
+        }
     }
 
     public void AddMetalForPlayer(int value, int player)
     {
         playerData[player].metal += value;
-        EventManager.TriggerEvent("UpdateMetalStockUI");
+
+        if (player == PlayerManager.myPlayerID)
+        {
+            EventManager.TriggerEvent("UpdateMetalStockUI");
+        }
     }
 
     public PlayerData GetPlayerData(int player)

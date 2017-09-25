@@ -187,8 +187,6 @@ public class UnitMoveToController : UnitMoveTo
 
     void ReachedTargetBuilding()
     {
-        Debug.Log("DDD");
-
         if (_targetController.playerID == PlayerManager.myPlayerID)
         {
             Building targetBuilding = _targetController.GetComponent<Building>();
