@@ -594,7 +594,9 @@ public class Grid : MonoBehaviour {
         Tile tile = GetTileFromWorldPoint(pos);
 
         if (tile == null)
+        {
             return false;
+        }
 
         for (int i = 0; i < size; i++)
         {
@@ -602,8 +604,12 @@ public class Grid : MonoBehaviour {
             {
                 if (i > -1 && j > -1 && tile.gridPosX + i < numTilesX && tile.gridPosY + j < numTilesY)
                 {
-                    if (!GetTileFromGridPos(tile.gridPosX + i, tile.gridPosY + j).IsEmpty())
+                    Tile checkTile = GetTileFromGridPos(tile.gridPosX + i, tile.gridPosY + j);
+                    if (!checkTile.IsEmpty() || !checkTile.explored)
+                    {
                         return false;
+                    }
+                        
                 }
 
                 else
