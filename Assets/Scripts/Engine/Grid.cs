@@ -38,6 +38,7 @@ public class Grid : MonoBehaviour {
     public GameObject treePrefab;
     public GameObject metalPrefab;
     public GameObject fruitBushPrefab;
+    public GameObject obsidianPrefab;
 
     public int MaxSize
     {
@@ -232,6 +233,11 @@ public class Grid : MonoBehaviour {
     public void SpawnFruitBush(Tile tile)
     {
         SpawnResource(tile, fruitBushPrefab);
+    }
+
+    public void SpawnObsidian(Tile tile)
+    {
+        SpawnResource(tile, obsidianPrefab);
     }
 
     Vector2 GetPosIsometricTo2D(Vector2 posIso)

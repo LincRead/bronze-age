@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: ba24593a1f1e5a645a720966e3210547
-timeCreated: 1506300687
+timeCreated: 1506316132
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -331,6 +331,20 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Unit Buttons_17
+      rect:
+        serializedVersion: 2
+        x: 32
         y: 32
         width: 32
         height: 32
