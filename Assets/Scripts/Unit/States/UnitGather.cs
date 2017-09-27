@@ -98,7 +98,7 @@ public class UnitGather : UnitState {
 
         if(_resource.depleted)
         {
-            _controller.SeekClosestResource(_resource.title);
+            _controller.seekClosestResourceDeliveryPoint();
         }
     }
 }
