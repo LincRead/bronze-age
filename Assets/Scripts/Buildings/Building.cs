@@ -237,7 +237,8 @@ public class Building : BaseController {
     void SetupBuildingPlacement()
     {
         hasBeenPlaced = false;
-        _spriteRenderer.sprite = constructionSprites[0];
+        _spriteRenderer.enabled = true;
+        _spriteRenderer.sprite = constructionSprites[1];
         _transform.position = PlayerManager.mousePosition - new Vector2(0.0f, _spriteRenderer.bounds.size.y / 2);
         _spriteRenderer.color = new Color(1f, 1f, 1f, 0.5f);
         _spriteRenderer.sortingLayerName = "Placing Building";
