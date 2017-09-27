@@ -8,7 +8,8 @@ public class CivilizationCenter : Building
     [Header("Unique Stats")]
     public int housing = 10;
 
-    public BuildingStats baseCampStats;
+    public BuildingStats settlementStats;
+    public BuildingStats empireStats;
 
     protected override void Start()
     {
@@ -41,6 +42,8 @@ public class CivilizationCenter : Building
         // Instantly constructed, so update hitpoints instantly too
         hitpointsLeft = maxHitPoints;
 
+        title = _buildingStats.title;
+
         if (selected)
         {
             ControllerUIManager.instance.UpdateTitle(title);
@@ -53,7 +56,7 @@ public class CivilizationCenter : Building
     {
         if(PlayerDataManager.instance.playerData[playerID].age == 1)
         {
-            _buildingStats = baseCampStats;
+            _buildingStats = settlementStats;
 
             // Add housing.
             housing = 8;
