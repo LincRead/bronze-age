@@ -26,6 +26,16 @@ public class CivilizationCenter : Building
         PlayerManager.instance.civilizationCenter = this;
     }
 
+    protected override void Place()
+    {
+        base.Place();
+
+        if(playerID > -1)
+        {
+            PlayerDataManager.instance.GetPlayerData(playerID).placedCamp = true;
+        }
+    }
+
     public override void FinishConstruction()
     {
         // Instantly constructed, so update hitpoints instantly too

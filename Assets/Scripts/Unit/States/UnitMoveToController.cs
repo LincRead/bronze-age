@@ -203,7 +203,7 @@ public class UnitMoveToController : UnitMoveTo
                 else if (_controller._unitStats.isTribe
                     && _targetController == PlayerManager.instance.civilizationCenter)
                 {
-                    _controller.GetComponent<TribeController>().SetupCamp(_targetController.GetComponent<Camp>());
+                    _controller.GetComponent<TribeController>().SetupCamp(_targetController.GetComponent<CivilizationCenter>());
                 }
             }
 
