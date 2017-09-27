@@ -32,6 +32,18 @@ public class ControllerSelecting : MonoBehaviour {
 
     void Update()
     {
+        if (CameraController.instance.currentlyMovingCamera)
+        {
+            mousePosStart = Input.mousePosition;
+
+            // Move origin from bottom left to top left
+            mousePosStart.y = Screen.height - mousePosStart.y;
+
+            mousePosScreenToWorldPointStart = PlayerManager.mousePosition;
+
+            showSelectBox = false;
+        }
+
         // Don't select anything unless player is in default state
         if (PlayerManager.instance.currentUserState == PlayerManager.PLAYER_ACTION_STATE.DEFAULT)
         {
@@ -56,7 +68,7 @@ public class ControllerSelecting : MonoBehaviour {
                 showSelectBox = false;
             }
 
-            else
+            else if(showSelectBox)
             {
                 ExecuteSelecting();
             }

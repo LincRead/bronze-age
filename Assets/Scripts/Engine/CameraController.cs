@@ -22,7 +22,8 @@ public class CameraController : MonoBehaviour {
     private float topBound;
     private float bottomBound;
 
-    bool currentlyMovingCamera = false;
+    [HideInInspector]
+    public bool currentlyMovingCamera = false;
 
     void Start()
     {
@@ -49,11 +50,14 @@ public class CameraController : MonoBehaviour {
     void Update()
     {
         // Check if camera is moved by mouse or keys, and reset controller if not
-        if(!MovingCameraUsingMouse() && !MovingCameraUsingKeys())
+        if(!MovingCameraUsingMouseButton() && !MovingCameraUsingKeys())
+        {
             Reset();
+            MoveCameraWithMousePosition();
+        }
     }
 
-    bool MovingCameraUsingMouse()
+    bool MovingCameraUsingMouseButton()
     {
         // Center mouse button pressed down
         if (Input.GetMouseButtonDown(2))
@@ -145,6 +149,44 @@ public class CameraController : MonoBehaviour {
         }
 
         return false;
+    }
+
+    void MoveCameraWithMousePosition()
+    {
+        Vector3 newCameraPos = _transform.position;
+        bool moveCamera = false;
+
+        if (Input.mousePosition.x < 1)
+        {
+            newCameraPos.x -= scrollSpeed * Time.deltaTime;
+            moveCamera = true;
+        }
+
+        if(Input.mousePosition.x > Screen.width - 1)
+        {
+            newCameraPos.x += scrollSpeed * Time.deltaTime;
+            moveCamera = true;
+        }
+
+        if (Input.mousePosition.y < 1)
+        {
+            newCameraPos.y -= scrollSpeed * Time.deltaTime;
+            moveCamera = true;
+        }
+
+        if (Input.mousePosition.y > Screen.height - 1)
+        {
+            newCameraPos.y += scrollSpeed * Time.deltaTime;
+            moveCamera = true;
+        }
+
+        if (moveCamera)
+        {
+            newCameraPos.x = Mathf.Clamp(newCameraPos.x, leftBound, rightBound);
+            newCameraPos.y = Mathf.Clamp(newCameraPos.y, bottomBound, topBound);
+            transform.position = newCameraPos;
+            currentlyMovingCamera = true;
+        }
     }
 
     void Reset()
