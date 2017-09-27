@@ -162,7 +162,7 @@ public class CameraController : MonoBehaviour {
             moveCamera = true;
         }
 
-        if(Input.mousePosition.x > Screen.width - 1)
+        if(Input.mousePosition.x >= Screen.width - 1 && Input.mousePosition.x <= Screen.width + 1)
         {
             newCameraPos.x += scrollSpeed * Time.deltaTime;
             moveCamera = true;
@@ -174,7 +174,7 @@ public class CameraController : MonoBehaviour {
             moveCamera = true;
         }
 
-        if (Input.mousePosition.y > Screen.height - 1)
+        if (Input.mousePosition.y >= Screen.height - 1 && Input.mousePosition.y <= Screen.height + 1)
         {
             newCameraPos.y += scrollSpeed * Time.deltaTime;
             moveCamera = true;

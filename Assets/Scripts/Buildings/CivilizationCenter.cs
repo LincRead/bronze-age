@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Text;
 
 public class CivilizationCenter : Building
 {
@@ -13,7 +14,29 @@ public class CivilizationCenter : Building
     {
         base.Start();
 
+
+        if(playerID > -1)
+        {
+            if (PlayerDataManager.instance.GetPlayerData(playerID).age == 0)
+            {
+                title = new StringBuilder("Waiting for tribe...").ToString();
+            }
+        }
+
         PlayerManager.instance.civilizationCenter = this;
+    }
+
+    public override void FinishConstruction()
+    {
+        // Instantly constructed, so update hitpoints instantly too
+        hitpointsLeft = maxHitPoints;
+
+        if (selected)
+        {
+            ControllerUIManager.instance.UpdateTitle(title);
+        }
+
+        base.FinishConstruction();
     }
 
     public void Upgrade()
