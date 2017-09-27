@@ -17,7 +17,7 @@ public class ProductionProgressCanvas : MonoBehaviour {
         {
             productionProgressText.text = new StringBuilder((int)(percent * 100) + "%").ToString();
             productionProgressText.color = new Color32(0x8F, 0x7E, 0x60, 0xFF);
-            productionProgressText.fontSize = 16;
+            productionProgressText.fontSize = 14;
 
             productionProgressBarImage.fillAmount = percent;
         }
