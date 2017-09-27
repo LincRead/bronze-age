@@ -15,7 +15,6 @@ public class CivilizationCenter : Building
     {
         base.Start();
 
-
         if(playerID > -1)
         {
             if (PlayerDataManager.instance.GetPlayerData(playerID).age == 0)
