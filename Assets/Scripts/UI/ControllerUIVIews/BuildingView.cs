@@ -56,7 +56,7 @@ public class BuildingView : ControllerUIView
         if (_buildingController.constructed)
         {
             ui.productionQueueCanvas.gameObject.SetActive(true);
-            _buildingController.UpdateProducionQueue();
+            _buildingController.UpdateProductionQueue();
         }
     }
 

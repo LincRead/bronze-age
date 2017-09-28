@@ -31,6 +31,9 @@ public class Building : BaseController {
     public ProductionButtonData[] productionButtonsData;
 
     // Store current production
+    [HideInInspector]
+
+    public
     List<int> productionList = new List<int>();
     int productionIndex = -1;
 
@@ -412,7 +415,7 @@ public class Building : BaseController {
         else if (productionList.Count < ProductionQueueCanvas.max)
         {
             productionList.Add(buttonIndex);
-            UpdateProducionQueue();
+            UpdateProductionQueue();
         }
 
         // If technology, then remove technology production button and tooltip
@@ -533,7 +536,7 @@ public class Building : BaseController {
         {
             Produce(productionList[0]);
             productionList.RemoveAt(0);
-            UpdateProducionQueue();
+            UpdateProductionQueue();
         }
 
         else
@@ -545,20 +548,15 @@ public class Building : BaseController {
         }
     }
 
-    public void UpdateProducionQueue()
+    public void RemoveProductionAtQueue(int index)
     {
-        for(int i = 0; i < ProductionQueueCanvas.max; i++)
-        {
-            if(i < productionList.Count)
-            {
-                ControllerUIManager.instance.productionQueueCanvas.ActivateIcon(productionButtonsData[productionList[i]].icon, i);
-            }
+        productionList.RemoveAt(index);
+        UpdateProductionQueue();
+    }
 
-            else
-            {
-                ControllerUIManager.instance.productionQueueCanvas.DeactivateIcon(i);
-            }
-        }
+    public void UpdateProductionQueue()
+    {
+        ControllerUIManager.instance.productionQueueCanvas.UpdateData(this);
     }
 
     public override void Hit(int damageValue)

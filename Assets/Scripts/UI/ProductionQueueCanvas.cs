@@ -5,25 +5,40 @@ using UnityEngine.UI;
 
 public class ProductionQueueCanvas : MonoBehaviour
 {
-    public GameObject[] productionQueueIcons;
+    public GameObject[] productionQueueButtons;
 
-    [HideInInspector]
+    Building currentProductionController;
+
     public static int max = 5;
 
-    string text;
-
-    public void ActivateIcon(Sprite newIconSprite, int index)
+    private void Start()
     {
-        productionQueueIcons[index].GetComponent<Icon>().icon.enabled = true;
-        productionQueueIcons[index].GetComponent<Icon>().icon.sprite = newIconSprite;
-
-        productionQueueIcons[index].GetComponentInChildren<Text>().enabled = false;
+        for(int i = 0; i < productionQueueButtons.Length; i++)
+        {
+            productionQueueButtons[i].GetComponent<ProductionQueueButton>().SetReferenceToParent(this);
+        }
     }
 
-    public void DeactivateIcon(int index)
+    public void UpdateData(Building building)
     {
-        productionQueueIcons[index].GetComponentInChildren<Text>().enabled = true;
+        currentProductionController = building;
 
-        productionQueueIcons[index].GetComponent<Icon>().icon.enabled = false;
+        for (int i = 0; i < max; i++)
+        {
+            if (i < currentProductionController.productionList.Count)
+            {
+                productionQueueButtons[i].GetComponent<ProductionQueueButton>().ActivateIcon(currentProductionController.productionButtonsData[currentProductionController.productionList[i]].icon);
+            }
+
+            else
+            {
+                productionQueueButtons[i].GetComponent<ProductionQueueButton>().DeactivateIcon();
+            }
+        }
+    }
+
+    public void CancelProduction(int index)
+    {
+        currentProductionController.RemoveProductionAtQueue(index);
     }
 }
