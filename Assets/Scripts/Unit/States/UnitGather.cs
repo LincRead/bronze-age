@@ -73,6 +73,7 @@ public class UnitGather : UnitState {
         _controller.resoureAmountCarrying = 0;
         _controller.resourceTypeCarrying = _resource.resourceType;
         _controller.resourceTitleCarrying = _resource.title;
+        _controller.goBackToResource = true;
     }
 
     public override void CheckTransitions()

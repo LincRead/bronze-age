@@ -223,9 +223,14 @@ public class UnitMoveToController : UnitMoveTo
                 }
                
                 // Move to position
-                else
+                else if(_controller.goBackToResource)
                 {
                     _controller.MoveToResourcePos(_controller.lastResourceGatheredPosition);
+                }
+
+                else
+                {
+                    _controller.TransitionToState(_controller.idleState);
                 }
 
                 // Reset

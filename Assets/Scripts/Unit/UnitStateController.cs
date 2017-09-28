@@ -103,6 +103,9 @@ public class UnitStateController : BaseController
     public Vector3 lastResourceGatheredPosition;
 
     [HideInInspector]
+    public bool goBackToResource = false;
+
+    [HideInInspector]
     public string resourceTitleCarrying;
 
     protected override void Start()

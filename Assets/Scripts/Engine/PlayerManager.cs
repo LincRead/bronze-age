@@ -383,6 +383,14 @@ public class PlayerManager : MonoBehaviour {
             else if(selectableController != null)
             {
                 selectedUnits[i].MoveTo(selectableController);
+
+                // If clicked on resource delivery point for a Villager carrying resources, 
+                // we don't want the Villager to go back to resource after delivering, but stay at Building.
+                if(selectedUnits[i]._unitStats.isVillager)
+                {
+                    selectedUnits[i].lastResouceGathered = null;
+                    selectedUnits[i].goBackToResource = false;
+                }
             }
 
             // Move to empty location
