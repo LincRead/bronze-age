@@ -521,12 +521,12 @@ public class Building : BaseController {
         stepsProduced = 0.0f;
         stepsToProduce = 0.1f;
         inProductionProcess = false;
-        startedProduction = false;
 
         // Give back resources
         if (startedProduction)
         {
             UseResourcesForProduction(1);
+            startedProduction = false;
         }
         
         // Once off production no longer in queue
