@@ -282,7 +282,7 @@ public class PlayerManager : MonoBehaviour {
         {
             if (!CursorHoveringUI.value)
             {
-                if (!building.constructed)
+                if (!building.constructed && _controllerSelecting.GetSelectedGatherers().Count > 0)
                 {
                     // Construct
                     // Never show any build cursor over civilization building,
