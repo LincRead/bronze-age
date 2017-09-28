@@ -218,6 +218,19 @@ public class PlayerManager : MonoBehaviour {
             }
         }
 
+        // No Controllers selected,so  see if we can select a Tile instead and show info about it
+        if(selectableController == null)
+        {
+            Tile tile = Grid.instance.GetTileFromWorldPoint(mousePosition);
+
+            if(tile != null)
+            {
+                // If key press
+
+                ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.NONE, null);
+            }
+        }
+
         UpdateMouseCursor();
     }
 
@@ -284,8 +297,7 @@ public class PlayerManager : MonoBehaviour {
             {
                 if (!building.constructed && _controllerSelecting.GetSelectedGatherers().Count > 0)
                 {
-                    // Construct
-                    // Never show any build cursor over civilization building,
+                    // Don;t show any Build Cursor over Civilization Center,
                     // since it's only placed and instantly constructed by Tribe unit
                     if (!building._buildingStats.isCivilizationCenter)
                     {

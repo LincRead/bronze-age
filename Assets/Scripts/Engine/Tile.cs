@@ -46,6 +46,9 @@ public class Tile : IHeapItem<Tile>
     public float fertility = 0;
 
     [HideInInspector]
+    public int fertilityPoints = 0;
+
+    [HideInInspector]
     public bool fertilityLocked = false;
 
     [HideInInspector]
@@ -86,6 +89,8 @@ public class Tile : IHeapItem<Tile>
         {
             tileIndex = 1;
         }
+
+        fertilityPoints = tileIndex;
 
         _tile = GameObject.Instantiate(Resources.Load("Tile"), worldPosition, Quaternion.identity) as GameObject;
         _tileSpriteRenderer = _tile.GetComponent<SpriteRenderer>();
