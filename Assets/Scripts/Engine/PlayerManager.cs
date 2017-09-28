@@ -52,6 +52,9 @@ public class PlayerManager : MonoBehaviour {
     public CivilizationCenter civilizationCenter = null;
 
     [HideInInspector]
+    public Tile selectedTile = null;
+
+    [HideInInspector]
     public static Vector2 mousePosition;
 
     private static PlayerManager playerManager;
@@ -221,13 +224,17 @@ public class PlayerManager : MonoBehaviour {
         // No Controllers selected,so  see if we can select a Tile instead and show info about it
         if(selectableController == null)
         {
-            Tile tile = Grid.instance.GetTileFromWorldPoint(mousePosition);
+            selectedTile = Grid.instance.GetTileFromWorldPoint(mousePosition);
 
-            if(tile != null)
+            if(selectedTile != null)
             {
-                // If key press
+                if(Input.GetMouseButtonUp(0))
+                {
+                    Grid.instance.selectedTilePrefab.GetComponent<SpriteRenderer>().enabled = true;
+                    Grid.instance.selectedTilePrefab.GetComponent<Transform>().position = selectedTile.worldPosition;
 
-                ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.NONE, null);
+                    ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.TILE, null);
+                }
             }
         }
 

@@ -84,6 +84,8 @@ public class ControllerSelecting : MonoBehaviour {
 
         mousePosScreenToWorldPointStart = PlayerManager.mousePosition;
 
+        Grid.instance.selectedTilePrefab.GetComponent<SpriteRenderer>().enabled = false;
+
         showSelectBox = true;
     }
 

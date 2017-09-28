@@ -10,6 +10,7 @@ public class ControllerUIManager : MonoBehaviour {
 
     [Header("Controller info")]
     public Text title;
+    public Text description;
     public Image icon;
     public Text tooltip;
     public GameObject infoBackground;
@@ -27,6 +28,7 @@ public class ControllerUIManager : MonoBehaviour {
     public enum CONTROLLER_UI_VIEW
     {
         NONE,
+        TILE,
         VILLAGER,
         WARRIOR,
         TRIBE,
@@ -73,6 +75,7 @@ public class ControllerUIManager : MonoBehaviour {
 
     [Header("Views")]
     private ControllerUIView nothingSelectedView;
+    private TileView tileView;
     private VillagerView villagerView;
     private UnitView warriorView;
     private TribeView tribeView;
@@ -132,7 +135,11 @@ public class ControllerUIManager : MonoBehaviour {
         foreach (Button btn in unitActionButtons)
             btn.gameObject.SetActive(false);
 
+        // Only show in special cases, eg. Tile
+        description.enabled = false;
+
         nothingSelectedView = ScriptableObject.CreateInstance<ControllerUIView>();
+        tileView = ScriptableObject.CreateInstance<TileView>();
         villagerView = ScriptableObject.CreateInstance<VillagerView>();
         warriorView = ScriptableObject.CreateInstance<UnitView>();
         tribeView = ScriptableObject.CreateInstance<TribeView>();
@@ -218,6 +225,10 @@ public class ControllerUIManager : MonoBehaviour {
         {
             case CONTROLLER_UI_VIEW.NONE:
                 currentView = nothingSelectedView;
+                break;
+
+            case CONTROLLER_UI_VIEW.TILE:
+                currentView = tileView;
                 break;
 
             case CONTROLLER_UI_VIEW.VILLAGER:

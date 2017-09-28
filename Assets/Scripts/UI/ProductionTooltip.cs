@@ -35,7 +35,6 @@ public class ProductionTooltip : MonoBehaviour {
         AddRequired(iconsObject.icons[4], data.wealth);
         AddRequired(iconsObject.icons[5], data.metal);
 
-
         for (int i = numItemsRequired; i < resourceIcons.Length; i++)
         {
             resourceIcons[i].enabled = false;

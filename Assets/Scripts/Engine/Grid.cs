@@ -40,6 +40,9 @@ public class Grid : MonoBehaviour {
     public GameObject fruitBushPrefab;
     public GameObject obsidianPrefab;
 
+    [Header("Show Tile selected")]
+    public GameObject selectedTilePrefab;
+
     public int MaxSize
     {
         get
@@ -76,6 +79,8 @@ public class Grid : MonoBehaviour {
     {
         // Singleton
         instance = this;
+
+        selectedTilePrefab.GetComponent<SpriteRenderer>().enabled = false;
 
         if (numTilesX < 16)
         {
