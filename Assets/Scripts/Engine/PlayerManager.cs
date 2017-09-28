@@ -223,14 +223,24 @@ public class PlayerManager : MonoBehaviour {
         {
             selectedTile = Grid.instance.GetTileFromWorldPoint(mousePosition);
 
-            if(selectedTile != null)
+            if (selectedTile != null)
             {
-                if(Input.GetMouseButtonUp(0))
+                if (Input.GetMouseButtonUp(0))
                 {
-                    Grid.instance.selectedTilePrefab.GetComponent<SpriteRenderer>().enabled = true;
-                    Grid.instance.selectedTilePrefab.GetComponent<Transform>().position = selectedTile.worldPosition;
+                    // If we clicked on a Tile, we are no longer previously selected any controllers
+                    if (_controllerSelecting.hadSelectedControllers)
+                    {
+                        _controllerSelecting.hadSelectedControllers = false;
+                    }
 
-                    ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.TILE, null);
+                    // If we didn't previously select any controllers, it is now safe to select a Tile
+                    else
+                    {
+                        Grid.instance.selectedTilePrefab.GetComponent<SpriteRenderer>().enabled = true;
+                        Grid.instance.selectedTilePrefab.GetComponent<Transform>().position = selectedTile.worldPosition;
+
+                        ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.TILE, null);
+                    }
                 }
             }
         }

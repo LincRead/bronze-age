@@ -28,6 +28,11 @@ public class ControllerSelecting : MonoBehaviour {
     [HideInInspector]
     public bool attemptedToSelectMultiple = false;
 
+    // When we click on a Tile, we need to know if we had controllers selected and just want to
+    // deselect, or if nothing was selected and we want to select a Tile
+    [HideInInspector]
+    public bool hadSelectedControllers = false;
+
     protected float timeSinceLastSingleUnitSelected = 0.0f;
     protected float doubleClickUnitTime = 1.0f;
     protected UnitStateController lastSelectedUnit;
@@ -74,6 +79,12 @@ public class ControllerSelecting : MonoBehaviour {
             else if(showSelectBox)
             {
                 ExecuteSelecting();
+
+                // We didn't actually find any controllers to select
+                if(HasSelectedAnything())
+                {
+                    hadSelectedControllers = true;
+                }
             }
         }
     }
@@ -437,5 +448,10 @@ public class ControllerSelecting : MonoBehaviour {
     public List<UnitStateController> GetSelectedUnits()
     {
         return selectedUnits;
+    }
+
+    public bool HasSelectedAnything()
+    {
+        return selectedController != null || selectedUnits.Count > 0;
     }
 }
