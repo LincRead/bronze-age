@@ -24,6 +24,15 @@ public class PlayerManager : MonoBehaviour {
         MENU
     }
 
+    struct MouseHoveringController
+    {
+        public int priorityValue;
+        public BaseController controller;
+    }
+
+    [HideInInspector]
+    MouseHoveringController mouseHoveringController;
+
     [HideInInspector]
     public PLAYER_ACTION_STATE currentUserState = PLAYER_ACTION_STATE.DEFAULT;
 
@@ -35,9 +44,6 @@ public class PlayerManager : MonoBehaviour {
 
     [HideInInspector]
     public Building buildingBeingPlaced = null;
-
-    [HideInInspector]
-    public BaseController mouseHoveringController = null;
 
     [HideInInspector]
     public BaseController selectableController = null;
@@ -81,6 +87,7 @@ public class PlayerManager : MonoBehaviour {
     void Init()
     {
         _controllerSelecting = GetComponent<ControllerSelecting>();
+        mouseHoveringController = new MouseHoveringController();
     }
 
     public void SetBuildingPlacementState(Building building)
@@ -181,19 +188,19 @@ public class PlayerManager : MonoBehaviour {
 
     void UpdateSelectableController()
     {
-        // Look for static Controller that occupies Tile first
-        BaseController newSelectableController = Grid.instance.GetControllerFromWorldPoint(mousePosition);
+        BaseController newSelectableController = SetMouseHoveringController();
 
-        // If not found, see if any units occupy nodes in Tiles
         if (newSelectableController == null)
         {
-            newSelectableController = Grid.instance.GetUnitFromWorldPoint(mousePosition);
-        }
-            
-        if (mouseHoveringController != null)
-        {
-            newSelectableController = mouseHoveringController;
-        }
+            // Look for static Controller that occupies Tile first
+            newSelectableController = Grid.instance.GetControllerFromWorldPoint(mousePosition);
+
+            // If not found, see if any units occupy nodes in Tiles
+            if (newSelectableController == null)
+            {
+                newSelectableController = Grid.instance.GetUnitFromWorldPoint(mousePosition);
+            }
+        }  
 
         // Only change mouse cursor when selectable controller changes
         if (newSelectableController != selectableController)
@@ -396,6 +403,56 @@ public class PlayerManager : MonoBehaviour {
         }
 
         EventManager.TriggerEvent("ActivateMoveUnitsIndicator");
+    }
+
+    private BaseController SetMouseHoveringController()
+    {
+        RaycastHit2D[] hits = Physics2D.RaycastAll(mousePosition, Vector2.zero);
+        
+        // Reset
+        mouseHoveringController.controller = null;
+        mouseHoveringController.priorityValue = -1;
+
+        // Iterate through all hit objects and see which one we should set as hovering to select
+        for(int i = 0; i < hits.Length; i++)
+        {
+            BaseController controller = hits[i].collider.gameObject.GetComponent<BaseController>();
+            int priority = GetHoveringPriorityOfSelectedController(controller);
+
+            if (priority == mouseHoveringController.priorityValue
+                && (controller.zIndex < mouseHoveringController.controller.zIndex))
+            {
+                mouseHoveringController.controller = controller;
+                mouseHoveringController.priorityValue = priority;
+            }
+
+            else if(priority > mouseHoveringController.priorityValue)
+            {
+                mouseHoveringController.controller = controller;
+                mouseHoveringController.priorityValue = priority;
+            }
+        }
+
+        return mouseHoveringController.controller;
+    }
+
+    int GetHoveringPriorityOfSelectedController(BaseController controller)
+    {
+        // Set priority
+        if (_controllerSelecting.SelectedUnitWhoCanAttack() && controller.playerID != myPlayerID)
+        {
+            return 2;
+        }
+
+        else if (controller.controllerType == CONTROLLER_TYPE.STATIC_RESOURCE)
+        {
+            return 1;
+        }
+
+        else
+        {
+            return 1;
+        }
     }
 
     public void StopAction()

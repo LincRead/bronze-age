@@ -15,7 +15,8 @@ public class BaseController : MonoBehaviour {
 
     public int playerID = 0;
 
-    protected float zIndex = 0;
+    [HideInInspector]
+    public float zIndex = 0;
 
     [HideInInspector]
     public bool selected = false;
@@ -107,15 +108,15 @@ public class BaseController : MonoBehaviour {
 
     void OnMouseEnter()
     {
-        PlayerManager.instance.mouseHoveringController = this;
+        //PlayerManager.instance.SetMouseHoveringController(this);
     }
 
     void OnMouseExit()
     {
-        if (PlayerManager.instance.mouseHoveringController == this)
+        /*if (PlayerManager.instance.mouseHoveringController == this)
         {
             PlayerManager.instance.mouseHoveringController = null;
-        }
+        }*/
     }
 
     public virtual void Select()
