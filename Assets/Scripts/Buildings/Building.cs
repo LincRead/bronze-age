@@ -181,6 +181,7 @@ public class Building : BaseController {
         _spriteRenderer.sprite = constructionSprites[0];
         _spriteRenderer.color = new Color(1f, 1f, 1f, 1f);
         _spriteRenderer.sortingLayerName = "Object";
+        _spriteRenderer.sortingOrder = 2;
 
         _selectedIndicatorRenderer.color = new Color(1f, 1f, 1f, 1f);
         _selectedIndicatorRenderer.enabled = false;
