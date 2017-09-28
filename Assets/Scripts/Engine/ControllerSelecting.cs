@@ -25,6 +25,9 @@ public class ControllerSelecting : MonoBehaviour {
     [HideInInspector]
     public BaseController selectedController = null;
 
+    [HideInInspector]
+    public bool attemptedToSelectMultiple = false;
+
     protected float timeSinceLastSingleUnitSelected = 0.0f;
     protected float doubleClickUnitTime = 1.0f;
     protected UnitStateController lastSelectedUnit;
@@ -97,11 +100,13 @@ public class ControllerSelecting : MonoBehaviour {
 
         if (Vector2.Distance(mousePosScreenToWorldPointStart, mousePosScreenToWorldPointEnd) < .1f)
         {
+            attemptedToSelectMultiple = false;
             SelectController();
         }
 
         else
         {
+            attemptedToSelectMultiple = true;
             FindUnitsToSelect(selectionRect);
         }
 

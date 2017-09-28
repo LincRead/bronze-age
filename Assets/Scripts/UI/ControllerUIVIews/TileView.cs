@@ -13,9 +13,9 @@ public class TileView : ControllerUIView
 
         switch (tile.fertilityPoints)
         {
-            case 3: ui.UpdateTitle("Mud"); break;
+            case 3: ui.UpdateTitle("Wetlands"); break;
             case 2: ui.UpdateTitle("Grass"); break;
-            case 1: ui.UpdateTitle("Steppe"); break;
+            case 1: ui.UpdateTitle("Plain"); break;
             case 0: ui.UpdateTitle("Dessert"); break;
         }
 

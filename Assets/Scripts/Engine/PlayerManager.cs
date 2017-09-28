@@ -8,12 +8,9 @@ public class PlayerManager : MonoBehaviour {
     [HideInInspector]
     public static int myPlayerID = 0;
 
-    // 0 - Paleolithic
-    // 1 - Mesolithic
-    // 2 - Neolithic
-    // 3 - Calcholithic
-    // 4 - Early Bronze Age
-    // 5 - Bronze Age
+    // 0 - Tribe
+    // 1 - Settlement
+    // 2 - City-State
     public int currentAge = 0;
 
     public enum PLAYER_ACTION_STATE
@@ -221,8 +218,8 @@ public class PlayerManager : MonoBehaviour {
             }
         }
 
-        // No Controllers selected,so  see if we can select a Tile instead and show info about it
-        if(selectableController == null)
+        // No Controllers selected, so see if we can select a Tile instead and show info about it
+        if(selectableController == null && !_controllerSelecting.attemptedToSelectMultiple)
         {
             selectedTile = Grid.instance.GetTileFromWorldPoint(mousePosition);
 
