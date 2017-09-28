@@ -7,6 +7,7 @@ public class ProductionTooltip : MonoBehaviour {
 
     public Text title;
     public Text description;
+    public Text requiresTitle;
 
     public Image[] resourceIcons;
     public Text[] resourceAmounts;
@@ -26,6 +27,7 @@ public class ProductionTooltip : MonoBehaviour {
     {
         // Reset
         numItemsRequired = 0;
+        requiresTitle.enabled = false;
 
         AddRequired(iconsObject.icons[1], data.population);
         AddRequired(iconsObject.icons[2], data.food);
@@ -33,7 +35,7 @@ public class ProductionTooltip : MonoBehaviour {
         AddRequired(iconsObject.icons[4], data.metal);
         AddRequired(iconsObject.icons[4], data.copper);
 
-        for(int i = numItemsRequired; i < resourceIcons.Length; i++)
+        for (int i = numItemsRequired; i < resourceIcons.Length; i++)
         {
             resourceIcons[i].enabled = false;
             resourceAmounts[i].enabled = false;
@@ -42,7 +44,14 @@ public class ProductionTooltip : MonoBehaviour {
 
     void AddRequired(Sprite icon, int amount)
     {
-        if(amount <= 0 || numItemsRequired >= resourceIcons.Length)
+        if (amount <= 0)
+        {
+            return;
+        }
+
+        requiresTitle.enabled = true;
+
+        if (numItemsRequired >= resourceIcons.Length)
         {
             return;
         }
