@@ -462,6 +462,7 @@ public class Building : BaseController {
         if (_buildingStats.timber > 0) PlayerDataManager.instance.AddTimberForPlayer(_buildingStats.timber * factor, playerID);
         if (_buildingStats.wealth > 0) PlayerDataManager.instance.AddMetalForPlayer(_buildingStats.wealth * factor, playerID);
         if (_buildingStats.metal > 0) PlayerDataManager.instance.AddMetalForPlayer(_buildingStats.metal * factor, playerID);
+        if (_buildingStats.newCitizens > 0) PlayerDataManager.instance.AddNewCitizensForPlayer(_buildingStats.newCitizens * factor, playerID);
     }
 
     void UseResourcesForProduction(int factor)
@@ -472,7 +473,9 @@ public class Building : BaseController {
 
         if (data.food > 0) PlayerDataManager.instance.AddFoodStockForPlayer(data.food * factor, playerID);
         if (data.timber > 0) PlayerDataManager.instance.AddTimberForPlayer(data.timber * factor, playerID);
+        if (data.wealth > 0) PlayerDataManager.instance.AddWealthForPlayer(data.wealth * factor, playerID);
         if (data.metal > 0) PlayerDataManager.instance.AddMetalForPlayer(data.metal * factor, playerID);
+        if (data.newCitizens > 0) PlayerDataManager.instance.AddNewCitizensForPlayer(data.newCitizens * factor, playerID);
     }
 
     public void FinishedProduction()

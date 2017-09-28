@@ -58,7 +58,7 @@ public class PlayerDataManager : MonoBehaviour
             newPlayerData.timber = playerStartingResources.timber;
             newPlayerData.wealth = playerStartingResources.wealth;
             newPlayerData.metal = playerStartingResources.metal;
-            newPlayerData.population = playerStartingResources.newCitizens;
+            newPlayerData.newCitizens = playerStartingResources.newCitizens;
         }
     }
 
@@ -93,6 +93,16 @@ public class PlayerDataManager : MonoBehaviour
         if (player == PlayerManager.myPlayerID)
         {
             EventManager.TriggerEvent("UpdateHousingStockUI");
+        }
+    }
+
+    public void AddNewCitizensForPlayer(int value, int player)
+    {
+        playerData[player].newCitizens += value;
+
+        if (player == PlayerManager.myPlayerID)
+        {
+            EventManager.TriggerEvent("UpdateNewCitizensStockUI");
         }
     }
 
@@ -158,7 +168,7 @@ public class PlayerDataManager : MonoBehaviour
             case RESOURCE_TYPE.FOOD: AddFoodStockForPlayer(value, player); break;
             case RESOURCE_TYPE.WOOD: AddTimberForPlayer(value, player); break;
             case RESOURCE_TYPE.METAL: AddMetalForPlayer(value, player); break;
-            //case RESOURCE_TYPE.FOOD: AddWealthForPlayer(value, player); break;
+            case RESOURCE_TYPE.WEALTH: AddWealthForPlayer(value, player); break;
         }
     }
 }
