@@ -43,10 +43,9 @@ public class ProductionButtonData : ScriptableObject {
     public string requiredTechnology;
 
     [Header("Required resources")]
-    public int timber = 0;
-    public int metal = 0;
     public int food = 0;
-    public int copper = 0;
-    public int bronze = 0;
-    public int population = 0;
+    public int timber = 0;
+    public int wealth = 0;
+    public int metal = 0;
+    public int newCitizens = 0;
 }

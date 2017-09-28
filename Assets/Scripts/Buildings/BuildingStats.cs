@@ -31,11 +31,14 @@ public class BuildingStats : DefaultStats
     public int food = 0;
 
     [HideInInspector]
+    public int wealth = 0;
+
+    [HideInInspector]
     public int timber = 0;
 
     [HideInInspector]
     public int metal = 0;
 
     [HideInInspector]
-    public int population = 0;
+    public int newCitizens = 0;
 }

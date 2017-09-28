@@ -29,11 +29,12 @@ public class ProductionTooltip : MonoBehaviour {
         numItemsRequired = 0;
         requiresTitle.enabled = false;
 
-        AddRequired(iconsObject.icons[1], data.population);
+        AddRequired(iconsObject.icons[1], data.newCitizens);
         AddRequired(iconsObject.icons[2], data.food);
         AddRequired(iconsObject.icons[3], data.timber);
-        AddRequired(iconsObject.icons[4], data.metal);
-        AddRequired(iconsObject.icons[4], data.copper);
+        AddRequired(iconsObject.icons[4], data.wealth);
+        AddRequired(iconsObject.icons[5], data.metal);
+
 
         for (int i = numItemsRequired; i < resourceIcons.Length; i++)
         {

@@ -132,10 +132,9 @@ public class Building : BaseController {
     public void SetRequiredResources(ProductionButtonData data)
     {
         _buildingStats.food = data.food;
-
         _buildingStats.timber = data.timber;
         _buildingStats.metal = data.metal;
-        _buildingStats.population = data.population;
+        _buildingStats.newCitizens = data.newCitizens;
     }
 
     void SetupHealthBar()
@@ -188,6 +187,12 @@ public class Building : BaseController {
 
         Grid.instance.SetTilesOccupiedByController(this);
         PlayerManager.instance.PlacedBuilding(this);
+
+        // Placed during gameplays
+        if(!WorldManager.firstUpdate)
+        {
+            UseResourcesForConstruction(-1);
+        }
     }
 
     protected override void Update()
@@ -222,7 +227,7 @@ public class Building : BaseController {
             {
                 if(HaveRequiredResourcesToProduce())
                 {
-                    UseResources(-1);
+                    UseResourcesForProduction(-1);
                     startedProduction = true;
                 }
             }
@@ -427,7 +432,7 @@ public class Building : BaseController {
         return playerData.foodStock >= _buildingStats.food
             && playerData.timber >= _buildingStats.timber
             && playerData.metal >= _buildingStats.metal
-            && playerData.population >= _buildingStats.population;
+            && playerData.population >= _buildingStats.newCitizens;
     }
 
     public bool HaveRequiredResourcesToProduce()
@@ -443,10 +448,20 @@ public class Building : BaseController {
         return playerData.foodStock >= data.food
             && playerData.timber >= data.timber
             && playerData.metal >= data.metal
-            && playerData.newCitizens >= data.population;
+            && playerData.newCitizens >= data.newCitizens;
     }
 
-    void UseResources(int factor)
+    void UseResourcesForConstruction(int factor)
+    {
+        int playerID = PlayerManager.myPlayerID;
+
+        if (_buildingStats.food > 0) PlayerDataManager.instance.AddFoodStockForPlayer(_buildingStats.food * factor, playerID);
+        if (_buildingStats.timber > 0) PlayerDataManager.instance.AddTimberForPlayer(_buildingStats.timber * factor, playerID);
+        if (_buildingStats.wealth > 0) PlayerDataManager.instance.AddMetalForPlayer(_buildingStats.wealth * factor, playerID);
+        if (_buildingStats.metal > 0) PlayerDataManager.instance.AddMetalForPlayer(_buildingStats.metal * factor, playerID);
+    }
+
+    void UseResourcesForProduction(int factor)
     {
         int playerID = PlayerManager.myPlayerID;
 
@@ -505,7 +520,7 @@ public class Building : BaseController {
         // Give back resources
         if (startedProduction)
         {
-            UseResources(1);
+            UseResourcesForProduction(1);
         }
         
         // Once off production no longer in queue
@@ -583,7 +598,8 @@ public class Building : BaseController {
     {
         if(!constructed)
         {
-            // Todo: give back resources
+            // Give back resources
+            UseResourcesForConstruction(1);
 
             Kill();
         }
