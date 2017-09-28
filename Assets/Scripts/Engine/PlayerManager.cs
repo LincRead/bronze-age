@@ -433,10 +433,10 @@ public class PlayerManager : MonoBehaviour {
                 {
                     selectedUnits[i].MoveTo(mousePosition);
                 }
+
+                EventManager.TriggerEvent("ActivateMoveUnitsIndicator");
             }
         }
-
-        EventManager.TriggerEvent("ActivateMoveUnitsIndicator");
     }
 
     private BaseController SetMouseHoveringController()
