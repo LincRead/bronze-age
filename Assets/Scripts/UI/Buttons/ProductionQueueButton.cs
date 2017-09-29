@@ -30,6 +30,11 @@ public class ProductionQueueButton : UnitUIButton
         _icon.sprite = newIconSprite;
 
         number.enabled = false;
+
+        if (hovered)
+        {
+            ShowTooltip();
+        }
     }
 
     public void DeactivateIcon()
@@ -38,5 +43,10 @@ public class ProductionQueueButton : UnitUIButton
 
         _icon.enabled = false;
         number.enabled = true;
+
+        if (hovered)
+        {
+            HideTooltip();
+        }
     }
 }
