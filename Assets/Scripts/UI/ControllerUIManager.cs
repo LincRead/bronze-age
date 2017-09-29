@@ -265,10 +265,9 @@ public class ControllerUIManager : MonoBehaviour {
                 break;
         }
 
+        HideTooltip();
         currentView.OnEnter(this, controller);
         currentViewType = viewType;
-
-        HideTooltip();
 
         if(currentViewType == CONTROLLER_UI_VIEW.NONE)
         {

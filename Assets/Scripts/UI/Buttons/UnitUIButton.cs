@@ -29,7 +29,9 @@ public class UnitUIButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
             && _button.enabled
             && _button.interactable
             && Input.GetKeyDown(hotkey))
+        {
             OnClick();
+        }
     }
 	
 	protected virtual void OnClick()
@@ -53,17 +55,11 @@ public class UnitUIButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     protected virtual void ShowTooltip()
     {
-        if (!tooltip.Equals("?"))
-        {
-            ControllerUIManager.instance.ShowTooltipDefault(tooltip);
-        }
+        ControllerUIManager.instance.ShowTooltipDefault(tooltip);
     }
 
     protected virtual void HideTooltip()
     {
-        if (!tooltip.Equals("?"))
-        {
-            ControllerUIManager.instance.HideTooltip();
-        }
+        ControllerUIManager.instance.HideTooltip();
     }
 }
