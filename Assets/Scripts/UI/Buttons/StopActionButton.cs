@@ -9,6 +9,8 @@ public class StopActionButton : UnitUIButton
     {
         PlayerManager.instance.StopAction();
 
+        // If button is still here after cancelling production,
+        // make sure we continue to show Tooltip
         if(isActiveAndEnabled)
         {
             ShowTooltip();
