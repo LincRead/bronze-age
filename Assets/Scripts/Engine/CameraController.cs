@@ -115,25 +115,25 @@ public class CameraController : MonoBehaviour {
         Vector3 newCameraPos = _transform.position;
         bool movingByKey = false;
 
-        if (Input.GetKey(KeyCode.LeftArrow) || (Input.GetKey(KeyCode.A)))
+        if (Input.GetKey(KeyCode.LeftArrow))
         {
             newCameraPos.x -= scrollSpeed * Time.deltaTime;
             movingByKey = true;
         }
 
-        if (Input.GetKey(KeyCode.RightArrow) || (Input.GetKey(KeyCode.D)))
+        if (Input.GetKey(KeyCode.RightArrow))
         {
             newCameraPos.x += scrollSpeed * Time.deltaTime;
             movingByKey = true;
         }
 
-        if (Input.GetKey(KeyCode.UpArrow) || (Input.GetKey(KeyCode.W)))
+        if (Input.GetKey(KeyCode.UpArrow))
         {
             newCameraPos.y += scrollSpeed * Time.deltaTime;
             movingByKey = true;
         }
 
-        if (Input.GetKey(KeyCode.DownArrow) || (Input.GetKey(KeyCode.S)))
+        if (Input.GetKey(KeyCode.DownArrow))
         {
             newCameraPos.y -= scrollSpeed * Time.deltaTime;
             movingByKey = true;

@@ -326,6 +326,10 @@ public class Building : BaseController {
 
         stepsProduced += buildAmount * Time.deltaTime;
 
+        hitpointsLeft = (int)(maxHitPoints * GetPercentageProduced());
+        _healthBar.UpdateHitpointsPercent((int)stepsProduced, (int)stepsToProduce);
+        villagersWhoHasDoneActionThisUpdate++;
+
         if (stepsProduced >= stepsToProduce)
         {
             _spriteRenderer.sprite = constructionSprites[1];
@@ -336,10 +340,6 @@ public class Building : BaseController {
         {
             _spriteRenderer.sprite = constructionSprites[0];
         }
-
-        hitpointsLeft = (int)(maxHitPoints * GetPercentageProduced());
-        _healthBar.UpdateHitpointsPercent((int)stepsProduced, (int)stepsToProduce);
-        villagersWhoHasDoneActionThisUpdate++;
     }
 
     void Repair(float repairAmount)
@@ -371,6 +371,7 @@ public class Building : BaseController {
 
         _spriteRenderer.sprite = constructionSprites[1];
 
+        hitpointsLeft = maxHitPoints;
         _healthBar.UpdateHitpointsPercent(hitpointsLeft, maxHitPoints);
 
         AddPlayerStats();
@@ -398,6 +399,7 @@ public class Building : BaseController {
     {
         if (!inProductionProcess)
         {
+            stepsProduced = 0f;
             productionIndex = buttonIndex;
             stepsToProduce = productionButtonsData[buttonIndex].stepsRequired;
             inProductionProcess = true;
