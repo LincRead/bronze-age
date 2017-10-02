@@ -11,7 +11,7 @@ public class UnitMoveTo : UnitState
     protected Node endNode;
 
     protected float timeSinceRouteBlocked = 0.0f;
-    protected float timeBeforeGivingUpRoute = 0.5f;
+    protected float timeBeforeFindingNewRoute = 0.5f;
 
     public override void OnEnter(UnitStateController controller)
     {
@@ -110,7 +110,7 @@ public class UnitMoveTo : UnitState
         _controller.PlayIdleAnimation();
         timeSinceRouteBlocked += Time.deltaTime;
 
-        if (timeSinceRouteBlocked >= 1.0f)
+        if (timeSinceRouteBlocked >= timeBeforeFindingNewRoute)
         {
             HandleBeingBlockedFromPath();
             timeSinceRouteBlocked = 0.0f;

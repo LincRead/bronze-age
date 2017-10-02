@@ -307,7 +307,7 @@ public class UnitMoveToController : UnitMoveTo
             }
         }
 
-        else if(timeSinceRouteBlocked >= timeBeforeGivingUpRoute)
+        else if(timeSinceRouteBlocked >= timeBeforeFindingNewRoute)
         {
             FindPathToTarget();
             timeSinceRouteBlocked = 0.0f;
