@@ -121,7 +121,7 @@ public class Grid : MonoBehaviour {
 
                 tiles[x, y] = new Tile(true, worldPoint, x, y, this);
 
-                if (Random.value < 0.01f)
+                if (Random.value < 0.005f)
                 {
                     tiles[x, y].fertility = 30;
                     tiles[x, y].fertilityLocked = true;

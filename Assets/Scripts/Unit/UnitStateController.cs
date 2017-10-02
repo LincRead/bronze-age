@@ -542,6 +542,7 @@ public class UnitStateController : BaseController
             MoveTo(closestResource);
         }
 
+        // Didn't find any resource close by
         else
         {
             TransitionToState(idleState);

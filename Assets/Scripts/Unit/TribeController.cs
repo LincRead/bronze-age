@@ -51,6 +51,7 @@ public class TribeController : UnitStateController {
     {
         center.FinishConstruction();
         RemoveFromPathfinding();
+        DecreaseVisibilityOfTiles();
         Destroy(gameObject);
     }
 

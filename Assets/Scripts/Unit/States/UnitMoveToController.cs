@@ -30,6 +30,11 @@ public class UnitMoveToController : UnitMoveTo
     {
         if (_controller.targetController == null)
         {
+            if (_controller.goBackToResource)
+            {
+                _controller.MoveToResourcePos(_controller.lastResourceGatheredPosition);
+            }
+
             return;
         }
 
@@ -225,6 +230,7 @@ public class UnitMoveToController : UnitMoveTo
                 // Move to position
                 else if(_controller.goBackToResource)
                 {
+                    Debug.Log("Go back to resource");
                     _controller.MoveToResourcePos(_controller.lastResourceGatheredPosition);
                 }
 
@@ -273,7 +279,7 @@ public class UnitMoveToController : UnitMoveTo
             if (_controller._unitStats.isVillager)
             {
                 _controller.ignoreControllers.Add(_targetController);
-                _controller.SeekClosestResource(_targetController.title);
+                _controller.SeekClosestResource(_controller.resourceTitleCarrying);
             }
         }
 

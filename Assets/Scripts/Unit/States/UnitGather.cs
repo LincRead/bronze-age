@@ -58,8 +58,9 @@ public class UnitGather : UnitState {
             // resources to a delivery point
             _controller.lastResouceGathered = _resource;
             _controller.lastResourceGatheredPosition = _resource.GetPosition();
+            _controller.goBackToResource = true;
 
-            if(_controller.resourceTypeCarrying != _resource.resourceType)
+            if (_controller.resourceTypeCarrying != _resource.resourceType)
             {
                 CarryNewResource();
             }
@@ -73,7 +74,6 @@ public class UnitGather : UnitState {
         _controller.resoureAmountCarrying = 0;
         _controller.resourceTypeCarrying = _resource.resourceType;
         _controller.resourceTitleCarrying = _resource.title;
-        _controller.goBackToResource = true;
     }
 
     public override void CheckTransitions()
