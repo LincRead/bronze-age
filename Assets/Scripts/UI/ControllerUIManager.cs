@@ -206,6 +206,7 @@ public class ControllerUIManager : MonoBehaviour {
         ChangeView(CONTROLLER_UI_VIEW.NONE, null);
     }
 
+    // Don't run OnExit unless view actually changes.
     public void ChangeView(CONTROLLER_UI_VIEW viewType, BaseController controller)
     {
         lastViewType = currentViewType;
@@ -278,6 +279,16 @@ public class ControllerUIManager : MonoBehaviour {
         {
             infoBackground.GetComponent<Image>().enabled = true;
         }
+    }
+
+    public void ChangeAndResetView(CONTROLLER_UI_VIEW viewType, BaseController controller)
+    {
+        // Make sure OnExit is also run when restarting.
+        currentView.OnExit();
+
+        currentViewType = viewType;
+
+        ChangeView(viewType, controller);
     }
 
     public void GoBackToLastView()

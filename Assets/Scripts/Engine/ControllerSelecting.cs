@@ -177,14 +177,22 @@ public class ControllerSelecting : MonoBehaviour {
     {
         if (selectedUnits.Count > 1)
         {
-            ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.SELECTED_UNITS, null);
+            if(selectedGatherers.Count > 0)
+            {
+                ControllerUIManager.instance.ChangeAndResetView(ControllerUIManager.CONTROLLER_UI_VIEW.VILLAGER, selectedUnits[0]);
+            }
+
+            else
+            {
+                ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.SELECTED_UNITS, null);
+            }
         }
 
         else if(selectedUnits.Count > 0)
         {
             if(selectedUnits[0]._unitStats.isVillager)
             {
-                ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.VILLAGER, selectedUnits[0]);
+                ControllerUIManager.instance.ChangeAndResetView(ControllerUIManager.CONTROLLER_UI_VIEW.VILLAGER, selectedUnits[0]);
             }
 
             else if(!selectedUnits[0]._unitStats.canAttack)

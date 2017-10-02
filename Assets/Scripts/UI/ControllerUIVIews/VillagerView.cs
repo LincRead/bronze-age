@@ -21,6 +21,7 @@ public class VillagerView : UnitView
 
         if (_controller.playerID == PlayerManager.myPlayerID)
         {
+            EventManager.TriggerEvent("DisableBuildingsView");
             EventManager.TriggerEvent("DisableVillagerView");
         }
     }
