@@ -181,6 +181,15 @@ public class PlayerManager : MonoBehaviour {
 
                 break;
 
+            case PLAYER_ACTION_STATE.PLACING_BUILDING:
+
+                if (Input.GetMouseButtonUp(1))
+                {
+                    CancelPlaceBuildingState();
+                }
+
+                break;
+
             default:
                 break;
         }
