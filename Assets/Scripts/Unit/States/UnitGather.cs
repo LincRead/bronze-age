@@ -13,10 +13,15 @@ public class UnitGather : UnitState {
     {
         base.OnEnter(controller);
 
+        data = PlayerDataManager.instance.GetPlayerData(_controller.playerID);
+
         harvestProgress = 0.0f;
 
         _resource = _controller.targetController.GetComponent<Resource>();
-        data = PlayerDataManager.instance.GetPlayerData(_controller.playerID);
+
+        // Remember so we can go back to continue harvesting after derlivering
+        // resources to a delivery point
+        _controller.lastResouceGathered = _resource;
 
         PlayGatherAnimation();
     }
@@ -54,12 +59,6 @@ public class UnitGather : UnitState {
 
             harvestProgress = 0.0f;
 
-            // Remember so we can go back to continue harvesting after derlivering
-            // resources to a delivery point
-            _controller.lastResouceGathered = _resource;
-            _controller.lastResourceGatheredPosition = _resource.GetPosition();
-            _controller.goBackToResource = true;
-
             if (_controller.resourceTypeCarrying != _resource.resourceType)
             {
                 CarryNewResource();
@@ -73,7 +72,6 @@ public class UnitGather : UnitState {
     {
         _controller.resoureAmountCarrying = 0;
         _controller.resourceTypeCarrying = _resource.resourceType;
-        _controller.resourceTitleCarrying = _resource.title;
     }
 
     public override void CheckTransitions()
@@ -88,18 +86,26 @@ public class UnitGather : UnitState {
             }
         }
 
-        else
-        {
-            if (_controller.resoureAmountCarrying >= data.villagerCarryLimit)
-            {
-                _controller.seekClosestResourceDeliveryPoint();
-                return;
-            }
-        }
-
-        if(_resource.depleted)
+        // Go back with harvested resources
+        else if (_controller.resoureAmountCarrying >= data.villagerCarryLimit)
         {
             _controller.seekClosestResourceDeliveryPoint();
+            return;
+        }
+
+        else if(_resource.depleted)
+        {
+            // Don't reliver if not carrying any resources
+            if (_controller.resoureAmountCarrying == 0)
+            {
+                _controller.SeekClosestResource(_controller.resourceTitleCarrying);
+            }   
+
+            // Deliver back whatever we were able to gather by the time resource depleted
+            else
+            {
+                _controller.seekClosestResourceDeliveryPoint();
+            }
         }
     }
 }

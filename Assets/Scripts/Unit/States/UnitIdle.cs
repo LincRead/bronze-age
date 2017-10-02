@@ -14,10 +14,7 @@ public class UnitIdle : UnitState
 
     protected override void PlayAnimation()
     {
-        if (!_controller._animator.GetCurrentAnimatorStateInfo(0).IsName("idle"))
-        {
-            _controller._animator.Play("idle", -1, 0.0f);
-        }
+        _controller.PlayIdleAnimation();
     }
 
     public override void OnExit()

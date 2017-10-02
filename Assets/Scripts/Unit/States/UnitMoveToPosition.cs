@@ -25,14 +25,7 @@ public class UnitMoveToPosition : UnitMoveTo
     }
 
     public override void CheckTransitions()
-    {
-        // No path to follow
-        if (endNode == null || timeSinceRouteBlocked >= timeBeforeGivingUpRoute)
-        {
-            _controller.TransitionToState(_controller.idleState);
-            return;
-        }
-           
+    {  
         // Reached target node
         if (nextTargetNode == endNode
             && Vector2.Distance(_transform.position, endNode.worldPosition) < 0.01f)
@@ -40,9 +33,8 @@ public class UnitMoveToPosition : UnitMoveTo
             _controller.TransitionToState(_controller.idleState);
         }
 
-        // Didn't find path
-        // Do this check last
-        else if (_pathfinder.path.Count == 0 && endNode != _pathfinder.currentStandingOnNode)
+        // No path to follow
+        if (endNode == null)
         {
             _controller.TransitionToState(_controller.idleState);
         }

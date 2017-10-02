@@ -16,4 +16,9 @@ public class UnitMoveBackToResource : UnitMoveToController
 
         base.ReachedNextTargetNode();
     }
+
+    protected override void HandleBeingBlockedFromPath()
+    {
+        _controller.SeekClosestResource(_controller.resourceTitleCarrying);
+    }
 }

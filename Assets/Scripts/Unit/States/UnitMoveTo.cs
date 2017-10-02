@@ -58,6 +58,7 @@ public class UnitMoveTo : UnitState
         else
         {
             velocity = Vector2.zero;
+            WaitToMove();
             return;
         }
 
@@ -105,8 +106,20 @@ public class UnitMoveTo : UnitState
 
     void WaitToMove()
     {
-        timeSinceRouteBlocked += Time.deltaTime;
         velocity = Vector2.zero;
+        _controller.PlayIdleAnimation();
+        timeSinceRouteBlocked += Time.deltaTime;
+
+        if (timeSinceRouteBlocked >= 1.0f)
+        {
+            HandleBeingBlockedFromPath();
+            timeSinceRouteBlocked = 0.0f;
+        }
+    }
+
+    protected virtual void HandleBeingBlockedFromPath()
+    {
+        FindPathToTarget();
     }
 
     protected virtual void ReachedNextTargetNode()
@@ -132,6 +145,16 @@ public class UnitMoveTo : UnitState
     public override void DoActions()
     {
         MoveToTarget();
+
+        if(velocity == Vector2.zero)
+        {
+            _controller.PlayIdleAnimation();
+        }
+
+        else
+        {
+            PlayAnimation();
+        }
 
         _controller.ExecuteMovement(velocity);
         _controller.FaceMoveDirection(velocity);

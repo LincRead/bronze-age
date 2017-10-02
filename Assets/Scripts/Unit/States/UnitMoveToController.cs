@@ -14,6 +14,13 @@ public class UnitMoveToController : UnitMoveTo
         _targetController = _controller.targetController;
         _targetControllerPosition = _targetController.GetPosition();
 
+        if(_targetController.controllerType == CONTROLLER_TYPE.STATIC_RESOURCE)
+        {
+            // Remember so we can go back to continue harvesting after derlivering
+            // resources to a delivery point
+            _controller.lastResourceGatheredPosition = _targetControllerPosition;
+        }
+
         FindPathToTarget();
 
         if(_pathfinder.path.Count > 0)
@@ -28,13 +35,9 @@ public class UnitMoveToController : UnitMoveTo
 
     protected override void FindPathToTarget()
     {
-        if (_controller.targetController == null)
+        if(_targetController == null)
         {
-            if (_controller.goBackToResource)
-            {
-                _controller.MoveToResourcePos(_controller.lastResourceGatheredPosition);
-            }
-
+            HandleTargetControllerIsDestroyed();
             return;
         }
 
@@ -84,7 +87,7 @@ public class UnitMoveToController : UnitMoveTo
     {
         if (_controller.targetController == null)
         {
-            _controller.MoveTo(_targetControllerPosition);
+            HandleTargetControllerIsDestroyed();
             return;
         }
 
@@ -205,8 +208,7 @@ public class UnitMoveToController : UnitMoveTo
                 }
 
                 // Special case for Tribe unit reaching Camp building
-                else if (_controller._unitStats.isTribe
-                    && _targetController == PlayerManager.instance.civilizationCenter)
+                else if (_controller._unitStats.isTribe && _targetController == PlayerManager.instance.civilizationCenter)
                 {
                     _controller.GetComponent<TribeController>().SetupCamp(_targetController.GetComponent<CivilizationCenter>());
                 }
@@ -215,32 +217,7 @@ public class UnitMoveToController : UnitMoveTo
             // Drop resources?
             else if(_controller.resoureAmountCarrying > 0 && targetBuilding.resourceDeliveryPoint)
             {
-                // Drop resources
-                PlayerDataManager.instance.AddResourceForPlayer(
-                    _controller.resoureAmountCarrying,
-                    _controller.playerID,
-                    _controller.resourceTypeCarrying);
-
-                // Go back to target resource
-                if(_controller.lastResouceGathered != null)
-                {
-                    _controller.MoveToResource(_controller.lastResouceGathered);
-                }
-               
-                // Move to position
-                else if(_controller.goBackToResource)
-                {
-                    Debug.Log("Go back to resource");
-                    _controller.MoveToResourcePos(_controller.lastResourceGatheredPosition);
-                }
-
-                else
-                {
-                    _controller.TransitionToState(_controller.idleState);
-                }
-
-                // Reset
-                _controller.resoureAmountCarrying = 0;
+                HandleResourceDrop();
             }
 
             else
@@ -253,6 +230,36 @@ public class UnitMoveToController : UnitMoveTo
         {
             _controller.TransitionToState(_controller.attackState);
         }
+    }
+
+    void HandleResourceDrop()
+    {
+        // Drop resources
+        PlayerDataManager.instance.AddResourceForPlayer(
+            _controller.resoureAmountCarrying,
+            _controller.playerID,
+            _controller.resourceTypeCarrying);
+
+        // Go back to target resource
+        if (_controller.lastResouceGathered != null)
+        {
+            _controller.MoveToResource(_controller.lastResouceGathered);
+        }
+
+        // Move to the position of the now depleted resource
+        else if (_controller.harvestingResource)
+        {
+            _controller.MoveToResourcePos(_controller.lastResourceGatheredPosition);
+        }
+
+        // We clicked manually to deliver resource, so stop at delivery point
+        else
+        {
+            _controller.TransitionToState(_controller.idleState);
+        }
+
+        // Reset how much we are carrying
+        _controller.resoureAmountCarrying = 0;
     }
 
     void ReachedTargetStaticResource()
@@ -268,24 +275,42 @@ public class UnitMoveToController : UnitMoveTo
         }
     }
 
+    void HandleTargetControllerIsDestroyed()
+    {
+        if (_controller.harvestingResource)
+        {
+            _controller.MoveToResourcePos(_controller.lastResourceGatheredPosition);
+        }
+
+        else
+        {
+            _controller.MoveTo(_targetControllerPosition);
+        }
+    }
+
     protected void HandleNoPathToTargetControllerFound()
     {
+        if (_targetController == null)
+        {
+            HandleTargetControllerIsDestroyed();
+        }
+
         // Only seek resources close by if we are close to target resource
-        if (_targetController.controllerType == CONTROLLER_TYPE.STATIC_RESOURCE
+        else if (_targetController.controllerType == CONTROLLER_TYPE.STATIC_RESOURCE
             && Grid.instance.GetDistanceBetweenNodes(
                 _controller._pathfinder.currentStandingOnNode, 
                 _targetController.GetPrimaryNode()) <= _controller._unitStats.visionRange * 10)
         {
             if (_controller._unitStats.isVillager)
             {
-                _controller.ignoreControllers.Add(_targetController);
                 _controller.SeekClosestResource(_controller.resourceTitleCarrying);
             }
         }
 
-        else
+        else if(timeSinceRouteBlocked >= timeBeforeGivingUpRoute)
         {
-            _controller.TransitionToState(_controller.idleState);
+            FindPathToTarget();
+            timeSinceRouteBlocked = 0.0f;
         }
     }
 }

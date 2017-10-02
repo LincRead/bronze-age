@@ -417,7 +417,21 @@ public class PlayerManager : MonoBehaviour {
                 if(selectedUnits[i]._unitStats.isVillager)
                 {
                     selectedUnits[i].lastResouceGathered = null;
-                    selectedUnits[i].goBackToResource = false;
+
+                    if(selectableController.controllerType == CONTROLLER_TYPE.STATIC_RESOURCE)
+                    {
+                        selectedUnits[i].harvestingResource = true;
+                        
+                        // Remember so we can go back to continue harvesting after derlivering
+                        // resources to a delivery point, or find a similair resource if it gets depleted by the time we reach it.
+                        selectedUnits[i].lastResourceGatheredPosition = selectableController.GetPosition();
+                        selectedUnits[i].resourceTitleCarrying = selectableController.title;
+                    }
+                    
+                    else
+                    {
+                        selectedUnits[i].harvestingResource = false;
+                    }
                 }
             }
 

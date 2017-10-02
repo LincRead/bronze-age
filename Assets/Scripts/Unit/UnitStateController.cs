@@ -6,6 +6,8 @@ public class UnitStateController : BaseController
 {
     public UnitStats _unitStats;
 
+    [Header("Debug")]
+
     [HideInInspector]
     public Animator _animator;
 
@@ -58,10 +60,10 @@ public class UnitStateController : BaseController
     [HideInInspector]
     public UnitDie dieState;
 
-    [HideInInspector]
+    //[HideInInspector]
     public UnitState currentState;
 
-    [HideInInspector]
+    //[HideInInspector]
     public bool isMoving = false;
 
     [HideInInspector]
@@ -103,7 +105,7 @@ public class UnitStateController : BaseController
     public Vector3 lastResourceGatheredPosition;
 
     [HideInInspector]
-    public bool goBackToResource = false;
+    public bool harvestingResource = false;
 
     [HideInInspector]
     public string resourceTitleCarrying;
@@ -608,6 +610,14 @@ public class UnitStateController : BaseController
         base.Deselect();
 
         _healthBar.Deactivate();
+    }
+
+    public void PlayIdleAnimation()
+    {
+        if (!_animator.GetCurrentAnimatorStateInfo(0).IsName("idle"))
+        {
+            _animator.Play("idle", -1, 0.0f);
+        }
     }
 
     void OnDrawGizmos()

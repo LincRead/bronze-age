@@ -121,14 +121,19 @@ public class Pathfinding : MonoBehaviour {
         }
 
         else
+        {
             FindPath(endNode.worldPosition);
+        }
     }
 
     public void FindPath(Vector2 endPos)
     {
         destinationNode = grid.GetNodeFromWorldPoint(endPos);
+
         if (destinationNode == null)
+        {
             return;
+        }
 
         startNode = currentStandingOnNode;
         Heap<Node> openSet = new Heap<Node>(grid.MaxSize);
