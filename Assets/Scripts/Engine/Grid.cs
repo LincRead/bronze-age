@@ -507,22 +507,48 @@ public class Grid : MonoBehaviour {
                 {
                     Tile tileToOccupy = GetTileFromGridPos(tile.gridPosX + i, tile.gridPosY + j);
 
-                    // If a controller already stands here, remove me
+                    // If a controller already stands here
                     if(tileToOccupy.controllerOccupying != null && controller != tileToOccupy.controllerOccupying)
                     {
+                        // Remove the other
                         if(controller.controllerType == CONTROLLER_TYPE.BUILDING)
                         {
                             tileToOccupy.controllerOccupying.Destroy();
+
+                            // Set this tile as occupied by building
+                            tileToOccupy.controllerOccupying = controller;
+                            tileToOccupy.SetUnwalkable();
+
+                            // Reset for all other tiles the controller occupies, 
+                            // because destroying a controller sets all tiles it occupied to not occupying any controllers
+                            SetTilesOccupiedByController(controller);
                         }
 
+                        // Remove me
                         else
                         {
+                            // Keep reference so we can reset that this controller occipies all tiles it does.
+                            BaseController currentOccupyingController = tileToOccupy.controllerOccupying;
+
+                            // Destroy me if controller already is occupying this tile, and I'm not a building.
                             controller.Destroy();
+
+                            // Tile should still be occupied by previous occupying controller
+                            tileToOccupy.controllerOccupying = currentOccupyingController;
+                            tileToOccupy.SetUnwalkable();
+
+                            // Reset for all other tiles the controller occupies, 
+                            // because destroying a controller sets all tiles it occupied to not occupying any controllerss
+                            SetTilesOccupiedByController(currentOccupyingController);
                         }
                     }
 
-                    tileToOccupy.SetUnwalkable();
-                    tileToOccupy.controllerOccupying = controller;
+                    else
+                    {
+                        // Set this tile as occupied by building
+                        tileToOccupy.controllerOccupying = controller;
+                        tileToOccupy.SetUnwalkable();
+                    }
                 }
             }
         }
@@ -555,6 +581,12 @@ public class Grid : MonoBehaviour {
             if(tiles[i].controllerOccupying != null && tiles[i].controllerOccupying != ignore)
             {
                 tiles[i].controllerOccupying.Destroy();
+                
+                // Keep reference
+                if(ignore != null)
+                {
+                    tiles[i].controllerOccupying = ignore;
+                }
             }
         }
     }
