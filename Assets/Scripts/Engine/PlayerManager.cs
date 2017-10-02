@@ -440,6 +440,9 @@ public class PlayerManager : MonoBehaviour {
                     else
                     {
                         selectedUnits[i].harvestingResource = false;
+
+                        // Show that we are moving to the controller's loaction
+                        EventManager.TriggerEvent("ActivateMoveUnitsIndicator");
                     }
                 }
             }
@@ -459,6 +462,7 @@ public class PlayerManager : MonoBehaviour {
                     selectedUnits[i].MoveTo(mousePosition);
                 }
 
+                // Show which location we are moving to
                 EventManager.TriggerEvent("ActivateMoveUnitsIndicator");
             }
         }
