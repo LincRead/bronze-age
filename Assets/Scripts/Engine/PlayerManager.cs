@@ -219,7 +219,9 @@ public class PlayerManager : MonoBehaviour {
         }
 
         // No Controllers selected, so see if we can select a Tile instead and show info about it
-        if(selectableController == null && !_controllerSelecting.attemptedToSelectMultiple)
+        if(selectableController == null 
+            && !CursorHoveringUI.value
+            && !_controllerSelecting.attemptedToSelectMultiple)
         {
             selectedTile = Grid.instance.GetTileFromWorldPoint(mousePosition);
 
