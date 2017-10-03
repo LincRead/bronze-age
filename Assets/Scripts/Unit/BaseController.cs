@@ -7,7 +7,7 @@ public enum CONTROLLER_TYPE
 {
     UNIT,
     ANIMAL,
-    STATIC_RESOURCE,
+    RESOURCE,
     BUILDING
 };
 

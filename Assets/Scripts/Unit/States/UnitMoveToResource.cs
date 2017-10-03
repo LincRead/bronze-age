@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class UnitMoveToResourcePosition : UnitMoveToPosition
 {
+    public override void OnEnter(UnitStateController controller)
+    {
+        base.OnEnter(controller);
+
+        _controller.harvestingResource = true;
+    }
+
     public override void CheckTransitions()
     {
         // Reached target node

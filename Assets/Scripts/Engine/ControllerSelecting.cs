@@ -148,7 +148,7 @@ public class ControllerSelecting : MonoBehaviour {
                 SelectBuilding();
             }
 
-            if(selectedController.controllerType == CONTROLLER_TYPE.STATIC_RESOURCE)
+            if(selectedController.controllerType == CONTROLLER_TYPE.RESOURCE)
             {
                 SelectResource();
             }

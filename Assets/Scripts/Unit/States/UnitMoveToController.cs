@@ -14,7 +14,7 @@ public class UnitMoveToController : UnitMoveTo
         _targetController = _controller.targetController;
         _targetControllerPosition = _targetController.GetPosition();
 
-        if(_targetController.controllerType == CONTROLLER_TYPE.STATIC_RESOURCE)
+        if(_targetController.controllerType == CONTROLLER_TYPE.RESOURCE)
         {
             // Remember so we can go back to continue harvesting after derlivering
             // resources to a delivery point
@@ -167,7 +167,7 @@ public class UnitMoveToController : UnitMoveTo
             ReachedTargetBuilding();
         }
 
-        else if (_targetController.controllerType == CONTROLLER_TYPE.STATIC_RESOURCE)
+        else if (_targetController.controllerType == CONTROLLER_TYPE.RESOURCE)
         {
             ReachedTargetStaticResource();
         }
@@ -243,6 +243,7 @@ public class UnitMoveToController : UnitMoveTo
         // Go back to target resource
         if (_controller.lastResouceGathered != null)
         {
+            Debug.Log("MOVE TO RESOURCE");
             _controller.MoveToResource(_controller.lastResouceGathered);
         }
 
@@ -296,7 +297,7 @@ public class UnitMoveToController : UnitMoveTo
         }
 
         // Only seek resources close by if we are close to target resource
-        else if (_targetController.controllerType == CONTROLLER_TYPE.STATIC_RESOURCE
+        else if (_targetController.controllerType == CONTROLLER_TYPE.RESOURCE
             && Grid.instance.GetDistanceBetweenNodes(
                 _controller._pathfinder.currentStandingOnNode, 
                 _targetController.GetPrimaryNode()) <= _controller._unitStats.visionRange * 10)

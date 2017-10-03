@@ -108,7 +108,10 @@ public class UnitStateController : BaseController
     public bool harvestingResource = false;
 
     [HideInInspector]
-    public string resourceTitleCarrying;
+    public string resourceTitleCarrying = "none";
+
+    [HideInInspector]
+    public Resource rallyToResource = null;
 
     private bool rallyToPositionAtInit = false;
     private Vector3 rallyToPosition;
@@ -160,7 +163,7 @@ public class UnitStateController : BaseController
 
         if (rallyToPositionAtInit)
         {
-            MoveTo(rallyToPosition);
+            StartMovingToRallyPoint();
         }
 
         if (playerID == PlayerManager.myPlayerID)
@@ -179,6 +182,32 @@ public class UnitStateController : BaseController
 
         UpdateVisibility();
         UpdateVisibilityOfAllControllerOccupiedTiles();
+    }
+
+    void StartMovingToRallyPoint()
+    {
+        if (_unitStats.isVillager)
+        {
+            if (rallyToResource != null)
+            {
+                MoveToResource(rallyToResource);
+            }
+
+            else if (!resourceTitleCarrying.Equals("none"))
+            {
+                MoveToResourcePos(rallyToPosition);
+            }
+
+            else
+            {
+                MoveTo(rallyToPosition);
+            }
+        }
+
+        else
+        {
+            MoveTo(rallyToPosition);
+        }
     }
 
     public void RallyTo(Vector3 pos)
@@ -238,7 +267,7 @@ public class UnitStateController : BaseController
         // Special cases for ranged units
         if (_unitStats.isRanged)
         {
-            if (targetController.controllerType != CONTROLLER_TYPE.STATIC_RESOURCE
+            if (targetController.controllerType != CONTROLLER_TYPE.RESOURCE
                 && targetController.playerID != PlayerManager.myPlayerID)
             {
                 TransitionToState(rangedMoveToControllerState);
@@ -249,13 +278,6 @@ public class UnitStateController : BaseController
         TransitionToState(moveToControllerState);
     }
 
-    public void MoveToResource(BaseController targetController)
-    {
-        this.targetController = targetController;
-
-        TransitionToState(moveBackToResource);
-    }
-
     public virtual void MoveTo(Vector2 targetPosition)
     {
         this.targetPosition = targetPosition;
@@ -264,6 +286,13 @@ public class UnitStateController : BaseController
         targetController = null;
 
         TransitionToState(moveToPositionState);
+    }
+
+    public void MoveToResource(BaseController targetController)
+    {
+        this.targetController = targetController;
+
+        TransitionToState(moveBackToResource);
     }
 
     // Need this because:

@@ -76,6 +76,12 @@ public class Building : BaseController {
     [HideInInspector]
     public Vector3 rallyPointPos;
 
+    [HideInInspector]
+    public Resource rallyToResource;
+
+    [HideInInspector]
+    public string rallyToResourceTitle;
+
     protected override void Start ()
     {
         _basicStats = _buildingStats;
@@ -539,8 +545,17 @@ public class Building : BaseController {
         {
             Node spawnToNode = Grid.instance.FindClosestWalkableNode(Grid.instance.GetNodeFromWorldPoint(transform.position + new Vector3(0.0f, (Grid.instance.tileHeight / 4))));
             GameObject newUnit = Instantiate(productionButtonsData[productionIndex].productionPrefab, spawnToNode.worldPosition, Quaternion.identity) as GameObject;
-            newUnit.GetComponent<BaseController>().playerID = playerID;
-            newUnit.GetComponent<UnitStateController>().RallyTo(rallyPointPos);
+            UnitStateController unitScript = newUnit.GetComponent<UnitStateController>();
+
+            // Rally to Resource?
+            if (unitScript._unitStats.isVillager)
+            {
+                unitScript.rallyToResource = this.rallyToResource;
+                unitScript.resourceTitleCarrying = this.rallyToResourceTitle;
+            }
+
+            unitScript.playerID = playerID;
+            unitScript.RallyTo(rallyPointPos);
         }
 
         if (productionList.Count > 0)

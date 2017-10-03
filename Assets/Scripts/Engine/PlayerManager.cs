@@ -232,10 +232,18 @@ public class PlayerManager : MonoBehaviour {
     public void SetNewRallyPoint()
     {
         Vector3 newRallyPointPosition = Vector3.zero;
+        Building selectedBuilding = _controllerSelecting.selectedController.GetComponent<Building>();
 
         if (selectableController != null)
         {
             newRallyPointPosition = selectableController.GetPrimaryNode().worldPosition;
+
+            if(selectableController.controllerType == CONTROLLER_TYPE.RESOURCE)
+            {
+                // Save this so Villagers can look for nearby resources of same type if Resource rallied gets depleted
+                selectedBuilding.rallyToResource = selectableController.GetComponent<Resource>();
+                selectedBuilding.rallyToResourceTitle = selectableController.GetComponent<Resource>().title;
+            }
         }
 
         else if (selectedTile != null)
@@ -248,7 +256,7 @@ public class PlayerManager : MonoBehaviour {
             return;
         }
 
-        _controllerSelecting.selectedController.GetComponent<Building>().rallyPointPos = newRallyPointPosition;
+        selectedBuilding.rallyPointPos = newRallyPointPosition;
         rallyPointSprite.GetComponent<Transform>().position = newRallyPointPosition;
 
         // Animate new Rally Point
@@ -330,7 +338,7 @@ public class PlayerManager : MonoBehaviour {
         // Don't select invisible controllers
         if (selectableController != null && selectableController._spriteRenderer.enabled)
         {
-            if (selectableController.controllerType == CONTROLLER_TYPE.STATIC_RESOURCE)
+            if (selectableController.controllerType == CONTROLLER_TYPE.RESOURCE)
             {
                 HandleMouseOverResource();
             }
@@ -493,7 +501,7 @@ public class PlayerManager : MonoBehaviour {
                 {
                     selectedUnits[i].lastResouceGathered = null;
 
-                    if(selectableController.controllerType == CONTROLLER_TYPE.STATIC_RESOURCE)
+                    if(selectableController.controllerType == CONTROLLER_TYPE.RESOURCE)
                     {
                         selectedUnits[i].harvestingResource = true;
                         
@@ -573,7 +581,7 @@ public class PlayerManager : MonoBehaviour {
             return 2;
         }
 
-        else if (controller.controllerType == CONTROLLER_TYPE.STATIC_RESOURCE)
+        else if (controller.controllerType == CONTROLLER_TYPE.RESOURCE)
         {
             return 1;
         }
