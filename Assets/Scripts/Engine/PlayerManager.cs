@@ -253,7 +253,18 @@ public class PlayerManager : MonoBehaviour {
 
         else
         {
-            newRallyPointPosition = Grid.instance.GetTileFromWorldPoint(mousePosition).worldPosition;
+            Tile tile = Grid.instance.GetTileFromWorldPoint(mousePosition);
+
+            // Clicked outside map, so don't do anything
+            if(tile == null)
+            {
+                return;
+            }
+
+            else
+            {
+                newRallyPointPosition = Grid.instance.GetTileFromWorldPoint(mousePosition).worldPosition;
+            }
         }
 
         selectedBuilding.rallyPointPos = newRallyPointPosition;
