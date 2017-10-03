@@ -26,12 +26,12 @@ public class ControllerSelecting : MonoBehaviour {
     public BaseController selectedController = null;
 
     [HideInInspector]
-    public bool attemptedToSelectMultiple = false;
+    public bool attemptedToSelectMultipleUnits = false;
 
     // When we click on a Tile, we need to know if we had controllers selected and just want to
     // deselect, or if nothing was selected and we want to select a Tile
     [HideInInspector]
-    public bool hadSelectedControllers = false;
+    public bool unsafeToSelectTile = false;
 
     protected float timeSinceLastSingleUnitSelected = 0.0f;
     protected float doubleClickUnitTime = 1.0f;
@@ -74,16 +74,16 @@ public class ControllerSelecting : MonoBehaviour {
             if(CursorHoveringUI.value)
             {
                 showSelectBox = false;
+                attemptedToSelectMultipleUnits = false;
             }
 
             else if(showSelectBox)
             {
                 ExecuteSelecting();
 
-                // We didn't actually find any controllers to select
-                if(HasSelectedAnything())
+                if(HasSelectedAtLeastOneControler())
                 {
-                    hadSelectedControllers = true;
+                    unsafeToSelectTile = true;
                 }
             }
         }
@@ -111,13 +111,13 @@ public class ControllerSelecting : MonoBehaviour {
 
         if (Vector2.Distance(mousePosScreenToWorldPointStart, mousePosScreenToWorldPointEnd) < .1f)
         {
-            attemptedToSelectMultiple = false;
+            attemptedToSelectMultipleUnits = false;
             SelectController();
         }
 
         else
         {
-            attemptedToSelectMultiple = true;
+            attemptedToSelectMultipleUnits = true;
             FindUnitsToSelect(selectionRect);
         }
 
@@ -458,7 +458,7 @@ public class ControllerSelecting : MonoBehaviour {
         return selectedUnits;
     }
 
-    public bool HasSelectedAnything()
+    public bool HasSelectedAtLeastOneControler()
     {
         return selectedController != null || selectedUnits.Count > 0;
     }

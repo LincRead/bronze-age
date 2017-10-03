@@ -70,6 +70,9 @@ public class Building : BaseController {
     [HideInInspector]
     public bool resourceDeliveryPoint = false;
 
+    [HideInInspector]
+    public Vector3 rallyPointPos;
+
     protected override void Start ()
     {
         _basicStats = _buildingStats;
@@ -191,8 +194,11 @@ public class Building : BaseController {
         Grid.instance.SetTilesOccupiedByController(this);
         PlayerManager.instance.PlacedBuilding(this);
 
+        // Initial rally point position
+        rallyPointPos = transform.position + new Vector3(0.0f, (Grid.instance.tileHeight / 4));
+
         // Placed during gameplays
-        if(!WorldManager.firstUpdate)
+        if (!WorldManager.firstUpdate)
         {
             UseResourcesForConstruction(-1);
         }
@@ -428,6 +434,9 @@ public class Building : BaseController {
             ControllerUIManager.instance.productionTooltip.gameObject.SetActive(false);
             Technologies.instance.SetTechnologyInQueue(productionButtonsData[buttonIndex].title);
         }
+
+        // Make sure we cancel this if in prosess
+        PlayerManager.instance.CancelRallyPointState();
     }
 
     bool HaveRequiredResourcesToPlaceBuilding()
@@ -508,6 +517,7 @@ public class Building : BaseController {
             Node spawnToNode = Grid.instance.FindClosestWalkableNode(Grid.instance.GetNodeFromWorldPoint(transform.position + new Vector3(0.0f, (Grid.instance.tileHeight / 4))));
             GameObject newUnit = Instantiate(productionButtonsData[productionIndex].productionPrefab, spawnToNode.worldPosition, Quaternion.identity) as GameObject;
             newUnit.GetComponent<BaseController>().playerID = playerID;
+            newUnit.GetComponent<UnitStateController>().RallyTo(rallyPointPos);
         }
 
         if (productionList.Count > 0)

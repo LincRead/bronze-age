@@ -18,6 +18,7 @@ public class PlayerManager : MonoBehaviour {
         DEFAULT,
         ATTACK_MOVE,
         PLACING_BUILDING,
+        SETTING_RALLY_POINT,
         MENU
     }
 
@@ -111,6 +112,18 @@ public class PlayerManager : MonoBehaviour {
         EventManager.TriggerEvent("SetDefaultCursor");
     }
 
+    public void SetRallyPointState()
+    {
+        currentUserState = PLAYER_ACTION_STATE.SETTING_RALLY_POINT;
+        EventManager.TriggerEvent("SetRallyPointCursor");
+    }
+
+    public void CancelRallyPointState()
+    {
+        currentUserState = PLAYER_ACTION_STATE.DEFAULT;
+        EventManager.TriggerEvent("SetDefaultCursor");
+    }
+
     public void PlacedBuilding(BaseController building)
     {
         List<UnitStateController> selectedBuilders = _controllerSelecting.GetSelectedGatherers();
@@ -149,6 +162,7 @@ public class PlayerManager : MonoBehaviour {
             case PLAYER_ACTION_STATE.DEFAULT:
 
                 UpdateSelectableController();
+                UpdateMouseCursor();
 
                 if (Input.GetMouseButtonUp(0))
                 {
@@ -183,9 +197,35 @@ public class PlayerManager : MonoBehaviour {
 
             case PLAYER_ACTION_STATE.PLACING_BUILDING:
 
-                if (Input.GetMouseButtonUp(1))
+                if (Input.GetMouseButtonDown(1))
                 {
                     CancelPlaceBuildingState();
+                }
+
+                break;
+
+            case PLAYER_ACTION_STATE.SETTING_RALLY_POINT:
+
+                UpdateSelectableController();
+
+                if (Input.GetMouseButtonDown(0))
+                {
+                    if(selectableController != null)
+                    {
+                        _controllerSelecting.selectedController.GetComponent<Building>().rallyPointPos = selectableController.GetPrimaryNode().worldPosition;
+                    }
+
+                    else if(selectedTile != null)
+                    {
+                        _controllerSelecting.selectedController.GetComponent<Building>().rallyPointPos = selectedTile.worldPosition;
+                    }
+
+                    CancelRallyPointState();
+                }
+
+                else if (Input.GetMouseButtonDown(1))
+                {
+                    CancelRallyPointState();
                 }
 
                 break;
@@ -227,10 +267,12 @@ public class PlayerManager : MonoBehaviour {
             }
         }
 
+        Debug.Log(_controllerSelecting.attemptedToSelectMultipleUnits);
+
         // No Controllers selected, so see if we can select a Tile instead and show info about it
         if(selectableController == null 
             && !CursorHoveringUI.value
-            && !_controllerSelecting.attemptedToSelectMultiple)
+            && !_controllerSelecting.attemptedToSelectMultipleUnits)
         {
             selectedTile = Grid.instance.GetTileFromWorldPoint(mousePosition);
 
@@ -239,9 +281,9 @@ public class PlayerManager : MonoBehaviour {
                 if (Input.GetMouseButtonUp(0))
                 {
                     // If we clicked on a Tile, we are no longer previously selected any controllers
-                    if (_controllerSelecting.hadSelectedControllers)
+                    if (_controllerSelecting.unsafeToSelectTile)
                     {
-                        _controllerSelecting.hadSelectedControllers = false;
+                        _controllerSelecting.unsafeToSelectTile = false;
                     }
 
                     // If we didn't previously select any controllers, it is now safe to select a Tile
@@ -255,8 +297,6 @@ public class PlayerManager : MonoBehaviour {
                 }
             }
         }
-
-        UpdateMouseCursor();
     }
 
     void UpdateMouseCursor()

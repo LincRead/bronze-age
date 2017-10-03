@@ -9,7 +9,8 @@ public class CursorManager : MonoBehaviour
         CAMERA_MOVEMENT,
         ACTION_BUILD,
         HARVEST,
-        ATTACK
+        ATTACK,
+        RALLY_POINT
     }
 
     private CURSOR_STATE state = CURSOR_STATE.NONE;
@@ -24,6 +25,7 @@ public class CursorManager : MonoBehaviour
     public Texture2D gatherTexture;
     public Texture2D farmTexture;
     public Texture2D attackTexture;
+    public Texture2D ralyPointTexture;
 
     void Start()
     {
@@ -41,6 +43,7 @@ public class CursorManager : MonoBehaviour
         EventManager.StartListening("SetGatherCursor", SetToGatherCursor);
         EventManager.StartListening("SetFarmCursor", SetToFarmCursor);
         EventManager.StartListening("SetAttackCursor", SetToAttackCursor);
+        EventManager.StartListening("SetRallyPointCursor", SetToRallyPointCursor);
     }
 
     private void OnDisable()
@@ -54,6 +57,7 @@ public class CursorManager : MonoBehaviour
         EventManager.StopListening("SetGatherCursor", SetToGatherCursor);
         EventManager.StopListening("SetFarmCursor", SetToFarmCursor);
         EventManager.StopListening("SetAttackCursor", SetToAttackCursor);
+        EventManager.StopListening("SetRallyPointCursor", SetToRallyPointCursor);
     }
 
     void LateUpdate()
@@ -144,5 +148,11 @@ public class CursorManager : MonoBehaviour
     {
         Cursor.SetCursor(attackTexture, Vector2.zero, CursorMode.Auto);
         state = CURSOR_STATE.ATTACK;
+    }
+
+    public void SetToRallyPointCursor()
+    {
+        Cursor.SetCursor(attackTexture, Vector2.zero, CursorMode.Auto);
+        state = CURSOR_STATE.RALLY_POINT;
     }
 }

@@ -21,6 +21,7 @@ public class ControllerUIManager : MonoBehaviour {
     public Button[] unitActionButtons;
 
     public Button selectedUnitButton;
+    public Button rallyPointButton;
 
     protected ProductionButton[] _productionButtonScripts;
 
@@ -137,6 +138,9 @@ public class ControllerUIManager : MonoBehaviour {
 
         // Only show in special cases, eg. Tile
         description.enabled = false;
+
+        // Disabled as default
+        rallyPointButton.gameObject.SetActive(false);
 
         nothingSelectedView = ScriptableObject.CreateInstance<ControllerUIView>();
         tileView = ScriptableObject.CreateInstance<TileView>();
@@ -267,6 +271,10 @@ public class ControllerUIManager : MonoBehaviour {
         }
 
         HideTooltip();
+
+        // Disabled as default
+        rallyPointButton.gameObject.SetActive(false);
+
         currentView.OnEnter(this, controller);
         currentViewType = viewType;
 
@@ -401,6 +409,7 @@ public class ControllerUIManager : MonoBehaviour {
     public void ShowProductionButtons(ProductionButtonData[] data)
     {
         bool[] buttonWithIndexesActivated = new bool[_productionButtonScripts.Length];
+        bool addRallyPointButton = false;
         for (int i = 0; i < buttonWithIndexesActivated.Length; i++)
         {
             buttonWithIndexesActivated[i] = false;
@@ -418,10 +427,26 @@ public class ControllerUIManager : MonoBehaviour {
                 _productionButtonScripts[data[i].position].SetData(data[i]);
                 _productionButtonScripts[data[i].position].Activate();
                 buttonWithIndexesActivated[data[i].position] = true;
+
+                if(data[i].type == PRODUCTION_TYPE.UNIT)
+                {
+                    addRallyPointButton = true;
+                }
             }
         }
 
-        // Deactivate buttons what didn't get activated
+        // Add rally point
+        if(addRallyPointButton)
+        {
+            rallyPointButton.gameObject.SetActive(true);
+        }
+
+        else
+        {
+            rallyPointButton.gameObject.SetActive(false);
+        }
+
+        // Deactivate buttons that didn't get activated
         for (int i = 0; i < buttonWithIndexesActivated.Length; i++)
         {
             if(!buttonWithIndexesActivated[i])

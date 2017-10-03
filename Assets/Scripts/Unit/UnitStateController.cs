@@ -110,6 +110,9 @@ public class UnitStateController : BaseController
     [HideInInspector]
     public string resourceTitleCarrying;
 
+    private bool rallyToPositionAtInit = false;
+    private Vector3 rallyToPosition;
+
     protected override void Start()
     {
         _basicStats = _unitStats;
@@ -151,11 +154,16 @@ public class UnitStateController : BaseController
             rangedAttackState = ScriptableObject.CreateInstance<RangedUnitAttack>();
         }
 
-        // Initial state
+        // Setup initial state
         currentState = idleState;
         currentState.OnEnter(this);
 
-        if(playerID == PlayerManager.myPlayerID)
+        if (rallyToPositionAtInit)
+        {
+            MoveTo(rallyToPosition);
+        }
+
+        if (playerID == PlayerManager.myPlayerID)
         {
             PlayerManager.instance.AddFriendlyUnitReference(this, playerID);
         }
@@ -171,6 +179,12 @@ public class UnitStateController : BaseController
 
         UpdateVisibility();
         UpdateVisibilityOfAllControllerOccupiedTiles();
+    }
+
+    public void RallyTo(Vector3 pos)
+    {
+        rallyToPositionAtInit = true;
+        rallyToPosition = pos;
     }
 
     void SetupHealthBar()
