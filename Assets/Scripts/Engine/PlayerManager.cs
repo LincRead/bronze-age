@@ -240,7 +240,7 @@ public class PlayerManager : MonoBehaviour {
 
         if (selectableController != null)
         {
-            newRallyPointPosition = selectableController.GetPrimaryNode().worldPosition;
+            newRallyPointPosition = selectableController.GetPrimaryNode().worldPosition + new Vector2(0.0f, -0.04f);
 
             // Remember this for Villagers who are rallied to resources
             selectedBuilding.rallyToController = selectableController.GetComponent<BaseController>();
@@ -253,7 +253,7 @@ public class PlayerManager : MonoBehaviour {
 
         else
         {
-            newRallyPointPosition = Grid.instance.GetNodeFromWorldPoint(mousePosition).worldPosition;
+            newRallyPointPosition = Grid.instance.GetTileFromWorldPoint(mousePosition).worldPosition;
         }
 
         selectedBuilding.rallyPointPos = newRallyPointPosition;
