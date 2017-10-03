@@ -197,7 +197,7 @@ public class PlayerManager : MonoBehaviour {
 
             case PLAYER_ACTION_STATE.PLACING_BUILDING:
 
-                if (Input.GetMouseButtonDown(1))
+                if (Input.GetMouseButtonUp(1))
                 {
                     CancelPlaceBuildingState();
                 }
@@ -220,10 +220,16 @@ public class PlayerManager : MonoBehaviour {
                         _controllerSelecting.selectedController.GetComponent<Building>().rallyPointPos = selectedTile.worldPosition;
                     }
 
+                    // Show which location we are moving to
+                    EventManager.TriggerEvent("ActivateRallyPointIndicator");
+
+                    _controllerSelecting.unsafeToSelectTile = true;
+
+                    // No longer setting rally point
                     CancelRallyPointState();
                 }
 
-                else if (Input.GetMouseButtonDown(1))
+                else if (Input.GetMouseButtonUp(1))
                 {
                     CancelRallyPointState();
                 }

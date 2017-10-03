@@ -9,6 +9,7 @@ public class ClickActionIndicator : MonoBehaviour
     [Header("Click action sprites")]
     public Sprite attackSprite;
     public Sprite moveSprite;
+    public Sprite setRallyPointSprite;
 
     private float bounceTime = 0.25f;
 
@@ -23,28 +24,36 @@ public class ClickActionIndicator : MonoBehaviour
     {
         EventManager.StartListening("ActivateAttackIndicator", ActivateAttackIndicator);
         EventManager.StartListening("ActivateMoveUnitsIndicator", ActivateMoveUnitsIndicator);
+        EventManager.StartListening("ActivateRallyPointIndicator", ActivatRallyPointSetIndicator);
     }
 
     private void OnDisable()
     {
         EventManager.StopListening("ActivateAttackIndicator", ActivateAttackIndicator);
         EventManager.StopListening("ActivateMoveUnitsIndicator", ActivateMoveUnitsIndicator);
+        EventManager.StopListening("ActivateRallyPointIndicator", ActivatRallyPointSetIndicator);
     }
 
     public void ActivateAttackIndicator()
     {
+        _transform.position = PlayerManager.mousePosition;
         ActivateBounceEffect(attackSprite);
     }
 
     public void ActivateMoveUnitsIndicator()
     {
+        _transform.position = PlayerManager.mousePosition;
         ActivateBounceEffect(moveSprite);
+    }
+
+    public void ActivatRallyPointSetIndicator()
+    {
+        _transform.position = PlayerManager.mousePosition + new Vector2(0.08f, 0.10f);
+        ActivateBounceEffect(setRallyPointSprite);
     }
 
     public void ActivateBounceEffect(Sprite sprite)
     {
-        _transform.position = PlayerManager.mousePosition;
-
         _spriteRenderer.sprite = sprite;
         _spriteRenderer.enabled = true;
 
