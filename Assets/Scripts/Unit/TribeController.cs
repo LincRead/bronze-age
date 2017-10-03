@@ -49,10 +49,12 @@ public class TribeController : UnitStateController {
 
     public void SetupCamp(CivilizationCenter center)
     {
-        center.FinishConstruction();
+        Destroy(gameObject);
         RemoveFromPathfinding();
         DecreaseVisibilityOfTiles();
-        Destroy(gameObject);
+
+        // Finish after unit is destroyed
+        center.FinishConstruction();
     }
 
     public override void Deselect()

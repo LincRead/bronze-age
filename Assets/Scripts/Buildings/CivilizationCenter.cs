@@ -30,9 +30,14 @@ public class CivilizationCenter : Building
     {
         base.Place();
 
-        if(playerID > -1)
+        if (playerID > -1)
         {
             PlayerDataManager.instance.GetPlayerData(playerID).placedCamp = true;
+
+            if(playerID == PlayerManager.myPlayerID)
+            {
+                Select();
+            }
         }
     }
 

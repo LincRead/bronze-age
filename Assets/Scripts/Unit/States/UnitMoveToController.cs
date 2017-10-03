@@ -210,7 +210,12 @@ public class UnitMoveToController : UnitMoveTo
                 // Special case for Tribe unit reaching Camp building
                 else if (_controller._unitStats.isTribe && _targetController == PlayerManager.instance.civilizationCenter)
                 {
-                    _controller.GetComponent<TribeController>().SetupCamp(_targetController.GetComponent<CivilizationCenter>());
+                    // Need to wait until this value is set to not cause problems in cases where Tribe unit
+                    // is placing Tribe Center right next to itself.
+                    if(_controller.GetComponent<TribeController>().movingTowarsCamp)
+                    {
+                        _controller.GetComponent<TribeController>().SetupCamp(_targetController.GetComponent<CivilizationCenter>());
+                    }
                 }
             }
 
