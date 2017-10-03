@@ -259,6 +259,11 @@ public class Building : BaseController {
             }
         }
 
+        if(selected && Input.GetMouseButtonUp(1))
+        {
+            PlayerManager.instance.SetNewRallyPoint();
+        }
+
         // TEMP! For testing purpose.
         if (selected && Input.GetKeyUp(KeyCode.Delete))
         {
