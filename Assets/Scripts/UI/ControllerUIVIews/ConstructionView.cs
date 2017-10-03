@@ -34,9 +34,19 @@ public class ConstructionView : ControllerUIView
         if (_buildingController.canSetRallyPoint)
         {
             ControllerUIManager.instance.rallyPointButton.gameObject.SetActive(true);
-
             PlayerManager.instance.rallyPointSprite.gameObject.SetActive(true);
-            PlayerManager.instance.rallyPointSprite.GetComponent<Transform>().position = _buildingController.rallyPointPos;
+
+            // Only bounce if changed building
+            if(PlayerManager.instance.rallyPointSprite.GetComponent<Transform>().position != _buildingController.rallyPointPos)
+            {
+                PlayerManager.instance.rallyPointSprite.GetComponent<Transform>().position = _buildingController.rallyPointPos;
+
+                // Animate new Rally Point
+                float bounceTime = 0.25f;
+                LeanTween.scale(PlayerManager.instance.rallyPointSprite.gameObject, new Vector3(1.0f, 1.0f, 1.0f), 0.0f);
+                LeanTween.scale(PlayerManager.instance.rallyPointSprite.gameObject, new Vector3(0.75f, 0.75f, 1.0f), bounceTime);
+                LeanTween.scale(PlayerManager.instance.rallyPointSprite.gameObject, new Vector3(1.0f, 1.0f, 1.0f), bounceTime).setDelay(bounceTime);
+            }
         }
 
         else
