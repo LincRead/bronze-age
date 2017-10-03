@@ -10,6 +10,9 @@ public class ProductionButton : UnitUIButton {
     protected GameObject prefab;
     protected BaseController script;
 
+    [HideInInspector]
+    public int index = -1;
+
     protected override void Awake()
     {
         base.Awake();
@@ -170,7 +173,7 @@ public class ProductionButton : UnitUIButton {
         {
             if(PlayerManager.instance._controllerSelecting.selectedController.controllerType == CONTROLLER_TYPE.BUILDING)
             {
-                PlayerManager.instance._controllerSelecting.selectedController.GetComponent<Building>().Produce(data.index);
+                PlayerManager.instance._controllerSelecting.selectedController.GetComponent<Building>().Produce(index);
             }
         }
     }

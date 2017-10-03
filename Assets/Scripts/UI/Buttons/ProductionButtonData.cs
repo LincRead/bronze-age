@@ -31,7 +31,7 @@ public class ProductionButtonData : ScriptableObject {
     public Sprite icon;
 
     [Header("View position")]
-    public int index = 0;
+    public int position = 0;
 
     [Header("Production time")]
     public int stepsRequired = 3;

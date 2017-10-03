@@ -414,9 +414,10 @@ public class ControllerUIManager : MonoBehaviour {
                 && (data[i].type != PRODUCTION_TYPE.TECHNOLOGY || Technologies.instance.CanProduceTechnology(data[i].title)))
             {
                 // Todo make condition for required technology
-                _productionButtonScripts[data[i].index].SetData(data[i]);
-                _productionButtonScripts[data[i].index].Activate();
-                buttonWithIndexesActivated[data[i].index] = true;
+                _productionButtonScripts[data[i].position].index = i;
+                _productionButtonScripts[data[i].position].SetData(data[i]);
+                _productionButtonScripts[data[i].position].Activate();
+                buttonWithIndexesActivated[data[i].position] = true;
             }
         }
 
