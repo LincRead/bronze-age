@@ -427,23 +427,7 @@ public class ControllerUIManager : MonoBehaviour {
                 _productionButtonScripts[data[i].position].SetData(data[i]);
                 _productionButtonScripts[data[i].position].Activate();
                 buttonWithIndexesActivated[data[i].position] = true;
-
-                if(data[i].type == PRODUCTION_TYPE.UNIT)
-                {
-                    addRallyPointButton = true;
-                }
             }
-        }
-
-        // Add rally point
-        if(addRallyPointButton)
-        {
-            rallyPointButton.gameObject.SetActive(true);
-        }
-
-        else
-        {
-            rallyPointButton.gameObject.SetActive(false);
         }
 
         // Deactivate buttons that didn't get activated

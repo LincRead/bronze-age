@@ -24,6 +24,22 @@ public class ConstructionView : ControllerUIView
         }
 
         ui.healthBar.ShowHitpoints(_buildingController.hitpointsLeft, _buildingController.maxHitPoints);
+
+        // Show Rally Point button?
+        SetRallyPointButtonActive();
+    }
+
+    void SetRallyPointButtonActive()
+    {
+        if (_buildingController.canSetRallyPoint)
+        {
+            ControllerUIManager.instance.rallyPointButton.gameObject.SetActive(true);
+        }
+
+        else
+        {
+            ControllerUIManager.instance.rallyPointButton.gameObject.SetActive(false);
+        }
     }
 
     public override void Update()

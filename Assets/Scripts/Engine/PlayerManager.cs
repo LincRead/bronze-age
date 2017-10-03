@@ -210,23 +210,7 @@ public class PlayerManager : MonoBehaviour {
 
                 if (Input.GetMouseButtonDown(0))
                 {
-                    if(selectableController != null)
-                    {
-                        _controllerSelecting.selectedController.GetComponent<Building>().rallyPointPos = selectableController.GetPrimaryNode().worldPosition;
-                    }
-
-                    else if(selectedTile != null)
-                    {
-                        _controllerSelecting.selectedController.GetComponent<Building>().rallyPointPos = selectedTile.worldPosition;
-                    }
-
-                    // Show which location we are moving to
-                    EventManager.TriggerEvent("ActivateRallyPointIndicator");
-
-                    _controllerSelecting.unsafeToSelectTile = true;
-
-                    // No longer setting rally point
-                    CancelRallyPointState();
+                    SetNewRallyPoint();
                 }
 
                 else if (Input.GetMouseButtonUp(1))
@@ -239,6 +223,27 @@ public class PlayerManager : MonoBehaviour {
             default:
                 break;
         }
+    }
+
+    public void SetNewRallyPoint()
+    {
+        if (selectableController != null)
+        {
+            _controllerSelecting.selectedController.GetComponent<Building>().rallyPointPos = selectableController.GetPrimaryNode().worldPosition;
+        }
+
+        else if (selectedTile != null)
+        {
+            _controllerSelecting.selectedController.GetComponent<Building>().rallyPointPos = selectedTile.worldPosition;
+        }
+
+        // Show which location we are moving to
+        EventManager.TriggerEvent("ActivateRallyPointIndicator");
+
+        _controllerSelecting.unsafeToSelectTile = true;
+
+        // No longer setting rally point
+        CancelRallyPointState();
     }
 
     void UpdateSelectableController()

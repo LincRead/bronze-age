@@ -71,6 +71,9 @@ public class Building : BaseController {
     public bool resourceDeliveryPoint = false;
 
     [HideInInspector]
+    public bool canSetRallyPoint = false;
+
+    [HideInInspector]
     public Vector3 rallyPointPos;
 
     protected override void Start ()
@@ -90,6 +93,9 @@ public class Building : BaseController {
 
         // Can deliver resources to this building
         resourceDeliveryPoint = _buildingStats.resourceDeliveryPoint;
+
+        // Check if we can set rally point
+        CheckCanSetRallyPoint();
 
         _selectionIndicator.GetComponent<Transform>().localPosition = new Vector3(0.0f, size * 0.08f, 0.0f);
 
@@ -113,6 +119,17 @@ public class Building : BaseController {
         else
         {
             SetupBuildingPlacement();
+        }
+    }
+
+    void CheckCanSetRallyPoint()
+    {
+        for (int i = 0; i < productionButtonsData.Length; i++)
+        {
+            if (productionButtonsData[i].type == PRODUCTION_TYPE.UNIT)
+            {
+                canSetRallyPoint = true;
+            }
         }
     }
 

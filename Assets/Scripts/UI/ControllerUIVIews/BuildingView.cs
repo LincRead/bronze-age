@@ -32,6 +32,22 @@ public class BuildingView : ControllerUIView
         {
             ShowBuildingStats();
         }
+
+        // Show Rally Point button?
+        SetRallyPointButtonActive();
+    }
+
+    void SetRallyPointButtonActive()
+    {
+        if (_buildingController.canSetRallyPoint)
+        {
+            ControllerUIManager.instance.rallyPointButton.gameObject.SetActive(true);
+        }
+
+        else
+        {
+            ControllerUIManager.instance.rallyPointButton.gameObject.SetActive(false);
+        }
     }
 
     public void ShowBuildingStats()
