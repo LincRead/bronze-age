@@ -55,6 +55,9 @@ public class PlayerManager : MonoBehaviour {
     [HideInInspector]
     public static Vector2 mousePosition;
 
+    // Show rally point for buildings with rally point
+    public GameObject rallyPointSprite;
+
     private static PlayerManager playerManager;
 
     // Food intake ui update
@@ -227,18 +230,20 @@ public class PlayerManager : MonoBehaviour {
 
     public void SetNewRallyPoint()
     {
+        Vector3 newRallyPointPosition = Vector3.zero;
+
         if (selectableController != null)
         {
-            _controllerSelecting.selectedController.GetComponent<Building>().rallyPointPos = selectableController.GetPrimaryNode().worldPosition;
+            newRallyPointPosition = selectableController.GetPrimaryNode().worldPosition;
         }
 
         else if (selectedTile != null)
         {
-            _controllerSelecting.selectedController.GetComponent<Building>().rallyPointPos = selectedTile.worldPosition;
+            newRallyPointPosition = selectedTile.worldPosition;
         }
 
-        // Show which location we are moving to
-        EventManager.TriggerEvent("ActivateRallyPointIndicator");
+        _controllerSelecting.selectedController.GetComponent<Building>().rallyPointPos = newRallyPointPosition;
+        rallyPointSprite.GetComponent<Transform>().position = newRallyPointPosition;
 
         _controllerSelecting.unsafeToSelectTile = true;
 

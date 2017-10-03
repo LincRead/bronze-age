@@ -42,12 +42,21 @@ public class BuildingView : ControllerUIView
         if (_buildingController.canSetRallyPoint)
         {
             ControllerUIManager.instance.rallyPointButton.gameObject.SetActive(true);
+
+            PlayerManager.instance.rallyPointSprite.gameObject.SetActive(true);
+            PlayerManager.instance.rallyPointSprite.GetComponent<Transform>().position = _buildingController.rallyPointPos;
         }
 
         else
         {
-            ControllerUIManager.instance.rallyPointButton.gameObject.SetActive(false);
+            HideRallyPoint();
         }
+    }
+
+    void HideRallyPoint()
+    {
+        PlayerManager.instance.rallyPointSprite.gameObject.SetActive(false);
+        ControllerUIManager.instance.rallyPointButton.gameObject.SetActive(false);
     }
 
     public void ShowBuildingStats()
@@ -109,6 +118,8 @@ public class BuildingView : ControllerUIView
 
     public override void OnExit()
     {
+        HideRallyPoint();
+
         ui.HideStats();
         ui.healthBar.HideHitpoints();
         ui.HideProductionButtons();
