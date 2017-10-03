@@ -29,16 +29,20 @@ public class ProductionTooltip : MonoBehaviour {
         numItemsRequired = 0;
         requiresTitle.enabled = false;
 
-        AddRequired(iconsObject.icons[1], data.newCitizens);
-        AddRequired(iconsObject.icons[2], data.food);
-        AddRequired(iconsObject.icons[3], data.timber);
-        AddRequired(iconsObject.icons[4], data.wealth);
-        AddRequired(iconsObject.icons[5], data.metal);
+        if(data.newCitizens > 0) AddRequired(iconsObject.icons[1], data.newCitizens);
+        if (data.food > 0) AddRequired(iconsObject.icons[2], data.food);
+        if (data.timber > 0) AddRequired(iconsObject.icons[3], data.timber);
+        if (data.wealth > 0) AddRequired(iconsObject.icons[8], data.wealth);
+        if (data.metal > 0) AddRequired(iconsObject.icons[7], data.metal);
 
         for (int i = numItemsRequired; i < resourceIcons.Length; i++)
         {
             resourceIcons[i].enabled = false;
-            resourceAmounts[i].enabled = false;
+
+            if(resourceAmounts[i] != null)
+            {
+                resourceAmounts[i].enabled = false;
+            }
         }
     }
 
