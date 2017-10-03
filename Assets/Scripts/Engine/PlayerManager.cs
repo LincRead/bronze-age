@@ -234,26 +234,26 @@ public class PlayerManager : MonoBehaviour {
         Vector3 newRallyPointPosition = Vector3.zero;
         Building selectedBuilding = _controllerSelecting.selectedController.GetComponent<Building>();
 
+        // Reset as default
+        selectedBuilding.rallyToControllerTitle = null;
+        selectedBuilding.rallyToController = null;
+
         if (selectableController != null)
         {
             newRallyPointPosition = selectableController.GetPrimaryNode().worldPosition;
 
+            // Remember this for Villagers who are rallied to resources
+            selectedBuilding.rallyToController = selectableController.GetComponent<BaseController>();
+
             if(selectableController.controllerType == CONTROLLER_TYPE.RESOURCE)
             {
-                // Save this so Villagers can look for nearby resources of same type if Resource rallied gets depleted
-                selectedBuilding.rallyToResource = selectableController.GetComponent<Resource>();
-                selectedBuilding.rallyToResourceTitle = selectableController.GetComponent<Resource>().title;
+                selectedBuilding.rallyToControllerTitle = selectableController.GetComponent<BaseController>().title;
             }
-        }
-
-        else if (selectedTile != null)
-        {
-            newRallyPointPosition = selectedTile.worldPosition;
         }
 
         else
         {
-            return;
+            newRallyPointPosition = Grid.instance.GetNodeFromWorldPoint(mousePosition).worldPosition;
         }
 
         selectedBuilding.rallyPointPos = newRallyPointPosition;

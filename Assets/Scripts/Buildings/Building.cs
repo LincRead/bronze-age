@@ -77,10 +77,10 @@ public class Building : BaseController {
     public Vector3 rallyPointPos;
 
     [HideInInspector]
-    public Resource rallyToResource;
+    public BaseController rallyToController;
 
     [HideInInspector]
-    public string rallyToResourceTitle;
+    public string rallyToControllerTitle = null;
 
     protected override void Start ()
     {
@@ -547,11 +547,13 @@ public class Building : BaseController {
             GameObject newUnit = Instantiate(productionButtonsData[productionIndex].productionPrefab, spawnToNode.worldPosition, Quaternion.identity) as GameObject;
             UnitStateController unitScript = newUnit.GetComponent<UnitStateController>();
 
+            // Set rally to Controller
+            unitScript.rallyToController = this.rallyToController;
+
             // Rally to Resource?
-            if (unitScript._unitStats.isVillager)
+            if (unitScript._unitStats.isVillager && rallyToControllerTitle != null)
             {
-                unitScript.rallyToResource = this.rallyToResource;
-                unitScript.resourceTitleCarrying = this.rallyToResourceTitle;
+                unitScript.resourceTitleCarrying = this.rallyToControllerTitle;
             }
 
             unitScript.playerID = playerID;

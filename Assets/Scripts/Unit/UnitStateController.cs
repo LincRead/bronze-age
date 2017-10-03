@@ -111,7 +111,7 @@ public class UnitStateController : BaseController
     public string resourceTitleCarrying = "none";
 
     [HideInInspector]
-    public Resource rallyToResource = null;
+    public BaseController rallyToController = null;
 
     private bool rallyToPositionAtInit = false;
     private Vector3 rallyToPosition;
@@ -186,11 +186,21 @@ public class UnitStateController : BaseController
 
     void StartMovingToRallyPoint()
     {
+        // Gatherers
         if (_unitStats.isVillager)
         {
-            if (rallyToResource != null)
+            if (rallyToController != null)
             {
-                MoveToResource(rallyToResource);
+                if(rallyToController.controllerType == CONTROLLER_TYPE.RESOURCE)
+                {
+                    Debug.Log("RALLY TO RESOURCE CONT");
+                    MoveToResource(rallyToController);
+                }
+
+                else
+                {
+                    MoveTo(rallyToController);
+                }
             }
 
             else if (!resourceTitleCarrying.Equals("none"))
@@ -204,9 +214,18 @@ public class UnitStateController : BaseController
             }
         }
 
+        // Warriors
         else
         {
-            MoveTo(rallyToPosition);
+            if (rallyToController != null)
+            {
+                MoveTo(rallyToController);
+            }
+
+            else
+            {
+                MoveTo(rallyToPosition);
+            } 
         }
     }
 
