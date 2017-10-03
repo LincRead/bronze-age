@@ -92,6 +92,7 @@ public class PlayerManager : MonoBehaviour {
     {
         _controllerSelecting = GetComponent<ControllerSelecting>();
         mouseHoveringController = new MouseHoveringController();
+        rallyPointSprite.SetActive(false);
     }
 
     public void SetBuildingPlacementState(Building building)
@@ -282,8 +283,6 @@ public class PlayerManager : MonoBehaviour {
                 selectableController = null;
             }
         }
-
-        Debug.Log(_controllerSelecting.attemptedToSelectMultipleUnits);
 
         // No Controllers selected, so see if we can select a Tile instead and show info about it
         if(selectableController == null 

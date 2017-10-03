@@ -126,7 +126,8 @@ public class Building : BaseController {
     {
         for (int i = 0; i < productionButtonsData.Length; i++)
         {
-            if (productionButtonsData[i].type == PRODUCTION_TYPE.UNIT)
+            if (productionButtonsData[i] != null
+                && productionButtonsData[i].type == PRODUCTION_TYPE.UNIT)
             {
                 canSetRallyPoint = true;
             }
