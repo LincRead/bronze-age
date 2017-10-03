@@ -125,6 +125,7 @@ public class UnitStateController : BaseController
         _animator = GetComponent<Animator>();
         _pathfinder = GetComponent<Pathfinding>();
 
+        // Hitpoints
         maxHitpoints = _unitStats.maxHitpoints;
         hitpointsLeft = maxHitpoints;
 
@@ -147,6 +148,13 @@ public class UnitStateController : BaseController
             gatherState = ScriptableObject.CreateInstance<UnitGather>();
             moveToResourcePositionState = ScriptableObject.CreateInstance<UnitMoveToResourcePosition>();
             moveBackToResource = ScriptableObject.CreateInstance<UnitMoveBackToResource>();
+
+            // Extra HP if technology researched
+            if(playerID > -1)
+            {
+                maxHitpoints += PlayerDataManager.instance.GetPlayerData(playerID).extraVillagerHP;
+                hitpointsLeft += PlayerDataManager.instance.GetPlayerData(playerID).extraVillagerHP;
+            }
         }
 
         // Special states
@@ -420,8 +428,13 @@ public class UnitStateController : BaseController
 
         else
         {
-            _healthBar.UpdateHitpointsPercent(hitpointsLeft, maxHitpoints);
+            UpdateHealthBar();
         }
+    }
+
+    public void UpdateHealthBar()
+    {
+        _healthBar.UpdateHitpointsPercent(hitpointsLeft, maxHitpoints);
     }
 
     public override void Cancel()

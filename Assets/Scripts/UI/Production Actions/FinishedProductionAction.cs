@@ -6,6 +6,6 @@ public class FinishedProductionAction : ScriptableObject {
 
     public virtual void Action(Building building)
     {
-        Debug.Log("Finished production - Execute Actoin!");
+        Debug.Log("Finished production - Execute Action!");
     }
 }

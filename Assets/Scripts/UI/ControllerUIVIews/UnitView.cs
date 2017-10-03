@@ -26,7 +26,7 @@ public class UnitView : ControllerUIView {
 
     public override void Update()
     {
-        ui.healthBar.UpdateHitpoints(unitController.hitpointsLeft, unitController._unitStats.maxHitpoints);
+        ui.healthBar.UpdateHitpoints(unitController.hitpointsLeft, unitController.maxHitpoints);
 
         if(unitController._unitStats.isVillager)
         {

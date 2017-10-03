@@ -46,4 +46,7 @@ public class PlayerData {
 
     [HideInInspector]
     public List<Building> friendlyResourceDeliveryPoints = new List<Building>();
+
+    // Technology stats
+    public int extraVillagerHP = 0;
 }
