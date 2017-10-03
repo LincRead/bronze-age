@@ -152,7 +152,7 @@ public class CursorManager : MonoBehaviour
 
     public void SetToRallyPointCursor()
     {
-        Cursor.SetCursor(attackTexture, Vector2.zero, CursorMode.Auto);
+        Cursor.SetCursor(ralyPointTexture, Vector2.zero, CursorMode.Auto);
         state = CURSOR_STATE.RALLY_POINT;
     }
 }
