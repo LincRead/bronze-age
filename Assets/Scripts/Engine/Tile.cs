@@ -102,8 +102,8 @@ public class Tile : IHeapItem<Tile>
         if (Grid.instance.GetAllTilesFromBoxArEmpty(this, 2))
         {
             float spawnValue = 0.0f;
-            if (tileIndex == 0) spawnValue = 0.015f;
-            if (tileIndex == 1) spawnValue = 0.003f;
+            if (tileIndex == 0) spawnValue = 0.01f;
+            if (tileIndex == 1) spawnValue = 0.002f;
             if (Random.value < spawnValue)
             {
                 grid.SpawnMetal(this);
@@ -115,8 +115,8 @@ public class Tile : IHeapItem<Tile>
         if (Grid.instance.GetAllTilesFromBoxArEmpty(this, 2))
         {
             float spawnValue = 0.0f;
-            if (tileIndex == 0) spawnValue = 0.015f;
-            if (tileIndex == 1) spawnValue = 0.003f;
+            if (tileIndex == 0) spawnValue = 0.01f;
+            if (tileIndex == 1) spawnValue = 0.002f;
             if (Random.value < spawnValue)
             {
                 grid.SpawnObsidian(this);
@@ -128,7 +128,7 @@ public class Tile : IHeapItem<Tile>
         if (Grid.instance.GetAllTilesFromBoxArEmpty(this, 2))
         {
             float spawnValue = 0.0f;
-            if (tileIndex == 0) spawnValue = 0.005f;
+            if (tileIndex == 0) spawnValue = 0.003f;
             if (Random.value < spawnValue)
             {
                 grid.SpawnGold(this);
