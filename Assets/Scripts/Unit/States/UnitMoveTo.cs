@@ -32,10 +32,50 @@ public class UnitMoveTo : UnitState
         if (_pathfinder.path.Count > 0)
         {
             // Carrying resource
+            if(_controller.resoureAmountCarrying > 0)
+            {
+                switch(_controller.resourceTypeCarrying)
+                {
+                    case RESOURCE_TYPE.WOOD:
 
+                        if (!_controller._animator.GetCurrentAnimatorStateInfo(0).IsName("carry_wood"))
+                        {
+                            _controller._animator.Play("carry_wood", -1, 0.0f);
+                        }
+
+                        break;
+
+                    case RESOURCE_TYPE.METAL:
+
+                        if (!_controller._animator.GetCurrentAnimatorStateInfo(0).IsName("carry_metal"))
+                        {
+                            _controller._animator.Play("carry_metal", -1, 0.0f);
+                        }
+
+                        break;
+
+                    case RESOURCE_TYPE.WEALTH:
+
+                        if (!_controller._animator.GetCurrentAnimatorStateInfo(0).IsName("carry_metal"))
+                        {
+                            _controller._animator.Play("carry_metal", -1, 0.0f);
+                        }
+
+                        break;
+
+                    case RESOURCE_TYPE.FOOD:
+
+                        if (!_controller._animator.GetCurrentAnimatorStateInfo(0).IsName("carry_berries"))
+                        {
+                            _controller._animator.Play("carry_berries", -1, 0.0f);
+                        }
+
+                        break;
+                }
+            }
 
             // Not carrying resources
-            if (!_controller._animator.GetCurrentAnimatorStateInfo(0).IsName("run"))
+            else if (!_controller._animator.GetCurrentAnimatorStateInfo(0).IsName("run"))
             {
                 _controller._animator.Play("run", -1, 0.0f);
             }
