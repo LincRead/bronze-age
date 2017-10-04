@@ -39,6 +39,7 @@ public class Grid : MonoBehaviour {
     public GameObject metalPrefab;
     public GameObject fruitBushPrefab;
     public GameObject obsidianPrefab;
+    public GameObject goldPrefab;
 
     [Header("Show Tile selected")]
     public GameObject selectedTilePrefab;
@@ -227,6 +228,19 @@ public class Grid : MonoBehaviour {
         {
             if (tiles[i].fertility > 1)
                 tiles[i].fertility = 1;
+        }
+    }
+
+    public void SpawnGold(Tile tile)
+    {
+        SpawnResource(tile, goldPrefab);
+
+        List<Tile> tiles = GetAllTilesFromBox(tile.worldPosition, 2);
+
+        for (int i = 0; i < tiles.Count; i++)
+        {
+            if (tiles[i].fertility > 0)
+                tiles[i].fertility = 0;
         }
     }
 

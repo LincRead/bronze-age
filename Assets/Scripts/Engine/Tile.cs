@@ -124,6 +124,18 @@ public class Tile : IHeapItem<Tile>
             }
         }
 
+        // Spawn Gold?
+        if (Grid.instance.GetAllTilesFromBoxArEmpty(this, 2))
+        {
+            float spawnValue = 0.0f;
+            if (tileIndex == 0) spawnValue = 0.005f;
+            if (Random.value < spawnValue)
+            {
+                grid.SpawnGold(this);
+                Grid.instance.SetTilesOccupied(this, 2);
+            }
+        }
+
         // Spawn tree?
         if (walkable)
         {
