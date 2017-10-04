@@ -43,10 +43,8 @@ public class Technologies : MonoBehaviour
         technologyDictionary = new Dictionary<string, Technology>();
 
         AddTechnology("Mesolithic Age");
-        AddTechnology("Stone Axe");
+        AddTechnology("Polished Stone Axe");
         AddTechnology("Weaving");
-        AddTechnology("Sedentism");
-        AddTechnology("Microliths");
     }
 
     public void AddTechnology(string title)

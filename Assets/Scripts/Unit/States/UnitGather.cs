@@ -31,7 +31,7 @@ public class UnitGather : UnitState {
         // Based on type of resource
         switch (_resource.harvestType)
         {
-            case HARVEST_TYPE.GATHER:
+            case HARVEST_TYPE.GATHER_BERRIES:
                 _controller._animator.Play("gather");
                 break;
             case HARVEST_TYPE.CHOP:
@@ -48,8 +48,28 @@ public class UnitGather : UnitState {
 
     public override void DoActions()
     {
-        // Todo add harvest rate
-        harvestProgress += 1.0f * Time.deltaTime;
+        // Based on type of resource
+        switch (_resource.harvestType)
+        {
+            case HARVEST_TYPE.GATHER_BERRIES:
+                harvestProgress += PlayerDataManager.instance.GetPlayerData(_controller.playerID).gatherBerriesSpeed * Time.deltaTime;
+                break;
+            case HARVEST_TYPE.GATHER_MEAT:
+                harvestProgress += PlayerDataManager.instance.GetPlayerData(_controller.playerID).gatherMeatSpeed * Time.deltaTime;
+                break;
+            case HARVEST_TYPE.FISHING:
+                harvestProgress += PlayerDataManager.instance.GetPlayerData(_controller.playerID).fishingSpeed * Time.deltaTime;
+                break;
+            case HARVEST_TYPE.CHOP:
+                harvestProgress += PlayerDataManager.instance.GetPlayerData(_controller.playerID).woodCuttingSpeed * Time.deltaTime;
+                break;
+            case HARVEST_TYPE.FARM:
+                harvestProgress += PlayerDataManager.instance.GetPlayerData(_controller.playerID).farmingSpeed * Time.deltaTime;
+                break;
+            case HARVEST_TYPE.MINE:
+                harvestProgress += PlayerDataManager.instance.GetPlayerData(_controller.playerID).miningSpeed * Time.deltaTime;
+                break;
+        }
 
         // Make sure it hasn't been depleted when we add a resouce to harvester
         if (harvestProgress >= _resource.harvestDifficulty 

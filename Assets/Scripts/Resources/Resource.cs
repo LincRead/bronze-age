@@ -3,7 +3,9 @@ using System.Collections;
 
 public enum HARVEST_TYPE
 {
-    GATHER,
+    GATHER_BERRIES,
+    GATHER_MEAT,
+    FISHING,
     CHOP,
     MINE,
     FARM

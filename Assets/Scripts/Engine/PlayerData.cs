@@ -49,4 +49,10 @@ public class PlayerData {
 
     // Technology stats
     public int extraVillagerHP = 0;
+    public float woodCuttingSpeed = 1f;
+    public float gatherBerriesSpeed = 1f;
+    public float gatherMeatSpeed = 1f;
+    public float fishingSpeed = 1f;
+    public float farmingSpeed = 1f;
+    public float miningSpeed = 1f;
 }

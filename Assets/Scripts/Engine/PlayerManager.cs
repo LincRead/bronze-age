@@ -384,7 +384,7 @@ public class PlayerManager : MonoBehaviour {
             {
                 case HARVEST_TYPE.CHOP: EventManager.TriggerEvent("SetChopCursor"); break;
                 case HARVEST_TYPE.MINE: EventManager.TriggerEvent("SetMineCursor"); break;
-                case HARVEST_TYPE.GATHER: EventManager.TriggerEvent("SetGatherCursor"); break;
+                case HARVEST_TYPE.GATHER_BERRIES: EventManager.TriggerEvent("SetGatherCursor"); break;
                 case HARVEST_TYPE.FARM: EventManager.TriggerEvent("SetFarmCursor"); break;
                 default: EventManager.TriggerEvent("SetDefaultCursor"); break;
             }

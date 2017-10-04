@@ -25,6 +25,10 @@ public class BuildingView : ControllerUIView
         if (_buildingController.inProductionProcess)
         {
             ShowProduction();
+
+            // Change icon to next production item's
+            ControllerUIManager.instance.productionProgressCanvas.icon.sprite = _buildingController.GetCurrentProduction().icon;
+
             UpdatePercentProductionVisuals();
         }
 

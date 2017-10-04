@@ -714,6 +714,11 @@ public class Building : BaseController {
         Destroy(gameObject);
     }
 
+    public ProductionButtonData GetCurrentProduction()
+    {
+        return productionButtonsData[productionIndex];
+    }
+
     public float GetPercentageProduced()
     {   
         float percent = stepsProduced / stepsToProduce;
