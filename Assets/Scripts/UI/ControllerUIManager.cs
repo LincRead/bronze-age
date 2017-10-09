@@ -289,6 +289,14 @@ public class ControllerUIManager : MonoBehaviour {
         }
     }
 
+    public void ResetView(BaseController controller)
+    {
+        if(currentView != null)
+        {
+            currentView.OnEnter(this, controller);
+        }
+    }
+
     public void ChangeAndResetView(CONTROLLER_UI_VIEW viewType, BaseController controller)
     {
         // Make sure OnExit is also run when restarting.

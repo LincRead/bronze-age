@@ -462,9 +462,10 @@ public class Building : BaseController {
             ControllerUIManager.instance.DeactivateProductionButton(buttonIndex);
             ControllerUIManager.instance.productionTooltip.gameObject.SetActive(false);
             Technologies.instance.SetTechnologyInQueue(productionButtonsData[buttonIndex].title);
+            ControllerUIManager.instance.ResetView(this);
         }
 
-        // Make sure we cancel this if in prosess
+        // Make sure we cancel settings rally point if we clicked on a production button
         PlayerManager.instance.CancelRallyPointState();
     }
 
@@ -568,7 +569,7 @@ public class Building : BaseController {
 
         if (selected)
         {
-            ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.BUILDING_INFO, this);
+            ControllerUIManager.instance.ResetView(this);
         }
     }
 
