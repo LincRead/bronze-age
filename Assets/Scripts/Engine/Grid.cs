@@ -931,10 +931,18 @@ public class Grid : MonoBehaviour {
      * Need to run game to see tiles in Editor Scene.
      * Grid gets created at Awake().
      */
-        void OnDrawGizmos()
+    void OnDrawGizmos()
     {
-        // Show grid size
-        Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, gridWorldSize.y, 1.0f));
+        Debug.Log(gridWorldSize.x);
+
+        Gizmos.color = Color.blue;
+        // Show size of Grid
+        Debug.Log(numTilesX);
+        float offsetY = (numTilesY * tileHeight);
+        Gizmos.DrawLine(new Vector3(- numTilesX * tileHeight * 2, 0.0f + offsetY), new Vector3(0.0f, numTilesY * tileHeight + offsetY));
+        Gizmos.DrawLine(new Vector3(0.0f, numTilesY * tileHeight + offsetY), new Vector3(numTilesX * tileHeight * 2, 0.0f + offsetY));
+        Gizmos.DrawLine(new Vector3(numTilesX * tileHeight * 2, 0f + offsetY), new Vector3(0.0f, -numTilesY * tileHeight + offsetY));
+        Gizmos.DrawLine(new Vector3(0.0f, -numTilesY * tileHeight + offsetY), new Vector3(-numTilesX * tileHeight * 2, 0.0f + offsetY));
 
         // Grid gets created at Awake()
         if (tiles != null)
