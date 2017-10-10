@@ -54,6 +54,11 @@ public class TribeController : UnitStateController {
         }
 	}
 
+    protected override void FirstUpdate()
+    {
+        Grid.instance.RemoveControllersFrom(visibleTiles, null);
+    }
+
     public void SetupCamp(CivilizationCenter center)
     {
         Destroy(gameObject);

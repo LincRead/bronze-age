@@ -18,6 +18,8 @@ public class BaseController : MonoBehaviour {
     [HideInInspector]
     public float zIndex = 0;
 
+    private bool firstUpdate = true;
+
     [HideInInspector]
     public bool selected = false;
 
@@ -98,6 +100,17 @@ public class BaseController : MonoBehaviour {
         {
             UpdateZIndex();
         }
+
+        if(firstUpdate)
+        {
+            firstUpdate = false;
+            FirstUpdate();
+        }
+    }
+
+    protected virtual void FirstUpdate()
+    {
+
     }
 
     void UpdateZIndex()
