@@ -7,7 +7,11 @@ public class TribeController : UnitStateController {
     [HideInInspector]
     public bool movingTowarsCamp = false;
 
-	protected override void Update ()
+    [Header("Special sounds")]
+    public AudioClip placedTribeSound;
+    public AudioClip setupCampSound;
+
+    protected override void Update ()
     {
         base.Update();
 
@@ -43,6 +47,9 @@ public class TribeController : UnitStateController {
                 EventManager.TriggerEvent("SetDefaultCursor");
 
                 movingTowarsCamp = true;
+
+                // Play sound
+                _audioSource.PlayOneShot(placedTribeSound);
             }
         }
 	}
@@ -52,6 +59,9 @@ public class TribeController : UnitStateController {
         Destroy(gameObject);
         RemoveFromPathfinding();
         DecreaseVisibilityOfTiles();
+
+        // Play sound
+        _audioSource.PlayOneShot(setupCampSound);
 
         // Finish after unit is destroyed
         center.FinishConstruction();

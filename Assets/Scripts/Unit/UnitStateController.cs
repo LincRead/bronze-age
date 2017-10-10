@@ -116,7 +116,7 @@ public class UnitStateController : BaseController
     private bool rallyToPositionAtInit = false;
     private Vector3 rallyToPosition;
 
-    AudioSource _audioSource;
+    protected AudioSource _audioSource;
 
     [Header("Sounds effects")]
     public AudioClip soundChop;
@@ -703,11 +703,9 @@ public class UnitStateController : BaseController
 
     public void PlaySound(string sound)
     {
-        _audioSource.volume = 0.3f;
-
         switch(sound)
         {
-            case "chop": _audioSource.PlayOneShot(soundChop); break;
+            case "chop": _audioSource.PlayOneShot(soundChop); _audioSource.volume = 0.05f; break;
         }
     }
 
