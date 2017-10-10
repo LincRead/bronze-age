@@ -586,7 +586,6 @@ public class Building : BaseController {
             startedProduction = false;
         }
         
-        // Once off production no longer in queue
         if (productionButtonsData[productionIndex].type == PRODUCTION_TYPE.TECHNOLOGY)
         {
             Technologies.instance.RemoveTechnologyFromQueue(productionButtonsData[productionIndex].title);
@@ -596,22 +595,24 @@ public class Building : BaseController {
         {
             Produce(productionList[0]);
             productionList.RemoveAt(0);
-            UpdateProductionQueue();
         }
 
-        else
-        {
-            if (selected)
-            {
-                ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.BUILDING_INFO, this);
-            }
-        }
+        UpdateProductionQueue();
+        ControllerUIManager.instance.ResetView(this);
     }
 
     public void RemoveProductionAtQueue(int index)
     {
+        // Add technology button back
+        if (productionButtonsData[productionList[index]].type == PRODUCTION_TYPE.TECHNOLOGY)
+        {
+            Technologies.instance.RemoveTechnologyFromQueue(productionButtonsData[productionList[index]].title);
+        }
+
         productionList.RemoveAt(index);
+
         UpdateProductionQueue();
+        ControllerUIManager.instance.ResetView(this);
     }
 
     public void UpdateProductionQueue()
