@@ -116,6 +116,11 @@ public class UnitStateController : BaseController
     private bool rallyToPositionAtInit = false;
     private Vector3 rallyToPosition;
 
+    private AudioSource _audioSource;
+
+    [Header("Sounds effects")]
+    public AudioClip soundChop;
+
     protected override void Start()
     {
         _basicStats = _unitStats;
@@ -123,6 +128,7 @@ public class UnitStateController : BaseController
         base.Start();
 
         _animator = GetComponent<Animator>();
+        _audioSource = gameObject.AddComponent<AudioSource>();
         _pathfinder = GetComponent<Pathfinding>();
 
         // Hitpoints
@@ -692,6 +698,16 @@ public class UnitStateController : BaseController
         if (!_animator.GetCurrentAnimatorStateInfo(0).IsName("idle"))
         {
             _animator.Play("idle", -1, 0.0f);
+        }
+    }
+
+    public void PlaySound(string sound)
+    {
+        _audioSource.volume = 0.3f;
+
+        switch(sound)
+        {
+            case "chop": _audioSource.PlayOneShot(soundChop); break;
         }
     }
 
