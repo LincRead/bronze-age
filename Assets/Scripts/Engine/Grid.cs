@@ -215,7 +215,7 @@ public class Grid : MonoBehaviour {
 
     void SpawnResource(Tile tile, GameObject resourcePrefab)
     {
-        GameObject newResource = GameObject.Instantiate(resourcePrefab, tile.worldPosition, Quaternion.identity) as GameObject;
+        GameObject.Instantiate(resourcePrefab, tile.worldPosition, Quaternion.identity);
     }
 
     public void SpawnMetal(Tile tile)

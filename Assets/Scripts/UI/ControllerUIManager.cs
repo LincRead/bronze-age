@@ -417,7 +417,6 @@ public class ControllerUIManager : MonoBehaviour {
     public void ShowProductionButtons(ProductionButtonData[] data)
     {
         bool[] buttonWithIndexesActivated = new bool[_productionButtonScripts.Length];
-        bool addRallyPointButton = false;
         for (int i = 0; i < buttonWithIndexesActivated.Length; i++)
         {
             buttonWithIndexesActivated[i] = false;

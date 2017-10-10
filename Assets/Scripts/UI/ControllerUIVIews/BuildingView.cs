@@ -125,7 +125,6 @@ public class BuildingView : ControllerUIView
 
         else
         {
-            float percent = _buildingController.GetPercentageProduced();
             ui.productionProgressCanvas.UpdateProgress(0);
         }
     }
