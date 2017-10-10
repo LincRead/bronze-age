@@ -116,7 +116,7 @@ public class UnitStateController : BaseController
     private bool rallyToPositionAtInit = false;
     private Vector3 rallyToPosition;
 
-    private AudioSource _audioSource;
+    AudioSource _audioSource;
 
     [Header("Sounds effects")]
     public AudioClip soundChop;
@@ -128,7 +128,7 @@ public class UnitStateController : BaseController
         base.Start();
 
         _animator = GetComponent<Animator>();
-        _audioSource = gameObject.AddComponent<AudioSource>();
+        _audioSource = GetComponent<AudioSource>();
         _pathfinder = GetComponent<Pathfinding>();
 
         // Hitpoints
