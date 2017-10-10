@@ -34,6 +34,7 @@ public class ProductionTooltip : MonoBehaviour {
         if (data.timber > 0) AddRequired(iconsObject.icons[3], data.timber);
         if (data.wealth > 0) AddRequired(iconsObject.icons[8], data.wealth);
         if (data.metal > 0) AddRequired(iconsObject.icons[7], data.metal);
+        if (data.stepsRequired > 0) AddRequired(iconsObject.icons[9], data.stepsRequired);
 
         for (int i = numItemsRequired; i < resourceIcons.Length; i++)
         {

@@ -933,11 +933,9 @@ public class Grid : MonoBehaviour {
      */
     void OnDrawGizmos()
     {
-        Debug.Log(gridWorldSize.x);
-
         Gizmos.color = Color.blue;
+
         // Show size of Grid
-        Debug.Log(numTilesX);
         float offsetY = (numTilesY * tileHeight);
         Gizmos.DrawLine(new Vector3(- numTilesX * tileHeight * 2, 0.0f + offsetY), new Vector3(0.0f, numTilesY * tileHeight + offsetY));
         Gizmos.DrawLine(new Vector3(0.0f, numTilesY * tileHeight + offsetY), new Vector3(numTilesX * tileHeight * 2, 0.0f + offsetY));
