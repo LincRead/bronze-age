@@ -687,6 +687,11 @@ public class Building : BaseController {
 
     public override void Select()
     {
+        if (!selected && canSetRallyPoint)
+        {
+            PlayerManager.instance.rallyPointSprite.GetComponent<Bounce>().Action(); // Animation
+        }
+
         base.Select();
 
         _healthBar.Activate();

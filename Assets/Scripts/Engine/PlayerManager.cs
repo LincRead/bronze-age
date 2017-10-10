@@ -269,12 +269,7 @@ public class PlayerManager : MonoBehaviour {
 
         selectedBuilding.rallyPointPos = newRallyPointPosition;
         rallyPointSprite.GetComponent<Transform>().position = newRallyPointPosition;
-
-        // Animate new Rally Point
-        float bounceTime = 0.25f;
-        LeanTween.scale(rallyPointSprite.gameObject, new Vector3(1.0f, 1.0f, 1.0f), 0.0f);
-        LeanTween.scale(rallyPointSprite.gameObject, new Vector3(0.75f, 0.75f, 1.0f), bounceTime);
-        LeanTween.scale(rallyPointSprite.gameObject, new Vector3(1.0f, 1.0f, 1.0f), bounceTime).setDelay(bounceTime);
+        rallyPointSprite.GetComponent<Bounce>().Action(); // Animation
 
         _controllerSelecting.unsafeToSelectTile = true;
 

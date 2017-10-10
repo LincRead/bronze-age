@@ -362,7 +362,9 @@ public class ControllerSelecting : MonoBehaviour {
             selectedEnemy = null;
         }
 
-        if (selectedController != null)
+        if (selectedController != null
+            // Only deselct if selecting another Controller
+            && PlayerManager.instance.selectableController != selectedController)
         {
             selectedController.Deselect();
             selectedController = null;
