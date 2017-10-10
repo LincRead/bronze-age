@@ -26,7 +26,7 @@ public class PlayerData {
     public int metal = 0;
 
     // Need to always be paired number
-    public int villagerCarryLimit = 10;
+    public int villagerCarryLimit = 5;
 
     [HideInInspector]
     public Color teamColor = Color.white;
