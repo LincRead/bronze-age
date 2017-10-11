@@ -38,37 +38,33 @@ public class UnitMoveTo : UnitState
                 {
                     case RESOURCE_TYPE.WOOD:
 
-                        if (!_controller._animator.GetCurrentAnimatorStateInfo(0).IsName("carry_wood"))
-                        {
-                            _controller._animator.Play("carry_wood", -1, 0.0f);
-                        }
+                        PlayCarryResourceAnimation("carry_wood");
 
                         break;
 
                     case RESOURCE_TYPE.METAL:
 
-                        if (!_controller._animator.GetCurrentAnimatorStateInfo(0).IsName("carry_metal"))
-                        {
-                            _controller._animator.Play("carry_metal", -1, 0.0f);
-                        }
+                        PlayCarryResourceAnimation("carry_metal");
 
                         break;
 
                     case RESOURCE_TYPE.WEALTH:
 
-                        if (!_controller._animator.GetCurrentAnimatorStateInfo(0).IsName("carry_metal"))
+                        if(_controller.resourceTitleCarrying.Equals("Gold"))
                         {
-                            _controller._animator.Play("carry_metal", -1, 0.0f);
+                            PlayCarryResourceAnimation("carry_gold");
+                        }
+
+                        else if (_controller.resourceTitleCarrying.Equals("Obsidian"))
+                        {
+                            PlayCarryResourceAnimation("carry_obsidian");
                         }
 
                         break;
 
                     case RESOURCE_TYPE.FOOD:
 
-                        if (!_controller._animator.GetCurrentAnimatorStateInfo(0).IsName("carry_berries"))
-                        {
-                            _controller._animator.Play("carry_berries", -1, 0.0f);
-                        }
+                        PlayCarryResourceAnimation("carry_berries");
 
                         break;
                 }
@@ -79,6 +75,14 @@ public class UnitMoveTo : UnitState
             {
                 _controller._animator.Play("run", -1, 0.0f);
             }
+        }
+    }
+
+    void PlayCarryResourceAnimation(string animName)
+    {
+        if (!_controller._animator.GetCurrentAnimatorStateInfo(0).IsName(animName))
+        {
+            _controller._animator.Play(animName, -1, 0.0f);
         }
     }
 
