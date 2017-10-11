@@ -92,7 +92,7 @@ public class Tile : IHeapItem<Tile>
 
         fertilityPoints = tileIndex;
 
-        _tile = GameObject.Instantiate(Resources.Load("Tile"), worldPosition, Quaternion.identity) as GameObject;
+        _tile = GameObject.Instantiate(Resources.Load("Tile"), new Vector3(worldPosition.x, worldPosition.y, worldPosition.y + 100f), Quaternion.identity) as GameObject;
         _tileSpriteRenderer = _tile.GetComponent<SpriteRenderer>();
         _tileSpriteRenderer.sprite = Grid.instance.tileSprites[tileIndex];
         _tile.transform.SetParent(grid.transform);

@@ -1,85 +1,86 @@
 fileFormatVersion: 2
-guid: 8ed3eff11f0e5024d8fd1244fdad0412
-timeCreated: 1502766893
+guid: b28d94f6cc69a404bbf7d5940918e265
+timeCreated: 1507697906
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Worker_0
-    21300002: Worker_1
-    21300004: Worker_2
-    21300006: Worker_3
-    21300008: Worker_4
-    21300010: Worker_5
-    21300012: Worker_6
-    21300014: Worker_7
-    21300016: Worker_8
-    21300018: Worker_9
-    21300020: Worker_10
-    21300022: Worker_11
-    21300024: Worker_12
-    21300026: Worker_13
-    21300028: Worker_14
-    21300030: Worker_15
-    21300032: Worker_16
-    21300034: Worker_17
-    21300036: Worker_18
-    21300038: Worker_19
-    21300040: Worker_20
-    21300042: Worker_21
-    21300044: Worker_22
-    21300046: Worker_23
-    21300048: Worker_24
-    21300050: Worker_25
-    21300052: Worker_26
-    21300054: Worker_27
-    21300056: Worker_28
-    21300058: Worker_29
-    21300060: Worker_30
-    21300062: Worker_31
-    21300064: Worker_32
-    21300066: Worker_33
-    21300068: Worker_34
-    21300070: Worker_35
-    21300072: Worker_36
-    21300074: Worker_37
-    21300076: Worker_38
-    21300078: Worker_39
-    21300080: Worker_40
-    21300082: Worker_41
-    21300084: Worker_42
-    21300086: Worker_43
-    21300088: Worker_44
-    21300090: Worker_45
-    21300092: Worker_46
-    21300094: Worker_47
-    21300096: Worker_48
-    21300098: Worker_49
-    21300100: Worker_50
-    21300102: Worker_51
-    21300104: Worker_52
-    21300106: Worker_53
-    21300108: Worker_54
-    21300110: Worker_55
-    21300112: Worker_56
-    21300114: Worker_57
-    21300116: Worker_58
-    21300118: Worker_59
-    21300120: Worker_60
-    21300122: Worker_61
-    21300124: Worker_62
-    21300126: Worker_63
-    21300128: Worker_64
-    21300130: Worker_65
-    21300132: Worker_66
-    21300134: Worker_67
-    21300136: Worker_68
-    21300138: Worker_69
-    21300140: Worker_70
-    21300142: Worker_71
-    21300144: Worker_72
-    21300146: Worker_73
-    21300148: Worker_74
-    21300150: Worker_75
+    21300000: Megaman_0
+    21300002: Megaman_1
+    21300004: Megaman_2
+    21300006: Megaman_3
+    21300008: Megaman_4
+    21300010: Megaman_5
+    21300012: Megaman_6
+    21300014: Megaman_7
+    21300016: Megaman_8
+    21300018: Megaman_9
+    21300020: Megaman_10
+    21300022: Megaman_11
+    21300024: Megaman_12
+    21300026: Megaman_13
+    21300028: Megaman_14
+    21300030: Megaman_15
+    21300032: Megaman_16
+    21300034: Megaman_17
+    21300036: Megaman_18
+    21300038: Megaman_19
+    21300040: Megaman_20
+    21300042: Megaman_21
+    21300044: Megaman_22
+    21300046: Megaman_23
+    21300048: Megaman_24
+    21300050: Megaman_25
+    21300052: Megaman_26
+    21300054: Megaman_27
+    21300056: Megaman_28
+    21300058: Megaman_29
+    21300060: Megaman_30
+    21300062: Megaman_31
+    21300064: Megaman_32
+    21300066: Megaman_33
+    21300068: Megaman_34
+    21300070: Megaman_35
+    21300072: Megaman_36
+    21300074: Megaman_37
+    21300076: Megaman_38
+    21300078: Megaman_39
+    21300080: Megaman_40
+    21300082: Megaman_41
+    21300084: Megaman_42
+    21300086: Megaman_43
+    21300088: Megaman_44
+    21300090: Megaman_45
+    21300092: Megaman_46
+    21300094: Megaman_47
+    21300096: Megaman_48
+    21300098: Megaman_49
+    21300100: Megaman_50
+    21300102: Megaman_51
+    21300104: Megaman_52
+    21300106: Megaman_53
+    21300108: Megaman_54
+    21300110: Megaman_55
+    21300112: Megaman_56
+    21300114: Megaman_57
+    21300116: Megaman_58
+    21300118: Megaman_59
+    21300120: Megaman_60
+    21300122: Megaman_61
+    21300124: Megaman_62
+    21300126: Megaman_63
+    21300128: Megaman_64
+    21300130: Megaman_65
+    21300132: Megaman_66
+    21300134: Megaman_67
+    21300136: Megaman_68
+    21300138: Megaman_69
+    21300140: Megaman_70
+    21300142: Megaman_71
+    21300144: Megaman_72
+    21300146: Megaman_73
+    21300148: Megaman_74
+    21300150: Megaman_75
+    21300152: Megaman_76
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -141,12 +142,12 @@ TextureImporter:
     overridden: 0
   - buildTarget: Standalone
     maxTextureSize: 2048
-    textureFormat: 4
-    textureCompression: 1
+    textureFormat: -1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
-    overridden: 1
+    overridden: 0
   - buildTarget: Windows Store Apps
     maxTextureSize: 2048
     textureFormat: -1
@@ -159,1037 +160,1079 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Worker_0
+      name: Megaman_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 280
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 33
+        y: 262
+        width: 7
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_1
+      name: Megaman_1
       rect:
         serializedVersion: 2
-        x: 26
-        y: 280
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 75
+        y: 278
+        width: 22
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_2
+      name: Megaman_2
       rect:
         serializedVersion: 2
-        x: 52
-        y: 280
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 105
+        y: 262
+        width: 21
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_3
+      name: Megaman_3
       rect:
         serializedVersion: 2
-        x: 78
-        y: 280
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 135
+        y: 262
+        width: 21
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_4
+      name: Megaman_4
       rect:
         serializedVersion: 2
-        x: 104
-        y: 280
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 162
+        y: 262
+        width: 20
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_5
+      name: Megaman_5
       rect:
         serializedVersion: 2
-        x: 0
-        y: 260
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 190
+        y: 262
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_6
+      name: Megaman_6
       rect:
         serializedVersion: 2
-        x: 26
-        y: 260
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 220
+        y: 262
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_7
+      name: Megaman_7
       rect:
         serializedVersion: 2
-        x: 52
-        y: 260
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 241
+        y: 262
+        width: 21
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_8
+      name: Megaman_8
       rect:
         serializedVersion: 2
-        x: 78
-        y: 260
+        x: 267
+        y: 262
         width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_9
+      name: Megaman_9
       rect:
         serializedVersion: 2
-        x: 104
-        y: 260
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 47
+        y: 262
+        width: 22
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_10
+      name: Megaman_10
       rect:
         serializedVersion: 2
-        x: 0
-        y: 240
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 75
+        y: 262
+        width: 22
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_11
+      name: Megaman_11
       rect:
         serializedVersion: 2
-        x: 26
-        y: 240
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 16
+        y: 226
+        width: 31
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_12
-      rect:
-        serializedVersion: 2
-        x: 52
-        y: 240
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Worker_13
-      rect:
-        serializedVersion: 2
-        x: 78
-        y: 240
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Worker_14
-      rect:
-        serializedVersion: 2
-        x: 104
-        y: 240
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Worker_15
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 220
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Worker_16
-      rect:
-        serializedVersion: 2
-        x: 26
-        y: 220
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Worker_17
+      name: Megaman_12
       rect:
         serializedVersion: 2
         x: 52
-        y: 220
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        y: 226
+        width: 29
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_18
+      name: Megaman_13
       rect:
         serializedVersion: 2
-        x: 78
-        y: 220
+        x: 86
+        y: 226
         width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_19
+      name: Megaman_14
       rect:
         serializedVersion: 2
-        x: 104
-        y: 220
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 115
+        y: 226
+        width: 30
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_20
+      name: Megaman_15
       rect:
         serializedVersion: 2
-        x: 0
-        y: 200
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 148
+        y: 226
+        width: 29
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_21
+      name: Megaman_16
       rect:
         serializedVersion: 2
-        x: 26
-        y: 200
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 184
+        y: 226
+        width: 27
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_22
+      name: Megaman_17
       rect:
         serializedVersion: 2
-        x: 52
-        y: 200
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 215
+        y: 226
+        width: 28
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_23
+      name: Megaman_18
       rect:
         serializedVersion: 2
-        x: 78
-        y: 200
+        x: 250
+        y: 226
         width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_24
+      name: Megaman_19
       rect:
         serializedVersion: 2
-        x: 104
-        y: 200
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 282
+        y: 226
+        width: 28
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_25
+      name: Megaman_20
       rect:
         serializedVersion: 2
-        x: 0
-        y: 180
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 7
+        y: 186
+        width: 16
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_26
+      name: Megaman_21
       rect:
         serializedVersion: 2
-        x: 26
-        y: 180
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 34
+        y: 186
+        width: 16
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_27
+      name: Megaman_22
       rect:
         serializedVersion: 2
-        x: 52
-        y: 180
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 62
+        y: 186
+        width: 24
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_28
+      name: Megaman_23
       rect:
         serializedVersion: 2
-        x: 78
-        y: 180
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 94
+        y: 191
+        width: 16
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_29
+      name: Megaman_24
       rect:
         serializedVersion: 2
-        x: 104
-        y: 180
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 118
+        y: 186
+        width: 27
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_30
+      name: Megaman_25
       rect:
         serializedVersion: 2
-        x: 0
-        y: 160
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 153
+        y: 186
+        width: 30
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_31
+      name: Megaman_26
       rect:
         serializedVersion: 2
-        x: 26
-        y: 160
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 189
+        y: 186
+        width: 29
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_32
+      name: Megaman_27
       rect:
         serializedVersion: 2
-        x: 52
-        y: 160
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 225
+        y: 186
+        width: 21
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_33
+      name: Megaman_28
       rect:
         serializedVersion: 2
-        x: 78
-        y: 160
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 252
+        y: 186
+        width: 21
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_34
+      name: Megaman_29
       rect:
         serializedVersion: 2
-        x: 104
-        y: 160
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 280
+        y: 186
+        width: 15
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_35
+      name: Megaman_30
       rect:
         serializedVersion: 2
-        x: 0
-        y: 140
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 302
+        y: 186
+        width: 19
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_36
+      name: Megaman_31
       rect:
         serializedVersion: 2
-        x: 26
-        y: 140
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 5
+        y: 151
+        width: 21
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_37
+      name: Megaman_32
       rect:
         serializedVersion: 2
-        x: 52
-        y: 140
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 34
+        y: 151
+        width: 21
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_38
+      name: Megaman_33
       rect:
         serializedVersion: 2
-        x: 78
-        y: 140
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 63
+        y: 151
+        width: 21
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_39
+      name: Megaman_34
       rect:
         serializedVersion: 2
-        x: 104
-        y: 140
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 93
+        y: 151
+        width: 21
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_40
+      name: Megaman_35
       rect:
         serializedVersion: 2
-        x: 0
-        y: 120
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 123
+        y: 151
+        width: 21
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_41
+      name: Megaman_36
       rect:
         serializedVersion: 2
-        x: 26
-        y: 120
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 154
+        y: 151
+        width: 21
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_42
+      name: Megaman_37
       rect:
         serializedVersion: 2
-        x: 52
-        y: 120
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 184
+        y: 151
+        width: 21
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_43
+      name: Megaman_38
       rect:
         serializedVersion: 2
-        x: 78
-        y: 120
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 214
+        y: 151
+        width: 21
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_44
+      name: Megaman_39
       rect:
         serializedVersion: 2
-        x: 104
-        y: 120
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 243
+        y: 151
+        width: 21
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_45
+      name: Megaman_40
       rect:
         serializedVersion: 2
-        x: 0
-        y: 100
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 273
+        y: 151
+        width: 21
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_46
+      name: Megaman_41
       rect:
         serializedVersion: 2
-        x: 26
-        y: 100
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 302
+        y: 151
+        width: 21
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_47
+      name: Megaman_42
       rect:
         serializedVersion: 2
-        x: 52
-        y: 100
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 10
+        y: 112
+        width: 21
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_48
+      name: Megaman_43
       rect:
         serializedVersion: 2
-        x: 78
-        y: 100
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 39
+        y: 112
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_49
+      name: Megaman_44
       rect:
         serializedVersion: 2
-        x: 104
-        y: 100
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 64
+        y: 112
+        width: 12
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_50
+      name: Megaman_45
       rect:
         serializedVersion: 2
-        x: 0
-        y: 80
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 86
+        y: 112
+        width: 17
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_51
+      name: Megaman_46
       rect:
         serializedVersion: 2
-        x: 26
-        y: 80
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 111
+        y: 112
+        width: 21
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_52
+      name: Megaman_47
       rect:
         serializedVersion: 2
-        x: 52
-        y: 80
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 139
+        y: 112
+        width: 17
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_53
+      name: Megaman_48
       rect:
         serializedVersion: 2
-        x: 78
-        y: 80
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 166
+        y: 112
+        width: 12
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_54
+      name: Megaman_49
       rect:
         serializedVersion: 2
-        x: 104
-        y: 80
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 186
+        y: 112
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_55
+      name: Megaman_50
       rect:
         serializedVersion: 2
-        x: 0
-        y: 60
+        x: 208
+        y: 112
         width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_56
+      name: Megaman_51
       rect:
         serializedVersion: 2
-        x: 26
-        y: 60
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 241
+        y: 112
+        width: 19
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_57
+      name: Megaman_52
       rect:
         serializedVersion: 2
-        x: 52
-        y: 60
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 256
+        y: 126
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_58
+      name: Megaman_53
       rect:
         serializedVersion: 2
-        x: 78
-        y: 60
+        x: 268
+        y: 112
         width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_59
+      name: Megaman_54
       rect:
         serializedVersion: 2
-        x: 104
-        y: 60
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 299
+        y: 126
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_60
+      name: Megaman_55
       rect:
         serializedVersion: 2
-        x: 0
-        y: 40
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 301
+        y: 112
+        width: 19
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_61
+      name: Megaman_56
       rect:
         serializedVersion: 2
-        x: 26
-        y: 40
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 65
+        y: 74
+        width: 16
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_62
+      name: Megaman_57
       rect:
         serializedVersion: 2
-        x: 52
-        y: 40
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 87
+        y: 74
+        width: 16
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_63
+      name: Megaman_58
       rect:
         serializedVersion: 2
-        x: 78
-        y: 40
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 108
+        y: 74
+        width: 24
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_64
+      name: Megaman_59
       rect:
         serializedVersion: 2
-        x: 104
-        y: 40
+        x: 136
+        y: 74
         width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_65
+      name: Megaman_60
       rect:
         serializedVersion: 2
-        x: 0
-        y: 20
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 169
+        y: 74
+        width: 22
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_66
+      name: Megaman_61
       rect:
         serializedVersion: 2
-        x: 26
-        y: 20
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 198
+        y: 74
+        width: 22
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_67
+      name: Megaman_62
       rect:
         serializedVersion: 2
-        x: 52
-        y: 20
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 229
+        y: 74
+        width: 21
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_68
+      name: Megaman_63
       rect:
         serializedVersion: 2
-        x: 78
-        y: 20
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 19
+        y: 38
+        width: 32
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_69
+      name: Megaman_64
       rect:
         serializedVersion: 2
-        x: 104
-        y: 20
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 56
+        y: 37
+        width: 32
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_70
+      name: Megaman_65
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 93
+        y: 38
+        width: 32
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_71
+      name: Megaman_66
       rect:
         serializedVersion: 2
-        x: 26
-        y: 0
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 129
+        y: 37
+        width: 32
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_72
+      name: Megaman_67
       rect:
         serializedVersion: 2
-        x: 52
-        y: 0
-        width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 164
+        y: 38
+        width: 32
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Worker_73
+      name: Megaman_68
       rect:
         serializedVersion: 2
-        x: 78
-        y: 0
+        x: 202
+        y: 39
+        width: 32
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Megaman_69
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 37
+        width: 33
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Megaman_70
+      rect:
+        serializedVersion: 2
+        x: 282
+        y: 37
+        width: 29
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Megaman_71
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 3
         width: 26
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Megaman_72
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 3
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Megaman_73
+      rect:
+        serializedVersion: 2
+        x: 174
+        y: 3
+        width: 17
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Megaman_74
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 3
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Megaman_75
+      rect:
+        serializedVersion: 2
+        x: 237
+        y: 2
+        width: 32
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Megaman_76
+      rect:
+        serializedVersion: 2
+        x: 271
+        y: 2
+        width: 32
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

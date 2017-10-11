@@ -235,6 +235,9 @@ public class Building : BaseController {
             if (!hasBeenPlaced)
             {
                 HandlePlacingBuilding();
+
+                // Update zIndex
+                base.Update();
             }
 
             else
