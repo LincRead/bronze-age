@@ -483,6 +483,7 @@ public class Building : BaseController {
         if (_buildingStats.food > 0 && playerData.foodStock < _buildingStats.food) return false;
         if (_buildingStats.timber > 0 && playerData.timber < _buildingStats.timber) return false;
         if (_buildingStats.metal > 0 && playerData.metal < _buildingStats.metal) return false;
+        if (_buildingStats.wealth > 0 && playerData.wealth < _buildingStats.wealth) return false;
         if (_buildingStats.newCitizens > 0 && playerData.newCitizens < _buildingStats.newCitizens) return false;
 
         return true;
@@ -501,6 +502,7 @@ public class Building : BaseController {
         if (data.food > 0 && playerData.foodStock < data.food) return false;
         if (data.timber > 0 && playerData.timber < data.timber) return false;
         if (data.metal > 0 && playerData.metal < data.metal) return false;
+        if (data.wealth > 0 && playerData.wealth < data.wealth) return false;
         if (data.newCitizens > 0 && playerData.newCitizens < data.newCitizens) return false;
 
         return true;
