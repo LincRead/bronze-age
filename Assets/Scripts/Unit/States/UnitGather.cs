@@ -113,7 +113,7 @@ public class UnitGather : UnitState {
             return;
         }
 
-        else if(_resource.depleted)
+        if(_resource.depleted)
         {
             // Don't reliver if not carrying any resources
             if (_controller.resoureAmountCarrying == 0)
