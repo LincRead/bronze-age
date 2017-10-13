@@ -16,7 +16,8 @@ public enum RESOURCE_TYPE
     FOOD,
     WOOD,
     WEALTH,
-    METAL
+    METAL,
+    CROPS
 }
 
 public class Resource : BaseController {
@@ -58,7 +59,7 @@ public class Resource : BaseController {
         // Center resource based on number of tiles resource occupies in each directions.
         transform.position += new Vector3(0.0f, 0.08f * (size - 1));
 
-        Grid.instance.SetTilesOccupiedByController(this);
+        Grid.instance.SetTilesOccupiedByController(this, false);
 
         playerID = -1;
         _spriteRenderer.sortingLayerName = "Object";

@@ -278,6 +278,6 @@ public class Tile : IHeapItem<Tile>
 
     public bool IsEmpty()
     {
-        return walkable && unitsStandingHere.Count == 0;
+        return walkable && unitsStandingHere.Count == 0 && controllerOccupying == null;
     }
 }

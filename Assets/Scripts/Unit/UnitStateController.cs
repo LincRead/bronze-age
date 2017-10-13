@@ -58,6 +58,9 @@ public class UnitStateController : BaseController
     public UnitGather gatherState;
 
     [HideInInspector]
+    public UnitFarm unitFarm;
+
+    [HideInInspector]
     public UnitDie dieState;
 
     //[HideInInspector]
@@ -111,6 +114,9 @@ public class UnitStateController : BaseController
     public string resourceTitleCarrying = "none";
 
     [HideInInspector]
+    public GrainFarm farm = null;
+
+    [HideInInspector]
     public BaseController rallyToController = null;
 
     private bool rallyToPositionAtInit = false;
@@ -152,6 +158,7 @@ public class UnitStateController : BaseController
         {
             buildState = ScriptableObject.CreateInstance<UnitBuild>();
             gatherState = ScriptableObject.CreateInstance<UnitGather>();
+            unitFarm = ScriptableObject.CreateInstance<UnitFarm>();
             moveToResourcePositionState = ScriptableObject.CreateInstance<UnitMoveToResourcePosition>();
             moveBackToResource = ScriptableObject.CreateInstance<UnitMoveBackToResource>();
 
@@ -753,6 +760,7 @@ public class UnitStateController : BaseController
 
             switch (resourceTypeCarrying)
             {
+                case RESOURCE_TYPE.CROPS: statSprites[2] = ControllerUIManager.instance.foodIcon; break;
                 case RESOURCE_TYPE.FOOD: statSprites[2] = ControllerUIManager.instance.foodIcon; break;
                 case RESOURCE_TYPE.WOOD: statSprites[2] = ControllerUIManager.instance.woodIcon; break;
                 case RESOURCE_TYPE.WEALTH: statSprites[2] = ControllerUIManager.instance.wealthIcon; break;

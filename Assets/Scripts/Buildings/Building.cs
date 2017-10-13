@@ -203,7 +203,7 @@ public class Building : BaseController {
 
         // Position
         Vector3 positionToPlace = Grid.instance.SnapToGrid(_transform.position);
-        zIndex = GetMiddleNode().worldPosition.y;
+        SetZndex(positionToPlace);
         _transform.position = new Vector3(positionToPlace.x, positionToPlace.y, zIndex);
 
         // Constructed sprite
@@ -215,7 +215,8 @@ public class Building : BaseController {
         _selectedIndicatorRenderer.color = new Color(1f, 1f, 1f, 1f);
         _selectedIndicatorRenderer.enabled = false;
 
-        Grid.instance.SetTilesOccupiedByController(this);
+        Grid.instance.SetTilesOccupiedByController(this, !_basicStats.walkable);
+
         PlayerManager.instance.PlacedBuilding(this);
 
         // Initial rally point position
@@ -225,6 +226,19 @@ public class Building : BaseController {
         if (!WorldManager.firstUpdate)
         {
             UseResourcesForConstruction(-1);
+        }
+    }
+
+    void SetZndex(Vector3 pos)
+    {
+        if (!_basicStats.walkable)
+        {
+            zIndex = GetMiddleNode().worldPosition.y;
+        }
+
+        else
+        {
+            zIndex = GetMiddleNode().worldPosition.y + (0.08f * size);
         }
     }
 
@@ -239,8 +253,7 @@ public class Building : BaseController {
                 // Set zIndex
                 if(GetMiddleNode() != null)
                 {
-                    zIndex = GetMiddleNode().worldPosition.y;
-                    _transform.position = new Vector3(_transform.position.x, _transform.position.y, zIndex);
+                    SetZndex(_transform.position);
                 }
             }
 

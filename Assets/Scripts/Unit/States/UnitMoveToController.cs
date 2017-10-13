@@ -55,7 +55,7 @@ public class UnitMoveToController : UnitMoveTo
         }
 
         // Reset
-        if (_targetController.controllerType != CONTROLLER_TYPE.UNIT)
+        if (_targetController.controllerType != CONTROLLER_TYPE.UNIT && !_targetController._basicStats.walkable)
         {
             Grid.instance.SetWalkableValueForTiles(_targetController.GetPosition(), _targetController.size, false);
         }
@@ -217,6 +217,11 @@ public class UnitMoveToController : UnitMoveTo
                         _controller.GetComponent<TribeController>().SetupCamp(_targetController.GetComponent<CivilizationCenter>());
                     }
                 }
+            }
+
+            else if(_controller._unitStats.isVillager && targetBuilding.title.Equals("Farm"))
+            {
+                _controller.TransitionToState(_controller.unitFarm);
             }
 
             // Drop resources?

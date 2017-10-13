@@ -16,6 +16,9 @@ public class DefaultStats : ScriptableObject
     [Header("Default stats")]
     public int size = 1;
 
+    [Header("Units can walk on this Controller")]
+    public bool walkable = false;
+
     [Header("UI")]
     public Sprite iconSprite;
     public Sprite[] statSprites = new Sprite[4];

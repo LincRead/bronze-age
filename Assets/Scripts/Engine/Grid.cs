@@ -193,11 +193,17 @@ public class Grid : MonoBehaviour {
             foreach (Tile neighbour in tilesToCheck)
             {
                 if (closedSet.Contains(neighbour))
+                {
                     continue;
+                }
+                    
 
                 float newFertility = currentTile.fertility - (1.5f + (Random.value * 10));
+
                 if (newFertility > neighbour.fertility)
+                {
                     neighbour.fertility = newFertility;
+                }
 
                 if (neighbour.fertility <= 0)
                 {
@@ -474,9 +480,14 @@ public class Grid : MonoBehaviour {
                     Tile tile = GetTileFromGridPos(primaryTile.gridPosX + i, primaryTile.gridPosY + j);
 
                     if (walkable)
+                    {
                         tile.SetWalkable();
+                    }
+                        
                     else
+                    {
                         tile.SetUnwalkable();
+                    }
                 }
             }
         }
@@ -495,15 +506,20 @@ public class Grid : MonoBehaviour {
                     Tile tile = GetTileFromGridPos(primaryTile.gridPosX + i, primaryTile.gridPosY + j);
 
                     if (walkable)
+                    {
                         tile.SetWalkable();
+                    }
+                        
                     else
+                    {
                         tile.SetUnwalkable();
+                    }    
                 }
             }
         }
     }
 
-    public void SetTilesOccupiedByController(BaseController controller)
+    public void SetTilesOccupiedByController(BaseController controller, bool walkable)
     {
         // Adding offset since building pivot point (buttom of sprite) is in the middle of two tiles.
         Tile tile = GetTileFromWorldPoint(controller.GetPosition() + new Vector2(0.04f, 0.04f));
@@ -531,11 +547,15 @@ public class Grid : MonoBehaviour {
 
                             // Set this tile as occupied by building
                             tileToOccupy.controllerOccupying = controller;
-                            tileToOccupy.SetUnwalkable();
+
+                            if (!walkable)
+                            {
+                                tileToOccupy.SetUnwalkable();
+                            }
 
                             // Reset for all other tiles the controller occupies, 
                             // because destroying a controller sets all tiles it occupied to not occupying any controllers
-                            SetTilesOccupiedByController(controller);
+                            SetTilesOccupiedByController(controller, walkable);
                         }
 
                         // Remove me
@@ -549,11 +569,15 @@ public class Grid : MonoBehaviour {
 
                             // Tile should still be occupied by previous occupying controller
                             tileToOccupy.controllerOccupying = currentOccupyingController;
-                            tileToOccupy.SetUnwalkable();
+
+                            if(!walkable)
+                            {
+                                tileToOccupy.SetUnwalkable();
+                            }
 
                             // Reset for all other tiles the controller occupies, 
                             // because destroying a controller sets all tiles it occupied to not occupying any controllerss
-                            SetTilesOccupiedByController(currentOccupyingController);
+                            SetTilesOccupiedByController(currentOccupyingController, walkable);
                         }
                     }
 
@@ -561,7 +585,11 @@ public class Grid : MonoBehaviour {
                     {
                         // Set this tile as occupied by building
                         tileToOccupy.controllerOccupying = controller;
-                        tileToOccupy.SetUnwalkable();
+
+                        if (!walkable)
+                        {
+                            tileToOccupy.SetUnwalkable();
+                        }
                     }
                 }
             }
@@ -948,9 +976,13 @@ public class Grid : MonoBehaviour {
             foreach (Tile t in tiles)
             {
                 if (t.walkable)
+                {
                     Gizmos.color = new Color(0.1f, 0.7f, 0.1f, 0.5f);
+                }
                 else
+                {
                     Gizmos.color = new Color(1.0f, 0.5f, 0.0f, 0.5f);
+                }
 
                 Gizmos.DrawCube(t.worldPosition, Vector3.one * (tileWidth / 2.5f));
             }

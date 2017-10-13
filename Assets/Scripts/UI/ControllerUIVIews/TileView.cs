@@ -23,10 +23,8 @@ public class TileView : ControllerUIView
         ui.icon.sprite = tile._tileSpriteRenderer.sprite;
         ui.icon.rectTransform.sizeDelta = new Vector2(32, 16);
 
-        ui.description.text = new StringBuilder("Fertility: " + tile.fertilityPoints + " " + tile.visibleForControllerCount).ToString();
+        ui.description.text = new StringBuilder("Fertility: " + tile.fertilityPoints + " " + tile.walkable).ToString();
         ui.description.enabled = true;
-
-
     }
 
     public override void OnExit()

@@ -291,7 +291,7 @@ public class PlayerManager : MonoBehaviour {
             {
                 newSelectableController = Grid.instance.GetUnitFromWorldPoint(mousePosition);
             }
-        }  
+        }
 
         // Only change mouse cursor when selectable controller changes
         if (newSelectableController != selectableController)
@@ -499,7 +499,27 @@ public class PlayerManager : MonoBehaviour {
             // Move to controller on location
             else if(selectableController != null)
             {
-                selectedUnits[i].MoveTo(selectableController);
+                // We are moving to a Controller that we can stand on
+                if(selectableController._basicStats.walkable)
+                {
+                    if(selectedUnits[i]._unitStats.isVillager)
+                    {
+                        // Continue as normal...
+                        selectedUnits[i].MoveTo(selectableController);
+                    }
+
+                    else
+                    {
+                        MoveToEmptyLocation(selectedUnits[i], new Vector2(averagePositionX, averagePositionY));
+                        continue;
+                    }
+                }
+
+                // For all unwalkable buildings, move to border of Controller
+                else
+                {
+                    selectedUnits[i].MoveTo(selectableController);
+                }
 
                 // If clicked on resource delivery point for a Villager carrying resources, 
                 // we don't want the Villager to go back to resource after delivering, but stay at Building.
@@ -530,22 +550,32 @@ public class PlayerManager : MonoBehaviour {
             // Move to empty location
             else
             {
-                Vector2 offset = new Vector2(averagePositionX - selectedUnits[i]._transform.position.x, averagePositionY - selectedUnits[i]._transform.position.y);
-
-                if (Grid.instance.GetNodeFromWorldPoint(mousePosition - offset) != null)
-                {
-                    selectedUnits[i].MoveTo(mousePosition - offset);
-                }
-
-                else
-                {
-                    selectedUnits[i].MoveTo(mousePosition);
-                }
-
-                // Show which location we are moving to
-                EventManager.TriggerEvent("ActivateMoveUnitsIndicator");
+                MoveToEmptyLocation(selectedUnits[i], new Vector2(averagePositionX, averagePositionY));
             }
         }
+    }
+
+    bool IsBuildingBeingConstructed()
+    {
+        return selectableController.controllerType == CONTROLLER_TYPE.BUILDING && !selectableController.GetComponent<Building>().constructed;
+    }
+
+    void MoveToEmptyLocation(UnitStateController controller, Vector2 averagePosition)
+    {
+        Vector2 offset = new Vector2(averagePosition.x - controller._transform.position.x, averagePosition.y - controller._transform.position.y);
+
+        if (Grid.instance.GetNodeFromWorldPoint(mousePosition - offset) != null)
+        {
+            controller.MoveTo(mousePosition - offset);
+        }
+
+        else
+        {
+            controller.MoveTo(mousePosition);
+        }
+
+        // Show which location we are moving to
+        EventManager.TriggerEvent("ActivateMoveUnitsIndicator");
     }
 
     private BaseController SetMouseHoveringController()

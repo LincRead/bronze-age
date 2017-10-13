@@ -26,7 +26,8 @@ public class BaseController : MonoBehaviour {
     [HideInInspector]
     public bool dead = false;
 
-    protected DefaultStats _basicStats;
+    [HideInInspector]
+    public DefaultStats _basicStats;
 
     [HideInInspector]
     public Transform _transform;
@@ -117,19 +118,6 @@ public class BaseController : MonoBehaviour {
     {
         zIndex = _transform.position.y;
         _transform.position = new Vector3(_transform.position.x, _transform.position.y, zIndex);
-    }
-
-    void OnMouseEnter()
-    {
-        //PlayerManager.instance.SetMouseHoveringController(this);
-    }
-
-    void OnMouseExit()
-    {
-        /*if (PlayerManager.instance.mouseHoveringController == this)
-        {
-            PlayerManager.instance.mouseHoveringController = null;
-        }*/
     }
 
     public virtual void Select()
