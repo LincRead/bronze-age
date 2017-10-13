@@ -703,9 +703,9 @@ public class UnitStateController : BaseController
 
     public void PlaySound(string sound)
     {
-        switch(sound)
+        switch (sound)
         {
-            case "chop": _audioSource.PlayOneShot(soundChop); _audioSource.volume = 0.1f; break;
+            case "chop": _audioSource.PlayOneShot(soundChop); _audioSource.volume = .1f; break;
         }
     }
 
