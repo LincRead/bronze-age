@@ -63,7 +63,7 @@ public class TribeController : UnitStateController {
     {
         Destroy(gameObject);
         RemoveFromPathfinding();
-        DecreaseVisibilityOfTiles();
+        //DecreaseVisibilityOfTiles();
 
         // Play sound
         _audioSource.PlayOneShot(setupCampSound);

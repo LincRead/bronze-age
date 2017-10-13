@@ -225,10 +225,6 @@ public class BaseController : MonoBehaviour {
         for (int i = 0; i < visibleTiles.Count; i++)
         {
             visibleTiles[i].ChangeVisibilityCount(1);
-        }
-
-        for (int i = 0; i < visibleTiles.Count; i++)
-        {
             visibleTiles[i].UpdateVisibilityOfTileAndControllers();
         }
     }
@@ -243,10 +239,6 @@ public class BaseController : MonoBehaviour {
         for (int i = 0; i < visibleTiles.Count; i++)
         {
             visibleTiles[i].ChangeVisibilityCount(-1);
-        }
-
-        for (int i = 0; i < visibleTiles.Count; i++)
-        {
             visibleTiles[i].UpdateVisibilityOfTileAndControllers();
         }
     }

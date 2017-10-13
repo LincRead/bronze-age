@@ -231,6 +231,8 @@ public class Tile : IHeapItem<Tile>
         {
             explored = true;
         }
+
+        UpdateVisibilityOfTileAndControllers();
     }
 
     public void UpdateVisibilityOfTileAndControllers()

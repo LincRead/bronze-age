@@ -195,7 +195,6 @@ public class UnitStateController : BaseController
         SetupTeamColor();
 
         UpdateVisibility();
-        UpdateVisibilityOfAllControllerOccupiedTiles();
     }
 
     void StartMovingToRallyPoint()
@@ -207,7 +206,6 @@ public class UnitStateController : BaseController
             {
                 if(rallyToController.controllerType == CONTROLLER_TYPE.RESOURCE)
                 {
-                    Debug.Log("RALLY TO RESOURCE CONT");
                     MoveToResource(rallyToController);
                 }
 
@@ -481,17 +479,14 @@ public class UnitStateController : BaseController
 
     public void UpdateVisibility()
     {
+        Node currentNode = _pathfinder.currentStandingOnNode;
+
         if (playerID == PlayerManager.myPlayerID)
         {
             DecreaseVisibilityOfTiles();
-        }
 
-        Node currentNode = _pathfinder.currentStandingOnNode;
+            visibleTiles = Grid.instance.GetAllTilesBasedOnVisibilityFromNode(_basicStats.visionRange, currentNode, size);
 
-        visibleTiles = Grid.instance.GetAllTilesBasedOnVisibilityFromNode(_basicStats.visionRange, currentNode, size);
-
-        if (playerID == PlayerManager.myPlayerID)
-        {
             IncreaseVisibilityOfTiles();
         }
     }
@@ -602,8 +597,6 @@ public class UnitStateController : BaseController
     {
         float closestDistance = 10000;
         BaseController closestResource = null;
-
-        visibleTiles = Grid.instance.GetAllTilesBasedOnVisibilityFromNode(_basicStats.visionRange, _pathfinder.currentStandingOnNode, size);
 
         for (int i = 0; i < visibleTiles.Count; i++)
         {
