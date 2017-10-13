@@ -236,8 +236,9 @@ public class Building : BaseController {
             {
                 HandlePlacingBuilding();
 
-                // Update zIndex
-                base.Update();
+                // Set zIndex
+                zIndex = GetMiddleNode().worldPosition.y;
+                _transform.position = new Vector3(_transform.position.x, _transform.position.y, zIndex);
             }
 
             else
