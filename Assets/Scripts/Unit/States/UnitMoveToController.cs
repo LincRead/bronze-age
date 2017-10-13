@@ -248,7 +248,6 @@ public class UnitMoveToController : UnitMoveTo
         // Go back to target resource
         if (_controller.lastResouceGathered != null)
         {
-            Debug.Log("MOVE TO RESOURCE");
             _controller.MoveToResource(_controller.lastResouceGathered);
         }
 
