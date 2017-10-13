@@ -195,7 +195,7 @@ public class Grid : MonoBehaviour {
                 if (closedSet.Contains(neighbour))
                     continue;
 
-                float newFertility = currentTile.fertility - (2 + (Random.value * 12));
+                float newFertility = currentTile.fertility - (1 + (Random.value * 12));
                 if (newFertility > neighbour.fertility)
                     neighbour.fertility = newFertility;
 

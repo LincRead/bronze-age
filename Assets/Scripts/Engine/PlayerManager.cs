@@ -664,8 +664,6 @@ public class PlayerManager : MonoBehaviour {
                 spawnCitizenFactor *= 10;
             }
 
-            Debug.Log(data.progressTowardsNewCitizen + " " + spawnCitizenFactor);
-
             data.progressTowardsNewCitizen += (Time.deltaTime / (20 - spawnCitizenFactor * 1.0f));
 
             if (data.progressTowardsNewCitizen >= 1.0f)
