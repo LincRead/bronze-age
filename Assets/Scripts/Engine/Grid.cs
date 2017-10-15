@@ -659,6 +659,35 @@ public class Grid : MonoBehaviour {
         return tilesToReturn;
     }
 
+    public Node GetRandomNodeFromController(BaseController controller)
+    {
+        Tile tile = GetTileFromWorldPoint(controller.GetPosition());
+        List<Node> nodesToSelectFrom = new List<Node>();
+
+        for (int i = 0; i < controller.size; i++)
+        {
+            for (int j = 0; j < controller.size; j++)
+            {
+                if (i > -1 && j > -1 && i < numTilesX + 1 && j < numTilesY + 1)
+                {
+                    Tile tileToIncludeNodesFrom = GetTileFromGridPos(tile.gridPosX + i, tile.gridPosY + j);
+
+                    for(int n = 0; n < tileToIncludeNodesFrom.nodes.Length; n++)
+                    {
+                        if(tileToIncludeNodesFrom.nodes[n].unitControllerStandingHere == null)
+                        {
+                            nodesToSelectFrom.Add(tileToIncludeNodesFrom.nodes[n]);
+                        }
+                    }
+                }
+            }
+        }
+
+        int ran = (int)(Mathf.Floor(Random.value * nodesToSelectFrom.Count));
+
+        return nodesToSelectFrom[ran];
+    }
+
     public void RemoveTilesOccupiedByController(BaseController controller)
     {
         Tile tile = GetTileFromWorldPoint(controller.GetPosition());

@@ -254,7 +254,7 @@ public class UnitMoveToController : UnitMoveTo
         // Go back to farm
         if(_controller.farm != null)
         {
-            _controller.MoveTo(_controller.farm);
+            _controller.MoveToFarm(_controller.farm);
         }
 
         // Go back to target resource

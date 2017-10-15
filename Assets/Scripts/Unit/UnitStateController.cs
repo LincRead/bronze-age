@@ -43,6 +43,9 @@ public class UnitStateController : BaseController
     public UnitMoveBackToResource moveBackToResource;
 
     [HideInInspector]
+    public UnitMoveToFarm moveToFarm;
+
+    [HideInInspector]
     public UnitAttackMode attackMoveState;
 
     [HideInInspector]
@@ -161,9 +164,10 @@ public class UnitStateController : BaseController
             farmState = ScriptableObject.CreateInstance<UnitFarm>();
             moveToResourcePositionState = ScriptableObject.CreateInstance<UnitMoveToResourcePosition>();
             moveBackToResource = ScriptableObject.CreateInstance<UnitMoveBackToResource>();
+            moveToFarm = ScriptableObject.CreateInstance<UnitMoveToFarm>();
 
             // Extra HP if technology researched
-            if(playerID > -1)
+            if (playerID > -1)
             {
                 maxHitpoints += PlayerDataManager.instance.GetPlayerData(playerID).extraVillagerHP;
                 hitpointsLeft += PlayerDataManager.instance.GetPlayerData(playerID).extraVillagerHP;
@@ -333,6 +337,13 @@ public class UnitStateController : BaseController
         this.targetController = targetController;
 
         TransitionToState(moveBackToResource);
+    }
+
+    public void MoveToFarm(BaseController targetController)
+    {
+        this.targetController = targetController;
+
+        TransitionToState(moveToFarm);
     }
 
     // Need this because:

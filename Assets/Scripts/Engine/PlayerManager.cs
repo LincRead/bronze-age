@@ -539,7 +539,7 @@ public class PlayerManager : MonoBehaviour {
                                 selectedUnits[i].farm = farm;
                                 farm.hasFarmer = true;
 
-                                selectedUnits[i].MoveTo(selectableController);
+                                selectedUnits[i].MoveToFarm(selectableController);
                             }
 
                             // Move to empty location on top of farm

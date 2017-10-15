@@ -53,7 +53,7 @@ public class UnitBuild : UnitState
                 _controller.farm = farm;
                 farm.hasFarmer = true;
 
-                _controller.TransitionToState(_controller.farmState);
+                _controller.MoveToFarm(_controller.farm);
             }
 
             else
