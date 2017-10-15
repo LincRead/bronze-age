@@ -100,7 +100,7 @@ public class Building : BaseController {
         productionButtonsData = _buildingStats.productionButtons;
 
         // Can deliver resources to this building
-        resourceDeliveryPoint = _buildingStats.deliveryPointMaterials;
+        resourceDeliveryPoint = _buildingStats.deliveryPointMaterials || _buildingStats.deliveryPointFood;
 
         // Check if we can set rally point
         CheckCanSetRallyPoint();
