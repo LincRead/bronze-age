@@ -225,7 +225,8 @@ public class UnitMoveToController : UnitMoveTo
             }
 
             // Drop resources?
-            else if(_controller.resoureAmountCarrying > 0 && targetBuilding.resourceDeliveryPoint)
+            else if(_controller.resoureAmountCarrying > 0 
+                && WorldManager.instance.CanDeliverResourceTo(targetBuilding, _controller.resourceTypeCarrying))
             {
                 HandleResourceDrop();
             }

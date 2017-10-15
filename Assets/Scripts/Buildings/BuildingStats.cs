@@ -24,8 +24,11 @@ public class BuildingStats : DefaultStats
     [Header("Main building")]
     public bool isCivilizationCenter = false;
 
-    [Header("Can deliver resources to this building")]
-    public bool resourceDeliveryPoint = false;
+    [Header("Can deliver materials to this building")]
+    public bool deliveryPointMaterials = false;
+
+    [Header("Can deliver food to this building")]
+    public bool deliveryPointFood = false;
 
     [HideInInspector]
     public int food = 0;

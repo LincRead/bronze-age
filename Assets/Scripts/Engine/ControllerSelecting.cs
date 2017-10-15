@@ -456,6 +456,34 @@ public class ControllerSelecting : MonoBehaviour {
         return false;
     }
 
+    public bool IsAnySelectedGatherersCarryingMaterials()
+    {
+        for (int i = 0; i < selectedGatherers.Count; i++)
+        {
+            if (selectedGatherers[i].resoureAmountCarrying > 0 
+                && selectedGatherers[i].resourceTypeCarrying != RESOURCE_TYPE.FOOD)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public bool IsAnySelectedGatherersCarryingFood()
+    {
+        for (int i = 0; i < selectedGatherers.Count; i++)
+        {
+            if (selectedGatherers[i].resoureAmountCarrying > 0 
+                && selectedGatherers[i].resourceTypeCarrying == RESOURCE_TYPE.FOOD)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public List<UnitStateController> GetSelectedUnits()
     {
         return selectedUnits;

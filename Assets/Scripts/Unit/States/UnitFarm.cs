@@ -42,10 +42,10 @@ public class UnitFarm : UnitState
         {
             harvestProgress = 0.0f;
 
-            if (_controller.resourceTypeCarrying != RESOURCE_TYPE.CROPS)
+            if (_controller.resourceTypeCarrying != RESOURCE_TYPE.FOOD)
             {
                     _controller.resoureAmountCarrying = 0;
-                    _controller.resourceTypeCarrying = RESOURCE_TYPE.CROPS;
+                    _controller.resourceTypeCarrying = RESOURCE_TYPE.FOOD;
             }
 
             _controller.resoureAmountCarrying++;

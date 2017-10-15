@@ -55,4 +55,25 @@ public class WorldManager : MonoBehaviour {
     {
         firstUpdate = false;
     }
+
+    public bool CanDeliverResourceTo(Building building, RESOURCE_TYPE resourceType)
+    {
+        if (resourceType == RESOURCE_TYPE.FOOD)
+        {
+            if (building._buildingStats.deliveryPointFood)
+            {
+                return true;
+            }
+        }
+
+        else
+        {
+            if (building._buildingStats.deliveryPointMaterials)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

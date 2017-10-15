@@ -647,7 +647,7 @@ public class UnitStateController : BaseController
         {
             float checkDistance = Grid.instance.GetDistanceBetweenControllers(this, resourcePoints[i]);
 
-            if (checkDistance < distance)
+            if (WorldManager.instance.CanDeliverResourceTo(resourcePoints[i], resourceTypeCarrying) && checkDistance < distance)
             {
                 distance = checkDistance;
                 gotoBuilding = resourcePoints[i];
@@ -760,7 +760,6 @@ public class UnitStateController : BaseController
 
             switch (resourceTypeCarrying)
             {
-                case RESOURCE_TYPE.CROPS: statSprites[2] = ControllerUIManager.instance.foodIcon; break;
                 case RESOURCE_TYPE.FOOD: statSprites[2] = ControllerUIManager.instance.foodIcon; break;
                 case RESOURCE_TYPE.WOOD: statSprites[2] = ControllerUIManager.instance.woodIcon; break;
                 case RESOURCE_TYPE.WEALTH: statSprites[2] = ControllerUIManager.instance.wealthIcon; break;

@@ -16,8 +16,7 @@ public enum RESOURCE_TYPE
     FOOD,
     WOOD,
     WEALTH,
-    METAL,
-    CROPS
+    METAL
 }
 
 public class Resource : BaseController {

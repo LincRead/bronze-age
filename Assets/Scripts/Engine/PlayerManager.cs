@@ -112,6 +112,7 @@ public class PlayerManager : MonoBehaviour {
 
         buildingBeingPlaced = null;
 
+        ControllerUIManager.instance.cursorInformation.gameObject.SetActive(false);
         currentUserState = PLAYER_ACTION_STATE.DEFAULT;
         EventManager.TriggerEvent("SetDefaultCursor");
     }
@@ -416,7 +417,14 @@ public class PlayerManager : MonoBehaviour {
                     EventManager.TriggerEvent("SetBuildCursor");
                 }
 
-                else if (building._buildingStats.resourceDeliveryPoint && _controllerSelecting.IsAnySelectedGatherersCarryingResources())
+                // Carrying materials that can be delivered here
+                else if (building._buildingStats.deliveryPointMaterials && _controllerSelecting.IsAnySelectedGatherersCarryingMaterials())
+                {
+                    EventManager.TriggerEvent("SetGatherCursor");
+                }
+
+                // Carrying food that can be delivered here
+                else if (building._buildingStats.deliveryPointFood && _controllerSelecting.IsAnySelectedGatherersCarryingFood())
                 {
                     EventManager.TriggerEvent("SetGatherCursor");
                 }

@@ -97,6 +97,9 @@ public class ControllerUIManager : MonoBehaviour {
 
     private static ControllerUIManager controllerUIManager;
 
+    [Header("Cursor information")]
+    public MouseCursorInfo cursorInformation;
+
     public static ControllerUIManager instance
     {
         get
@@ -173,6 +176,8 @@ public class ControllerUIManager : MonoBehaviour {
         HideTooltip();
         healthBar.HideHitpoints();
         HideStats();
+
+        cursorInformation.gameObject.SetActive(false);
     }
 
     void SetupSelectedUnitsView()

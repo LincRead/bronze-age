@@ -23,6 +23,11 @@ public class Farm : Building
     {
         List<Tile> tiles = Grid.instance.GetTilesOccupiedByController(this);
 
+        if(tiles == null)
+        {
+            soilQuality = 0;
+        }
+
         float soilQualityCalc = 0;
 
         for(int i = 0; i < tiles.Count; i++)
@@ -36,6 +41,14 @@ public class Farm : Building
         }
 
         soilQuality = Mathf.RoundToInt(soilQualityCalc);
+        harvestDifficulty = 12 - soilQuality;
+    }
+
+    protected override void Place()
+    {
+        base.Place();
+
+        ControllerUIManager.instance.cursorInformation.gameObject.SetActive(false);
     }
 
     protected override void AdditionalCanPlaceChecks()
@@ -48,8 +61,8 @@ public class Farm : Building
 
     protected override void HandlePlacingBuilding()
     {
-
         CalculateSoilLevel();
+        ControllerUIManager.instance.cursorInformation.UpdateValue(soilQuality);
 
         base.HandlePlacingBuilding();
 

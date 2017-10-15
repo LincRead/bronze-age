@@ -100,7 +100,7 @@ public class Building : BaseController {
         productionButtonsData = _buildingStats.productionButtons;
 
         // Can deliver resources to this building
-        resourceDeliveryPoint = _buildingStats.resourceDeliveryPoint;
+        resourceDeliveryPoint = _buildingStats.deliveryPointMaterials;
 
         // Check if we can set rally point
         CheckCanSetRallyPoint();
@@ -722,7 +722,7 @@ public class Building : BaseController {
 
         RemovePlayerStats();
 
-        if (_buildingStats.resourceDeliveryPoint && playerID == PlayerManager.myPlayerID)
+        if (_buildingStats.deliveryPointMaterials && playerID == PlayerManager.myPlayerID)
         {
             PlayerDataManager.instance.GetPlayerData(playerID).friendlyResourceDeliveryPoints.Remove(this);
         }
