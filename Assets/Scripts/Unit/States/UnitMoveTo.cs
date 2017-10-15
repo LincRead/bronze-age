@@ -67,6 +67,13 @@ public class UnitMoveTo : UnitState
                         PlayCarryResourceAnimation("carry_berries");
 
                         break;
+
+                    case RESOURCE_TYPE.CROPS:
+
+                        PlayCarryResourceAnimation("carry_berries");
+
+                        break;
+
                 }
             }
 

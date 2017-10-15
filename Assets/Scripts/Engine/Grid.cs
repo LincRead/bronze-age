@@ -637,7 +637,13 @@ public class Grid : MonoBehaviour {
     {
         // Adding offset since building pivot point (buttom of sprite) is in the middle of two tiles.
         Tile tile = GetTileFromWorldPoint(controller.GetPosition() + new Vector2(0.04f, 0.04f));
+
         List<Tile> tilesToReturn = new List<Tile>();
+
+        if (tile == null)
+        {
+            return tilesToReturn;
+        }
 
         for (int i = 0; i < controller.size; i++)
         {

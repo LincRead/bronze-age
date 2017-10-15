@@ -221,7 +221,7 @@ public class UnitMoveToController : UnitMoveTo
 
             else if(_controller._unitStats.isVillager && targetBuilding.title.Equals("Farm"))
             {
-                _controller.TransitionToState(_controller.unitFarm);
+                _controller.TransitionToState(_controller.farmState);
             }
 
             // Drop resources?
@@ -250,8 +250,14 @@ public class UnitMoveToController : UnitMoveTo
             _controller.playerID,
             _controller.resourceTypeCarrying);
 
+        // Go back to farm
+        if(_controller.farm != null)
+        {
+            _controller.MoveTo(_controller.farm);
+        }
+
         // Go back to target resource
-        if (_controller.lastResouceGathered != null)
+        else if (_controller.lastResouceGathered != null)
         {
             _controller.MoveToResource(_controller.lastResouceGathered);
         }

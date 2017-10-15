@@ -421,6 +421,14 @@ public class PlayerManager : MonoBehaviour {
                     EventManager.TriggerEvent("SetGatherCursor");
                 }
 
+                // Holding over available farm (max 1 Villager per farm)
+                else if(_controllerSelecting.GetSelectedGatherers().Count > 0 
+                    && building.title.Equals("Farm") 
+                    && !building.GetComponent<Farm>().hasFarmer)
+                {
+                    EventManager.TriggerEvent("SetGatherCursor");
+                }
+
                 else
                 {
                     EventManager.TriggerEvent("SetDefaultCursor");
@@ -491,6 +499,13 @@ public class PlayerManager : MonoBehaviour {
 
         for (int i = 0; i < selectedUnits.Count; i++)
         {
+            // Reset any farm ownerships
+            if(selectedUnits[i].farm)
+            {
+                selectedUnits[i].farm.hasFarmer = false;
+                selectedUnits[i].farm = null;
+            }
+
             if(attackMode && selectedUnits[i]._unitStats.canAttack)
             {
                 selectedUnits[i].MoveToInAttackMode(mousePosition);
@@ -502,12 +517,38 @@ public class PlayerManager : MonoBehaviour {
                 // We are moving to a Controller that we can stand on
                 if(selectableController._basicStats.walkable)
                 {
-                    if(selectedUnits[i]._unitStats.isVillager)
+                    // Special cases for walkable Controller if selected unit is a Villager
+                    if (selectedUnits[i]._unitStats.isVillager)
                     {
-                        // Continue as normal...
-                        selectedUnits[i].MoveTo(selectableController);
+                        // Farms have special cases
+                        if(selectableController.title.Equals("Farm"))
+                        {
+                            // Become the new farmer
+                            if(!selectableController.GetComponent<Farm>().hasFarmer)
+                            {
+                                // Set farmer
+                                Farm farm = selectableController.GetComponent<Farm>();
+                                selectedUnits[i].farm = farm;
+                                farm.hasFarmer = true;
+
+                                selectedUnits[i].MoveTo(selectableController);
+                            }
+
+                            // Move to empty location on top of farm
+                            else
+                            {
+                                MoveToEmptyLocation(selectedUnits[i], new Vector2(averagePositionX, averagePositionY));
+                            }  
+                        }
+
+                        // Move to empty location on top of walkable Controller
+                        else
+                        {
+                            MoveToEmptyLocation(selectedUnits[i], new Vector2(averagePositionX, averagePositionY));
+                        }
                     }
 
+                    // Move to empty location on top of farm
                     else
                     {
                         MoveToEmptyLocation(selectedUnits[i], new Vector2(averagePositionX, averagePositionY));

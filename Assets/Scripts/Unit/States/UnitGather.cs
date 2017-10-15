@@ -23,7 +23,10 @@ public class UnitGather : UnitState {
         // resources to a delivery point
         _controller.lastResouceGathered = _resource;
 
-        PlayGatherAnimation();
+        if (_controller.resoureAmountCarrying < data.villagerCarryLimit)
+        {
+            PlayGatherAnimation();
+        }
     }
 
     void PlayGatherAnimation()

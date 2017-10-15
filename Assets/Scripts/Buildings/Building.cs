@@ -9,6 +9,8 @@ public class Building : BaseController {
     // 2. When Player has successfully placed the building to be constructed
     private bool hasBeenPlaced = false;
 
+    protected bool canPlace;
+
     public BuildingStats _buildingStats;
 
     [HideInInspector]
@@ -153,7 +155,7 @@ public class Building : BaseController {
         iconSprite = _buildingStats.iconSprite;
 
         // Update constructed
-        _spriteRenderer.sprite = constructionSprites[1];
+        SetConstructedSprite();
 
         // Update damaged art
         UpdateDamagedSprite();
@@ -302,20 +304,21 @@ public class Building : BaseController {
     {
         hasBeenPlaced = false;
         _spriteRenderer.enabled = true;
-        _spriteRenderer.sprite = constructionSprites[1];
-        _transform.position = PlayerManager.mousePosition - new Vector2(0.0f, _spriteRenderer.bounds.size.y / 2);
+        SetConstructedSprite();
         _spriteRenderer.color = new Color(1f, 1f, 1f, 0.5f);
         _spriteRenderer.sortingLayerName = "Placing Building";
+
+        _transform.position = PlayerManager.mousePosition - new Vector2(0.0f, _spriteRenderer.bounds.size.y / 2);
 
         _selectedIndicatorRenderer.enabled = true;
         _selectedIndicatorRenderer.color = new Color(1f, 1f, 1f, 0.5f);
     }
 
-    void HandlePlacingBuilding()
+    protected virtual void HandlePlacingBuilding()
     {
         _transform.position = Grid.instance.SnapToGrid(PlayerManager.mousePosition - new Vector2(0.0f, _spriteRenderer.bounds.size.y / 2));
 
-        bool canPlace = false;
+         canPlace = false;
 
         if (!HaveRequiredResourcesToPlaceBuilding())
         {
@@ -328,11 +331,23 @@ public class Building : BaseController {
         else if (Grid.instance.GetAllTilesFromBoxArEmpty(_transform.position + new Vector3(0.04f, 0.04f), size))
         {
             canPlace = true;
-            _spriteRenderer.color = new Color(1f, 1f, 1f, 0.5f);
-            _selectedIndicatorRenderer.color = new  Color(1f, 1f, 1f, 0.5f);
         }
 
         // Show that location is not suitable
+        else
+        {
+            _spriteRenderer.color = new Color(1.0f, 0.5f, 0.5f, 0.5f);
+            _selectedIndicatorRenderer.color = new Color(1.0f, 0.5f, 0.5f, 0.5f);
+        }
+
+        AdditionalCanPlaceChecks();
+
+        if(canPlace)
+        {
+            _spriteRenderer.color = new Color(1f, 1f, 1f, 0.5f);
+            _selectedIndicatorRenderer.color = new Color(1f, 1f, 1f, 0.5f);
+        }
+
         else
         {
             _spriteRenderer.color = new Color(1.0f, 0.5f, 0.5f, 0.5f);
@@ -353,6 +368,11 @@ public class Building : BaseController {
             CancelPlacing();
             PlayerManager.instance.CancelPlaceBuildingState();
         }
+    }
+
+    protected virtual void AdditionalCanPlaceChecks()
+    {
+
     }
 
     public void Build(float amount)
@@ -387,7 +407,6 @@ public class Building : BaseController {
 
         if (stepsProduced >= stepsToProduce)
         {
-            _spriteRenderer.sprite = constructionSprites[1];
             FinishConstruction();
         }
 
@@ -424,7 +443,7 @@ public class Building : BaseController {
     {
         constructed = true;
 
-        _spriteRenderer.sprite = constructionSprites[1];
+        SetConstructedSprite();
 
         hitpointsLeft = maxHitPoints;
         _healthBar.UpdateHitpointsPercent(hitpointsLeft, maxHitPoints);
@@ -448,6 +467,11 @@ public class Building : BaseController {
             IncreaseVisibilityOfTiles();
             UpdateVisibilityOfAllControllerOccupiedTiles();
         }
+    }
+
+    protected virtual void SetConstructedSprite()
+    {
+        _spriteRenderer.sprite = constructionSprites[1];
     }
 
     public void Produce(int buttonIndex)

@@ -44,7 +44,23 @@ public class UnitBuild : UnitState
 
         if (_building.constructed && _building.hitpointsLeft == _building.maxHitPoints)
         {
-            _controller.TransitionToState(_controller.idleState);
+            if(_controller._unitStats.isVillager 
+                && _building.title.Equals("Farm") 
+                && !_building.GetComponent<Farm>().hasFarmer)
+            {
+                // Set as farmer
+                Farm farm = _building.GetComponent<Farm>();
+                _controller.farm = farm;
+                farm.hasFarmer = true;
+
+                _controller.TransitionToState(_controller.farmState);
+            }
+
+            else
+            {
+                _controller.TransitionToState(_controller.idleState);
+            }
+
         }
     }
 

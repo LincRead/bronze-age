@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "States/Unit states/farm")]
 public class UnitFarm : UnitState
 {
-    GrainFarm _farm;
+    Farm _farm;
     PlayerData data;
 
     float harvestProgress = 0.0f;
@@ -18,16 +18,17 @@ public class UnitFarm : UnitState
 
         harvestProgress = 0.0f;
 
-        _farm = _controller.targetController.GetComponent<GrainFarm>();
-
         // Remember so we can go back to continue harvesting after delivering
         // resources to a delivery point
-        _controller.farm = _farm;
+         _farm = _controller.farm;
 
-        PlayAnimation();
+        if (_controller.resoureAmountCarrying < data.villagerCarryLimit)
+        {
+            PlayGatherAnimation();
+        }
     }
 
-    protected override void PlayAnimation()
+    protected void PlayGatherAnimation()
     {
         _controller._animator.Play("gather");
     }
@@ -56,7 +57,7 @@ public class UnitFarm : UnitState
         if (_controller.resoureAmountCarrying >= data.villagerCarryLimit)
         {
             // TODO seek closest GRAIN OR TOWN CENTER
-            //_controller.seekClosestResourceDeliveryPoint();
+            _controller.seekClosestResourceDeliveryPoint();
             return;
         }
     }

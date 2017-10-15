@@ -58,7 +58,7 @@ public class UnitStateController : BaseController
     public UnitGather gatherState;
 
     [HideInInspector]
-    public UnitFarm unitFarm;
+    public UnitFarm farmState;
 
     [HideInInspector]
     public UnitDie dieState;
@@ -114,7 +114,7 @@ public class UnitStateController : BaseController
     public string resourceTitleCarrying = "none";
 
     [HideInInspector]
-    public GrainFarm farm = null;
+    public Farm farm = null;
 
     [HideInInspector]
     public BaseController rallyToController = null;
@@ -158,7 +158,7 @@ public class UnitStateController : BaseController
         {
             buildState = ScriptableObject.CreateInstance<UnitBuild>();
             gatherState = ScriptableObject.CreateInstance<UnitGather>();
-            unitFarm = ScriptableObject.CreateInstance<UnitFarm>();
+            farmState = ScriptableObject.CreateInstance<UnitFarm>();
             moveToResourcePositionState = ScriptableObject.CreateInstance<UnitMoveToResourcePosition>();
             moveBackToResource = ScriptableObject.CreateInstance<UnitMoveBackToResource>();
 
