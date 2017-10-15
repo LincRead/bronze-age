@@ -63,7 +63,7 @@ public class PlayerManager : MonoBehaviour {
     // Food intake ui update
     float timeSinceLastFoodUIUpdate = 0.0f;
     float timeBetweenFoodUIUpdates = 1.0f;
-    float timePerFoodIntakePoint = 30f;
+    float timePerFoodIntakePoint = 20f;
 
     public static PlayerManager instance
     {
