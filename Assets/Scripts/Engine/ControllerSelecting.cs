@@ -333,8 +333,10 @@ public class ControllerSelecting : MonoBehaviour {
     {
         List<UnitStateController> friendlyUnits = PlayerManager.instance.GetAllFriendlyUnits();
 
+        int unitSelected = 0;
+
         // Can select max 18 units atm
-        for (int i = 0; i < friendlyUnits.Count && i < maxUnitsSelected; i++)
+        for (int i = 0; i < friendlyUnits.Count && unitSelected < maxUnitsSelected; i++)
         {
             if (friendlyUnits[i] != null
                 && !friendlyUnits[i].dead
@@ -349,6 +351,8 @@ public class ControllerSelecting : MonoBehaviour {
                 {
                     selectedGatherers.Add(friendlyUnits[i]);
                 }
+
+                unitSelected++;
             }
         }
     }
