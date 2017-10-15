@@ -7,16 +7,10 @@ public class Farm : Building
     public int harvestDifficulty = 1;
     public bool hasFarmer = false;
 
-    int randomSpriteIndex = 1;
-
     int soilQuality = 3;
 
     protected override void Start()
     {
-        float ran = Random.value;
-
-        randomSpriteIndex = (1 + Mathf.RoundToInt(ran));
-
         base.Start();
     }
 
