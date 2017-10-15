@@ -487,6 +487,11 @@ public class UnitStateController : BaseController
             PlayerManager.instance._controllerSelecting.RemoveFromSelectedUnits(this);
         }
 
+        if(farm != null)
+        {
+            farm.hasFarmer = false;
+        }
+
         RemoveFromPathfinding();
         TransitionToState(dieState);
     }

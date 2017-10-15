@@ -198,7 +198,7 @@ public class Building : BaseController {
     {
         hasBeenPlaced = true;
 
-        if(playerID == PlayerManager.myPlayerID)
+        if(playerID == PlayerManager.myPlayerID && _buildingStats.visionRange > 0)
         {
             SetVisible(true);
         }
@@ -460,7 +460,10 @@ public class Building : BaseController {
             ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.BUILDING_INFO, this);
         }
 
-        visibleTiles = Grid.instance.GetAllTilesBasedOnVisibilityFromNode(visionRange, GetMiddleNode(), size);
+        if(_buildingStats.visionRange > 0)
+        {
+            visibleTiles = Grid.instance.GetAllTilesBasedOnVisibilityFromNode(visionRange, GetMiddleNode(), size);
+        }
 
         if (playerID == PlayerManager.myPlayerID)
         {
