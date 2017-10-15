@@ -14,6 +14,7 @@ public class Farm : Building
     protected override void Start()
     {
         float ran = Random.value;
+
         randomSpriteIndex = (1 + Mathf.RoundToInt(ran));
 
         base.Start();
@@ -70,7 +71,7 @@ public class Farm : Building
 
     protected override void SetConstructedSprite()
     {
-        _spriteRenderer.sprite = constructionSprites[randomSpriteIndex];
+        _spriteRenderer.sprite = constructionSprites[soilQuality];
     }
 
     public override int[] GetUniqueStats()
