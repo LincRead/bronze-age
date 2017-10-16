@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Text;
 
+// TEMP victory condition
+using UnityEngine.SceneManagement;
+
 public class CivilizationCenter : Building
 {
     [Header("Unique Stats")]
@@ -98,5 +101,15 @@ public class CivilizationCenter : Building
         int[] stats = new int[1];
         stats[0] = housing;
         return stats;
+    }
+
+    public override void Destroy()
+    {
+        base.Destroy();
+
+        if(playerID == -1)
+        {
+            SceneManager.LoadScene("victory");
+        }
     }
 }
