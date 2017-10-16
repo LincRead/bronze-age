@@ -45,6 +45,7 @@ public class Technologies : MonoBehaviour
         AddTechnology("Mesolithic Age");
         AddTechnology("Polished Stone Axe");
         AddTechnology("Weaving");
+        AddTechnology("Domesticated Animals");
     }
 
     public void AddTechnology(string title)
