@@ -531,11 +531,18 @@ public class PlayerManager : MonoBehaviour {
                         // Farms have special cases
                         if(selectableController.title.Equals("Farm"))
                         {
-                            // Become the new farmer
-                            if(!selectableController.GetComponent<Farm>().hasFarmer)
+                            Farm farm = selectableController.GetComponent<Farm>();
+
+                            // Move to construct farm
+                            if (!farm.constructed)
+                            {
+                                selectedUnits[i].MoveTo(selectableController);
+                            }
+
+                            // Become the new farmer for selectable farm
+                            else if (!selectableController.GetComponent<Farm>().hasFarmer)
                             {
                                 // Set farmer
-                                Farm farm = selectableController.GetComponent<Farm>();
                                 selectedUnits[i].farm = farm;
                                 farm.hasFarmer = true;
 
