@@ -38,7 +38,7 @@ public class WorldManager : MonoBehaviour {
 
     void Init()
     {
-
+        firstUpdate = true;
     }
 
     public void Awake()
