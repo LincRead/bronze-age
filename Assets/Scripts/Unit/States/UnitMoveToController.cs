@@ -23,10 +23,7 @@ public class UnitMoveToController : UnitMoveTo
 
         FindPathToTarget();
 
-        // Already at target?
-        CheckTransitions();
-
-        if(_pathfinder.path.Count > 0)
+        if (_controller.currentState == this && _pathfinder.path.Count > 0)
         {
             // Fetch this for initial intersect target node check
             nextTargetNode = _pathfinder.path[0];
@@ -253,8 +250,11 @@ public class UnitMoveToController : UnitMoveTo
             _controller.playerID,
             _controller.resourceTypeCarrying);
 
+        // Reset how much we are carrying
+        _controller.resoureAmountCarrying = 0;
+
         // Go back to farm
-        if(_controller.farm != null)
+        if (_controller.farm != null)
         {
             _controller.MoveToFarm(_controller.farm);
         }
@@ -276,9 +276,6 @@ public class UnitMoveToController : UnitMoveTo
         {
             _controller.TransitionToState(_controller.idleState);
         }
-
-        // Reset how much we are carrying
-        _controller.resoureAmountCarrying = 0;
     }
 
     void ReachedTargetStaticResource()

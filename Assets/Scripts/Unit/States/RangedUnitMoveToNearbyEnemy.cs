@@ -4,6 +4,16 @@ using UnityEngine;
 
 public class RangedUnitMoveToNearbyEnemy : UnitMoveToNearbyEnemy
 {
+    public override void OnEnter(UnitStateController controller)
+    {
+        base.OnEnter(controller);
+
+        if (_controller.distanceToTarget <= _controller._unitStats.range * 10)
+        {
+            _controller.TransitionToState(_controller.attackState);
+        }
+    }
+
     public override void CheckTransitions()
     {
         if (nextTargetNode == null)
