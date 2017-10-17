@@ -350,14 +350,15 @@ public class PlayerManager : MonoBehaviour {
                 HandleMouseOverResource();
             }
 
+            // Allied unit
+            else if (selectableController.controllerType == CONTROLLER_TYPE.UNIT)
+            {
+                HandleMouseOverUnit();
+            }
+
             else if (selectableController.controllerType == CONTROLLER_TYPE.BUILDING)
             {
                 HandleMouseOverBuilding();
-            }
-
-            else if(selectableController.controllerType == CONTROLLER_TYPE.UNIT)
-            {
-                HandleMouseOverUnit();
             }
         }
 
@@ -646,6 +647,7 @@ public class PlayerManager : MonoBehaviour {
         for(int i = 0; i < hits.Length; i++)
         {
             BaseController controller = hits[i].collider.gameObject.GetComponent<BaseController>();
+
             int priority = GetHoveringPriorityOfSelectedController(controller);
 
             if (priority == mouseHoveringController.priorityValue
@@ -662,13 +664,16 @@ public class PlayerManager : MonoBehaviour {
             }
         }
 
+
         return mouseHoveringController.controller;
     }
 
     int GetHoveringPriorityOfSelectedController(BaseController controller)
     {
         // Set priority
-        if (_controllerSelecting.SelectedUnitWhoCanAttack() && controller.playerID != myPlayerID)
+        if (controller.controllerType == CONTROLLER_TYPE.UNIT
+            && _controllerSelecting.SelectedUnitWhoCanAttack() 
+            && controller.playerID != myPlayerID)
         {
             return 2;
         }
@@ -680,7 +685,7 @@ public class PlayerManager : MonoBehaviour {
 
         else
         {
-            return 1;
+            return 0;
         }
     }
 
