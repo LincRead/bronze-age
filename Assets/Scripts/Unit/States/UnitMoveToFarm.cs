@@ -22,15 +22,25 @@ public class UnitMoveToFarm : UnitMoveTo
         _pathfinder.FindPath(endNode);
     }
 
-    public override void CheckTransitions()
+    protected override void ReachedNextTargetNode()
     {
+        _pathfinder.path.Remove(nextTargetNode);
+
+        // Fetch next target node
+        if (_pathfinder.path.Count > 0)
+        {
+            nextTargetNode = _pathfinder.path[0];
+        }
+
         // Reached target node
-        if (nextTargetNode == endNode
-            && Vector2.Distance(_transform.position, endNode.worldPosition) < 0.01f)
+        if (nextTargetNode == endNode)
         {
             _controller.TransitionToState(_controller.farmState);
         }
+    }
 
+    public override void CheckTransitions()
+    {
         // No path to follow
         if (endNode == null)
         {

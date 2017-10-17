@@ -108,7 +108,7 @@ public class UnitMoveTo : UnitState
         }
 
         // Reached next target node
-        if (Vector2.Distance(_transform.position, nextTargetNode.worldPosition) < 0.02f)
+        if (Vector2.Distance(_transform.position, nextTargetNode.worldPosition) < 0.05f)
         {
             ReachedNextTargetNode();
             _controller.UpdateVisibility();
