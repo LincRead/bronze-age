@@ -73,7 +73,9 @@ public class Pathfinding : MonoBehaviour {
     public void SetCurrentPathfindingNode(Node node)
     {
         if (currentStandingOnNode == node)
+        {
             return;
+        }
 
         if(currentStandingOnNode.parentTile != node.parentTile)
         {

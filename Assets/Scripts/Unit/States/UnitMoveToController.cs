@@ -23,6 +23,9 @@ public class UnitMoveToController : UnitMoveTo
 
         FindPathToTarget();
 
+        // Already at target?
+        CheckTransitions();
+
         if(_pathfinder.path.Count > 0)
         {
             // Fetch this for initial intersect target node check
@@ -131,7 +134,6 @@ public class UnitMoveToController : UnitMoveTo
         if (nextTargetNode == null)
         {
             HandleNoPathToTargetControllerFound();
-            return;
         }
 
         // Didn't find path

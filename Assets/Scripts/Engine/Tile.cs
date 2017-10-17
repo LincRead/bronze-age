@@ -52,10 +52,10 @@ public class Tile : IHeapItem<Tile>
     public bool fertilityLocked = false;
 
     [HideInInspector]
-    public bool explored = true;
+    public bool explored = false;
 
     [HideInInspector]
-    public int visibleForControllerCount = 1;
+    public int visibleForControllerCount = 0;
 
     public Tile(bool _walkable, Vector2 _worldPosition, int _gridPosX, int _gridPosY, Grid grid)
     {
