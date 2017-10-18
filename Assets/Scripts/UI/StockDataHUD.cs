@@ -114,6 +114,11 @@ public class StockDataHUD : MonoBehaviour {
         else
         {
             prosperityNumber++;
+
+            if(myPlayerData.foodStock > 500) prosperityNumber++;
+            if (myPlayerData.foodStock > 250) prosperityNumber++;
+            if (myPlayerData.foodStock > 100) prosperityNumber++;
+            if (myPlayerData.foodStock > 50) prosperityNumber++;
         }
 
         // Housing
@@ -128,22 +133,23 @@ public class StockDataHUD : MonoBehaviour {
         }
 
         // Population - decease
-        if(myPlayerData.age >= 2)
-        {
-            prosperityNumber -= (int)(myPlayerData.population / 10);
-        }
+        prosperityNumber -= (int)(myPlayerData.population / 10);
 
+        SetProsperityText(prosperityNumber);
+        myPlayerData.realProsperity = prosperityNumber;
+    }
+
+    void SetProsperityText(int value)
+    {
         // Set text
-        if(prosperityNumber > -1)
+        if (value > -1)
         {
-            prosperity.text = new StringBuilder("+" + prosperityNumber.ToString()).ToString();
+            prosperity.text = new StringBuilder("+" + value.ToString()).ToString();
         }
 
         else
         {
-            prosperity.text = prosperityNumber.ToString();
+            prosperity.text = value.ToString();
         }
-
-        myPlayerData.realProsperity = prosperityNumber;
     }
 }
