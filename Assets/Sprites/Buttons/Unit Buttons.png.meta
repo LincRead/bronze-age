@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: ba24593a1f1e5a645a720966e3210547
-timeCreated: 1507072577
+timeCreated: 1508296510
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -35,6 +35,7 @@ TextureImporter:
     21300056: Unit Buttons_28
     21300058: Unit Buttons_29
     21300060: Unit Buttons_30
+    21300062: Unit Buttons_31
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -538,6 +539,20 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 64
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Unit Buttons_31
+      rect:
+        serializedVersion: 2
+        x: 96
         y: 0
         width: 32
         height: 32

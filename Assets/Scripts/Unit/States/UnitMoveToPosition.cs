@@ -28,7 +28,7 @@ public class UnitMoveToPosition : UnitMoveTo
     {  
         // Reached target node
         if (nextTargetNode == endNode
-            && Vector2.Distance(_transform.position, endNode.worldPosition) < 0.01f)
+            && Vector2.Distance(_transform.position, endNode.worldPosition) < 0.05f)
         {
             _controller.TransitionToState(_controller.idleState);
         }

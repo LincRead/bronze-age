@@ -41,6 +41,9 @@ public class PlayerManager : MonoBehaviour {
     public List<UnitStateController> friendlyUnits = new List<UnitStateController>();
 
     [HideInInspector]
+    public List<UnitStateController> idleVillagers = new List<UnitStateController>();
+
+    [HideInInspector]
     public Building buildingBeingPlaced = null;
 
     [HideInInspector]

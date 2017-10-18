@@ -8,6 +8,8 @@ public class CameraController : MonoBehaviour {
     [HideInInspector]
     public Transform _transform;
 
+    private float initialPosZ;
+
     private Grid _grid;
 
     public float scrollSpeed = 1f;
@@ -33,6 +35,8 @@ public class CameraController : MonoBehaviour {
         _grid = Grid.instance;
 
         SetupBounds();
+
+        initialPosZ = _transform.position.z;
     }
 
     void SetupBounds()
@@ -95,7 +99,9 @@ public class CameraController : MonoBehaviour {
                 transform.position = newCameraPos;
 
                 if(!currentlyMovingCamera)
+                {
                     EventManager.TriggerEvent("ChangeToMoveCameraCursor");
+                }
 
                 currentlyMovingCamera = true;
             }
@@ -108,6 +114,14 @@ public class CameraController : MonoBehaviour {
         }
 
         return false;
+    }
+
+    public void MoveToController(BaseController controller)
+    {
+        Vector3 newCameraPos = controller.GetMiddleNode().worldPosition;
+        newCameraPos.x = Mathf.Clamp(newCameraPos.x, leftBound, rightBound);
+        newCameraPos.y = Mathf.Clamp(newCameraPos.y, bottomBound, topBound);
+        transform.position = new Vector3(newCameraPos.x, newCameraPos.y, initialPosZ);
     }
 
     bool MovingCameraUsingKeys()

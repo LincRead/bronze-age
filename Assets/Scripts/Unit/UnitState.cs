@@ -10,6 +10,7 @@ public class UnitState : ScriptableObject
 
     public virtual void OnEnter(UnitStateController controller)
     {
+        timeSinceStateChange = 0.0f;
         _controller = controller;
         playAnimation = true;
     }
