@@ -177,12 +177,12 @@ public class ControllerSelecting : MonoBehaviour {
     {
         if (selectedUnits.Count > 1)
         {
-            if(selectedGatherers.Count > 0)
+            ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.SELECTED_UNITS, null);
+
+            if (selectedGatherers.Count > 0)
             {
                 ControllerUIManager.instance.ChangeAndResetView(ControllerUIManager.CONTROLLER_UI_VIEW.VILLAGER, selectedUnits[0]);
             }
-
-            ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.SELECTED_UNITS, null);
         }
 
         else if(selectedUnits.Count > 0)
