@@ -11,7 +11,6 @@ public class IdleVillagerButton : MonoBehaviour {
 
     int idleVillagerIndex = 0;
 
-    public Image _subIcon;
     public Text _number;
 
     void Start()
@@ -26,17 +25,20 @@ public class IdleVillagerButton : MonoBehaviour {
         {
             _image.enabled = true;
             _button.interactable = true;
-            _subIcon.enabled = true;
-            _number.enabled = true;
 
+            _number.enabled = true;
             _number.text = PlayerManager.instance.idleVillagers.Count.ToString();
+
+            if(Input.GetKeyDown(KeyCode.I))
+            {
+                ToggleIdleVillager();
+            }
         }
 
         else
         {
             _image.enabled = false;
             _button.interactable = false;
-            _subIcon.enabled = false;
             _number.enabled = false;
         }
 	}
@@ -49,9 +51,14 @@ public class IdleVillagerButton : MonoBehaviour {
         }
 
         // Select next idle villager
+        UnitStateController villager = PlayerManager.instance.idleVillagers[idleVillagerIndex];
         PlayerManager.instance._controllerSelecting.ResetSelection();
-        PlayerManager.instance._controllerSelecting.SetControllerAsSelected(PlayerManager.instance.idleVillagers[idleVillagerIndex]);
-        CameraController.instance.MoveToController(PlayerManager.instance.idleVillagers[idleVillagerIndex]);
+        Grid.instance.selectedTilePrefab.GetComponent<SpriteRenderer>().enabled = false;
+
+        PlayerManager.instance.selectableController = villager;
+        PlayerManager.instance._controllerSelecting.SetUnitAsSelected();
+
+        CameraController.instance.MoveToController(villager);
 
         idleVillagerIndex++;
     }
