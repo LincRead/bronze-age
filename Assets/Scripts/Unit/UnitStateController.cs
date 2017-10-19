@@ -40,7 +40,10 @@ public class UnitStateController : BaseController
     public UnitMoveToResourcePosition moveToResourcePositionState;
 
     [HideInInspector]
-    public UnitMoveBackToResource moveBackToResource;
+    public UnitMoveBackToResource moveBackToResourceState;
+
+    [HideInInspector]
+    public UnitMoveToEmptyNode moveToEmptyNodeState;
 
     [HideInInspector]
     public UnitMoveToFarm moveToFarm;
@@ -68,6 +71,9 @@ public class UnitStateController : BaseController
 
     //[HideInInspector]
     public UnitState currentState;
+
+    [HideInInspector]
+    public UnitState lastState;
 
     //[HideInInspector]
     public bool isMoving = false;
@@ -151,6 +157,7 @@ public class UnitStateController : BaseController
         moveToPositionState = ScriptableObject.CreateInstance<UnitMoveToPosition>();
         moveToControllerState = ScriptableObject.CreateInstance<UnitMoveToController>();
         moveToNearbyEnemyState = ScriptableObject.CreateInstance<UnitMoveToNearbyEnemy>();
+        moveToEmptyNodeState = ScriptableObject.CreateInstance<UnitMoveToEmptyNode>();
         attackMoveState = ScriptableObject.CreateInstance<UnitAttackMode>();
 
         attackState = ScriptableObject.CreateInstance<UnitAttack>();
@@ -163,7 +170,7 @@ public class UnitStateController : BaseController
             gatherState = ScriptableObject.CreateInstance<UnitGather>();
             farmState = ScriptableObject.CreateInstance<UnitFarm>();
             moveToResourcePositionState = ScriptableObject.CreateInstance<UnitMoveToResourcePosition>();
-            moveBackToResource = ScriptableObject.CreateInstance<UnitMoveBackToResource>();
+            moveBackToResourceState = ScriptableObject.CreateInstance<UnitMoveBackToResource>();
             moveToFarm = ScriptableObject.CreateInstance<UnitMoveToFarm>();
 
             // Extra HP if technology researched
@@ -292,6 +299,14 @@ public class UnitStateController : BaseController
 
     protected override void Update()
     {
+        // Move away from unwalkable tiles
+        if (_pathfinder.currentStandingOnNode.parentTile.controllerOccupying != null
+            && currentState != moveToEmptyNodeState)
+        {
+            lastState = currentState;
+            TransitionToState(moveToEmptyNodeState);
+        }
+
         currentState.UpdateState();
 
         base.Update();
@@ -336,7 +351,7 @@ public class UnitStateController : BaseController
     {
         this.targetController = targetController;
 
-        TransitionToState(moveBackToResource);
+        TransitionToState(moveBackToResourceState);
     }
 
     public void MoveToFarm(BaseController targetController)

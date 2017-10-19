@@ -275,9 +275,23 @@ public class Tile : IHeapItem<Tile>
         }
     }
 
+    bool EnemyUnitsStandingHere()
+    {
+        for(int i = 0; i < unitsStandingHere.Count; i++)
+        {
+            if(unitsStandingHere[i].playerID != PlayerManager.myPlayerID)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     public bool IsEmpty()
     {
-        return walkable && unitsStandingHere.Count == 0 && controllerOccupying == null;
+        return walkable 
+            && !EnemyUnitsStandingHere() 
+            && controllerOccupying == null;
     }
 }
