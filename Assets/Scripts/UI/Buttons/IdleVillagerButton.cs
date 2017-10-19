@@ -57,6 +57,7 @@ public class IdleVillagerButton : MonoBehaviour {
 
         PlayerManager.instance.selectableController = villager;
         PlayerManager.instance._controllerSelecting.SetUnitAsSelected();
+        PlayerManager.instance._controllerSelecting.ChangeToUnitView();
 
         CameraController.instance.MoveToController(villager);
 

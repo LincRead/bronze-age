@@ -157,8 +157,8 @@ public class Tile : IHeapItem<Tile>
         if (walkable)
         {
             float spawnValue = 0.0f;
-            if (tileIndex == 1) spawnValue = 0.05f;
-            if (tileIndex > 1) spawnValue = 0.1f;
+            if (tileIndex == 1) spawnValue = 0.03f;
+            if (tileIndex > 1) spawnValue = 0.06f;
             if (Random.value < spawnValue)
             {
                 grid.SpawnFruitBush(this);

@@ -173,7 +173,7 @@ public class ControllerSelecting : MonoBehaviour {
         ChangeToUnitView();
     }
 
-    void ChangeToUnitView()
+    public void ChangeToUnitView()
     {
         if (selectedUnits.Count > 1)
         {
