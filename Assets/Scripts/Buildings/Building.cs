@@ -217,6 +217,7 @@ public class Building : BaseController {
         _selectedIndicatorRenderer.color = new Color(1f, 1f, 1f, 1f);
         _selectedIndicatorRenderer.enabled = false;
 
+        Debug.Log("DDD");
         Grid.instance.SetTilesOccupiedByController(this, !_basicStats.walkable);
 
         PlayerManager.instance.PlacedBuilding(this);

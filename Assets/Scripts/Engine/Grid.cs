@@ -507,8 +507,13 @@ public class Grid : MonoBehaviour {
 
                     if (walkable)
                     {
+                        // Only set to null if not a farm
+                        if (!obj._basicStats.walkable)
+                        {
+                            tile.controllerOccupying = null;
+                        }
+
                         tile.SetWalkable();
-                        tile.controllerOccupying = null;
                     }
                         
                     else
