@@ -72,12 +72,13 @@ public class Resource : BaseController {
 
     protected override void Update()
     {
-        base.Update();
-
         if (depleted)
         {
             Destroy();
+            return;
         }
+
+        base.Update();
     }
 
     public void Harvest()
