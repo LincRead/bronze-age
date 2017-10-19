@@ -55,9 +55,11 @@ public class UnitMoveToController : UnitMoveTo
         }
 
         // Reset
-        if (_targetController.controllerType != CONTROLLER_TYPE.UNIT && !_targetController._basicStats.walkable)
+        if (_targetController.controllerType != CONTROLLER_TYPE.UNIT 
+            && !_targetController._basicStats.walkable
+            && !_targetController.dead)
         {
-            Grid.instance.SetWalkableValueForTiles(_targetController.GetPosition(), _targetController.size, false);
+            Grid.instance.SetWalkableValueForTiles(_targetController, false);
         }
 
         // Found path
@@ -66,7 +68,8 @@ public class UnitMoveToController : UnitMoveTo
             _controller.ignoreControllers.Clear();
 
             // Ignore unwalkable nodes
-            while (_pathfinder.path.Count > 1 && !_pathfinder.path[_pathfinder.path.Count - 1].walkable)
+            while (_pathfinder.path.Count > 1 
+                && !_pathfinder.path[_pathfinder.path.Count - 1].walkable)
             {
                 _pathfinder.path.Remove(_pathfinder.path[_pathfinder.path.Count - 1]);
             }

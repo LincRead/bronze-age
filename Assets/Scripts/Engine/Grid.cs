@@ -508,11 +508,13 @@ public class Grid : MonoBehaviour {
                     if (walkable)
                     {
                         tile.SetWalkable();
+                        tile.controllerOccupying = null;
                     }
                         
                     else
                     {
                         tile.SetUnwalkable();
+                        tile.controllerOccupying = obj;
                     }    
                 }
             }
@@ -690,10 +692,13 @@ public class Grid : MonoBehaviour {
 
     public void RemoveTilesOccupiedByController(BaseController controller)
     {
-        Tile tile = GetTileFromWorldPoint(controller.GetPosition());
+        // Adding offset since building pivot point (buttom of sprite) is in the middle of two tiles.
+        Tile tile = GetTileFromWorldPoint(controller.GetPosition() + new Vector2(0.04f, 0.04f));
 
         if (tile == null)
+        {
             return;
+        }
 
         for (int i = 0; i < controller.size; i++)
         {

@@ -25,7 +25,9 @@ public class UnitMoveToEmptyNode : UnitMoveTo
 
         _pathfinder.FindPath(endNode);
 
-        if (blockingController != null && !blockingController._basicStats.walkable)
+        if (blockingController != null 
+            && !blockingController._basicStats.walkable
+            && !blockingController.dead)
         {
             Grid.instance.SetWalkableValueForTiles(blockingController, false);
         }

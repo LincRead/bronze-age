@@ -135,7 +135,8 @@ public class UnitMoveTo : UnitState
             return;
         }
 
-        else if (nextTargetNode.walkable || _controller.currentState == _controller.moveToEmptyNodeState)
+        else if (nextTargetNode.walkable 
+            || _controller.currentState == _controller.moveToEmptyNodeState)
         {
             _pathfinder.SetCurrentPathfindingNode(nextTargetNode);
         }

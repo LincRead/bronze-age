@@ -301,6 +301,7 @@ public class UnitStateController : BaseController
     {
         // Move away from unwalkable tiles
         if (_pathfinder.currentStandingOnNode.parentTile.controllerOccupying != null
+            && !_pathfinder.currentStandingOnNode.parentTile.controllerOccupying._basicStats.walkable
             && currentState != moveToEmptyNodeState)
         {
             lastState = currentState;
