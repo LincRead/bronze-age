@@ -24,6 +24,9 @@ public class ProductionButtonData : ScriptableObject {
     [Header("Execute when production finishes")]
     public FinishedProductionAction executeScript;
 
+    [Header("Hotkey")]
+    public KeyCode hotkey;
+
     [Header("Produce")]
     public GameObject productionPrefab;
 

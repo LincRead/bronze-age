@@ -44,6 +44,8 @@ public class ProductionButton : UnitUIButton {
             script = prefab.GetComponent<BaseController>();
         }
 
+        hotkey = data.hotkey;
+
         UpdateCanBeProduced();
     }
 
