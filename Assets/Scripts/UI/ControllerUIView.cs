@@ -36,12 +36,18 @@ public class ControllerUIView : ScriptableObject {
         {
             ui.icon.enabled = true;
             ui.icon.sprite = _controller.iconSprite;
-            ui.icon.rectTransform.sizeDelta = new Vector2(32, 32);
+            ui.icon.rectTransform.sizeDelta = new Vector2(ui.icon.sprite.bounds.size.x * 100, ui.icon.sprite.bounds.size.y * 100);
+
 
             if (_controller.playerID > -1)
+            {
                 ui.icon.material.SetColor("_TeamColor", PlayerDataManager.instance.playerData[_controller.playerID].teamColor);
+            }
+               
             else
+            {
                 ui.icon.material.SetColor("_TeamColor", PlayerDataManager.neutralPlayerColor);
+            } 
         }
            
         else

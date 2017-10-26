@@ -81,7 +81,7 @@ public class ControllerSelecting : MonoBehaviour {
             {
                 ExecuteSelecting();
 
-                if(HasSelectedAtLeastOneControler())
+                if(HasSelectedAtLeastOneController())
                 {
                     unsafeToSelectTile = true;
                 }
@@ -177,11 +177,16 @@ public class ControllerSelecting : MonoBehaviour {
     {
         if (selectedUnits.Count > 1)
         {
-            ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.SELECTED_UNITS, null);
-
             if (selectedGatherers.Count > 0)
             {
-                ControllerUIManager.instance.ChangeAndResetView(ControllerUIManager.CONTROLLER_UI_VIEW.VILLAGER, selectedUnits[0]);
+                ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.VILLAGER, selectedUnits[0]);
+            }
+
+            ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.SELECTED_UNITS, null);
+
+            if(selectedGatherers.Count > 0)
+            {
+                EventManager.TriggerEvent("ActivateVillagerView");
             }
         }
 
@@ -493,7 +498,7 @@ public class ControllerSelecting : MonoBehaviour {
         return selectedUnits;
     }
 
-    public bool HasSelectedAtLeastOneControler()
+    public bool HasSelectedAtLeastOneController()
     {
         return selectedController != null || selectedUnits.Count > 0;
     }
