@@ -434,7 +434,7 @@ public class UnitStateController : BaseController
             return;
         }
          
-        targetController.Hit(_unitStats.damage);
+        targetController.Hit(_unitStats.damage, this);
     }
 
     public void FireProjectile()
@@ -449,7 +449,7 @@ public class UnitStateController : BaseController
             transform.position + new Vector3(0.0f, (_spriteRenderer.bounds.size.y / 2)), 
             Quaternion.identity);
         Projectile p = newProjectile.GetComponent<Projectile>();
-        p.SetTarget(targetController, targetController.GetPrimaryNode(), _unitStats.damage);
+        p.SetTarget(this, targetController, targetController.GetPrimaryNode(), _unitStats.damage);
     }
 
     public void FireProjectileTowards(Node node)
@@ -457,7 +457,7 @@ public class UnitStateController : BaseController
 
     }
 
-    public override void Hit(int damageValue)
+    public override void Hit(int damageValue, BaseController hitByController)
     {
         hitpointsLeft -= damageValue;
 
@@ -469,6 +469,13 @@ public class UnitStateController : BaseController
         else
         {
             UpdateHealthBar();
+
+            if(currentState == idleState)
+            {
+                Debug.Log(hitByController);
+
+                MoveTo(hitByController);
+            }
         }
     }
 

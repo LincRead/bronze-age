@@ -7,13 +7,15 @@ public class Projectile : MonoBehaviour {
     Transform _transform;
     Vector2 velocity = Vector2.zero;
     Node targetNode;
+    BaseController parentController;
     BaseController targetController;
     int damage = 0;
     float moveSpeed = 2f;
     bool rotated = false;
 
-    public void SetTarget(BaseController targetController, Node targetNode, int damage)
+    public void SetTarget(BaseController parentController, BaseController targetController, Node targetNode, int damage)
     {
+        this.parentController = parentController;
         this.targetController = targetController;
         this.targetNode = targetNode;
         this.damage = damage;
@@ -51,12 +53,12 @@ public class Projectile : MonoBehaviour {
         {
             if (targetNode.unitControllerStandingHere == targetController)
             {
-                targetController.Hit(damage);
+                targetController.Hit(damage, parentController);
             }
 
             else if (targetNode.parentTile.controllerOccupying == targetController)
             {
-                targetController.Hit(damage);
+                targetController.Hit(damage, parentController);
             }
         }
 
