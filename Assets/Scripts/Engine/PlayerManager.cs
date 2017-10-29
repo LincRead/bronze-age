@@ -641,15 +641,16 @@ public class PlayerManager : MonoBehaviour {
     private BaseController SetMouseHoveringController()
     {
         RaycastHit2D[] hits = Physics2D.RaycastAll(mousePosition, Vector2.zero);
-        
+        BaseController controller = null;
+
         // Reset
         mouseHoveringController.controller = null;
         mouseHoveringController.priorityValue = -1;
 
         // Iterate through all hit objects and see which one we should set as hovering to select
-        for(int i = 0; i < hits.Length; i++)
+        for (int i = 0; i < hits.Length; i++)
         {
-            BaseController controller = hits[i].collider.gameObject.GetComponent<BaseController>();
+            controller = hits[i].collider.gameObject.GetComponent<BaseController>();
 
             int priority = GetHoveringPriorityOfSelectedController(controller);
 
@@ -667,6 +668,30 @@ public class PlayerManager : MonoBehaviour {
             }
         }
 
+        Tile tile = Grid.instance.GetTileFromWorldPoint(mousePosition);
+
+        if(tile != null)
+        {
+            controller = tile.controllerOccupying;
+        } 
+
+        if (controller != null)
+        {
+            int priority = GetHoveringPriorityOfSelectedController(tile.controllerOccupying);
+
+            if (priority == mouseHoveringController.priorityValue
+                && (controller.zIndex < mouseHoveringController.controller.zIndex))
+            {
+                mouseHoveringController.controller = controller;
+                mouseHoveringController.priorityValue = priority;
+            }
+
+            else if (priority > mouseHoveringController.priorityValue)
+            {
+                mouseHoveringController.controller = controller;
+                mouseHoveringController.priorityValue = priority;
+            }
+        }
 
         return mouseHoveringController.controller;
     }
@@ -677,6 +702,14 @@ public class PlayerManager : MonoBehaviour {
         if (controller.controllerType == CONTROLLER_TYPE.UNIT
             && _controllerSelecting.SelectedUnitWhoCanAttack() 
             && controller.playerID != myPlayerID)
+        {
+            return 3;
+        }
+
+        else if (controller.controllerType == CONTROLLER_TYPE.BUILDING
+            && _controllerSelecting.GetSelectedGatherers().Count > 0
+            && !controller.GetComponent<Building>().constructed
+            && controller.playerID == myPlayerID)
         {
             return 2;
         }
