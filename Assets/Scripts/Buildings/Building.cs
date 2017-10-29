@@ -94,7 +94,7 @@ public class Building : BaseController {
         constructionSprites = _buildingStats.constructionSprites;
         damagedSprite = _buildingStats.damagedSprite;
         maxHitPoints = _buildingStats.maxHitpoints;
-        hitpointsLeft = maxHitPoints;
+        hitpointsLeft = 1;
 
         // Only set once
         productionButtonsData = _buildingStats.productionButtons;
