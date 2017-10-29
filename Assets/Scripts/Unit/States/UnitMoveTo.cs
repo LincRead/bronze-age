@@ -108,7 +108,7 @@ public class UnitMoveTo : UnitState
         }
 
         // Reached next target node
-        if (Vector2.Distance(_transform.position, nextTargetNode.worldPosition) <= 0.02f)
+        if (Vector2.Distance(_transform.position, nextTargetNode.worldPosition) <= 0.01f)
         {
             ReachedNextTargetNode();
             _controller.UpdateVisibility();
@@ -135,8 +135,7 @@ public class UnitMoveTo : UnitState
             return;
         }
 
-        else if (nextTargetNode.walkable 
-            || _controller.currentState == _controller.moveToEmptyNodeState)
+        else if (nextTargetNode.walkable  || _controller.currentState == _controller.moveToEmptyNodeState)
         {
             _pathfinder.SetCurrentPathfindingNode(nextTargetNode);
         }

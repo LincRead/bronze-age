@@ -22,7 +22,7 @@ public class UnitState : ScriptableObject
 
     public virtual void UpdateState()
     {
-        if(playAnimation)
+        if (playAnimation)
         {
             PlayAnimation();
             playAnimation = false;
@@ -30,9 +30,12 @@ public class UnitState : ScriptableObject
 
         timeSinceStateChange += Time.deltaTime;
 
-        DoActions();
+        if (_controller.currentState == this)
+        {
+            DoActions();
+        }
 
-        if(_controller.currentState == this)
+        if (_controller.currentState == this)
         {
             CheckTransitions();
         }

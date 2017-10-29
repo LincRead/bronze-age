@@ -472,8 +472,6 @@ public class UnitStateController : BaseController
 
             if(currentState == idleState)
             {
-                Debug.Log(hitByController);
-
                 MoveTo(hitByController);
             }
         }
