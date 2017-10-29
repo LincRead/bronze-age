@@ -7,6 +7,7 @@ using UnityEngine;
 public class ConstructionView : ControllerUIView
 {
     Building _buildingController;
+    public Sprite constructIcon;
 
     public override void OnEnter(ControllerUIManager ui, BaseController controller)
     {
@@ -20,6 +21,7 @@ public class ConstructionView : ControllerUIView
         if (!_buildingController._buildingStats.isCivilizationCenter)
         {
             ui.productionProgressCanvas.gameObject.SetActive(true);
+            ControllerUIManager.instance.productionProgressCanvas.icon.sprite = constructIcon;
             UpdatePercentConstructedVisuals();
         }
 

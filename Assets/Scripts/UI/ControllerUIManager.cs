@@ -75,6 +75,8 @@ public class ControllerUIManager : MonoBehaviour {
     ControllerUIView lastView;
 
     [Header("Views")]
+    public ConstructionView constructionView;
+
     private ControllerUIView nothingSelectedView;
     private TileView tileView;
     private VillagerView villagerView;
@@ -84,7 +86,6 @@ public class ControllerUIManager : MonoBehaviour {
     private BuildingsView buildingsView;
     private BuildingView buildingView;
     private ResourceView resourceView;
-    private ConstructionView constructionView;
 
     [HideInInspector]
     public List<SelectedUnitButton> _selectedUnitButtons = new List<SelectedUnitButton>();
@@ -154,7 +155,6 @@ public class ControllerUIManager : MonoBehaviour {
         buildingsView = ScriptableObject.CreateInstance<BuildingsView>();
         buildingView = ScriptableObject.CreateInstance<BuildingView>();
         resourceView = ScriptableObject.CreateInstance<ResourceView>();
-        constructionView = ScriptableObject.CreateInstance<ConstructionView>();
 
         // Init production tooltip
         productionTooltip = GetComponentInChildren<ProductionTooltip>();
