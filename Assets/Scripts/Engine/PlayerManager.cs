@@ -675,6 +675,8 @@ public class PlayerManager : MonoBehaviour {
             controller = tile.controllerOccupying;
         } 
 
+        // Extra check based on tile and not box collider mouse is hovering, 
+        // since buildings don't have a box collider
         if (controller != null)
         {
             int priority = GetHoveringPriorityOfSelectedController(tile.controllerOccupying);
