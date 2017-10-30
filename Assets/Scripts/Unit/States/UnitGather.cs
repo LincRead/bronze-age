@@ -75,8 +75,7 @@ public class UnitGather : UnitState {
         }
 
         // Make sure it hasn't been depleted when we add a resouce to harvester
-        if (harvestProgress >= _resource.harvestDifficulty 
-            && !_resource.depleted)
+        if (harvestProgress >= _resource.harvestDifficulty && !_resource.depleted)
         {
             _resource.Harvest();
 

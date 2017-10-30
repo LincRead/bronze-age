@@ -679,7 +679,7 @@ public class PlayerManager : MonoBehaviour {
         // since buildings don't have a box collider
         if (controller != null)
         {
-            int priority = GetHoveringPriorityOfSelectedController(tile.controllerOccupying);
+            int priority = GetHoveringPriorityOfSelectedController(controller);
 
             if (priority == mouseHoveringController.priorityValue
                 && (controller.zIndex < mouseHoveringController.controller.zIndex))

@@ -225,7 +225,6 @@ public class UnitStateController : BaseController
             {
                 if(rallyToController.controllerType == CONTROLLER_TYPE.RESOURCE)
                 {
-                    Debug.Log("RALLY TO RESOURCE CONT");
                     MoveToResource(rallyToController);
                 }
 

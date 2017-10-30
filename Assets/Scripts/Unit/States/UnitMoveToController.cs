@@ -59,7 +59,11 @@ public class UnitMoveToController : UnitMoveTo
             && !_targetController._basicStats.walkable
             && !_targetController.dead)
         {
-            Grid.instance.SetWalkableValueForTiles(_targetController, false);
+            // Make sure we don't touch depleted resources
+            if(_targetController.controllerType != CONTROLLER_TYPE.RESOURCE || !_targetController.GetComponent<Resource>().depleted)
+            {
+                Grid.instance.SetWalkableValueForTiles(_targetController, false);
+            }
         }
 
         // Found path

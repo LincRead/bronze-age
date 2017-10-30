@@ -70,17 +70,6 @@ public class Resource : BaseController {
         UpdateVisibilityOfAllControllerOccupiedTiles();
     }
 
-    protected override void Update()
-    {
-        if (depleted)
-        {
-            Destroy();
-            return;
-        }
-
-        base.Update();
-    }
-
     public void Harvest()
     {
         amountLeft--;
@@ -93,6 +82,7 @@ public class Resource : BaseController {
         if (amountLeft <= 0)
         {
             depleted = true;
+            Destroy();
         }
 
         else if (amountLeft < amount / 2.5f && harvestStagesSprites.Length == 2)

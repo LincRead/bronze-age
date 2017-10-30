@@ -342,7 +342,7 @@ public class BaseController : MonoBehaviour {
     public virtual void Destroy()
     {
         DecreaseVisibilityOfTiles();
-        Grid.instance.RemoveTilesOccupiedByController(this);
+        Grid.instance.RemoveTilesOccupiedByResource(this);
         Destroy(gameObject);
     }
 }

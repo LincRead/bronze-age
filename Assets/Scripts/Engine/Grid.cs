@@ -695,10 +695,10 @@ public class Grid : MonoBehaviour {
         return nodesToSelectFrom[ran];
     }
 
-    public void RemoveTilesOccupiedByController(BaseController controller)
+    public void RemoveTilesOccupiedByResource(BaseController controller)
     {
         // Adding offset since building pivot point (buttom of sprite) is in the middle of two tiles.
-        Tile tile = GetTileFromWorldPoint(controller.GetPosition() + new Vector2(0.04f, 0.04f));
+        Tile tile = GetTileFromWorldPoint(controller.GetPosition() + new Vector2(0.0f, -0.04f));
 
         if (tile == null)
         {
