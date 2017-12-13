@@ -6,8 +6,6 @@ using System.Text;
 
 public class ControllerUIManager : MonoBehaviour {
 
-    public Text ageText;
-
     [Header("Controller info")]
     public Text title;
     public Text description;

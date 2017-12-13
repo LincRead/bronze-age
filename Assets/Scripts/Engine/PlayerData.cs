@@ -19,11 +19,14 @@ public class PlayerData {
     public int population = 0;
     public int housing = 0;
     public int staticProsperity = 1;
-    public float foodStock;
+    public float foodInStock;
     public int foodIntake = 0;
     public int wealth = 0;
     public int timber = 0;
     public int metal = 0;
+
+    // Food surplus level
+    public int foodSurplusLevel = 0;
 
     // Need to always be paired number
     public int villagerCarryLimit = 5;

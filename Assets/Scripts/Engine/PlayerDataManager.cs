@@ -14,6 +14,8 @@ public class PlayerDataManager : MonoBehaviour
     [HideInInspector]
     public static Color neutralPlayerColor = new Color(0.4f, 0.2f, 0.1f);
 
+    public static float foodPerSurplusLevel = 50;
+
     public static PlayerDataManager instance
     {
         get
@@ -54,11 +56,17 @@ public class PlayerDataManager : MonoBehaviour
             PlayerData newPlayerData = new PlayerData();
             playerData.Add(newPlayerData);
 
-            newPlayerData.foodStock = playerStartingResources.food;
+            newPlayerData.foodInStock = playerStartingResources.food;
             newPlayerData.timber = playerStartingResources.timber;
             newPlayerData.wealth = playerStartingResources.wealth;
             newPlayerData.metal = playerStartingResources.metal;
             newPlayerData.newCitizens = playerStartingResources.newCitizens;
+
+            /* 
+             * Make sure this is done straight away so UI shows correct values
+             * and bonuses are correct
+             */
+            CalculateFoodSurplusLevelFor(i);
         }
     }
 
@@ -108,12 +116,31 @@ public class PlayerDataManager : MonoBehaviour
 
     public void AddFoodStockForPlayer(int value, int player)
     {
-        playerData[player].foodStock += value;
+        playerData[player].foodInStock += value;
+
+        CalculateFoodSurplusLevelFor(player);
 
         if (player == PlayerManager.myPlayerID)
         {
             EventManager.TriggerEvent("UpdateFoodStockUI");
         }
+    }
+
+    public void CalculateFoodSurplusLevelFor(int player)
+    {
+        int foodSurplusLevel = (int)Mathf.Floor(((PlayerDataManager.foodPerSurplusLevel + playerData[player].foodInStock) / (PlayerDataManager.foodPerSurplusLevel * 5) * 5));
+
+        if (foodSurplusLevel > 4)
+        {
+            foodSurplusLevel = 4;
+        }
+        
+        playerData[player].foodSurplusLevel = foodSurplusLevel;
+    }
+
+    public int GetFoodSurplusLevelFor(int player)
+    {
+        return playerData[player].foodSurplusLevel;
     }
 
     public void AddFoodIntakeForPlayer(int value, int player)

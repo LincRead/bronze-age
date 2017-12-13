@@ -270,7 +270,22 @@ public class Building : BaseController {
         {
             if(startedProduction)
             {
-                stepsProduced += 1 * Time.deltaTime;
+                float step = 1f;
+
+                // Slow down all production if people are starving
+                if(PlayerDataManager.instance.GetFoodSurplusLevelFor(playerID) == 0)
+                {
+                    step *= 0.5f;
+                }
+
+                // Todo unique per civ!
+                else if (productionButtonsData[productionIndex].type == PRODUCTION_TYPE.UNIT)
+                {
+                    // Increase unit production for each food surplus level
+                    step += ((PlayerDataManager.instance.GetFoodSurplusLevelFor(playerID) - 1) * 0.1f);
+                }
+
+                stepsProduced += step * Time.deltaTime;
 
                 if (stepsProduced >= stepsToProduce)
                 {
@@ -520,7 +535,7 @@ public class Building : BaseController {
     {
         PlayerData playerData = PlayerDataManager.instance.GetPlayerData(PlayerManager.myPlayerID);
 
-        if (_buildingStats.food > 0 && playerData.foodStock < _buildingStats.food) return false;
+        if (_buildingStats.food > 0 && playerData.foodInStock < _buildingStats.food) return false;
         if (_buildingStats.timber > 0 && playerData.timber < _buildingStats.timber) return false;
         if (_buildingStats.metal > 0 && playerData.metal < _buildingStats.metal) return false;
         if (_buildingStats.wealth > 0 && playerData.wealth < _buildingStats.wealth) return false;
@@ -539,7 +554,7 @@ public class Building : BaseController {
         ProductionButtonData data = productionButtonsData[productionIndex];
         PlayerData playerData = PlayerDataManager.instance.GetPlayerData(PlayerManager.myPlayerID);
 
-        if (data.food > 0 && playerData.foodStock < data.food) return false;
+        if (data.food > 0 && playerData.foodInStock < data.food) return false;
         if (data.timber > 0 && playerData.timber < data.timber) return false;
         if (data.metal > 0 && playerData.metal < data.metal) return false;
         if (data.wealth > 0 && playerData.wealth < data.wealth) return false;

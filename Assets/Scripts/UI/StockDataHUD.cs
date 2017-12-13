@@ -7,6 +7,8 @@ using System.Text;
 public class StockDataHUD : MonoBehaviour {
 
     PlayerData myPlayerData;
+    public Image foodSurplusBar;
+    public Text foodBonusText;
 
     public Text population;
     public Text housing;
@@ -60,7 +62,7 @@ public class StockDataHUD : MonoBehaviour {
 
     void UpdatePopulation()
     {
-        population.text = new StringBuilder(myPlayerData.newCitizens.ToString()).ToString();
+        //population.text = new StringBuilder(myPlayerData.newCitizens.ToString()).ToString();
     }
 
     void UpdateHousing()
@@ -83,7 +85,9 @@ public class StockDataHUD : MonoBehaviour {
 
     void UpdateFoodStock()
     {
-        foodStock.text = ((int)myPlayerData.foodStock).ToString();
+        foodStock.text =((int)(myPlayerData.foodInStock)).ToString();
+        foodSurplusBar.GetComponent<FoodSurplusBar>().UpdateBar(myPlayerData.foodInStock);
+        foodBonusText.GetComponent<FoodBonusText>().UpdateBonusText(myPlayerData.foodSurplusLevel);
     }
 
     void UpdateTimber()
@@ -103,7 +107,7 @@ public class StockDataHUD : MonoBehaviour {
 
     void UpdateProsperity()
     {
-        int prosperityNumber = myPlayerData.staticProsperity;
+        /*int prosperityNumber = myPlayerData.staticProsperity;
 
         // Food stock
         if (myPlayerData.foodStock < 0)
@@ -136,11 +140,13 @@ public class StockDataHUD : MonoBehaviour {
         prosperityNumber -= (int)(myPlayerData.population / 10);
 
         SetProsperityText(prosperityNumber);
-        myPlayerData.realProsperity = prosperityNumber;
+        myPlayerData.realProsperity = prosperityNumber;*/
     }
 
     void SetProsperityText(int value)
     {
+        return;
+
         // Set text
         if (value > -1)
         {

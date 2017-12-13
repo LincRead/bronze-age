@@ -764,12 +764,19 @@ public class PlayerManager : MonoBehaviour {
     {
         for(int i = 0; i < WorldManager.instance.numPlayers; i++)
         {
-            PlayerDataManager.instance.playerData[i].foodStock += (Time.deltaTime * PlayerDataManager.instance.playerData[i].foodIntake) / timePerFoodIntakePoint;
+            PlayerDataManager.instance.playerData[i].foodInStock += (Time.deltaTime * PlayerDataManager.instance.playerData[i].foodIntake) / timePerFoodIntakePoint;
         }
 
         timeSinceLastFoodUIUpdate += Time.deltaTime;
         if(timeSinceLastFoodUIUpdate >= timeBetweenFoodUIUpdates)
         {
+            timeSinceLastFoodUIUpdate = 0.0f;
+
+            for (int i = 0; i < WorldManager.instance.numPlayers; i++)
+            {
+                PlayerDataManager.instance.CalculateFoodSurplusLevelFor(i);
+            }
+
             EventManager.TriggerEvent("UpdateFoodStockUI");
             EventManager.TriggerEvent("UpdateProsperityStockUI");
         }
