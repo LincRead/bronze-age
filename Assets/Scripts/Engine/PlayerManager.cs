@@ -161,7 +161,6 @@ public class PlayerManager : MonoBehaviour {
     void Update ()
     {
         UpdateFoodIntake();
-        UpdateNewCitizens();
 
         mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
@@ -778,36 +777,6 @@ public class PlayerManager : MonoBehaviour {
             }
 
             EventManager.TriggerEvent("UpdateFoodStockUI");
-            EventManager.TriggerEvent("UpdateProsperityStockUI");
-        }
-    }
-
-    void UpdateNewCitizens()
-    {
-        for (int i = 0; i < WorldManager.instance.numPlayers; i++)
-        {
-            PlayerData data = PlayerDataManager.instance.playerData[i];
-
-            float spawnCitizenFactor = data.realProsperity;
-
-            if (spawnCitizenFactor < -4)
-            {
-                return;
-            }
-
-            if (spawnCitizenFactor < 0)
-            {
-                spawnCitizenFactor *= 10;
-            }
-
-            data.progressTowardsNewCitizen += (Time.deltaTime / (20 - spawnCitizenFactor * 1.0f));
-
-            if (data.progressTowardsNewCitizen >= 1.0f)
-            {
-                data.progressTowardsNewCitizen = 0.0f + (data.progressTowardsNewCitizen - 1.0f);
-                data.newCitizens++;
-                EventManager.TriggerEvent("UpdateNewCitizensStockUI");
-            }
         }
     }
 }

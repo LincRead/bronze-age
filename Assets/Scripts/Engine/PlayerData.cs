@@ -15,10 +15,8 @@ public enum FACTION
 
 public class PlayerData {
 
-    public int newCitizens = 0;
     public int population = 0;
     public int housing = 0;
-    public int staticProsperity = 1;
     public float foodInStock;
     public int foodIntake = 0;
     public int wealth = 0;
@@ -40,12 +38,6 @@ public class PlayerData {
     public int age = 0;
 
     public bool placedCamp = false;
-
-    [HideInInspector]
-    public float progressTowardsNewCitizen = 0.0f;
-
-    [HideInInspector]
-    public int realProsperity = 0;
 
     [HideInInspector]
     public List<Building> friendlyResourceDeliveryPoints = new List<Building>();

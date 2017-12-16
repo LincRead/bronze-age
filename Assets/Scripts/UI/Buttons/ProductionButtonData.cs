@@ -50,5 +50,4 @@ public class ProductionButtonData : ScriptableObject {
     public int timber = 0;
     public int wealth = 0;
     public int metal = 0;
-    public int newCitizens = 0;
 }

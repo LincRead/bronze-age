@@ -41,7 +41,4 @@ public class BuildingStats : DefaultStats
 
     [HideInInspector]
     public int metal = 0;
-
-    [HideInInspector]
-    public int newCitizens = 0;
 }

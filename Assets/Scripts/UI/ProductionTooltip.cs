@@ -29,7 +29,6 @@ public class ProductionTooltip : MonoBehaviour {
         numItemsRequired = 0;
         requiresTitle.enabled = false;
 
-        if(data.newCitizens > 0) AddRequired(iconsObject.icons[1], data.newCitizens);
         if (data.food > 0) AddRequired(iconsObject.icons[2], data.food);
         if (data.timber > 0) AddRequired(iconsObject.icons[3], data.timber);
         if (data.wealth > 0) AddRequired(iconsObject.icons[8], data.wealth);

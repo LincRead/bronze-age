@@ -60,7 +60,6 @@ public class PlayerDataManager : MonoBehaviour
             newPlayerData.timber = playerStartingResources.timber;
             newPlayerData.wealth = playerStartingResources.wealth;
             newPlayerData.metal = playerStartingResources.metal;
-            newPlayerData.newCitizens = playerStartingResources.newCitizens;
 
             /* 
              * Make sure this is done straight away so UI shows correct values
@@ -101,16 +100,6 @@ public class PlayerDataManager : MonoBehaviour
         if (player == PlayerManager.myPlayerID)
         {
             EventManager.TriggerEvent("UpdateHousingStockUI");
-        }
-    }
-
-    public void AddNewCitizensForPlayer(int value, int player)
-    {
-        playerData[player].newCitizens += value;
-
-        if (player == PlayerManager.myPlayerID)
-        {
-            EventManager.TriggerEvent("UpdateNewCitizensStockUI");
         }
     }
 

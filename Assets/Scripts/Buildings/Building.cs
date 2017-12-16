@@ -166,7 +166,7 @@ public class Building : BaseController {
         _buildingStats.food = data.food;
         _buildingStats.timber = data.timber;
         _buildingStats.metal = data.metal;
-        _buildingStats.newCitizens = data.newCitizens;
+        _buildingStats.wealth = data.wealth;
     }
 
     void SetupHealthBar()
@@ -539,7 +539,6 @@ public class Building : BaseController {
         if (_buildingStats.timber > 0 && playerData.timber < _buildingStats.timber) return false;
         if (_buildingStats.metal > 0 && playerData.metal < _buildingStats.metal) return false;
         if (_buildingStats.wealth > 0 && playerData.wealth < _buildingStats.wealth) return false;
-        if (_buildingStats.newCitizens > 0 && playerData.newCitizens < _buildingStats.newCitizens) return false;
 
         return true;
     }
@@ -558,7 +557,6 @@ public class Building : BaseController {
         if (data.timber > 0 && playerData.timber < data.timber) return false;
         if (data.metal > 0 && playerData.metal < data.metal) return false;
         if (data.wealth > 0 && playerData.wealth < data.wealth) return false;
-        if (data.newCitizens > 0 && playerData.newCitizens < data.newCitizens) return false;
 
         return true;
     }
@@ -571,7 +569,6 @@ public class Building : BaseController {
         if (_buildingStats.timber > 0) PlayerDataManager.instance.AddTimberForPlayer(_buildingStats.timber * factor, playerID);
         if (_buildingStats.wealth > 0) PlayerDataManager.instance.AddMetalForPlayer(_buildingStats.wealth * factor, playerID);
         if (_buildingStats.metal > 0) PlayerDataManager.instance.AddMetalForPlayer(_buildingStats.metal * factor, playerID);
-        if (_buildingStats.newCitizens > 0) PlayerDataManager.instance.AddNewCitizensForPlayer(_buildingStats.newCitizens * factor, playerID);
     }
 
     void UseResourcesForProduction(int factor)
@@ -583,8 +580,7 @@ public class Building : BaseController {
         if (data.food > 0) PlayerDataManager.instance.AddFoodStockForPlayer(data.food * factor, playerID);
         if (data.timber > 0) PlayerDataManager.instance.AddTimberForPlayer(data.timber * factor, playerID);
         if (data.wealth > 0) PlayerDataManager.instance.AddWealthForPlayer(data.wealth * factor, playerID);
-        if (data.metal > 0) PlayerDataManager.instance.AddMetalForPlayer(data.metal * factor, playerID);
-        if (data.newCitizens > 0) PlayerDataManager.instance.AddNewCitizensForPlayer(data.newCitizens * factor, playerID);
+        if (data.metal > 0) PlayerDataManager.instance.AddMetalForPlayer(data.metal * factor, playerID);    
     }
 
     public void FinishedProduction()
