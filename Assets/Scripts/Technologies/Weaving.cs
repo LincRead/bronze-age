@@ -15,11 +15,14 @@ public class Weaving : FinishedProductionAction
 
         // Update all Villager hitpoints
         List<UnitStateController> friendlyUnits = PlayerManager.instance.friendlyUnits;
-        for(int i = 0; i < friendlyUnits.Count; i++)
+        int addHitpoints = PlayerDataManager.instance.GetPlayerData(id).extraVillagerHP;
+
+        for (int i = 0; i < friendlyUnits.Count; i++)
         {
             if(friendlyUnits[i]._unitStats.isVillager)
             {
-                friendlyUnits[i].maxHitpoints += PlayerDataManager.instance.GetPlayerData(id).extraVillagerHP;
+                friendlyUnits[i].maxHitpoints += addHitpoints;
+                friendlyUnits[i].hitpointsLeft += addHitpoints;
                 friendlyUnits[i].UpdateHealthBar();
             }
         }

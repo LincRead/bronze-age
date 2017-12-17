@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class Farm : Building
 {
-    public int harvestDifficulty = 1;
+    public float harvestDifficulty = 1f;
     public bool hasFarmer = false;
 
     int soilQuality = 3;
@@ -27,7 +27,13 @@ public class Farm : Building
 
         for(int i = 0; i < tiles.Count; i++)
         {
-            switch(tiles[i].fertilityPoints)
+            // In case we tried to get tiles outside of the map
+            if (tiles[i] == null)
+            {
+                return;
+            }
+
+            switch (tiles[i].fertilityPoints)
             {
                 case 1: soilQualityCalc += 0.5f; break;
                 case 2: soilQualityCalc += 0.75f; break;
@@ -36,7 +42,12 @@ public class Farm : Building
         }
 
         soilQuality = Mathf.RoundToInt(soilQualityCalc);
-        harvestDifficulty = 12 - soilQuality;
+        CalculateHarvestDifficulty();
+    }
+
+    void CalculateHarvestDifficulty()
+    {
+        harvestDifficulty = 4.25f - (soilQuality * 0.25f);
     }
 
     protected override void Place()

@@ -329,8 +329,9 @@ public class PlayerManager : MonoBehaviour {
                         _controllerSelecting.unsafeToSelectTile = false;
                     }
 
-                    // If we didn't previously select any controllers, it is now safe to select a Tile
-                    else
+                    // If we didn't previously select any controllers, it is now safe to select the Tile
+                    // We can't select unexplored tiles
+                    else if(selectedTile.explored)
                     {
                         Grid.instance.selectedTilePrefab.GetComponent<SpriteRenderer>().enabled = true;
                         Grid.instance.selectedTilePrefab.GetComponent<Transform>().position = selectedTile.worldPosition;
