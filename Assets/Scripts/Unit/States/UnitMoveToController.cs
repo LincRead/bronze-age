@@ -218,10 +218,10 @@ public class UnitMoveToController : UnitMoveTo
                 {
                     // Need to wait until this value is set to not cause problems in cases where Tribe unit
                     // is placing Tribe Center right next to itself.
-                    if(_controller.GetComponent<TribeController>().movingTowarsCamp)
-                    {
+                    //if(_controller.GetComponent<TribeController>().movingTowarsCamp)
+                    //{
                         _controller.GetComponent<TribeController>().SetupCamp(_targetController.GetComponent<CivilizationCenter>());
-                    }
+                    //}
                 }
             }
 

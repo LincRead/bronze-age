@@ -108,14 +108,15 @@ public class UnitMoveTo : UnitState
         }
 
         // Reached next target node
-        if (Vector2.Distance(_transform.position, nextTargetNode.worldPosition) <= 0.02f)
+        //if (Vector2.Distance(_transform.position, nextTargetNode.worldPosition) <= 0.02f)
+		if(_pathfinder.GetNodeFromPoint(_transform.position) == nextTargetNode)	
         {
             ReachedNextTargetNode();
             _controller.UpdateVisibility();
         }
 
         // Another unit is blocking the path
-        else if (nextTargetNode.unitControllerStandingHere && nextTargetNode.unitControllerStandingHere != _controller)
+        if (nextTargetNode.unitControllerStandingHere && nextTargetNode.unitControllerStandingHere != _controller)
         {
             UnitStateController unitBlocking = nextTargetNode.unitControllerStandingHere;
 
