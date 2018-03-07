@@ -164,6 +164,11 @@ public class PlayerManager : MonoBehaviour {
 
         mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
+		if (CursorHoveringUI.value)
+		{
+			return;
+		}
+
         switch (currentUserState)
         {
             case PLAYER_ACTION_STATE.DEFAULT:

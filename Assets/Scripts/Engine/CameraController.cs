@@ -12,6 +12,10 @@ public class CameraController : MonoBehaviour {
 
     private Grid _grid;
 
+	[HideInInspector]
+	// Stop camera from moving
+	public bool freeze = false; 
+
     public float scrollSpeed = 1f;
 
     private float timeButtonDownBeforeScroll = 0.1f;
@@ -53,6 +57,11 @@ public class CameraController : MonoBehaviour {
 
     void Update()
     {
+		if (freeze)
+		{
+			return;
+		}
+
         // Check if camera is moved by mouse or keys, and reset controller if not
         if(!MovingCameraUsingMouseButton() && !MovingCameraUsingKeys())
         {

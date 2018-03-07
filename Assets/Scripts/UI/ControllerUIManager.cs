@@ -6,6 +6,9 @@ using System.Text;
 
 public class ControllerUIManager : MonoBehaviour {
 
+	[HideInInspector]
+	public Canvas _canvas;
+
     [Header("Controller info")]
     public Text title;
     public Text description;
@@ -99,6 +102,9 @@ public class ControllerUIManager : MonoBehaviour {
     [Header("Cursor information")]
     public MouseCursorInfo cursorInformation;
 
+	[Header("Parts that can be hid")]
+	public GameObject hideableHUDParts;
+
     public static ControllerUIManager instance
     {
         get
@@ -129,6 +135,8 @@ public class ControllerUIManager : MonoBehaviour {
 
     void Start ()
     {
+		_canvas = GetComponent<Canvas> ();
+
         foreach (Button btn in villagerButtons)
             btn.gameObject.SetActive(false);
 
