@@ -51,6 +51,7 @@ public class ProductionButton : UnitUIButton {
 
     public void Activate()
     {
+		gameObject.SetActive (true);
         _icon.enabled = true;
         UpdateCanBeProduced();
     }

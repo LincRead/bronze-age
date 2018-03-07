@@ -23,9 +23,4 @@ public class ProductionButtonsCanvas : MonoBehaviour {
 
         ControllerUIManager.instance.SetupProductionButtonsView(productionButtonsList);
 	}
-	
-	void Update ()
-    {
-		
-	}
 }

@@ -48,6 +48,9 @@ public class ControllerUIManager : MonoBehaviour {
     [HideInInspector]
     public ProductionQueueCanvas productionQueueCanvas;
 
+	// Want to fetch this from Tech Tree
+	public ProductionButtonsCanvas productionButtonsCanvas;
+
     [HideInInspector]
     public HealthBarUI healthBar;
 
