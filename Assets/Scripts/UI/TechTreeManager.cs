@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TechTreeManager : MonoBehaviour {
 
@@ -9,9 +10,24 @@ public class TechTreeManager : MonoBehaviour {
 	[Header("Technologies")]
 	public ProductionButtonData[] data;
 
+	[Header("Description")]
+	public Text technologyTitle;
+	public Text technologyDescription;
+
+	[Header("Research progress")]
+	public ResearchProgressCanvas researchProgressCanvas;
+	public Sprite idleResearchIcon;
+
 	protected TechnologyButton[] _technologyButtonScripts;
 
 	private static TechTreeManager techTreeManager;
+
+	float pointsResearched = 0.0f;
+	float pointsToResearch = 25f;
+
+	bool researching = false;
+
+	private TechnologyButton currentResearchButtonScript = null;
 
 	public static TechTreeManager instance
 	{
@@ -40,6 +56,9 @@ public class TechTreeManager : MonoBehaviour {
 	void Start () 
 	{
 		_canvas = GetComponent<Canvas> ();
+	
+		technologyDescription.text = "";
+		technologyTitle.text = "";
 	}
 
 	void Init()
@@ -102,8 +121,39 @@ public class TechTreeManager : MonoBehaviour {
 		CameraController.instance.freeze = false;
 	}
 
+	public void StartResearch(TechnologyButton technologyButtonScript)
+	{
+		if (researching) 
+		{
+			currentResearchButtonScript.Cancel ();
+		}
+
+		currentResearchButtonScript = technologyButtonScript;
+		researchProgressCanvas.icon.sprite = technologyButtonScript.data.icon;
+		researching = true;
+		pointsResearched = 0.0f;
+	}
+
+	void FinishResearch()
+	{
+		currentResearchButtonScript.Complete ();
+		researching = false;
+		pointsResearched = 0.0f;
+		researchProgressCanvas.icon.sprite = idleResearchIcon;
+	}
+
 	void Update () 
 	{
-		
+		if (researching) 
+		{
+			pointsResearched += PlayerDataManager.instance.GetPlayerData(PlayerManager.myPlayerID).knowledgeGeneration * Time.deltaTime;
+
+			if (pointsResearched >= pointsToResearch) 
+			{
+				FinishResearch ();
+			}
+		}
+
+		researchProgressCanvas.UpdateProgress (pointsResearched / pointsToResearch);
 	}
 }

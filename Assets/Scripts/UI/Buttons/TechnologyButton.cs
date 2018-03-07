@@ -8,6 +8,13 @@ public class TechnologyButton : UnitUIButton {
 
 	public ProductionButtonData data;
 
+	Image _image;
+
+	[Header("Sprite for states")]
+	private Sprite defaultSprite;
+	public Sprite researchingSprite;
+	public Sprite researchedSprite;
+
 	public enum TECH_BTN_STATE
 	{
 		NOT_RESEARCHED,
@@ -29,6 +36,9 @@ public class TechnologyButton : UnitUIButton {
 		{
 			SetData(data);
 		}
+			
+		_image = GetComponent<Image> ();
+		defaultSprite = _image.sprite;
 	}
 
 	public void SetData(ProductionButtonData newData)
@@ -70,39 +80,49 @@ public class TechnologyButton : UnitUIButton {
 			case TECH_BTN_STATE.NOT_RESEARCHED: // Tech
 			{
 				// Start research
+				technologyButtonState = TECH_BTN_STATE.RESEARCHING;
+				_image.sprite = researchingSprite;
 
+				TechTreeManager.instance.StartResearch (this);
 			}
-
-			break;
-
-			case TECH_BTN_STATE.RESEARCHING: // Tech
-			{
-				// Cancel research
-
-			}
-			break;
-
-			case TECH_BTN_STATE.RESEARCHED:
-			{
-				// Nothing happens
-
-			}
+				
 			break;
 		}
+	}
+
+	public void Cancel()
+	{
+		technologyButtonState = TECH_BTN_STATE.NOT_RESEARCHED;
+		_image.sprite = defaultSprite;
+	}
+
+	public void Complete()
+	{
+		technologyButtonState = TECH_BTN_STATE.RESEARCHED;
+		_image.sprite = researchedSprite;
+
+		Deactivate ();
 	}
 
 	public override void OnPointerEnter(PointerEventData eventData)
 	{
 		hovered = true;
 
-
+		if (data != null) 
+		{
+			TechTreeManager.instance.technologyDescription.text = data.description;
+			TechTreeManager.instance.technologyTitle.text = data.title;
+		}
 	}
 
 	public override void OnPointerExit(PointerEventData eventData)
 	{
 		hovered = false;
 
-
+		if (data != null)
+		{
+			TechTreeManager.instance.technologyDescription.text = "";
+			TechTreeManager.instance.technologyTitle.text = "";
+		}
 	}
-
 }
