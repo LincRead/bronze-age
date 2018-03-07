@@ -8,8 +8,10 @@ public class StockDataHUD : MonoBehaviour {
 
     PlayerData myPlayerData;
     public Image foodSurplusBar;
+	public Image researchBar;
     public Text foodBonusText;
 
+	public Text knowledge;
     public Text population;
     public Text housing;
     public Text foodStock;
@@ -25,6 +27,7 @@ public class StockDataHUD : MonoBehaviour {
 
     private void Start()
     {
+		UpdateKnowledge();
         UpdateTimber();
         UpdateWealth();
         UpdateMetal();
@@ -35,6 +38,7 @@ public class StockDataHUD : MonoBehaviour {
 
     private void OnEnable()
     {
+		EventManager.StartListening("UpdateKnowledgeProductionUI", UpdateKnowledge);
         EventManager.StartListening("UpdateHousingStockUI", UpdateHousing);
         EventManager.StartListening("UpdateFoodStockUI", UpdateFoodStock);
         EventManager.StartListening("UpdateFoodIntakeUI", UpdateFoodIntake);
@@ -45,6 +49,7 @@ public class StockDataHUD : MonoBehaviour {
 
     private void OnDisable()
     {
+		EventManager.StopListening("UpdateKnowledgeProductionUI", UpdateHousing);
         EventManager.StopListening("UpdateHousingStockUI", UpdateHousing);
         EventManager.StopListening("UpdateFoodStockUI", UpdateFoodStock);
         EventManager.StopListening("UpdateFoodIntakeUI", UpdateFoodIntake);
@@ -58,6 +63,11 @@ public class StockDataHUD : MonoBehaviour {
         housing.text = new StringBuilder(myPlayerData.population.ToString() + "/" + myPlayerData.housing.ToString()).ToString();
     }
 
+	void UpdateKnowledge()
+	{
+		knowledge.text = new StringBuilder(myPlayerData.knowledgeGeneration.ToString()).ToString();
+	}
+		
     void UpdateFoodIntake()
     {
         if (myPlayerData.foodIntake > -1)
