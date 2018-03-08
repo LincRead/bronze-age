@@ -7,8 +7,12 @@ using System.Text;
 public class StockDataHUD : MonoBehaviour {
 
     PlayerData myPlayerData;
+
+	[Header("Bars")]
     public Image foodSurplusBar;
 	public Image researchBar;
+
+	[Header("Labels")]
     public Text foodBonusText;
 
 	public Text knowledge;
@@ -58,6 +62,11 @@ public class StockDataHUD : MonoBehaviour {
         EventManager.StopListening("UpdateMetalStockUI", UpdateMetal);
     }
 
+	void Update()
+	{
+		UpdateKnowledge();
+	}
+
     void UpdateHousing()
     {
         housing.text = new StringBuilder(myPlayerData.population.ToString() + "/" + myPlayerData.housing.ToString()).ToString();
@@ -65,7 +74,8 @@ public class StockDataHUD : MonoBehaviour {
 
 	void UpdateKnowledge()
 	{
-		knowledge.text = new StringBuilder(myPlayerData.knowledgeGeneration.ToString()).ToString();
+		knowledge.text = new StringBuilder(myPlayerData.knowledgeGeneration.ToString("n2")).ToString();
+		researchBar.GetComponent<FoodSurplusBar>().FillPercent(TechTreeManager.instance.GetResearchedPercentage());
 	}
 		
     void UpdateFoodIntake()

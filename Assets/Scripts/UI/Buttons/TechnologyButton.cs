@@ -6,7 +6,7 @@ using System.Text;
 
 public class TechnologyButton : UnitUIButton {
 
-	public ProductionButtonData data;
+	public ResearchButtonData data;
 
 	Image _image;
 
@@ -41,7 +41,7 @@ public class TechnologyButton : UnitUIButton {
 		defaultSprite = _image.sprite;
 	}
 
-	public void SetData(ProductionButtonData newData)
+	public void SetData(ResearchButtonData newData)
 	{
 		data = newData;
 
@@ -62,14 +62,12 @@ public class TechnologyButton : UnitUIButton {
 	{
 		if(_icon.enabled)
 		{
-			_icon.enabled = false;
-
 			if (_button.interactable)
 			{
 				_button.interactable = false;
 			}
-				
-			_icon.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+
+			_icon.enabled = false;
 		}
 	}
 
@@ -102,6 +100,11 @@ public class TechnologyButton : UnitUIButton {
 		_image.sprite = researchedSprite;
 
 		Deactivate ();
+
+		var newDisabledColor = _button.colors;
+		newDisabledColor.disabledColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+		_button.colors = newDisabledColor;
+		_icon.enabled = true;
 	}
 
 	public override void OnPointerEnter(PointerEventData eventData)

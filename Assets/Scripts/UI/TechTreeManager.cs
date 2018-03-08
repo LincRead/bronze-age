@@ -8,7 +8,7 @@ public class TechTreeManager : MonoBehaviour {
 	private Canvas _canvas;
 
 	[Header("Technologies")]
-	public ProductionButtonData[] data;
+	public ResearchButtonData[] data;
 
 	[Header("Description")]
 	public Text technologyTitle;
@@ -17,13 +17,14 @@ public class TechTreeManager : MonoBehaviour {
 	[Header("Research progress")]
 	public ResearchProgressCanvas researchProgressCanvas;
 	public Sprite idleResearchIcon;
+	public Image researchIconResourceUI;
 
 	protected TechnologyButton[] _technologyButtonScripts;
 
 	private static TechTreeManager techTreeManager;
 
-	float pointsResearched = 0.0f;
-	float pointsToResearch = 25f;
+	[HideInInspector]
+	public float pointsToResearch = 50f; // 50f
 
 	bool researching = false;
 
@@ -83,8 +84,7 @@ public class TechTreeManager : MonoBehaviour {
 		{
 			if (data != null
 				&& i < data.Length
-				&& data[i] != null
-				&& data[i].type == PRODUCTION_TYPE.TECHNOLOGY)
+				&& data[i] != null)
 			{
 				// Todo make condition for required technology
 				_technologyButtonScripts[i].index = i;
@@ -130,30 +130,40 @@ public class TechTreeManager : MonoBehaviour {
 
 		currentResearchButtonScript = technologyButtonScript;
 		researchProgressCanvas.icon.sprite = technologyButtonScript.data.icon;
+		researchIconResourceUI.sprite = technologyButtonScript.data.icon;
 		researching = true;
-		pointsResearched = 0.0f;
+		PlayerDataManager.instance.GetPlayerData(PlayerManager.myPlayerID).knowledgeGenerated = 0.0f;
+		researchProgressCanvas.UpdateProgress (PlayerDataManager.instance.GetPlayerData(PlayerManager.myPlayerID).knowledgeGenerated / pointsToResearch);
 	}
 
 	void FinishResearch()
 	{
 		currentResearchButtonScript.Complete ();
 		researching = false;
-		pointsResearched = 0.0f;
+		PlayerDataManager.instance.GetPlayerData(PlayerManager.myPlayerID).knowledgeGenerated = 0.0f;
 		researchProgressCanvas.icon.sprite = idleResearchIcon;
+		researchIconResourceUI.sprite = idleResearchIcon;
+		researchProgressCanvas.UpdateProgress(GetResearchedPercentage());
+		currentResearchButtonScript.data.executeScript.ActivateTechnology(PlayerManager.myPlayerID);
 	}
 
 	void Update () 
 	{
 		if (researching) 
 		{
-			pointsResearched += PlayerDataManager.instance.GetPlayerData(PlayerManager.myPlayerID).knowledgeGeneration * Time.deltaTime;
+			PlayerDataManager.instance.GetPlayerData(PlayerManager.myPlayerID).knowledgeGenerated += PlayerDataManager.instance.GetPlayerData(PlayerManager.myPlayerID).knowledgeGeneration * Time.deltaTime * .1f;
 
-			if (pointsResearched >= pointsToResearch) 
+			if (PlayerDataManager.instance.GetPlayerData(PlayerManager.myPlayerID).knowledgeGenerated >= pointsToResearch) 
 			{
 				FinishResearch ();
 			}
-		}
 
-		researchProgressCanvas.UpdateProgress (pointsResearched / pointsToResearch);
+			researchProgressCanvas.UpdateProgress (PlayerDataManager.instance.GetPlayerData(PlayerManager.myPlayerID).knowledgeGenerated / pointsToResearch);
+		}
+	}
+
+	public float GetResearchedPercentage()
+	{
+		return PlayerDataManager.instance.GetPlayerData (PlayerManager.myPlayerID).knowledgeGenerated / pointsToResearch;
 	}
 }

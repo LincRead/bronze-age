@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Technologies/Farming")]
-public class ImprovedFarming : FinishedProductionAction
+public class ImprovedFarming : FinishedResearchAction
 {
     public float extraFarmingSpeed = 1.25f;
 
-    public override void Action(Building building)
+	public override void ActivateTechnology(int playerID)
     {
-        int id = building.playerID;
-
-        PlayerDataManager.instance.GetPlayerData(id).farmingSpeed += extraFarmingSpeed;
+		PlayerDataManager.instance.GetPlayerData(playerID).farmingSpeed += extraFarmingSpeed;
     }
 }

@@ -16,6 +16,11 @@ public class FoodSurplusBar : MonoBehaviour {
         myPlayerData = PlayerDataManager.instance.playerData[PlayerManager.myPlayerID];
     }
 
+	public void FillPercent(float percent)
+	{
+		_image.fillAmount = percent;
+	}
+
     public void UpdateBar(float foodInStock)
     {
         fillPercent = (PlayerDataManager.foodPerSurplusLevel + foodInStock) / (PlayerDataManager.foodPerSurplusLevel * 5);

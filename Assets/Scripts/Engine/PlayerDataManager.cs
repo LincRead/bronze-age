@@ -127,6 +127,43 @@ public class PlayerDataManager : MonoBehaviour
         playerData[player].foodSurplusLevel = foodSurplusLevel;
     }
 
+	public float CalculateKnowledgeGenerationFor(int player)
+	{
+		float knowledgeToGenerate = 0;
+
+		switch (playerData[player].foodSurplusLevel) {
+		case 0:
+			knowledgeToGenerate += 1;
+			knowledgeToGenerate += playerData [player].numPriests * 0.2f;
+			break;
+		case 1:
+			knowledgeToGenerate += 3;
+			knowledgeToGenerate += playerData [player].numPriests * 0.4f;
+			break;
+		case 2:
+			knowledgeToGenerate += 4;
+			knowledgeToGenerate += playerData [player].numPriests * 0.6f;
+			break;
+		case 3:
+			knowledgeToGenerate += 5;
+			knowledgeToGenerate += playerData [player].numPriests * 0.8f;
+			break;
+		case 4:
+			knowledgeToGenerate += 6;
+			knowledgeToGenerate += playerData [player].numPriests * 1f;
+			break;
+		}
+
+		if (playerData [player].writing) 
+		{
+			knowledgeToGenerate *= 1.2f;
+		}
+
+		playerData[player].knowledgeGeneration = knowledgeToGenerate;
+
+		return playerData[player].knowledgeGeneration;
+	}
+
     public int GetFoodSurplusLevelFor(int player)
     {
         return playerData[player].foodSurplusLevel;
@@ -172,6 +209,13 @@ public class PlayerDataManager : MonoBehaviour
         }
     }
 
+	public void AddKnowledgeForPlayer(int value, int player)
+	{
+		playerData[player].knowledgeGeneration += value;
+
+		// Knowledge generation in the Stock UI is updated every update loop
+	}
+
     public PlayerData GetPlayerData(int player)
     {
         return playerData[player];
@@ -187,4 +231,12 @@ public class PlayerDataManager : MonoBehaviour
             case RESOURCE_TYPE.WEALTH: AddWealthForPlayer(value, player); break;
         }
     }
+
+	void Update()
+	{
+		for (int i = 0; i < playerData.Count; i++)
+		{
+			CalculateKnowledgeGenerationFor(i);
+		}
+	}
 }

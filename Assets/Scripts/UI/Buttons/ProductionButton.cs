@@ -92,10 +92,6 @@ public class ProductionButton : UnitUIButton {
                 case PRODUCTION_TYPE.BUILDING:
                     tooltip = new StringBuilder("Advance your civilization to " + WorldManager.civAgeNames[data.age] + " to construct " + data.title + ".").ToString();
                     break;
-
-                case PRODUCTION_TYPE.TECHNOLOGY:
-                    tooltip = new StringBuilder("Advance your civilization to " + WorldManager.civAgeNames[data.age] + " to research " + data.title + ".").ToString();
-                    break;
             }
 
             if (_button.interactable)
@@ -117,10 +113,6 @@ public class ProductionButton : UnitUIButton {
 
                 case PRODUCTION_TYPE.BUILDING:
                     tooltip = new StringBuilder("Research " + data.requiredTechnology + " to construct " + data.title + ".").ToString();
-                    break;
-
-                case PRODUCTION_TYPE.TECHNOLOGY:
-                    tooltip = new StringBuilder("Research " + data.requiredTechnology + " to research " + data.title + ".").ToString();
                     break;
             }
 

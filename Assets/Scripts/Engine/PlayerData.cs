@@ -44,7 +44,10 @@ public class PlayerData {
     [HideInInspector]
     public List<Building> friendlyResourceDeliveryPoints = new List<Building>();
 
+	public int numPriests = 0;
+
     // Technology stats
+	public bool writing = false;
     public int extraVillagerHP = 0;
     public float woodCuttingSpeed = 1f;
     public float gatherBerriesSpeed = 1f;

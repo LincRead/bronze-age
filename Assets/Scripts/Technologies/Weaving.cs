@@ -3,19 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Technologies/Weaving")]
-public class Weaving : FinishedProductionAction
+public class Weaving : FinishedResearchAction
 {
     public int extraVillagerHP = 5;
 
-    public override void Action(Building building)
+	public override void ActivateTechnology(int playerID)
     {
-        int id = building.playerID;
-
-        PlayerDataManager.instance.GetPlayerData(id).extraVillagerHP = this.extraVillagerHP;
+		PlayerDataManager.instance.GetPlayerData(playerID).extraVillagerHP = this.extraVillagerHP;
 
         // Update all Villager hitpoints
         List<UnitStateController> friendlyUnits = PlayerManager.instance.friendlyUnits;
-        int addHitpoints = PlayerDataManager.instance.GetPlayerData(id).extraVillagerHP;
+		int addHitpoints = PlayerDataManager.instance.GetPlayerData(playerID).extraVillagerHP;
 
         for (int i = 0; i < friendlyUnits.Count; i++)
         {

@@ -6,7 +6,6 @@ public enum PRODUCTION_TYPE
 {
     DEFAULT,
     BUILDING,
-    TECHNOLOGY,
     UNIT
 }
 

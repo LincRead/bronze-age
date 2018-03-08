@@ -105,9 +105,6 @@ public class ControllerUIManager : MonoBehaviour {
     [Header("Cursor information")]
     public MouseCursorInfo cursorInformation;
 
-	[Header("Parts that can be hid")]
-	public GameObject hideableHUDParts;
-
     public static ControllerUIManager instance
     {
         get
@@ -440,8 +437,7 @@ public class ControllerUIManager : MonoBehaviour {
         {
             if (data != null
                 && i < data.Length
-                && data[i] != null
-                && (data[i].type != PRODUCTION_TYPE.TECHNOLOGY || Technologies.instance.CanProduceTechnology(data[i].title)))
+                && data[i] != null)
             {
                 // Todo make condition for required technology
                 _productionButtonScripts[data[i].position].index = i;

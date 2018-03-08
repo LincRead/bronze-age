@@ -517,16 +517,6 @@ public class Building : BaseController {
             UpdateProductionQueue();
         }
 
-        // If technology, then remove technology production button and tooltip
-        // Need to store that technology is set in queue, so we can add button again if user cancels production 
-        if (productionButtonsData[buttonIndex].type == PRODUCTION_TYPE.TECHNOLOGY)
-        {
-            ControllerUIManager.instance.DeactivateProductionButton(buttonIndex);
-            ControllerUIManager.instance.productionTooltip.gameObject.SetActive(false);
-            Technologies.instance.SetTechnologyInQueue(productionButtonsData[buttonIndex].title);
-            ControllerUIManager.instance.ResetView(this);
-        }
-
         // Make sure we cancel settings rally point if we clicked on a production button
         PlayerManager.instance.CancelRallyPointState();
     }
@@ -596,12 +586,6 @@ public class Building : BaseController {
             productionButtonsData[productionIndex].executeScript.Action(this);
         }
 
-        if(productionButtonsData[productionIndex].type == PRODUCTION_TYPE.TECHNOLOGY)
-        {
-            Technologies.instance.CompleteTechnology(productionButtonsData[productionIndex].title);
-            ControllerUIManager.instance.UpdateProductionButtons();
-        }
-
         else if(productionButtonsData[productionIndex].type == PRODUCTION_TYPE.UNIT)
         {
             Node spawnToNode = Grid.instance.FindClosestWalkableNode(Grid.instance.GetNodeFromWorldPoint(transform.position + new Vector3(0.0f, (Grid.instance.tileHeight / 4))));
@@ -646,11 +630,6 @@ public class Building : BaseController {
             startedProduction = false;
         }
         
-        if (productionButtonsData[productionIndex].type == PRODUCTION_TYPE.TECHNOLOGY)
-        {
-            Technologies.instance.RemoveTechnologyFromQueue(productionButtonsData[productionIndex].title);
-        }
-
         if (productionList.Count > 0)
         {
             Produce(productionList[0]);
@@ -663,12 +642,6 @@ public class Building : BaseController {
 
     public void RemoveProductionAtQueue(int index)
     {
-        // Add technology button back
-        if (productionButtonsData[productionList[index]].type == PRODUCTION_TYPE.TECHNOLOGY)
-        {
-            Technologies.instance.RemoveTechnologyFromQueue(productionButtonsData[productionList[index]].title);
-        }
-
         productionList.RemoveAt(index);
 
         UpdateProductionQueue();
