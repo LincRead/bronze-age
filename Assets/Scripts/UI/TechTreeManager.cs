@@ -23,8 +23,7 @@ public class TechTreeManager : MonoBehaviour {
 
 	private static TechTreeManager techTreeManager;
 
-	[HideInInspector]
-	public float pointsToResearch = 50f; // 50f
+	private float pointsToResearch = 50f;
 
 	bool researching = false;
 
@@ -106,7 +105,11 @@ public class TechTreeManager : MonoBehaviour {
 
 	public void Open()
 	{
-		_canvas.enabled = true;
+		CanvasGroup cg = GetComponent<CanvasGroup>();
+		cg.interactable = true;
+		cg.blocksRaycasts = true;
+		cg.alpha = 1f;
+
 		CameraController.instance.freeze = true;
 		PlayerManager.instance._controllerSelecting.ResetSelection ();
 		ControllerUIManager.instance.productionButtonsCanvas.GetComponent<Canvas> ().enabled = false;
@@ -116,7 +119,11 @@ public class TechTreeManager : MonoBehaviour {
 
 	public void Close()
 	{
-		_canvas.enabled = false;
+		CanvasGroup cg = GetComponent<CanvasGroup> ();
+		cg.interactable = false;
+		cg.blocksRaycasts = false;
+		cg.alpha = 0f;
+
 		ControllerUIManager.instance.productionButtonsCanvas.GetComponent<Canvas> ().enabled = true;
 		CameraController.instance.freeze = false;
 	}
