@@ -98,8 +98,9 @@ public class CivilizationCenter : Building
 
     public override int[] GetUniqueStats()
     {
-        int[] stats = new int[1];
+        int[] stats = new int[2];
         stats[0] = housing;
+		stats[1] = PlayerDataManager.knowledgeGeneratedByCivCenter[PlayerDataManager.instance.GetPlayerData (PlayerManager.myPlayerID).foodSurplusLevel];
         return stats;
     }
 

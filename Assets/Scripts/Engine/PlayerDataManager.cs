@@ -16,6 +16,8 @@ public class PlayerDataManager : MonoBehaviour
 
     public static float foodPerSurplusLevel = 50;
 
+	public static int[] knowledgeGeneratedByCivCenter = new int[] { 1, 3, 4, 5, 6 };
+
     public static PlayerDataManager instance
     {
         get
@@ -132,28 +134,26 @@ public class PlayerDataManager : MonoBehaviour
 	{
 		float knowledgeToGenerate = 0;
 
-		switch (playerData[player].foodSurplusLevel) {
+		switch (playerData[player].foodSurplusLevel) 
+		{
 		case 0:
-			knowledgeToGenerate += 1;
 			knowledgeToGenerate += playerData [player].numPriests * 0.2f;
 			break;
 		case 1:
-			knowledgeToGenerate += 3;
 			knowledgeToGenerate += playerData [player].numPriests * 0.4f;
 			break;
 		case 2:
-			knowledgeToGenerate += 4;
 			knowledgeToGenerate += playerData [player].numPriests * 0.6f;
 			break;
 		case 3:
-			knowledgeToGenerate += 5;
 			knowledgeToGenerate += playerData [player].numPriests * 0.8f;
 			break;
 		case 4:
-			knowledgeToGenerate += 6;
 			knowledgeToGenerate += playerData [player].numPriests * 1f;
 			break;
 		}
+
+		knowledgeToGenerate += knowledgeGeneratedByCivCenter[playerData[player].foodSurplusLevel];
 
 		if (playerData [player].writing) 
 		{
