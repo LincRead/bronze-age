@@ -18,8 +18,5 @@ public class ResearchButtonData : ScriptableObject {
 	public Sprite icon;
 
 	[Header("Required resources")]
-	public int food = 0;
-	public int timber = 0;
-	public int wealth = 0;
-	public int metal = 0;
+	public int knowledge = 0;
 }

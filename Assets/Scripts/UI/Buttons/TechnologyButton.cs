@@ -115,6 +115,8 @@ public class TechnologyButton : UnitUIButton {
 		{
 			TechTreeManager.instance.technologyDescription.text = data.description;
 			TechTreeManager.instance.technologyTitle.text = data.title;
+			TechTreeManager.instance.technologyKnowledgeRequired.text = data.knowledge.ToString();
+			TechTreeManager.instance.knowledgeIcon.enabled = true;
 		}
 	}
 
@@ -126,6 +128,8 @@ public class TechnologyButton : UnitUIButton {
 		{
 			TechTreeManager.instance.technologyDescription.text = "";
 			TechTreeManager.instance.technologyTitle.text = "";
+			TechTreeManager.instance.technologyKnowledgeRequired.text = "";
+			TechTreeManager.instance.knowledgeIcon.enabled = false;
 		}
 	}
 }

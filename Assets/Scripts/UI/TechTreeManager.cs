@@ -11,6 +11,8 @@ public class TechTreeManager : MonoBehaviour {
 	[Header("Description")]
 	public Text technologyTitle;
 	public Text technologyDescription;
+	public Text technologyKnowledgeRequired;
+	public Image knowledgeIcon;
 
 	[Header("Research progress")]
 	public ResearchProgressCanvas researchProgressCanvas;
@@ -55,6 +57,8 @@ public class TechTreeManager : MonoBehaviour {
 	{
 		technologyDescription.text = "";
 		technologyTitle.text = "";
+		technologyKnowledgeRequired.text = "";
+		knowledgeIcon.enabled = false;
 	}
 
 	void Init()
@@ -136,6 +140,7 @@ public class TechTreeManager : MonoBehaviour {
 		researchIconResourceUI.sprite = technologyButtonScript.data.icon;
 		researching = true;
 		PlayerDataManager.instance.GetPlayerData(PlayerManager.myPlayerID).knowledgeGenerated = 0.0f;
+		pointsToResearch = technologyButtonScript.data.knowledge;
 		researchProgressCanvas.UpdateProgress (PlayerDataManager.instance.GetPlayerData(PlayerManager.myPlayerID).knowledgeGenerated / pointsToResearch);
 	}
 
