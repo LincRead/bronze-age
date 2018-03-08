@@ -11,4 +11,5 @@ public class PlayerStartResources : ScriptableObject
     public int timber = 0;
     public int wealth = 0;
     public int metal = 0;
+	public int population = 5;
 }

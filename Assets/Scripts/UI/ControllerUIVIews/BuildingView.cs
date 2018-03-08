@@ -120,7 +120,14 @@ public class BuildingView : ControllerUIView
         else if (!_buildingController.HaveRequiredResourcesToProduce())
         {
             // Not enought resources == -1
-            ui.productionProgressCanvas.UpdateProgress(-1);
+			if (_buildingController.HaveEnoughtHousingAvailable ()) {
+				ui.productionProgressCanvas.UpdateProgress (-1);
+			} 
+
+			else 
+			{
+				ui.productionProgressCanvas.UpdateProgress (-2);
+			}
         }
 
         else

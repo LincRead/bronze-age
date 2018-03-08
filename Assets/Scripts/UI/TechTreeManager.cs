@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class TechTreeManager : MonoBehaviour {
 
-	private Canvas _canvas;
-
 	[Header("Technologies")]
 	public ResearchButtonData[] data;
 
@@ -55,8 +53,6 @@ public class TechTreeManager : MonoBehaviour {
 
 	void Start () 
 	{
-		_canvas = GetComponent<Canvas> ();
-	
 		technologyDescription.text = "";
 		technologyTitle.text = "";
 	}

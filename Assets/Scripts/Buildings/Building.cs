@@ -543,13 +543,29 @@ public class Building : BaseController {
         ProductionButtonData data = productionButtonsData[productionIndex];
         PlayerData playerData = PlayerDataManager.instance.GetPlayerData(PlayerManager.myPlayerID);
 
+		Debug.Log (data.housing + " " + (playerData.housing - playerData.population));
+
         if (data.food > 0 && playerData.foodInStock < data.food) return false;
         if (data.timber > 0 && playerData.timber < data.timber) return false;
         if (data.metal > 0 && playerData.metal < data.metal) return false;
         if (data.wealth > 0 && playerData.wealth < data.wealth) return false;
+		if (!HaveEnoughtHousingAvailable()) return false;
 
         return true;
     }
+
+	public bool HaveEnoughtHousingAvailable()
+	{
+		ProductionButtonData data = productionButtonsData[productionIndex];
+		PlayerData playerData = PlayerDataManager.instance.GetPlayerData(PlayerManager.myPlayerID);
+
+		if (data.housing > playerData.housing - playerData.population) 
+		{
+			return false;
+		}
+
+		return true;
+	}
 
     void UseResourcesForConstruction(int factor)
     {
@@ -570,7 +586,8 @@ public class Building : BaseController {
         if (data.food > 0) PlayerDataManager.instance.AddFoodStockForPlayer(data.food * factor, playerID);
         if (data.timber > 0) PlayerDataManager.instance.AddTimberForPlayer(data.timber * factor, playerID);
         if (data.wealth > 0) PlayerDataManager.instance.AddWealthForPlayer(data.wealth * factor, playerID);
-        if (data.metal > 0) PlayerDataManager.instance.AddMetalForPlayer(data.metal * factor, playerID);    
+        if (data.metal > 0) PlayerDataManager.instance.AddMetalForPlayer(data.metal * factor, playerID);
+		if (data.housing > 0) PlayerDataManager.instance.AddPopulationForPlayer(data.housing * factor * -1, playerID);
     }
 
     public void FinishedProduction()

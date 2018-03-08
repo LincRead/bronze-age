@@ -205,7 +205,6 @@ public class UnitStateController : BaseController
 
         if(playerID > -1)
         {
-            PlayerDataManager.instance.AddPopulationForPlayer(1, playerID);
             PlayerDataManager.instance.AddFoodIntakeForPlayer(-_unitStats.foodConsuming, playerID);
         }
 

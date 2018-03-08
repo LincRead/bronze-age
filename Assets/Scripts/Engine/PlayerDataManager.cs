@@ -60,6 +60,7 @@ public class PlayerDataManager : MonoBehaviour
             newPlayerData.timber = playerStartingResources.timber;
             newPlayerData.wealth = playerStartingResources.wealth;
             newPlayerData.metal = playerStartingResources.metal;
+			newPlayerData.population = playerStartingResources.population;
 
             /* 
              * Make sure this is done straight away so UI shows correct values
