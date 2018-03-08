@@ -72,7 +72,7 @@ public class ControllerUIManager : MonoBehaviour {
     [HideInInspector]
     public ResourceTooltip resourceTooltip;
 
-    CONTROLLER_UI_VIEW currentViewType = CONTROLLER_UI_VIEW.NONE;
+    public CONTROLLER_UI_VIEW currentViewType = CONTROLLER_UI_VIEW.NONE;
     CONTROLLER_UI_VIEW lastViewType = CONTROLLER_UI_VIEW.NONE;
 
     ControllerUIView currentView;

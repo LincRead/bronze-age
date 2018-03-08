@@ -21,8 +21,6 @@ public class TribeController : UnitStateController {
             {
                 Building camp = PlayerManager.instance.civilizationCenter;
 
-                MoveTo(camp);
-
                 // Select Camp instead of Tribe
                 Deselect();
                 PlayerManager.instance._controllerSelecting.SetControllerAsSelected(camp);
@@ -45,6 +43,8 @@ public class TribeController : UnitStateController {
 
                 // Make sure we don't keep on showing build cursor
                 EventManager.TriggerEvent("SetDefaultCursor");
+
+				MoveTo(camp);
 
                 movingTowarsCamp = true;
 

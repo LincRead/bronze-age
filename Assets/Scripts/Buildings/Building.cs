@@ -456,6 +456,11 @@ public class Building : BaseController {
 
     public virtual void FinishConstruction()
     {
+		if (constructed) 
+		{
+			return;
+		}
+			
         constructed = true;
 
         SetConstructedSprite();
@@ -469,7 +474,7 @@ public class Building : BaseController {
         {
             PlayerDataManager.instance.GetPlayerData(playerID).friendlyResourceDeliveryPoints.Add(this);
         }
-
+			
         if (selected)
         {
             ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.BUILDING_INFO, this);
@@ -542,8 +547,6 @@ public class Building : BaseController {
     {
         ProductionButtonData data = productionButtonsData[productionIndex];
         PlayerData playerData = PlayerDataManager.instance.GetPlayerData(PlayerManager.myPlayerID);
-
-		Debug.Log (data.housing + " " + (playerData.housing - playerData.population));
 
         if (data.food > 0 && playerData.foodInStock < data.food) return false;
         if (data.timber > 0 && playerData.timber < data.timber) return false;
