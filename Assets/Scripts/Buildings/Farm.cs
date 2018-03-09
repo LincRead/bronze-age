@@ -47,7 +47,7 @@ public class Farm : Building
 
     void CalculateHarvestDifficulty()
     {
-        harvestDifficulty = 5.25f - (soilQuality * 0.25f);
+        harvestDifficulty = 6.25f - (soilQuality * 0.25f);
     }
 
     protected override void Place()
