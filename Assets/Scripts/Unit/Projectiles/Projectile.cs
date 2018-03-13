@@ -39,7 +39,8 @@ public class Projectile : MonoBehaviour {
 
     bool IntersectsTarget()
     {
-        if (Vector2.Distance(_transform.position, targetNode.worldPosition) < 0.1f)
+		if(Grid.instance.GetNodeFromWorldPoint(_transform.position) == targetNode)
+        //if (Vector2.Distance(_transform.position, targetNode.worldPosition) < 0.1f)
         {
             return true;
         }

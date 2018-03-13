@@ -1,52 +1,49 @@
 fileFormatVersion: 2
-guid: ba24593a1f1e5a645a720966e3210547
-timeCreated: 1508296510
+guid: 640dd1911efdbf04daaaee29543adbfa
+timeCreated: 1520942576
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Unit Buttons_0
-    21300002: Unit Buttons_1
-    21300004: Unit Buttons_2
-    21300006: Unit Buttons_3
-    21300008: Unit Buttons_4
-    21300010: Unit Buttons_5
-    21300012: Unit Buttons_6
-    21300014: Unit Buttons_7
-    21300016: Unit Buttons_8
-    21300018: Unit Buttons_9
-    21300020: Unit Buttons_10
-    21300022: Unit Buttons_11
-    21300024: Unit Buttons_12
-    21300026: Unit Buttons_13
-    21300028: Unit Buttons_14
-    21300030: Unit Buttons_15
-    21300032: Unit Buttons_16
-    21300034: Unit Buttons_17
-    21300036: Unit Buttons_18
-    21300038: Unit Buttons_19
-    21300040: Unit Buttons_20
-    21300042: Unit Buttons_21
-    21300044: Unit Buttons_22
-    21300046: Unit Buttons_23
-    21300048: Unit Buttons_24
-    21300050: Unit Buttons_25
-    21300052: Unit Buttons_26
-    21300054: Unit Buttons_27
-    21300056: Unit Buttons_28
-    21300058: Unit Buttons_29
-    21300060: Unit Buttons_30
-    21300062: Unit Buttons_31
-    21300064: Unit Buttons_32
-    21300066: Unit Buttons_33
-    21300068: Unit Buttons_34
-    21300070: Unit Buttons_35
-    21300072: Unit Buttons_36
-    21300074: Unit Buttons_37
+    21300000: Slinger_0
+    21300002: Slinger_1
+    21300004: Slinger_2
+    21300006: Slinger_3
+    21300008: Slinger_4
+    21300010: Slinger_5
+    21300012: Slinger_6
+    21300014: Slinger_7
+    21300016: Slinger_8
+    21300018: Slinger_9
+    21300020: Slinger_10
+    21300022: Slinger_11
+    21300024: Slinger_12
+    21300026: Slinger_13
+    21300028: Slinger_14
+    21300030: Slinger_15
+    21300032: Slinger_16
+    21300034: Slinger_17
+    21300036: Slinger_18
+    21300038: Slinger_19
+    21300040: Slinger_20
+    21300042: Slinger_21
+    21300044: Slinger_22
+    21300046: Slinger_23
+    21300048: Slinger_24
+    21300050: Slinger_25
+    21300052: Slinger_26
+    21300054: Slinger_27
+    21300056: Slinger_28
+    21300058: Slinger_29
+    21300060: Slinger_30
+    21300062: Slinger_31
+    21300064: Slinger_32
+    21300066: Slinger_33
+    21300068: Slinger_34
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 1
+    enableMipMap: 0
     sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
@@ -65,12 +62,12 @@ TextureImporter:
   generateCubemap: 6
   cubemapConvolution: 0
   seamlessCubemap: 0
-  textureFormat: -1
+  textureFormat: 1
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: 16
+    aniso: -1
     mipBias: -1
     wrapU: 1
     wrapV: 1
@@ -107,12 +104,12 @@ TextureImporter:
   - buildTarget: Standalone
     maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: 4
+    textureFormat: -1
     textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
-    overridden: 1
+    overridden: 0
     androidETC2FallbackOverride: 0
   - buildTarget: Windows Store Apps
     maxTextureSize: 2048
@@ -128,533 +125,491 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Unit Buttons_0
+      name: Slinger_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        y: 72
+        width: 30
+        height: 24
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Unit Buttons_1
+      name: Slinger_1
       rect:
         serializedVersion: 2
-        x: 32
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 30
+        y: 72
+        width: 30
+        height: 24
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Unit Buttons_2
+      name: Slinger_2
       rect:
         serializedVersion: 2
-        x: 64
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 60
+        y: 72
+        width: 30
+        height: 24
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Unit Buttons_3
+      name: Slinger_3
       rect:
         serializedVersion: 2
-        x: 96
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 90
+        y: 72
+        width: 30
+        height: 24
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Unit Buttons_4
+      name: Slinger_4
       rect:
         serializedVersion: 2
-        x: 128
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 120
+        y: 72
+        width: 30
+        height: 24
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Unit Buttons_5
+      name: Slinger_5
       rect:
         serializedVersion: 2
-        x: 160
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 150
+        y: 72
+        width: 30
+        height: 24
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Unit Buttons_6
+      name: Slinger_6
       rect:
         serializedVersion: 2
-        x: 192
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 180
+        y: 72
+        width: 30
+        height: 24
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Unit Buttons_7
+      name: Slinger_7
       rect:
         serializedVersion: 2
-        x: 224
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 210
+        y: 72
+        width: 30
+        height: 24
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Unit Buttons_8
+      name: Slinger_8
       rect:
         serializedVersion: 2
-        x: 256
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 240
+        y: 72
+        width: 30
+        height: 24
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Unit Buttons_9
+      name: Slinger_9
       rect:
         serializedVersion: 2
-        x: 288
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 270
+        y: 72
+        width: 30
+        height: 24
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Unit Buttons_10
+      name: Slinger_10
       rect:
         serializedVersion: 2
-        x: 320
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 0
+        y: 48
+        width: 30
+        height: 24
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Unit Buttons_11
+      name: Slinger_11
       rect:
         serializedVersion: 2
-        x: 352
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 30
+        y: 48
+        width: 30
+        height: 24
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Unit Buttons_12
+      name: Slinger_12
       rect:
         serializedVersion: 2
-        x: 384
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 60
+        y: 48
+        width: 30
+        height: 24
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Unit Buttons_13
+      name: Slinger_13
       rect:
         serializedVersion: 2
-        x: 416
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 90
+        y: 48
+        width: 30
+        height: 24
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Unit Buttons_14
+      name: Slinger_14
       rect:
         serializedVersion: 2
-        x: 448
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 120
+        y: 48
+        width: 30
+        height: 24
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Unit Buttons_15
+      name: Slinger_15
       rect:
         serializedVersion: 2
-        x: 480
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 150
+        y: 48
+        width: 30
+        height: 24
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Unit Buttons_16
+      name: Slinger_16
       rect:
         serializedVersion: 2
-        x: 512
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 180
+        y: 48
+        width: 30
+        height: 24
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Unit Buttons_17
+      name: Slinger_17
       rect:
         serializedVersion: 2
-        x: 544
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 210
+        y: 48
+        width: 30
+        height: 24
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Unit Buttons_18
+      name: Slinger_18
       rect:
         serializedVersion: 2
-        x: 576
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 240
+        y: 48
+        width: 30
+        height: 24
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Unit Buttons_19
+      name: Slinger_19
       rect:
         serializedVersion: 2
-        x: 608
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 270
+        y: 48
+        width: 30
+        height: 24
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Unit Buttons_20
+      name: Slinger_20
       rect:
         serializedVersion: 2
-        x: 640
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 0
+        y: 24
+        width: 30
+        height: 24
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Unit Buttons_21
+      name: Slinger_21
       rect:
         serializedVersion: 2
-        x: 672
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 30
+        y: 24
+        width: 30
+        height: 24
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Unit Buttons_22
+      name: Slinger_22
       rect:
         serializedVersion: 2
-        x: 704
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 60
+        y: 24
+        width: 30
+        height: 24
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Unit Buttons_23
+      name: Slinger_23
       rect:
         serializedVersion: 2
-        x: 736
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 90
+        y: 24
+        width: 30
+        height: 24
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Unit Buttons_24
+      name: Slinger_24
       rect:
         serializedVersion: 2
-        x: 768
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 120
+        y: 24
+        width: 30
+        height: 24
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Unit Buttons_25
+      name: Slinger_25
       rect:
         serializedVersion: 2
-        x: 800
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 150
+        y: 24
+        width: 30
+        height: 24
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Unit Buttons_26
+      name: Slinger_26
       rect:
         serializedVersion: 2
-        x: 832
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 180
+        y: 24
+        width: 30
+        height: 24
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Unit Buttons_27
+      name: Slinger_27
       rect:
         serializedVersion: 2
-        x: 864
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 210
+        y: 24
+        width: 30
+        height: 24
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Unit Buttons_28
+      name: Slinger_28
       rect:
         serializedVersion: 2
-        x: 896
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 240
+        y: 24
+        width: 30
+        height: 24
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Unit Buttons_29
+      name: Slinger_29
       rect:
         serializedVersion: 2
-        x: 928
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 270
+        y: 24
+        width: 30
+        height: 24
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Unit Buttons_30
-      rect:
-        serializedVersion: 2
-        x: 960
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Unit Buttons_31
-      rect:
-        serializedVersion: 2
-        x: 992
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Unit Buttons_32
+      name: Slinger_30
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 30
+        height: 24
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Unit Buttons_33
+      name: Slinger_31
       rect:
         serializedVersion: 2
-        x: 32
+        x: 30
         y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 30
+        height: 24
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Unit Buttons_34
+      name: Slinger_32
       rect:
         serializedVersion: 2
-        x: 64
+        x: 60
         y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 30
+        height: 24
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Unit Buttons_35
+      name: Slinger_33
       rect:
         serializedVersion: 2
-        x: 96
+        x: 90
         y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 30
+        height: 24
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Unit Buttons_36
+      name: Slinger_34
       rect:
         serializedVersion: 2
-        x: 128
+        x: 120
         y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Unit Buttons_37
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 30
+        height: 24
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
