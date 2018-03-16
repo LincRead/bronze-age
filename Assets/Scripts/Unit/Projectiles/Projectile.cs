@@ -6,7 +6,8 @@ public class Projectile : MonoBehaviour {
 
     Transform _transform;
     Vector2 velocity = Vector2.zero;
-    Node targetNode;
+	Node currentNode;
+	Node targetNode;
     BaseController parentController;
     BaseController targetController;
     int damage = 0;
@@ -26,6 +27,8 @@ public class Projectile : MonoBehaviour {
 	
 	void Update ()
     {
+		currentNode = Grid.instance.GetNodeFromWorldPoint (_transform.position);
+
         if(IntersectsTarget())
         {
             HitControllerOnTargetNode();
@@ -39,7 +42,7 @@ public class Projectile : MonoBehaviour {
 
     bool IntersectsTarget()
     {
-		if(Grid.instance.GetNodeFromWorldPoint(_transform.position) == targetNode)
+		if(currentNode == targetNode || currentNode == targetController.GetMiddleNode())
         //if (Vector2.Distance(_transform.position, targetNode.worldPosition) < 0.1f)
         {
             return true;
@@ -52,15 +55,15 @@ public class Projectile : MonoBehaviour {
     {
         if (targetController != null && !targetController.dead)
         {
-            if (targetNode.unitControllerStandingHere == targetController)
+			if (currentNode.unitControllerStandingHere == targetController)
             {
                 targetController.Hit(damage, parentController, true);
             }
 
-            else if (targetNode.parentTile.controllerOccupying == targetController)
+			/*else if (currentNode.parentTile.controllerOccupying == targetController)
             {
                 targetController.Hit(damage, parentController, true);
-            }
+            }*/
         }
 
         Destroy(gameObject);   
