@@ -570,6 +570,11 @@ public class UnitStateController : BaseController
 
         else
         {
+			if (selected) 
+			{
+				PlayerManager.instance._controllerSelecting.DeselectEnemyUnit();
+			}
+
             if (_spriteRenderer.enabled)
             {
                 _spriteRenderer.enabled = false;

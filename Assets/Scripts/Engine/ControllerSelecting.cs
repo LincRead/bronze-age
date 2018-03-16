@@ -381,6 +381,15 @@ public class ControllerSelecting : MonoBehaviour {
         }
     }
 
+	public void DeselectEnemyUnit()
+	{
+		if (selectedEnemy != null)
+		{
+			selectedEnemy.Deselect();
+			selectedEnemy = null;
+		}
+	}
+
     public void DeselectAllFriendlyUnits()
     {
         for(int i = 0; i < selectedUnits.Count; i++)

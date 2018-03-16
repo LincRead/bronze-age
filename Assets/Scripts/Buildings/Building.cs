@@ -675,7 +675,15 @@ public class Building : BaseController {
 
 	public override void Hit(int damageValue, BaseController hitByController, bool ranged)
     {
-        hitpointsLeft -= damageValue;
+		int damage = damageValue;
+
+		// Ranged attack only deals 1 damage against buildings (except with fire arrows)
+		if (ranged) 
+		{
+			damage = 1;
+		}
+
+		hitpointsLeft -= damage;
 
         if (hitpointsLeft <= 0)
         {
