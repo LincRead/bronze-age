@@ -54,12 +54,12 @@ public class Projectile : MonoBehaviour {
         {
             if (targetNode.unitControllerStandingHere == targetController)
             {
-                targetController.Hit(damage, parentController);
+                targetController.Hit(damage, parentController, true);
             }
 
             else if (targetNode.parentTile.controllerOccupying == targetController)
             {
-                targetController.Hit(damage, parentController);
+                targetController.Hit(damage, parentController, true);
             }
         }
 

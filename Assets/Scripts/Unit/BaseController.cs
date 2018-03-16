@@ -132,7 +132,7 @@ public class BaseController : MonoBehaviour {
         _selectedIndicatorRenderer.enabled = false;
     }
 
-    public virtual void Hit(int damageValue, BaseController hitByController)
+	public virtual void Hit(int damageValue, BaseController hitByController, bool ranged)
     {
 
     }

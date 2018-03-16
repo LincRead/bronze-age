@@ -673,7 +673,7 @@ public class Building : BaseController {
         ControllerUIManager.instance.productionQueueCanvas.UpdateData(this);
     }
 
-    public override void Hit(int damageValue, BaseController hitByController)
+	public override void Hit(int damageValue, BaseController hitByController, bool ranged)
     {
         hitpointsLeft -= damageValue;
 

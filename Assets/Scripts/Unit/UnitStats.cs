@@ -25,6 +25,10 @@ public class UnitStats : DefaultStats
     public int range = 0;
     public GameObject projectile;
 
+	[Header("Defence")]
+	public int rangedArmor = 0;
+	public int meleeArmor = 0;
+
     [Header("Vilager")]
     public bool isVillager = false;
 

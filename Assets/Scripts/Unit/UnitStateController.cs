@@ -432,7 +432,7 @@ public class UnitStateController : BaseController
             return;
         }
          
-        targetController.Hit(_unitStats.damage, this);
+        targetController.Hit(_unitStats.damage, this, false);
     }
 
     public void FireProjectile()
@@ -455,9 +455,27 @@ public class UnitStateController : BaseController
 
     }
 
-    public override void Hit(int damageValue, BaseController hitByController)
+	public override void Hit(int damageValue, BaseController hitByController, bool ranged)
     {
-        hitpointsLeft -= damageValue;
+		int damage = damageValue;
+
+		if (ranged) 
+		{
+			damage -= _unitStats.rangedArmor;
+		} 
+
+		else 
+		{
+			damage -= _unitStats.meleeArmor;
+		}
+
+		// Always deal at least 1 damage
+		if (damage < 1) 
+		{
+			damage = 1;
+		}
+
+		hitpointsLeft -= damage;
 
         if(hitpointsLeft <= 0)
         {
@@ -777,7 +795,16 @@ public class UnitStateController : BaseController
     {
         int[] stats =  new int[3];
 
-        stats[0] = _unitStats.damage;
+		if (_unitStats.damage > 0) 
+		{
+			stats [0] = _unitStats.damage;
+		}
+
+		else 
+		{
+			stats [0] = -1;
+		}
+        
 
         if (_unitStats.isRanged)
         {
@@ -806,6 +833,11 @@ public class UnitStateController : BaseController
         {
             stats[2] = -1;
         }
+
+		if (_unitStats.rangedArmor > 0) 
+		{
+			stats[2] = _unitStats.rangedArmor;
+		}
 
         return stats;
     }
