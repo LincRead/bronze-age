@@ -56,6 +56,9 @@ public class BaseController : MonoBehaviour {
     [HideInInspector]
     public Sprite[] statSprites = new Sprite[4];
 
+	[HideInInspector]
+	public string[] statsDescriptions = new string[4];
+
     protected GameObject _selectionIndicator;
     protected SpriteRenderer _selectedIndicatorRenderer;
 
@@ -73,6 +76,7 @@ public class BaseController : MonoBehaviour {
         size = _basicStats.size;
         iconSprite = _basicStats.iconSprite;
         statSprites = _basicStats.statSprites;
+		statsDescriptions = _basicStats.statDescriptions;
         controllerType = _basicStats.controllerType;
         visionRange = _basicStats.visionRange;
 

@@ -22,6 +22,7 @@ public class DefaultStats : ScriptableObject
     [Header("UI")]
     public Sprite iconSprite;
     public Sprite[] statSprites = new Sprite[4];
+	public string[] statDescriptions = new string[4];
 
     [Header("Vision")]
     public int visionRange = 4;

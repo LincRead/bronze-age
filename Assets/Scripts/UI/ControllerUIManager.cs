@@ -13,7 +13,8 @@ public class ControllerUIManager : MonoBehaviour {
     public Text title;
     public Text description;
     public Image icon;
-    public Text tooltip;
+    public Text actionTooltip;
+	public Text baseControllerTooltip;
     public GameObject infoBackground;
 
     [Header("Buttons")]
@@ -179,7 +180,8 @@ public class ControllerUIManager : MonoBehaviour {
         healthBar = GetComponentInChildren<HealthBarUI>();
 
         ChangeView(CONTROLLER_UI_VIEW.NONE, null);
-        HideTooltip();
+        HideActionTooltip();
+		HideBaseControllerTooltip();
         healthBar.HideHitpoints();
         HideStats();
 
@@ -281,7 +283,7 @@ public class ControllerUIManager : MonoBehaviour {
                 break;
         }
 
-        HideTooltip();
+        HideActionTooltip();
 
         // Disabled as default
         rallyPointButton.gameObject.SetActive(false);
@@ -338,7 +340,7 @@ public class ControllerUIManager : MonoBehaviour {
         icon.sprite = newSprite;
     }
 
-    public void ShowStats(Sprite[] icons, int[] stats)
+	public void ShowStats(Sprite[] icons, int[] stats, string[] descriptions)
     {
         statsInfoPrefab.gameObject.SetActive(true);
 
@@ -348,6 +350,7 @@ public class ControllerUIManager : MonoBehaviour {
             {
                 statIcons[i].enabled = true;
                 statIcons[i].sprite = icons[i];
+				statIcons[i].GetComponent<BaseControllerTooltipBox>().tooltip = descriptions[i].ToString();
 
                 statTexts[i].enabled = true;
                 statTexts[i].text = stats[i].ToString();
@@ -405,17 +408,29 @@ public class ControllerUIManager : MonoBehaviour {
         resourceTooltip.gameObject.SetActive(false);
     }
 
-    public void ShowTooltipDefault(string tip)
+    public void ShowActionTooltip(string tip)
     {
-        tooltip.enabled = true;
-        tooltip.text = tip;
-        tooltip.color = Color.white;
+        actionTooltip.enabled = true;
+        actionTooltip.text = tip;
+        actionTooltip.color = Color.white;
     }
 
-    public void HideTooltip()
+    public void HideActionTooltip()
     {
-        tooltip.enabled = false;
+        actionTooltip.enabled = false;
     }
+
+	public void ShowBaseControllerTooltip(string tip)
+	{
+		baseControllerTooltip.enabled = true;
+		baseControllerTooltip.text = tip;
+		baseControllerTooltip.color = Color.white;
+	}
+
+	public void HideBaseControllerTooltip()
+	{
+		baseControllerTooltip.enabled = false;
+	}
 
     public void HideSelectedUnitsButtons()
     {

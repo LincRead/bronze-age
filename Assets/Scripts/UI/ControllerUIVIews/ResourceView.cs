@@ -13,7 +13,7 @@ public class ResourceView : ControllerUIView
 
         resourceController = controller.GetComponent<Resource>();
 
-        ui.ShowStats(resourceController.statSprites, resourceController.GetUniqueStats());
+		ui.ShowStats(resourceController.statSprites, resourceController.GetUniqueStats(), resourceController.statsDescriptions);
     }
 
     public override void Update()

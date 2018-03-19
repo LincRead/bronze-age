@@ -14,7 +14,7 @@ public class UnitView : ControllerUIView {
         {
             unitController = controller.GetComponent<UnitStateController>();
             ui.healthBar.ShowHitpoints(unitController.hitpointsLeft, unitController._unitStats.maxHitpoints);
-            ui.ShowStats(_controller.statSprites, _controller.GetUniqueStats());
+			ui.ShowStats(_controller.statSprites, _controller.GetUniqueStats(), _controller.statsDescriptions);
 
             if (_controller.playerID == PlayerManager.myPlayerID
                 && unitController._unitStats.canAttack)
@@ -30,7 +30,7 @@ public class UnitView : ControllerUIView {
 
         if(unitController._unitStats.isVillager)
         {
-            ui.ShowStats(_controller.statSprites, _controller.GetUniqueStats());
+			ui.ShowStats(_controller.statSprites, _controller.GetUniqueStats(), _controller.statsDescriptions);
         }
     }
 

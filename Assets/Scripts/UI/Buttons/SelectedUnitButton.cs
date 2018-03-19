@@ -63,7 +63,7 @@ public class SelectedUnitButton : UnitUIButton
     // ...or it wouldn't work first time the button got activated
     public void OnPointerOver(PointerEventData eventData)
     {
-        ControllerUIManager.instance.ShowTooltipDefault(new StringBuilder(title + _controller.title).ToString());
+        ControllerUIManager.instance.ShowActionTooltip(new StringBuilder(title + _controller.title).ToString());
     }
 
     public void Clear()

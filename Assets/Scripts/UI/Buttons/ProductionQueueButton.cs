@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class ProductionQueueButton : UnitUIButton
 {
@@ -31,22 +32,21 @@ public class ProductionQueueButton : UnitUIButton
 
         number.enabled = false;
 
-        if (hovered)
-        {
-            ShowTooltip();
-        }
+		if (hovered) 
+		{
+			ShowTooltip ();
+		}
     }
 
     public void DeactivateIcon()
     {
         _button.interactable = false;
-
         _icon.enabled = false;
         number.enabled = true;
 
-        if (hovered)
-        {
-            HideTooltip();
-        }
+		if (hovered) 
+		{
+			HideTooltip();
+		}
     }
 }

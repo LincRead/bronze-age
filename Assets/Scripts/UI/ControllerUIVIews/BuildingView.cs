@@ -77,7 +77,7 @@ public class BuildingView : ControllerUIView
     {
         if (PlayerManager.myPlayerID == _controller.playerID)
         {
-            ui.ShowStats(_buildingController.statSprites, _buildingController.GetUniqueStats());
+			ui.ShowStats(_buildingController.statSprites, _buildingController.GetUniqueStats(), _buildingController.statsDescriptions);
         }
 
         ui.productionProgressCanvas.gameObject.SetActive(false);

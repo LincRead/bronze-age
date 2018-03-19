@@ -13,6 +13,10 @@ public class UnitUIButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     protected string tooltip;
     protected bool hovered = false;
 
+	[Header("Tooltip settings")]
+	public bool actionTooltip = false;
+	public bool baseControllerTooltip = false;
+
     protected virtual void Awake()
     {
         // Todo make tooltip system
@@ -55,11 +59,33 @@ public class UnitUIButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     protected virtual void ShowTooltip()
     {
-        ControllerUIManager.instance.ShowTooltipDefault(tooltip);
+		if (!_button.interactable) 
+		{
+			return;
+		}
+
+		if (actionTooltip) 
+		{
+			ControllerUIManager.instance.ShowActionTooltip(tooltip);
+		} 
+
+		else if(baseControllerTooltip)
+		{
+			ControllerUIManager.instance.ShowBaseControllerTooltip(tooltip);
+		}
+        
     }
 
     protected virtual void HideTooltip()
     {
-        ControllerUIManager.instance.HideTooltip();
+		if (actionTooltip) 
+		{
+			ControllerUIManager.instance.HideActionTooltip();
+		} 
+
+		else if(baseControllerTooltip)
+		{
+			ControllerUIManager.instance.HideBaseControllerTooltip();
+		}
     }
 }
