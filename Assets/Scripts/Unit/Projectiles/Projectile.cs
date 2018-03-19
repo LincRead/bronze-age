@@ -55,15 +55,17 @@ public class Projectile : MonoBehaviour {
     {
         if (targetController != null && !targetController.dead)
         {
+			// Unit
 			if (currentNode.unitControllerStandingHere == targetController)
             {
                 targetController.Hit(damage, parentController, true);
             }
 
-			/*else if (currentNode.parentTile.controllerOccupying == targetController)
+			// Building
+			else if (currentNode.parentTile.controllerOccupying == targetController)
             {
                 targetController.Hit(damage, parentController, true);
-            }*/
+            }
         }
 
         Destroy(gameObject);   

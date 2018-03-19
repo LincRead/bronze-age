@@ -12,6 +12,7 @@ public class IdleVillagerButton : MonoBehaviour {
     int idleVillagerIndex = 0;
 
     public Text _number;
+	public Image _idleVillagerImage;
 
     void Start()
     {
@@ -27,6 +28,7 @@ public class IdleVillagerButton : MonoBehaviour {
             _button.interactable = true;
 
             _number.enabled = true;
+			_idleVillagerImage.enabled = true;
             _number.text = PlayerManager.instance.idleVillagers.Count.ToString();
 
             if(Input.GetKeyDown(KeyCode.I))
@@ -40,6 +42,7 @@ public class IdleVillagerButton : MonoBehaviour {
             _image.enabled = false;
             _button.interactable = false;
             _number.enabled = false;
+			_idleVillagerImage.enabled = false;
         }
 	}
 
