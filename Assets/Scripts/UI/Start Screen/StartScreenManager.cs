@@ -5,42 +5,100 @@ using UnityEngine.SceneManagement;
 
 public class StartScreenManager : MonoBehaviour {
 
-    public GameObject[] screens;
+    public GameObject mainMenuElements;
+
+    [Header("How to play")]
+    public GameObject[] howToPlayPages;
+    public GameObject previousButton;
+    public GameObject nextButton;
+
     GameObject lastScreen;
     GameObject currentScreen;
-    int index = 0;
+    int currentHowToPlayPage = 0;
 
     private void Start()
     {
-        for(int i = 0; i < screens.Length; i++)
+        for(int i = 0; i < howToPlayPages.Length; i++)
         {
-            screens[i].gameObject.SetActive(false);
+            howToPlayPages[i].gameObject.SetActive(false);
         }
 
-        lastScreen = screens[0];
-        currentScreen = screens[0];
-        currentScreen.gameObject.SetActive(true);
+        lastScreen = howToPlayPages[0];
+        currentScreen = howToPlayPages[0];
+
+        ShowMainButtons();
     }
 
-    public void Action()
+    public void OpenHowToPlayPages()
     {
-        index++;
+        mainMenuElements.SetActive(false);
 
-        if(index >= screens.Length)
-        {
-            StartGame();
-            return;
-        }
+        // Reset how to play
+        nextButton.SetActive(true);
+        previousButton.SetActive(true);
 
-        lastScreen.gameObject.SetActive(false);
-        currentScreen = screens[index];
+        ShowCurrentHowToPlayPage();
+    }
 
+    void ShowCurrentHowToPlayPage()
+    {
+        currentScreen = howToPlayPages[currentHowToPlayPage];
         currentScreen.gameObject.SetActive(true);
         lastScreen = currentScreen;
     }
 
-    void StartGame()
+    public void OpenNextHowToPlayPage()
+    {
+        currentHowToPlayPage++;
+
+        lastScreen.gameObject.SetActive(false);
+
+        if (currentHowToPlayPage >= howToPlayPages.Length)
+        {
+            ShowMainButtons();
+            return;
+        }
+
+        ShowCurrentHowToPlayPage();
+    }
+
+    public void OpenPreviousHowToPlayPage()
+    {
+        currentHowToPlayPage--;
+
+        lastScreen.gameObject.SetActive(false);
+
+        if (currentHowToPlayPage < 0)
+        {
+            ShowMainButtons();
+            return;
+        }
+
+        ShowCurrentHowToPlayPage();
+    }
+
+    void ShowMainButtons()
+    {
+        mainMenuElements.SetActive(true);
+
+        // Reset how to play
+        nextButton.SetActive(false);
+        previousButton.SetActive(false);
+        currentHowToPlayPage = 0;
+    }
+
+    public void StartGame()
     {
         SceneManager.LoadScene("game");
+    }
+
+    public void HideMenu()
+    {
+        gameObject.SetActive(false);
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
     }
 }
