@@ -94,6 +94,9 @@ public class UnitStateController : BaseController
     public int hitpointsLeft = 0;
 
     [HideInInspector]
+    private float actualMoveSpeed = .2f;
+
+    [HideInInspector]
     public List<BaseController> ignoreControllers = new List<BaseController>();
 
     [HideInInspector]
@@ -188,6 +191,9 @@ public class UnitStateController : BaseController
             rangedMoveToNearbyEnemyState = ScriptableObject.CreateInstance<RangedUnitMoveToNearbyEnemy>();
             rangedAttackState = ScriptableObject.CreateInstance<RangedUnitAttack>();
         }
+
+        // Set actual move speed
+        actualMoveSpeed = .2f + (_unitStats.moveSpeed * 0.02f);
 
         // Setup initial state
         currentState = idleState;
@@ -393,8 +399,8 @@ public class UnitStateController : BaseController
 
     public virtual void ExecuteMovement(Vector2 velocity)
     {
-        float moveX = velocity.x * _unitStats.moveSpeed * Time.deltaTime;
-        float moveY = velocity.y * _unitStats.moveSpeed * Time.deltaTime;
+        float moveX = velocity.x * actualMoveSpeed * Time.deltaTime;
+        float moveY = velocity.y * actualMoveSpeed * Time.deltaTime;
 
         _transform.position = new Vector3(_transform.position.x + moveX, _transform.position.y + moveY, zIndex);
     }
@@ -461,7 +467,7 @@ public class UnitStateController : BaseController
 
 		if (ranged) 
 		{
-			damage -= _unitStats.rangedArmor;
+			damage -= _unitStats.pierceArmor;
 		} 
 
 		else 
@@ -798,51 +804,49 @@ public class UnitStateController : BaseController
 
     public override int[] GetUniqueStats()
     {
-        int[] stats =  new int[3];
+        int[] stats = new int[6];
 
-		if (_unitStats.damage > 0) 
-		{
-			stats [0] = _unitStats.damage;
-		}
+        // Top row
+	    stats[0] = _unitStats.damage;
+        statSprites[0] = ControllerUIManager.instance.attackIcon;
 
-		else 
-		{
-			stats [0] = -1;
-		}
-        
+        stats[2] = _unitStats.damageSiege;
+        statSprites[2] = ControllerUIManager.instance.attackSiegeIcon;
 
+        stats[4] = _unitStats.moveSpeed;
+        statSprites[4] = ControllerUIManager.instance.movementSpeedIcon;
+
+        // Bot row
+        stats[1] = _unitStats.pierceArmor;
+        statSprites[1] = ControllerUIManager.instance.pierceArmorIcon;
+
+        stats[3] = _unitStats.meleeArmor;
+        statSprites[3] = ControllerUIManager.instance.meleeArmorIcon;
+
+        // Special (bot right)
         if (_unitStats.isRanged)
         {
-            stats[1] = _unitStats.range;
+            stats[5] = _unitStats.range;
+            statSprites[5] = ControllerUIManager.instance.rangeIcon;
         }
 
-        else
+        else if(_unitStats.isVillager && resoureAmountCarrying > 0)
         {
-            stats[1] = -1;
-        }
-
-        if(resoureAmountCarrying > 0)
-        {
-            stats[2] = resoureAmountCarrying;
+            stats[5] = resoureAmountCarrying;
 
             switch (resourceTypeCarrying)
             {
-                case RESOURCE_TYPE.FOOD: statSprites[2] = ControllerUIManager.instance.foodIcon; break;
-                case RESOURCE_TYPE.WOOD: statSprites[2] = ControllerUIManager.instance.woodIcon; break;
-                case RESOURCE_TYPE.WEALTH: statSprites[2] = ControllerUIManager.instance.wealthIcon; break;
-                case RESOURCE_TYPE.METAL: statSprites[2] = ControllerUIManager.instance.metalIcon; break;
+                case RESOURCE_TYPE.FOOD: statSprites[5] = ControllerUIManager.instance.foodIcon; break;
+                case RESOURCE_TYPE.WOOD: statSprites[5] = ControllerUIManager.instance.woodIcon; break;
+                case RESOURCE_TYPE.WEALTH: statSprites[5] = ControllerUIManager.instance.wealthIcon; break;
+                case RESOURCE_TYPE.METAL: statSprites[5] = ControllerUIManager.instance.metalIcon; break;
             }
         }
 
         else
         {
-            stats[2] = -1;
+            stats[5] = -1;
         }
-
-		if (_unitStats.rangedArmor > 0) 
-		{
-			stats[2] = _unitStats.rangedArmor;
-		}
 
         return stats;
     }

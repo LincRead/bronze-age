@@ -12,11 +12,12 @@ public class UnitStats : DefaultStats
 
     [Header("Unit stats")]
     public int maxHitpoints = 20;
-    public float moveSpeed = 0.5f;
+    public int moveSpeed = 2;
 
     [Header("Attack stats")]
     public bool canAttack = true;
     public int damage = 1;
+    public int damageSiege = 1;
     public float attackSpeed = 1f;
     public int attackTriggerRadius = 6;
 
@@ -26,7 +27,7 @@ public class UnitStats : DefaultStats
     public GameObject projectile;
 
 	[Header("Defence")]
-	public int rangedArmor = 0;
+	public int pierceArmor = 0;
 	public int meleeArmor = 0;
 
     [Header("Vilager")]

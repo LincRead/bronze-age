@@ -61,11 +61,8 @@ public class ControllerUIManager : MonoBehaviour {
     [Header("Stats")]
     public GameObject statsInfoPrefab;
 
-    [HideInInspector]
-    public Image[] statIcons = new Image[4];
-
-    [HideInInspector]
-    public Text[] statTexts = new Text[4];
+    public Image[] statIcons = new Image[6];
+    public Text[] statTexts = new Text[6];
 
     [HideInInspector]
     public ProductionTooltip productionTooltip;
@@ -100,6 +97,14 @@ public class ControllerUIManager : MonoBehaviour {
     public Sprite woodIcon;
     public Sprite metalIcon;
     public Sprite wealthIcon;
+
+    [Header("Stat icons")]
+    public Sprite attackIcon;
+    public Sprite attackSiegeIcon;
+    public Sprite movementSpeedIcon;
+    public Sprite pierceArmorIcon;
+    public Sprite meleeArmorIcon;
+    public Sprite rangeIcon;
 
     private static ControllerUIManager controllerUIManager;
 
@@ -344,7 +349,7 @@ public class ControllerUIManager : MonoBehaviour {
     {
         statsInfoPrefab.gameObject.SetActive(true);
 
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 6; i++)
         {
             if (i < stats.Length && stats[i] != -1)
             {
@@ -366,7 +371,7 @@ public class ControllerUIManager : MonoBehaviour {
 
     public void UpdateStats(Sprite[] icons, int[] stats)
     {
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 6; i++)
         {
             if (i < stats.Length)
             {
