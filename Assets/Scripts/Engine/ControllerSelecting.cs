@@ -215,6 +215,11 @@ public class ControllerSelecting : MonoBehaviour {
             }
         }
 
+        else if(selectedEnemy != null)
+        {
+            ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.WARRIOR, selectedEnemy);
+        }
+
         else
         {
             ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.NONE, null);

@@ -20,25 +20,30 @@ public class BuildingView : ControllerUIView
         if (PlayerManager.myPlayerID == _controller.playerID)
         {
             ui.ShowProductionButtons(_buildingController.productionButtonsData);
-        }
 
-        if (_buildingController.inProductionProcess)
-        {
-            ShowProduction();
+            if (_buildingController.inProductionProcess)
+            {
+                ShowProduction();
 
-            // Change icon to next production item's
-            ControllerUIManager.instance.productionProgressCanvas.icon.sprite = _buildingController.GetCurrentProduction().icon;
+                // Change icon to next production item's
+                ControllerUIManager.instance.productionProgressCanvas.icon.sprite = _buildingController.GetCurrentProduction().icon;
 
-            UpdatePercentProductionVisuals();
+                UpdatePercentProductionVisuals();
+            }
+
+            else
+            {
+                ShowBuildingStats();
+            }
+
+            // Show Rally Point button?
+            SetRallyPointButtonActive();
         }
 
         else
         {
-            ShowBuildingStats();
+            ui.HideProductionButtons();
         }
-
-        // Show Rally Point button?
-        SetRallyPointButtonActive();
     }
 
     void SetRallyPointButtonActive()
