@@ -808,29 +808,36 @@ public class UnitStateController : BaseController
 
 	    stats[0] = _unitStats.damage;
         statSprites[0] = ControllerUIManager.instance.attackIcon;
+        statsDescriptions[0] = "Attack damage";
 
         //stats[2] = _unitStats.damageSiege;
         //statSprites[2] = ControllerUIManager.instance.attackSiegeIcon;
 
         stats[1] = _unitStats.moveSpeed;
         statSprites[1] = ControllerUIManager.instance.movementSpeedIcon;
+        statsDescriptions[1] = "Movement speed";
 
         stats[2] = _unitStats.pierceArmor;
         statSprites[2] = ControllerUIManager.instance.pierceArmorIcon;
+        statsDescriptions[2] = "Armor agains ranged attacks";
 
         stats[4] = _unitStats.meleeArmor;
         statSprites[4] = ControllerUIManager.instance.meleeArmorIcon;
+        statsDescriptions[4] = "Armour against melee attacks";
+
 
         // Special (bot right)
         if (_unitStats.isRanged)
         {
             stats[3] = _unitStats.range;
             statSprites[3] = ControllerUIManager.instance.rangeIcon;
+            statsDescriptions[3] = "Attack range";
         }
 
         else if(_unitStats.isVillager && resoureAmountCarrying > 0)
         {
             stats[3] = resoureAmountCarrying;
+            statsDescriptions[3] = "Carrying resources";
 
             switch (resourceTypeCarrying)
             {

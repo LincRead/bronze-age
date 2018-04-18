@@ -10,7 +10,10 @@ public class UnitUIButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     public Image _icon;
 
     protected Button _button;
-    protected string tooltip;
+
+    [HideInInspector]
+    public string tooltip;
+
     protected bool hovered = false;
 
 	[Header("Tooltip settings")]

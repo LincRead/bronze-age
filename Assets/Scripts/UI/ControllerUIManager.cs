@@ -355,7 +355,8 @@ public class ControllerUIManager : MonoBehaviour {
             {
                 statIcons[i].enabled = true;
                 statIcons[i].sprite = icons[i];
-				statIcons[i].GetComponent<BaseControllerTooltipBox>().tooltip = descriptions[i].ToString();
+                
+				statIcons[i].GetComponent<UnitUIButton>().tooltip = descriptions[i].ToString();
 
                 statTexts[i].enabled = true;
                 statTexts[i].text = stats[i].ToString();
