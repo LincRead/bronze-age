@@ -817,44 +817,45 @@ public class UnitStateController : BaseController
         statSprites[1] = ControllerUIManager.instance.movementSpeedIcon;
         statsDescriptions[1] = "Movement speed";
 
-        stats[2] = _unitStats.pierceArmor;
-        statSprites[2] = ControllerUIManager.instance.pierceArmorIcon;
-        statsDescriptions[2] = "Armor agains ranged attacks";
+        stats[2] = _unitStats.damageSiege;
+        statSprites[2] = ControllerUIManager.instance.attackSiegeIcon;
+        statsDescriptions[2] = "Attack damage to buildings";
 
-        stats[4] = _unitStats.meleeArmor;
-        statSprites[4] = ControllerUIManager.instance.meleeArmorIcon;
-        statsDescriptions[4] = "Armour against melee attacks";
+        stats[3] = _unitStats.pierceArmor;
+        statSprites[3] = ControllerUIManager.instance.pierceArmorIcon;
+        statsDescriptions[3] = "Armor agains ranged attacks";
+
+        stats[5] = _unitStats.meleeArmor;
+        statSprites[5] = ControllerUIManager.instance.meleeArmorIcon;
+        statsDescriptions[5] = "Armour against melee attacks";
 
 
         // Special (bot right)
         if (_unitStats.isRanged)
         {
-            stats[3] = _unitStats.range;
-            statSprites[3] = ControllerUIManager.instance.rangeIcon;
-            statsDescriptions[3] = "Attack range";
+            stats[4] = _unitStats.range;
+            statSprites[4] = ControllerUIManager.instance.rangeIcon;
+            statsDescriptions[4] = "Attack range";
         }
 
         else if(_unitStats.isVillager && resoureAmountCarrying > 0)
         {
-            stats[3] = resoureAmountCarrying;
-            statsDescriptions[3] = "Carrying resources";
+            stats[4] = resoureAmountCarrying;
+            statsDescriptions[4] = "Carrying resources";
 
             switch (resourceTypeCarrying)
             {
-                case RESOURCE_TYPE.FOOD: statSprites[3] = ControllerUIManager.instance.foodIcon; break;
-                case RESOURCE_TYPE.WOOD: statSprites[3] = ControllerUIManager.instance.woodIcon; break;
-                case RESOURCE_TYPE.WEALTH: statSprites[3] = ControllerUIManager.instance.wealthIcon; break;
-                case RESOURCE_TYPE.METAL: statSprites[3] = ControllerUIManager.instance.metalIcon; break;
+                case RESOURCE_TYPE.FOOD: statSprites[4] = ControllerUIManager.instance.foodIcon; break;
+                case RESOURCE_TYPE.WOOD: statSprites[4] = ControllerUIManager.instance.woodIcon; break;
+                case RESOURCE_TYPE.WEALTH: statSprites[4] = ControllerUIManager.instance.wealthIcon; break;
+                case RESOURCE_TYPE.METAL: statSprites[4] = ControllerUIManager.instance.metalIcon; break;
             }
         }
 
         else
         {
-            stats[3] = -1;
+            stats[4] = -1;
         }
-
-        // Todo replace with siege??
-        stats[5] = -1;
 
         return stats;
     }
