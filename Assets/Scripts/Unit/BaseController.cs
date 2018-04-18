@@ -136,7 +136,17 @@ public class BaseController : MonoBehaviour {
         _selectedIndicatorRenderer.enabled = false;
     }
 
-	public virtual void Hit(int damageValue, BaseController hitByController, bool ranged)
+	public virtual void Hit(UnitStateController hitByController)
+    {
+
+    }
+
+    public virtual void Hit(int damage)
+    {
+
+    }
+
+    public virtual void Damage(int damage)
     {
 
     }

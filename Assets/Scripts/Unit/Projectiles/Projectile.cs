@@ -8,18 +8,20 @@ public class Projectile : MonoBehaviour {
     Vector2 velocity = Vector2.zero;
 	Node currentNode;
 	Node targetNode;
-    BaseController parentController;
+    UnitStateController parentController;
     BaseController targetController;
-    int damage = 0;
+    int damage = 1;
+    int damageSiege = 1;
     float moveSpeed = 2f;
     bool rotated = false;
 
-    public void SetTarget(BaseController parentController, BaseController targetController, Node targetNode, int damage)
+    public void SetParentAndTargetControllers(UnitStateController parentController, BaseController targetController)
     {
         this.parentController = parentController;
         this.targetController = targetController;
-        this.targetNode = targetNode;
-        this.damage = damage;
+        this.targetNode = targetController.GetPrimaryNode();
+        this.damage = parentController._unitStats.damage;
+        this.damageSiege = parentController._unitStats.damageSiege;
 
         _transform = GetComponent<Transform>();
         _transform.position = new Vector3(_transform.position.x, _transform.position.y, _transform.position.y);
@@ -58,13 +60,13 @@ public class Projectile : MonoBehaviour {
 			// Unit
 			if (currentNode.unitControllerStandingHere == targetController)
             {
-                targetController.Hit(damage, parentController, true);
+                targetController.Hit(parentController);
             }
 
 			// Building
 			else if (currentNode.parentTile.controllerOccupying == targetController)
             {
-                targetController.Hit(damage, parentController, true);
+                targetController.Hit(damageSiege);
             }
         }
 

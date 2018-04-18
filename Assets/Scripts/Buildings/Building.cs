@@ -673,17 +673,19 @@ public class Building : BaseController {
         ControllerUIManager.instance.productionQueueCanvas.UpdateData(this);
     }
 
-	public override void Hit(int damageValue, BaseController hitByController, bool ranged)
+	public override void Hit(UnitStateController hitByController)
     {
-		int damage = damageValue;
+        Damage(hitByController._unitStats.damageSiege);
+    }
 
-		// Ranged attack only deals 1 damage against buildings (except with fire arrows)
-		if (ranged) 
-		{
-			damage = 1;
-		}
+    public override void Hit(int damage)
+    {
+        Damage(damage);
+    }
 
-		hitpointsLeft -= damage;
+    public override void Damage(int damage)
+    {
+        hitpointsLeft -= damage;  
 
         if (hitpointsLeft <= 0)
         {

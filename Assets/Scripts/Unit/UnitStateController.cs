@@ -438,7 +438,7 @@ public class UnitStateController : BaseController
             return;
         }
          
-        targetController.Hit(_unitStats.damage, this, false);
+        targetController.Hit(this);
     }
 
     public void FireProjectile()
@@ -453,7 +453,7 @@ public class UnitStateController : BaseController
             transform.position + new Vector3(0.0f, (_spriteRenderer.bounds.size.y / 2)), 
             Quaternion.identity);
         Projectile p = newProjectile.GetComponent<Projectile>();
-        p.SetTarget(this, targetController, targetController.GetPrimaryNode(), _unitStats.damage);
+        p.SetParentAndTargetControllers(this, targetController);
     }
 
     public void FireProjectileTowards(Node node)
@@ -461,11 +461,11 @@ public class UnitStateController : BaseController
 
     }
 
-	public override void Hit(int damageValue, BaseController hitByController, bool ranged)
+	public override void Hit(UnitStateController hitByController)
     {
-		int damage = damageValue;
+		int damage = hitByController._unitStats.damage;
 
-		if (ranged) 
+		if (hitByController._unitStats.isRanged) 
 		{
 			damage -= _unitStats.pierceArmor;
 		} 
