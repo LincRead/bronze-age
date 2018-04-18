@@ -235,6 +235,12 @@ public class PlayerManager : MonoBehaviour {
             default:
                 break;
         }
+
+        // Debug map hack
+        if(Input.GetKeyUp(KeyCode.M))
+        {
+            Grid.instance.ToggleAllTilesVisibility();
+        }
     }
 
     public void SetNewRallyPoint()

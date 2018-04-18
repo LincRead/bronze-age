@@ -243,7 +243,7 @@ public class Tile : IHeapItem<Tile>
             controllerOccupying.UpdateVisibilityOfAllControllerOccupiedTiles();
         }
 
-        // Just update thus tile based on visibility count
+        // Just update this tile based on visibility count
         else
         {
             SetVisible(visibleForControllerCount > 0);

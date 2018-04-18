@@ -44,6 +44,8 @@ public class Grid : MonoBehaviour {
     [Header("Show Tile selected")]
     public GameObject selectedTilePrefab;
 
+    private bool showingAllTiles = false;
+
     public int MaxSize
     {
         get
@@ -716,6 +718,30 @@ public class Grid : MonoBehaviour {
                     tileToRemoveFrom.controllerOccupying = null;
                 }
             }
+        }
+    }
+
+    public void ToggleAllTilesVisibility()
+    {
+        if (showingAllTiles)
+        {
+            foreach (Tile t in tiles)
+            {
+                t.ChangeVisibilityCount(-10);
+            }
+
+            showingAllTiles = false;
+        }
+
+        else
+        {
+            foreach (Tile t in tiles)
+            {
+                t.ChangeVisibilityCount(10);
+                t.SetVisible(true);
+            }
+
+            showingAllTiles = true;
         }
     }
 
