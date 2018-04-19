@@ -9,10 +9,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dc79851b7c9cc3a4b8ba538552433bcc, type: 3}
-  m_Name: Domesticated Animals
+  m_Name: Mining
   m_EditorClassIdentifier: 
-  title: Domesticated Animals
-  description: Improve farming speed by 20%.
-  executeScript: {fileID: 11400000, guid: a7fb56f52520607409aab2b897ddbbc5, type: 2}
-  icon: {fileID: 21300060, guid: ba24593a1f1e5a645a720966e3210547, type: 3}
+  title: Mining
+  description: Improve  mining speed by 25%.
+  executeScript: {fileID: 11400000, guid: 997926fcb40fb59459e2c4056964ffc3, type: 2}
+  icon: {fileID: 0}
   knowledge: 30

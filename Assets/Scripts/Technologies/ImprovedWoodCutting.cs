@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Technologies/Woodcutting")]
-public class ImprovedWoodcutting : FinishedResearchAction
+public class ImprovedWoodCutting : FinishedResearchAction
 {
     public float extraWoodCuttingSpeed = 1.25f;
 

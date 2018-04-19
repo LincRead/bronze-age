@@ -8,7 +8,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ded3860d52edc74991e0ca2b16b8486, type: 3}
-  m_Name: Polished Stone Axe
-  m_EditorClassIdentifier: 
-  extraWoodCuttingSpeed: 1.25
+  m_Script: {fileID: 0}
+  m_Name: Mining
+  m_EditorClassIdentifier: Assembly-CSharp::ImprovedMiningSpeed
+  extraMiningSpeed: 1.25
