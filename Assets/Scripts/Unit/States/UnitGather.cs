@@ -101,7 +101,7 @@ public class UnitGather : UnitState {
         // Halved carry limit for metal
         if(_resource.resourceType == RESOURCE_TYPE.METAL)
         {
-            if (_controller.resoureAmountCarrying >= (data.villagerCarryLimit / 2))
+            if (_controller.resoureAmountCarrying >= (data.villagerCarryLimit  - 5))
             {
                 _controller.seekClosestResourceDeliveryPoint();
                 return;
