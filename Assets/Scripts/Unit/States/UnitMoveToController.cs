@@ -201,7 +201,12 @@ public class UnitMoveToController : UnitMoveTo
 
     void ReachedTargetBuilding()
     {
-        if (_targetController.playerID == PlayerManager.myPlayerID)
+        if(_targetController.playerID != _controller.playerID)
+        {
+            _controller.TransitionToState(_controller.attackState);
+        }
+
+        else if (_targetController.playerID == PlayerManager.myPlayerID)
         {
             Building targetBuilding = _targetController.GetComponent<Building>();
 
@@ -214,7 +219,7 @@ public class UnitMoveToController : UnitMoveTo
                 }
 
                 // Special case for Tribe unit reaching Camp building
-                else if (_controller._unitStats.isTribe && _targetController == PlayerManager.instance.civilizationCenter)
+                else if (_controller._unitStats.isTribe && _targetController == PlayerManager.instance.myCivilizationCenter)
                 {
                     // Need to wait until this value is set to not cause problems in cases where Tribe unit
                     // is placing Tribe Center right next to itself.
@@ -241,11 +246,6 @@ public class UnitMoveToController : UnitMoveTo
             {
                 _controller.TransitionToState(_controller.idleState);
             }
-        }
-
-        else
-        {
-            _controller.TransitionToState(_controller.attackState);
         }
     }
 

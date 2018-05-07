@@ -593,6 +593,12 @@ public class Building : BaseController {
 		if (data.housing > 0) PlayerDataManager.instance.AddPopulationForPlayer(data.housing * factor * -1, playerID);
     }
 
+    public void ProduceInstantly(int productionIndex)
+    {
+        this.productionIndex = productionIndex;
+        FinishedProduction();
+    }
+
     public void FinishedProduction()
     {
         stepsProduced = 0.0f;
@@ -623,15 +629,20 @@ public class Building : BaseController {
 
             unitScript.playerID = playerID;
             unitScript.RallyTo(rallyPointPos);
+
+            if(playerID < 0)
+            {
+                belongsToWavesAI.AddUnitToWave(unitScript);
+            }
         }
 
-        if (productionList.Count > 0)
+        if (productionList.Count > 0 && playerID > -1)
         {
             Produce(productionList[0]);
             productionList.RemoveAt(0);
         }
 
-        if (selected)
+        if (selected && playerID == PlayerManager.myPlayerID)
         {
             ControllerUIManager.instance.ResetView(this);
         }

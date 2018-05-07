@@ -139,6 +139,10 @@ public class UnitStateController : BaseController
     [Header("Sounds effects")]
     public AudioClip soundChop;
 
+    // Todo: Seperate component for Waves functionality?
+    [HideInInspector]
+    public bool waveAttackMode = false;
+
     protected override void Start()
     {
         _basicStats = _unitStats;
@@ -391,8 +395,18 @@ public class UnitStateController : BaseController
 
     public void TransitionToState(UnitState nextState)
     {
+        if(!nextState)
+        {
+            return;
+        }
+
         distanceToTarget = 1000; //  Reset
-        currentState.OnExit();
+
+        if(currentState)
+        {
+            currentState.OnExit();
+        }
+        
         currentState = nextState;
         currentState.OnEnter(this);
     }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Default start resources
   m_EditorClassIdentifier: 
   food: 30
-  timber: 50
+  timber: 80
   wealth: 0
   metal: 0
   population: 5

@@ -19,7 +19,7 @@ public class TribeController : UnitStateController {
         {
             if (PlayerDataManager.instance.GetPlayerData(playerID).placedCamp)
             {
-                Building camp = PlayerManager.instance.civilizationCenter;
+                Building camp = PlayerManager.instance.myCivilizationCenter;
 
                 // Select Camp instead of Tribe
                 Deselect();

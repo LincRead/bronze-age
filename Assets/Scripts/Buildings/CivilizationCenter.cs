@@ -26,7 +26,10 @@ public class CivilizationCenter : Building
             }
         }
 
-        PlayerManager.instance.civilizationCenter = this;
+        if(playerID == PlayerManager.myPlayerID)
+        {
+            PlayerManager.instance.myCivilizationCenter = this;
+        }
     }
 
     protected override void Place()
@@ -111,6 +114,11 @@ public class CivilizationCenter : Building
         if(playerID == -1)
         {
             SceneManager.LoadScene("victory");
+        }
+
+        else if(playerID == PlayerManager.myPlayerID)
+        {
+            SceneManager.LoadScene("gameover");
         }
     }
 }

@@ -975,7 +975,7 @@ public class Grid : MonoBehaviour {
             return null;
         }
             
-        if (node.walkable && node.unitControllerStandingHere == null)
+        if (node.walkable && node.unitControllerStandingHere == null && node.parentTile.controllerOccupying == null)
         {
             return node;
         }
@@ -999,7 +999,7 @@ public class Grid : MonoBehaviour {
                     continue;
                 }
 
-                if (neighbour.walkable && neighbour.unitControllerStandingHere == null)
+                if (neighbour.walkable && neighbour.unitControllerStandingHere == null && neighbour.parentTile.controllerOccupying == null)
                 {
                     return neighbour;
                 }

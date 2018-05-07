@@ -30,7 +30,7 @@ MonoBehaviour:
   - 
   visionRange: 4
   healthBar: {fileID: 1853909942107304, guid: 390418c6a1078ef4eb100709ab7795ad, type: 2}
-  maxHitpoints: 200
+  maxHitpoints: 350
   stepsToConstruct: 20
   constructionSprites:
   - {fileID: 21300000, guid: 0b528a5f635d7c045a841c9e60fc2c84, type: 3}

@@ -41,7 +41,7 @@ MonoBehaviour:
   damage: 12
   damageSiege: 5
   attackSpeed: 1
-  attackTriggerRadius: 10
+  attackTriggerRadius: 14
   isRanged: 0
   range: 0
   projectile: {fileID: 0}

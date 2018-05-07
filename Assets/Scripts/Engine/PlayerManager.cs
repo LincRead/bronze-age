@@ -50,7 +50,7 @@ public class PlayerManager : MonoBehaviour {
     public BaseController selectableController = null;
 
     [HideInInspector]
-    public CivilizationCenter civilizationCenter = null;
+    public CivilizationCenter myCivilizationCenter = null;
 
     [HideInInspector]
     public Tile selectedTile = null;

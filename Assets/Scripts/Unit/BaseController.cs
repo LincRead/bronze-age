@@ -64,6 +64,10 @@ public class BaseController : MonoBehaviour {
 
     protected List<Tile> visibleTiles = new List<Tile>();
 
+    // Belongs to a Waves AI?
+    [HideInInspector]
+    public Waves belongsToWavesAI = null;
+
     protected virtual void Awake()
     {
         _transform = GetComponent<Transform>();
@@ -355,8 +359,25 @@ public class BaseController : MonoBehaviour {
 
     public virtual void Destroy()
     {
+        RemoveFromWavesAI();
         DecreaseVisibilityOfTiles();
         Grid.instance.RemoveTilesOccupiedByResource(this);
         Destroy(gameObject);
+    }
+
+    void RemoveFromWavesAI()
+    {
+        if (belongsToWavesAI)
+        {
+            if (_basicStats.controllerType == CONTROLLER_TYPE.UNIT)
+            {
+                belongsToWavesAI.RemoveUnit(GetComponent<UnitStateController>());
+            }
+
+            else
+            {
+                belongsToWavesAI.RemoveBuilding(GetComponent<Building>());
+            }
+        }
     }
 }

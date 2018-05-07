@@ -15,7 +15,7 @@ public class AdvanceAgeAction : FinishedProductionAction
         // Keep in synch
         PlayerManager.instance.currentAge++;
 
-        PlayerManager.instance.civilizationCenter.Upgrade();
+        PlayerManager.instance.myCivilizationCenter.Upgrade();
 
         EventManager.TriggerEvent("AdvancedCivilizationAge");
     }
