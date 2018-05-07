@@ -26,6 +26,6 @@ MonoBehaviour:
   requiredTechnology: 
   food: 0
   timber: 0
-  wealth: 15
+  wealth: 25
   metal: 0
   housing: 1
