@@ -20,11 +20,11 @@ MonoBehaviour:
     type: 2}
   icon: {fileID: 21300046, guid: ba24593a1f1e5a645a720966e3210547, type: 3}
   position: 0
-  stepsRequired: 12
+  stepsRequired: 15
   age: 0
   requiredTechnology: 
   food: 0
-  timber: 25
-  wealth: 5
+  timber: 35
+  wealth: 10
   metal: 0
   housing: 1
