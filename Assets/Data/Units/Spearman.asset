@@ -35,7 +35,7 @@ MonoBehaviour:
   visionRange: 14
   foodConsuming: 1
   healthBar: {fileID: 1853909942107304, guid: 390418c6a1078ef4eb100709ab7795ad, type: 2}
-  maxHitpoints: 220
+  maxHitpoints: 260
   moveSpeed: 2
   canAttack: 1
   damage: 9
@@ -46,6 +46,6 @@ MonoBehaviour:
   range: 0
   projectile: {fileID: 0}
   pierceArmor: 2
-  meleeArmor: 1
+  meleeArmor: 0
   isVillager: 0
   isTribe: 0

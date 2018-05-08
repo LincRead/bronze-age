@@ -3695,9 +3695,9 @@ MonoBehaviour:
   - {fileID: 708949392}
   rallyPoint: {fileID: 1875816127}
   secsBeforeFirstWave: 9001000040010000f0000000
-  produceUnitPerSecs: 260000001e00000016000000
+  produceUnitPerSecs: 200000001900000014000000
   unitsFirstWave: 030000000400000005000000
-  extraUnitsPerWave: 010000000200000003000000
+  extraUnitsPerWave: 010000000100000001000000
 --- !u!1 &1599950725
 GameObject:
   m_ObjectHideFlags: 0

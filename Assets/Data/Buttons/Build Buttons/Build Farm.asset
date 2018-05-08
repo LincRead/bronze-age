@@ -24,7 +24,7 @@ MonoBehaviour:
   age: 0
   requiredTechnology: 
   food: 0
-  timber: 40
+  timber: 50
   wealth: 0
   metal: 0
   housing: 0

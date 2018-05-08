@@ -57,7 +57,7 @@ public class Waves : MonoBehaviour {
         {
             timeSinceLastWave += Time.deltaTime;
 
-            if (timeSinceLastWave >= secsBeforeFirstWave[(int)difficulty] && unitsCurrentWave > unitsPerWave)
+            if (timeSinceLastWave >= secsBeforeFirstWave[(int)difficulty] && unitsCurrentWave >= unitsPerWave)
             {
                 firstWave = false;
                 SendWave();
@@ -71,6 +71,8 @@ public class Waves : MonoBehaviour {
                 SendWave();
             }
         }
+
+        UpdateUnitsInWave();
     }
 
     public void ProduceUnit()

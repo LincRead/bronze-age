@@ -20,7 +20,7 @@ MonoBehaviour:
     type: 2}
   icon: {fileID: 21300032, guid: ba24593a1f1e5a645a720966e3210547, type: 3}
   position: 0
-  stepsRequired: 20
+  stepsRequired: 45
   age: 0
   requiredTechnology: 
   food: 0

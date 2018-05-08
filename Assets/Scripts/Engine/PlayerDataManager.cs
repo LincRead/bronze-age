@@ -16,7 +16,7 @@ public class PlayerDataManager : MonoBehaviour
 
     public static float foodPerSurplusLevel = 50;
 
-	public static int[] knowledgeGeneratedByCivCenter = new int[] { 1, 3, 4, 5, 6 };
+	public static int[] knowledgeGeneratedByCivCenter = new int[] { 1, 2, 3, 4, 5 };
 
     public static PlayerDataManager instance
     {
