@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class TechTreeManager : MonoBehaviour {
 
+    [HideInInspector]
+    public bool open = false;
+
 	[Header("Technologies")]
 	public ResearchButtonData[] data;
 
@@ -28,6 +31,9 @@ public class TechTreeManager : MonoBehaviour {
 	bool researching = false;
 
 	private TechnologyButton currentResearchButtonScript = null;
+
+    [Header("Popup")]
+    public ResearchCompletedPopup researchCompletedPopup;
 
 	public static TechTreeManager instance
 	{
@@ -115,7 +121,11 @@ public class TechTreeManager : MonoBehaviour {
 		ControllerUIManager.instance.productionButtonsCanvas.GetComponent<Canvas> ().enabled = false;
 		ControllerUIManager.instance.ChangeAndResetView(ControllerUIManager.CONTROLLER_UI_VIEW.NONE, null);
 		ShowTechnologyButtonsView ();
-	}
+
+        open = true;
+
+        researchCompletedPopup.Close();
+    }
 
 	public void Close()
 	{
@@ -126,7 +136,9 @@ public class TechTreeManager : MonoBehaviour {
 
 		ControllerUIManager.instance.productionButtonsCanvas.GetComponent<Canvas> ().enabled = true;
 		CameraController.instance.freeze = false;
-	}
+
+        open = false;
+    }
 
 	public void StartResearch(TechnologyButton technologyButtonScript)
 	{
@@ -146,6 +158,7 @@ public class TechTreeManager : MonoBehaviour {
 
 	void FinishResearch()
 	{
+        researchCompletedPopup.Show(currentResearchButtonScript.data.icon, currentResearchButtonScript.data.title);
 		currentResearchButtonScript.Complete ();
 		researching = false;
 		PlayerDataManager.instance.GetPlayerData(PlayerManager.myPlayerID).knowledgeGenerated = 0.0f;
