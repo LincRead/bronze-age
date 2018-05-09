@@ -173,6 +173,7 @@ public class BaseController : MonoBehaviour {
 
             else
             {
+                visible = false;
                 tile.SetVisible(false);
             }
         }

@@ -218,6 +218,8 @@ public class UnitStateController : BaseController
             PlayerDataManager.instance.AddFoodIntakeForPlayer(-_unitStats.foodConsuming, playerID);
         }
 
+        shadow.GetComponent<SpriteRenderer>().enabled = false;
+
         SetupHealthBar();
         SetupTeamColor();
 
@@ -576,6 +578,19 @@ public class UnitStateController : BaseController
         }
     }
 
+    public override void SetVisible(int value)
+    {
+        if (value > 1)
+        {
+            SetVisible(true);
+        }
+
+        else
+        {
+            SetVisible(false);
+        }
+    }
+
     public override void SetVisible(bool value)
     {
         if (value)
@@ -583,7 +598,6 @@ public class UnitStateController : BaseController
             if(!_spriteRenderer.enabled)
             {
                 _spriteRenderer.enabled = true;
-
                 shadow.GetComponent<SpriteRenderer>().enabled = true;
             }
         }
@@ -598,7 +612,6 @@ public class UnitStateController : BaseController
             if (_spriteRenderer.enabled)
             {
                 _spriteRenderer.enabled = false;
-
                 shadow.GetComponent<SpriteRenderer>().enabled = false;
             }
         }

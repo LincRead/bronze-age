@@ -10,7 +10,6 @@ public class Projectile : MonoBehaviour {
 	Node targetNode;
     UnitStateController parentController;
     BaseController targetController;
-    int damage = 1;
     int damageSiege = 1;
     float moveSpeed = 2f;
     bool rotated = false;
@@ -20,7 +19,6 @@ public class Projectile : MonoBehaviour {
         this.parentController = parentController;
         this.targetController = targetController;
         this.targetNode = targetController.GetPrimaryNode();
-        this.damage = parentController._unitStats.damage;
         this.damageSiege = parentController._unitStats.damageSiege;
 
         _transform = GetComponent<Transform>();

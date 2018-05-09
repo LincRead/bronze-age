@@ -82,8 +82,6 @@ public class ProductionTooltip : MonoBehaviour {
             return;
         }
 
-        Debug.Log(requiredType);
-
         requiredTypes[numItemsRequired] = requiredType;
         resourceAmounts[numItemsRequired] = amount;
 

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Axe Man
   m_EditorClassIdentifier: 
   type: 2
-  title: Warrior (X)
+  title: Axe Man Warrior (X)
   description: Fierce close-combat warriors. These units are fast and brutal, dealing
     high damage.
   executeScript: {fileID: 0}

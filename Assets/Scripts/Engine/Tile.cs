@@ -248,12 +248,6 @@ public class Tile : IHeapItem<Tile>
         {
             SetVisible(visibleForControllerCount > 0);
         }
-
-        // Update visibility of units standing on this tile based on tile's visibility
-        for(int i = 0; i < unitsStandingHere.Count; i++)
-        {
-            unitsStandingHere[i].SetVisible(visibleForControllerCount > 0);
-        }
     }
 
     public void SetVisible(bool visible)
@@ -262,16 +256,27 @@ public class Tile : IHeapItem<Tile>
         {
             explored = true;
             _tileSpriteRenderer.color = Color.white;
+            SetVisibilityForUnitsStandingHere(true);
         }
 
         else if (explored)
         {
             _tileSpriteRenderer.color = new Color(0.5f, 0.5f, 0.5f, 1.0f);
+            SetVisibilityForUnitsStandingHere(false);
         }
 
         else
         {
             _tileSpriteRenderer.color = Color.black;
+            SetVisibilityForUnitsStandingHere(false);
+        }
+    }
+
+    void SetVisibilityForUnitsStandingHere(bool visible)
+    {
+        for (int i = 0; i < unitsStandingHere.Count; i++)
+        {
+            unitsStandingHere[i].SetVisible(visible);
         }
     }
 
