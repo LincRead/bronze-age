@@ -75,6 +75,7 @@ MonoBehaviour:
   - 
   - 
   - 
+  belongsToWavesAI: {fileID: 0}
   _buildingStats: {fileID: 0}
   healthBar: {fileID: 0}
   stepsToProduce: 3

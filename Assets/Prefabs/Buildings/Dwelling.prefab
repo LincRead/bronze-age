@@ -72,6 +72,7 @@ MonoBehaviour:
   - 
   - 
   - 
+  belongsToWavesAI: {fileID: 0}
   _buildingStats: {fileID: 11400000, guid: 907aaf48bf0227f4da3ac03ad73da9bb, type: 2}
   healthBar: {fileID: 0}
   stepsToProduce: 3
@@ -107,7 +108,7 @@ SpriteRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 2100000, guid: 312e4d6c93cb4ca45be04aabfbc09a25, type: 2}
+  - {fileID: 2100000, guid: d8ecb348dc1bbd246968f9aaaccedcf0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
