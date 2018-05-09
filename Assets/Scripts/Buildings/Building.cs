@@ -185,8 +185,7 @@ public class Building : BaseController {
     {
         if (playerID > -1)
         {
-            //_spriteRenderer.material.SetColor("_TeamColor", PlayerDataManager.instance.playerData[playerID].teamColor);
-            _spriteRenderer.material.SetColor("_TeamColor", PlayerDataManager.neutralPlayerColor);
+            _spriteRenderer.material.SetColor("_TeamColor", PlayerDataManager.instance.playerData[playerID].teamColor);
         }
 
         else
