@@ -26,7 +26,7 @@ MonoBehaviour:
   harvestType: 4
   resourceType: 2
   amount: 250
-  harvestDifficulty: 4
+  harvestDifficulty: 3
   harvestStagesSprites:
   - {fileID: 21300002, guid: c27863ac77d181d458dd91828622586d, type: 3}
   - {fileID: 21300004, guid: c27863ac77d181d458dd91828622586d, type: 3}

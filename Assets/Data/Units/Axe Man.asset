@@ -35,7 +35,7 @@ MonoBehaviour:
   visionRange: 14
   foodConsuming: 1
   healthBar: {fileID: 1853909942107304, guid: 390418c6a1078ef4eb100709ab7795ad, type: 2}
-  maxHitpoints: 180
+  maxHitpoints: 160
   moveSpeed: 7
   canAttack: 1
   damage: 12
