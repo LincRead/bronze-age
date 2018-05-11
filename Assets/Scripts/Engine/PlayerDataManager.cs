@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerDataManager : MonoBehaviour
 {
@@ -17,6 +18,14 @@ public class PlayerDataManager : MonoBehaviour
     public static float foodPerSurplusLevel = 50;
 
 	public static int[] knowledgeGeneratedByCivCenter = new int[] { 1, 2, 3, 4, 5 };
+
+    [HideInInspector]
+    public float timeToStartBeforeGameOver = 60;
+
+    [HideInInspector]
+    public float[] timeSinceStartedStarving;
+
+    public StarvingPopup starvingPopupBox;
 
     public static PlayerDataManager instance
     {
@@ -51,6 +60,8 @@ public class PlayerDataManager : MonoBehaviour
     {
         int numPlayers = WorldManager.instance.numPlayers;
 
+        InitStarvingValues(numPlayers);
+
         playerData = new List<PlayerData>(numPlayers);
 
         for (int i = 0; i < numPlayers; i++)
@@ -69,6 +80,16 @@ public class PlayerDataManager : MonoBehaviour
              * and bonuses are correct
              */
             CalculateFoodSurplusLevelFor(i);
+        }
+    }
+
+    void InitStarvingValues(int numPlayers)
+    {
+        timeSinceStartedStarving = new float[numPlayers];
+
+        for (int i = 0; i < numPlayers; i++)
+        {
+            timeSinceStartedStarving[i] = 0.0f;
         }
     }
 
@@ -120,11 +141,18 @@ public class PlayerDataManager : MonoBehaviour
 
     public void CalculateFoodSurplusLevelFor(int player)
     {
+        int oldfoodSurplusLevel = playerData[player].foodSurplusLevel;
+
         int foodSurplusLevel = (int)Mathf.Floor(((PlayerDataManager.foodPerSurplusLevel + playerData[player].foodInStock) / (PlayerDataManager.foodPerSurplusLevel * 5) * 5));
 
         if (foodSurplusLevel > 4)
         {
             foodSurplusLevel = 4;
+        }
+
+        if(player == PlayerManager.myPlayerID && oldfoodSurplusLevel != foodPerSurplusLevel)
+        {
+
         }
         
         playerData[player].foodSurplusLevel = foodSurplusLevel;
@@ -238,6 +266,35 @@ public class PlayerDataManager : MonoBehaviour
 		for (int i = 0; i < playerData.Count; i++)
 		{
 			CalculateKnowledgeGenerationFor(i);
-		}
-	}
+            UpdateStarvingPeopleValue(i);
+        }
+    }
+
+    void UpdateStarvingPeopleValue(int playerID)
+    {
+        if (playerData[playerID].foodSurplusLevel <= 0)
+        {
+            timeSinceStartedStarving[playerID] += Time.deltaTime;
+
+            if (timeSinceStartedStarving[playerID] >= timeToStartBeforeGameOver)
+            {
+                SceneManager.LoadScene("gameover");
+            }
+
+            if(playerID == PlayerManager.myPlayerID)
+            {
+                starvingPopupBox.Show();
+            }
+        }
+        
+        else
+        {
+            timeSinceStartedStarving[playerID] = 0.0f;
+
+            if (playerID == PlayerManager.myPlayerID)
+            {
+                starvingPopupBox.Hide();
+            }
+        }
+    }
 }
