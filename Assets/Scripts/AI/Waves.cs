@@ -4,15 +4,9 @@ using UnityEngine;
 
 public class Waves : MonoBehaviour {
 
-    public enum WAVES_DIFFICULTY
-    {
-        EASY,
-        MEDIUM,
-        HARD
-    }
 
     public int playerID = -1;
-    public WAVES_DIFFICULTY difficulty = WAVES_DIFFICULTY.HARD;
+    public PersistentData.DIFFICULTY difficulty = PersistentData.DIFFICULTY.MEDIUM;
 
     public List<Building> productionBuildings;
     public GameObject rallyPoint;
@@ -35,6 +29,11 @@ public class Waves : MonoBehaviour {
 
     private void Awake()
     {
+        if(PersistentData.instance != null)
+        {
+            difficulty = PersistentData.instance.difficulty;
+        }
+
         unitsPerWave = unitsFirstWave[(int)difficulty];
         _rallyPointTransform = rallyPoint.transform;
 

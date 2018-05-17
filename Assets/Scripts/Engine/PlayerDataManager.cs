@@ -20,7 +20,7 @@ public class PlayerDataManager : MonoBehaviour
 	public static int[] knowledgeGeneratedByCivCenter = new int[] { 1, 2, 3, 4, 5 };
 
     [HideInInspector]
-    public float timeToStartBeforeGameOver = 60;
+    public float timeToStartBeforeGameOver = 90;
 
     [HideInInspector]
     public float[] timeSinceStartedStarving;

@@ -2681,6 +2681,11 @@ Prefab:
       propertyPath: m_Material
       value: 
       objectReference: {fileID: 2100000, guid: d8ecb348dc1bbd246968f9aaaccedcf0, type: 2}
+    - target: {fileID: 114731654002349394, guid: f3480b3cd2e92d441abaa961ba14ddeb,
+        type: 2}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 2100000, guid: d8ecb348dc1bbd246968f9aaaccedcf0, type: 2}
     m_RemovedComponents:
     - {fileID: 114165925665057666, guid: f3480b3cd2e92d441abaa961ba14ddeb, type: 2}
     - {fileID: 114560549602665352, guid: f3480b3cd2e92d441abaa961ba14ddeb, type: 2}
@@ -4078,8 +4083,8 @@ MonoBehaviour:
   - {fileID: 708949392}
   rallyPoint: {fileID: 1875816127}
   secsBeforeFirstWave: 9001000040010000f0000000
-  produceUnitPerSecs: 200000001900000014000000
-  unitsFirstWave: 030000000400000005000000
+  produceUnitPerSecs: 230000001900000014000000
+  unitsFirstWave: 020000000400000006000000
   extraUnitsPerWave: 010000000100000001000000
 --- !u!1 &1599950725
 GameObject:

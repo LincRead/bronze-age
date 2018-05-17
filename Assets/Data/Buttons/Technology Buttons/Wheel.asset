@@ -14,5 +14,5 @@ MonoBehaviour:
   title: Wheel
   description: Villagers can carry more resources.
   executeScript: {fileID: 11400000, guid: 1614526ba5282fa4485eaa3bf27e51eb, type: 2}
-  icon: {fileID: 21300068, guid: ba24593a1f1e5a645a720966e3210547, type: 3}
+  icon: {fileID: 21300072, guid: ba24593a1f1e5a645a720966e3210547, type: 3}
   knowledge: 30
