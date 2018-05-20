@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectionCircle: {fileID: 1146485549116186, guid: c9feb719354d105419dee1fad02af82d,
     type: 2}
-  title: Axe Man Warrior
+  title: Footman
   controllerType: 0
   size: 1
   walkable: 0

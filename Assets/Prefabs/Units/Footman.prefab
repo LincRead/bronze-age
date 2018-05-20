@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 95548403018358886}
   - component: {fileID: 114806416536438340}
   m_Layer: 0
-  m_Name: Club Man
+  m_Name: Footman
   m_TagString: Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -161,6 +161,7 @@ MonoBehaviour:
   - 
   - 
   - 
+  belongsToWavesAI: {fileID: 0}
   _unitStats: {fileID: 11400000, guid: f66ccf4857ea58d47b024cd5f2f885c8, type: 2}
   _animator: {fileID: 0}
   _pathfinder: {fileID: 0}
@@ -201,6 +202,7 @@ MonoBehaviour:
   farm: {fileID: 0}
   rallyToController: {fileID: 0}
   soundChop: {fileID: 0}
+  waveAttackMode: 0
 --- !u!212 &212589095626158148
 SpriteRenderer:
   m_ObjectHideFlags: 1

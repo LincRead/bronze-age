@@ -12,11 +12,10 @@ MonoBehaviour:
   m_Name: Axe Man
   m_EditorClassIdentifier: 
   type: 2
-  title: Axe Man Warrior (X)
-  description: Fierce close-combat warriors. These units are fast and brutal, dealing
-    high damage.
+  title: Footman (F)
+  description: Footmen are fast close-combat warriors who deal high damage.
   executeScript: {fileID: 0}
-  hotkey: 120
+  hotkey: 102
   productionPrefab: {fileID: 1473468351577072, guid: 81317b6b0bfb1694582b777d54122f67,
     type: 2}
   icon: {fileID: 21300042, guid: ba24593a1f1e5a645a720966e3210547, type: 3}
