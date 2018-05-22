@@ -13,7 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 2
   title: Archer (A)
-  description: Ranged warriors.
+  description: Archers deal high ranged damage and are especially powerful when they
+    are stationed in an outpost, protected from melee damage.
   executeScript: {fileID: 0}
   hotkey: 97
   productionPrefab: {fileID: 1806930240321258, guid: d5d84fbe9fae28f47b913a6dcae5ff98,

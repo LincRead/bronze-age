@@ -46,7 +46,10 @@ public class UnitsView : ControllerUIView
     {
         for (int i = 0; i < numButtonsActivated; i++)
         {
-            ui._selectedUnitButtons[i].UpdateHealth();
+            if(ui._selectedUnitButtons[i] != null)
+            {
+                ui._selectedUnitButtons[i].UpdateHealth();
+            }
         }
     }
 

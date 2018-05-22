@@ -14,13 +14,13 @@ MonoBehaviour:
   type: 2
   title: Heavy Infantry (H)
   description: Heavy infantry can withstand lots of damage and have good protection
-    against ranged attacks, but they are slow.
+    against ranged attacks, but the heavy equipment makes them slow.
   executeScript: {fileID: 0}
   hotkey: 104
   productionPrefab: {fileID: 1536942713551430, guid: 424a0719c04b3144382eaf764935b67d,
     type: 2}
   icon: {fileID: 21300066, guid: ba24593a1f1e5a645a720966e3210547, type: 3}
-  position: 0
+  position: 2
   stepsRequired: 22
   age: 0
   requiredTechnology: 

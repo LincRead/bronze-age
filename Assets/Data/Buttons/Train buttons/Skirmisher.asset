@@ -13,13 +13,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 2
   title: Skirmisher (S)
-  description: Skirmishers are fast moving and cheap close-combat units who are quick
-    train.
+  description: Skirmishers are cheap and fast moving close-combat units.
   executeScript: {fileID: 0}
   hotkey: 115
   productionPrefab: {fileID: 1483358607672402, guid: 2b851cabbbd8b7746b21569869be993a,
     type: 2}
-  icon: {fileID: 21300066, guid: ba24593a1f1e5a645a720966e3210547, type: 3}
+  icon: {fileID: 21300074, guid: ba24593a1f1e5a645a720966e3210547, type: 3}
   position: 0
   stepsRequired: 12
   age: 0

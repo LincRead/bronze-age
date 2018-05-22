@@ -13,13 +13,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 2
   title: Footman (F)
-  description: Footmen are fast close-combat warriors who deal high damage.
+  description: Footmen deal high melee damage.
   executeScript: {fileID: 0}
   hotkey: 102
   productionPrefab: {fileID: 1473468351577072, guid: 81317b6b0bfb1694582b777d54122f67,
     type: 2}
   icon: {fileID: 21300042, guid: ba24593a1f1e5a645a720966e3210547, type: 3}
-  position: 0
+  position: 1
   stepsRequired: 18
   age: 0
   requiredTechnology: 

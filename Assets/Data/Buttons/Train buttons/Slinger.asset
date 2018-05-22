@@ -13,7 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 2
   title: Slinger (L)
-  description: Fast-moving and with a long range, slingers are good at gerilja warfare.
+  description: Slingers are fast and has a long range, so they are good scouts or
+    for gerilja warfare.
   executeScript: {fileID: 0}
   hotkey: 115
   productionPrefab: {fileID: 1020951914992802, guid: 6d3fa4ecf08be154382c5969d0fa2605,

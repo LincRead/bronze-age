@@ -17,7 +17,7 @@ MonoBehaviour:
   controllerType: 0
   size: 1
   walkable: 0
-  iconSprite: {fileID: 21300000, guid: 7adb2ac24d899ef4a8aaa22641223931, type: 3}
+  iconSprite: {fileID: 21300000, guid: 9c8b0aada80a4c3439f5375c46f3e8f8, type: 3}
   statSprites:
   - {fileID: 21300010, guid: 21f702c21d1581441b7d3f124400b51c, type: 3}
   - {fileID: 21300028, guid: 21f702c21d1581441b7d3f124400b51c, type: 3}
@@ -36,12 +36,12 @@ MonoBehaviour:
   foodConsuming: 1
   healthBar: {fileID: 1853909942107304, guid: 390418c6a1078ef4eb100709ab7795ad, type: 2}
   maxHitpoints: 150
-  moveSpeed: 2
+  moveSpeed: 8
   canAttack: 1
   damage: 9
   damageSiege: 3
   attackSpeed: 1
-  attackTriggerRadius: 6
+  attackTriggerRadius: 14
   isRanged: 0
   range: 0
   projectile: {fileID: 0}
