@@ -111,6 +111,9 @@ public class ControllerUIManager : MonoBehaviour {
     [Header("Cursor information")]
     public MouseCursorInfo cursorInformation;
 
+    [Header("Team colour shader")]
+    public Material teamColorMaterial;
+
     public static ControllerUIManager instance
     {
         get
@@ -136,7 +139,7 @@ public class ControllerUIManager : MonoBehaviour {
 
     void Init()
     {
-        // ...
+        teamColorMaterial.SetColor("_MyTeamColor", PlayerDataManager.instance.playerData[PlayerManager.myPlayerID].teamColor);
     }
 
     void Start ()

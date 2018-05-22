@@ -37,7 +37,6 @@ public class ControllerUIView : ScriptableObject {
             ui.icon.enabled = true;
             ui.icon.sprite = _controller.iconSprite;
             ui.icon.rectTransform.sizeDelta = new Vector2(ui.icon.sprite.bounds.size.x * 100, ui.icon.sprite.bounds.size.y * 100);
-            ui.icon.material.SetColor("_MyTeamColor", PlayerDataManager.instance.playerData[PlayerManager.myPlayerID].teamColor);
 
             if (_controller.playerID > -1)
             {
