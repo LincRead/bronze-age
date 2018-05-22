@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a3ad325981febcb40b1684ae72c26884, type: 3}
-  m_Name: Axe Man
+  m_Name: Footman
   m_EditorClassIdentifier: 
   type: 2
   title: Footman (F)
@@ -25,6 +25,6 @@ MonoBehaviour:
   requiredTechnology: 
   food: 0
   timber: 0
-  wealth: 15
+  wealth: 25
   metal: 0
   housing: 1

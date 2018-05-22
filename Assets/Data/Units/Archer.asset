@@ -38,7 +38,7 @@ MonoBehaviour:
   maxHitpoints: 135
   moveSpeed: 5
   canAttack: 1
-  damage: 8
+  damage: 11
   damageSiege: 1
   attackSpeed: 1
   attackTriggerRadius: 18

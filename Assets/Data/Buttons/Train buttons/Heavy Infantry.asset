@@ -9,24 +9,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a3ad325981febcb40b1684ae72c26884, type: 3}
-  m_Name: Spearman
+  m_Name: Heavy Infantry
   m_EditorClassIdentifier: 
   type: 2
-  title: Spearman (S)
-  description: Spearman are versatile. They have protection against ranged attack,
-    bonus damage against chariots, and deal normal damage against buildings. However,
-    they are more costly and slower than many other units.
+  title: Heavy Infantry (H)
+  description: Heavy infantry can withstand lots of damage and have good protection
+    against ranged attacks, but they are slow.
   executeScript: {fileID: 0}
-  hotkey: 115
+  hotkey: 104
   productionPrefab: {fileID: 1536942713551430, guid: 424a0719c04b3144382eaf764935b67d,
     type: 2}
   icon: {fileID: 21300066, guid: ba24593a1f1e5a645a720966e3210547, type: 3}
-  position: 1
+  position: 0
   stepsRequired: 22
   age: 0
   requiredTechnology: 
   food: 0
-  timber: 10
+  timber: 0
   wealth: 35
-  metal: 0
+  metal: 15
   housing: 0

@@ -9,11 +9,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9b23cc1b3efc76048b4f96a7047ffbc1, type: 3}
-  m_Name: Spearman
+  m_Name: Skirmisher
   m_EditorClassIdentifier: 
   selectionCircle: {fileID: 1146485549116186, guid: c9feb719354d105419dee1fad02af82d,
     type: 2}
-  title: Spearman
+  title: Skirmisher
   controllerType: 0
   size: 1
   walkable: 0
@@ -23,29 +23,29 @@ MonoBehaviour:
   - {fileID: 21300028, guid: 21f702c21d1581441b7d3f124400b51c, type: 3}
   - {fileID: 21300030, guid: 21f702c21d1581441b7d3f124400b51c, type: 3}
   - {fileID: 21300024, guid: 21f702c21d1581441b7d3f124400b51c, type: 3}
-  - {fileID: 21300026, guid: 21f702c21d1581441b7d3f124400b51c, type: 3}
+  - {fileID: 0}
   - {fileID: 21300026, guid: 21f702c21d1581441b7d3f124400b51c, type: 3}
   statDescriptions:
   - Attack damage
   - Movement speed
   - Attack damage to buildings
   - Armor agains ranged attacks
-  - Armour against melee attacks
+  - 
   - Armour against melee attacks
   visionRange: 14
   foodConsuming: 1
   healthBar: {fileID: 1853909942107304, guid: 390418c6a1078ef4eb100709ab7795ad, type: 2}
-  maxHitpoints: 280
+  maxHitpoints: 150
   moveSpeed: 2
   canAttack: 1
   damage: 9
-  damageSiege: 5
+  damageSiege: 3
   attackSpeed: 1
-  attackTriggerRadius: 14
+  attackTriggerRadius: 6
   isRanged: 0
   range: 0
   projectile: {fileID: 0}
-  pierceArmor: 2
+  pierceArmor: 0
   meleeArmor: 0
   isVillager: 0
   isTribe: 0

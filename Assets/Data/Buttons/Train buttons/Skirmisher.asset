@@ -9,22 +9,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a3ad325981febcb40b1684ae72c26884, type: 3}
-  m_Name: Slinger
+  m_Name: Skirmisher
   m_EditorClassIdentifier: 
   type: 2
-  title: Slinger (L)
-  description: Fast-moving and with a long range, slingers are good at gerilja warfare.
+  title: Skirmisher (S)
+  description: Skirmishers are fast moving and cheap close-combat units who are quick
+    train.
   executeScript: {fileID: 0}
   hotkey: 115
-  productionPrefab: {fileID: 1020951914992802, guid: 6d3fa4ecf08be154382c5969d0fa2605,
+  productionPrefab: {fileID: 1483358607672402, guid: 2b851cabbbd8b7746b21569869be993a,
     type: 2}
-  icon: {fileID: 21300064, guid: ba24593a1f1e5a645a720966e3210547, type: 3}
-  position: 1
+  icon: {fileID: 21300066, guid: ba24593a1f1e5a645a720966e3210547, type: 3}
+  position: 0
   stepsRequired: 12
   age: 0
   requiredTechnology: 
   food: 0
-  timber: 25
+  timber: 15
   wealth: 0
   metal: 0
-  housing: 1
+  housing: 0
