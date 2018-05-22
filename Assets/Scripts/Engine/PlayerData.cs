@@ -55,4 +55,5 @@ public class PlayerData {
     public float fishingSpeed = 1f;
     public float farmingSpeed = 1f;
     public float miningSpeed = 1f;
+    public float militaryUnitTrainingSpeed = 1f;
 }

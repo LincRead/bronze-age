@@ -278,11 +278,11 @@ public class Building : BaseController {
                     step *= 0.5f;
                 }
 
-                // Todo unique per civ!
-                else if (productionButtonsData[productionIndex].type == PRODUCTION_TYPE.UNIT)
+                // Increase production if Organized Warfare is researched
+                else if (productionButtonsData[productionIndex].type == PRODUCTION_TYPE.UNIT && !_buildingStats.isCivilizationCenter)
                 {
                     // Increase unit production for each food surplus level
-                    step += ((PlayerDataManager.instance.GetFoodSurplusLevelFor(playerID) - 1) * 0.1f);
+                    step = PlayerDataManager.instance.GetPlayerData(playerID).militaryUnitTrainingSpeed;
                 }
 
                 stepsProduced += step * Time.deltaTime;
