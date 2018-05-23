@@ -180,14 +180,10 @@ public class ControllerSelecting : MonoBehaviour {
             if (selectedGatherers.Count > 0)
             {
                 ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.VILLAGER, selectedUnits[0]);
+                EventManager.TriggerEvent("ActivateVillagerView");
             }
 
             ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.SELECTED_UNITS, null);
-
-            if(selectedGatherers.Count > 0)
-            {
-                EventManager.TriggerEvent("ActivateVillagerView");
-            }
         }
 
         else if(selectedUnits.Count > 0)
