@@ -149,11 +149,6 @@ public class PlayerDataManager : MonoBehaviour
         {
             foodSurplusLevel = 4;
         }
-
-        if(player == PlayerManager.myPlayerID && oldfoodSurplusLevel != foodPerSurplusLevel)
-        {
-
-        }
         
         playerData[player].foodSurplusLevel = foodSurplusLevel;
     }
@@ -183,10 +178,7 @@ public class PlayerDataManager : MonoBehaviour
 
 		knowledgeToGenerate += knowledgeGeneratedByCivCenter[playerData[player].foodSurplusLevel];
 
-		if (playerData [player].writing) 
-		{
-			knowledgeToGenerate *= 1.2f;
-		}
+		knowledgeToGenerate *= playerData[player].knowledgeGenerationFactor;
 
 		playerData[player].knowledgeGeneration = knowledgeToGenerate;
 

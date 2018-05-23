@@ -47,7 +47,7 @@ public class PlayerData {
 	public int numPriests = 0;
 
     // Technology stats
-	public bool writing = false;
+	public float knowledgeGenerationFactor = 1.0f;
     public int extraVillagerHP = 0;
     public float woodCuttingSpeed = 1f;
     public float gatherBerriesSpeed = 1f;

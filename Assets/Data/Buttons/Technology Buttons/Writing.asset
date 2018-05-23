@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc79851b7c9cc3a4b8ba538552433bcc, type: 3}
+  m_Name: Writing
+  m_EditorClassIdentifier: 
+  title: Writing
+  description: Increase knowlegde generation by 25%.
+  executeScript: {fileID: 11400000, guid: fd8ca6ce48560fb49a7cf46b6eda0f9a, type: 2}
+  icon: {fileID: 21300078, guid: ba24593a1f1e5a645a720966e3210547, type: 3}
+  knowledge: 30
