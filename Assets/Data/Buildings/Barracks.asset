@@ -33,9 +33,8 @@ MonoBehaviour:
   - {fileID: 21300002, guid: a60bb9b1b41d0c0439807712bb591a31, type: 3}
   damagedSprite: {fileID: 21300002, guid: a60bb9b1b41d0c0439807712bb591a31, type: 3}
   productionButtons:
-  - {fileID: 11400000, guid: ccd7bf0f7bfcd244a86c0727d6b678f4, type: 2}
-  - {fileID: 11400000, guid: 6b84467f8e93a8242a5daaab9b718505, type: 2}
   - {fileID: 11400000, guid: ac4d60ac24fd9c941b7d6a4da66a559e, type: 2}
+  - {fileID: 11400000, guid: 6b84467f8e93a8242a5daaab9b718505, type: 2}
   isCivilizationCenter: 0
   deliveryPointMaterials: 0
   deliveryPointFood: 0

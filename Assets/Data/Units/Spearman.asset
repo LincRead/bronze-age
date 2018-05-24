@@ -9,11 +9,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9b23cc1b3efc76048b4f96a7047ffbc1, type: 3}
-  m_Name: Heavy Infantry
+  m_Name: Spearman
   m_EditorClassIdentifier: 
   selectionCircle: {fileID: 1146485549116186, guid: c9feb719354d105419dee1fad02af82d,
     type: 2}
-  title: Heavy Infantry
+  title: Spearman
   controllerType: 0
   size: 1
   walkable: 0
@@ -32,7 +32,7 @@ MonoBehaviour:
   - Armor agains ranged attacks
   - 
   - Armour against melee attacks
-  visionRange: 14
+  visionRange: 12
   foodConsuming: 1
   healthBar: {fileID: 1853909942107304, guid: 390418c6a1078ef4eb100709ab7795ad, type: 2}
   maxHitpoints: 260
@@ -45,7 +45,7 @@ MonoBehaviour:
   isRanged: 0
   range: 0
   projectile: {fileID: 0}
-  pierceArmor: 3
-  meleeArmor: 1
+  pierceArmor: 2
+  meleeArmor: 0
   isVillager: 0
   isTribe: 0

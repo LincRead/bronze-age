@@ -9,12 +9,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a3ad325981febcb40b1684ae72c26884, type: 3}
-  m_Name: Heavy Infantry
+  m_Name: Spearman
   m_EditorClassIdentifier: 
   type: 2
   title: Heavy Infantry (H)
-  description: Heavy infantry can withstand lots of damage and have good protection
-    against ranged attacks, but the heavy equipment makes them slow.
+  description: Sperman can withstand lots of damage and have good protection against
+    ranged attacks, but the heavy equipment makes them slow.
   executeScript: {fileID: 0}
   hotkey: 104
   productionPrefab: {fileID: 1536942713551430, guid: 424a0719c04b3144382eaf764935b67d,
@@ -25,7 +25,7 @@ MonoBehaviour:
   age: 0
   requiredTechnology: 
   food: 0
-  timber: 0
-  wealth: 35
-  metal: 15
+  timber: 35
+  wealth: 25
+  metal: 0
   housing: 0

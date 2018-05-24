@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 2
   title: Footman (F)
-  description: Footmen deal high melee damage.
+  description: Footmen carry bronze axes that deal high melee damage.
   executeScript: {fileID: 0}
   hotkey: 102
   productionPrefab: {fileID: 1473468351577072, guid: 81317b6b0bfb1694582b777d54122f67,
@@ -26,5 +26,5 @@ MonoBehaviour:
   food: 0
   timber: 0
   wealth: 25
-  metal: 0
+  metal: 15
   housing: 1
