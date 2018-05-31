@@ -297,13 +297,13 @@ public class PlayerManager : MonoBehaviour {
 
         if (newSelectableController == null)
         {
-            // Look for static Controller that occupies Tile first
-            newSelectableController = Grid.instance.GetControllerFromWorldPoint(mousePosition);
-
-            // If not found, see if any units occupy nodes in Tiles
+            // Look for unit that occupies Tile first
+            newSelectableController = Grid.instance.GetUnitFromWorldPoint(mousePosition);
+            
+            // If not found, see if any other types of Controller occupy nodes in Tiles
             if (newSelectableController == null)
             {
-                newSelectableController = Grid.instance.GetUnitFromWorldPoint(mousePosition);
+                newSelectableController = Grid.instance.GetControllerFromWorldPoint(mousePosition);
             }
         }
 
@@ -709,29 +709,44 @@ public class PlayerManager : MonoBehaviour {
         return mouseHoveringController.controller;
     }
 
+    // Set priority for selecting
     int GetHoveringPriorityOfSelectedController(BaseController controller)
     {
-        // Set priority
-        if (controller.controllerType == CONTROLLER_TYPE.UNIT
-            && _controllerSelecting.SelectedUnitWhoCanAttack() 
+        // Friendly unit
+        if (controller.controllerType == CONTROLLER_TYPE.UNIT 
+            && controller.playerID == myPlayerID)
+        {
+            return 5;
+        }
+
+        // Friendly building
+        else if (controller.controllerType == CONTROLLER_TYPE.BUILDING
+            && controller.playerID == myPlayerID)
+        {
+            return 4;
+        }
+
+        // Enemy unit
+        else if (controller.controllerType == CONTROLLER_TYPE.UNIT 
             && controller.playerID != myPlayerID)
         {
             return 3;
         }
 
+        // Enemy building
         else if (controller.controllerType == CONTROLLER_TYPE.BUILDING
-            && _controllerSelecting.GetSelectedGatherers().Count > 0
-            && !controller.GetComponent<Building>().constructed
-            && controller.playerID == myPlayerID)
+            && controller.playerID != myPlayerID)
         {
             return 2;
         }
 
+        // Resources
         else if (controller.controllerType == CONTROLLER_TYPE.RESOURCE)
         {
             return 1;
         }
 
+        // Rest
         else
         {
             return 0;
