@@ -42,10 +42,14 @@ MonoBehaviour:
   damageSiege: 3
   attackSpeed: 1
   attackTriggerRadius: 7
-  isRanged: 0
+  weaponType: 1
+  canAttackMelee: 1
+  canAttackRanged: 0
   range: 0
   projectile: {fileID: 0}
-  pierceArmor: 0
+  rangedArmor: 0
   meleeArmor: 0
+  hasShield: 0
+  hasHeavyBodyArmor: 0
   isVillager: 1
   isTribe: 0

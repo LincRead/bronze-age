@@ -31,6 +31,13 @@ TextureImporter:
     21300048: Skirmisher_24
     21300050: Skirmisher_25
     21300052: Skirmisher_26
+    21300054: Skirmisher_27
+    21300056: Skirmisher_28
+    21300058: Skirmisher_29
+    21300060: Skirmisher_30
+    21300062: Skirmisher_31
+    21300064: Skirmisher_32
+    21300066: Skirmisher_33
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -477,6 +484,104 @@ TextureImporter:
         serializedVersion: 2
         x: 180
         y: 24
+        width: 30
+        height: 24
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Skirmisher_27
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 24
+        width: 30
+        height: 24
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Skirmisher_28
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 24
+        width: 30
+        height: 24
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Skirmisher_29
+      rect:
+        serializedVersion: 2
+        x: 270
+        y: 24
+        width: 30
+        height: 24
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Skirmisher_30
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 30
+        height: 24
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Skirmisher_31
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 0
+        width: 30
+        height: 24
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Skirmisher_32
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 0
+        width: 30
+        height: 24
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Skirmisher_33
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 0
         width: 30
         height: 24
       alignment: 7

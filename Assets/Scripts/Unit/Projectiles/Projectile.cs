@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour {
 
+    [Tooltip("So projectile is in front of unit firing it")]
+    public float offsetY = 0.0f;
+
     Transform _transform;
-    Vector2 velocity = Vector2.zero;
 	Node currentNode;
 	Node targetNode;
     UnitStateController parentController;
@@ -22,7 +24,9 @@ public class Projectile : MonoBehaviour {
         this.damageSiege = parentController._unitStats.damageSiege;
 
         _transform = GetComponent<Transform>();
-        _transform.position = new Vector3(_transform.position.x, _transform.position.y, _transform.position.y);
+        _transform.position = new Vector3(_transform.position.x, _transform.position.y, _transform.position.y - offsetY);
+
+        Rotate();
     }
 	
 	void Update ()
@@ -36,7 +40,7 @@ public class Projectile : MonoBehaviour {
 
         else
         {
-            MoveTowardsTargetNode(velocity);
+            MoveTowardsTargetNode();
         }
     }
 
@@ -71,20 +75,32 @@ public class Projectile : MonoBehaviour {
         Destroy(gameObject);   
     }
 
-    void MoveTowardsTargetNode(Vector2 velocity)
+    void MoveTowardsTargetNode()
     {
         float dirx = targetNode.worldPosition.x - _transform.position.x;
         float diry = targetNode.worldPosition.y - _transform.position.y;
 
-        velocity = new Vector2(dirx, diry);
+        Vector2 velocity = new Vector2(dirx, diry);
         velocity.Normalize();
 
         float moveX = velocity.x * moveSpeed * Time.deltaTime;
         float moveY = velocity.y * moveSpeed * Time.deltaTime;
 
-        _transform.position = new Vector3(_transform.position.x + moveX, _transform.position.y + moveY, _transform.position.y + moveY);
+        _transform.position = new Vector3(_transform.position.x + moveX, _transform.position.y + moveY, _transform.position.y + moveY - offsetY);
+    }
 
-        if(!rotated)
+    void Rotate()
+    {
+        float dirx = targetNode.worldPosition.x - _transform.position.x;
+        float diry = targetNode.worldPosition.y - _transform.position.y;
+
+        Vector2 velocity = new Vector2(dirx, diry);
+        velocity.Normalize();
+
+        float moveX = velocity.x * moveSpeed * Time.deltaTime;
+        float moveY = velocity.y * moveSpeed * Time.deltaTime;
+
+        if (!rotated)
         {
             rotated = true;
 

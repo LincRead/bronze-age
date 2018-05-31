@@ -20,18 +20,18 @@ MonoBehaviour:
   iconSprite: {fileID: 21300000, guid: 31653b2da68c0294db56c01e2c5dbc8b, type: 3}
   statSprites:
   - {fileID: 21300010, guid: 21f702c21d1581441b7d3f124400b51c, type: 3}
+  - {fileID: 21300028, guid: 21f702c21d1581441b7d3f124400b51c, type: 3}
+  - {fileID: 21300030, guid: 21f702c21d1581441b7d3f124400b51c, type: 3}
+  - {fileID: 21300024, guid: 21f702c21d1581441b7d3f124400b51c, type: 3}
   - {fileID: 21300012, guid: 21f702c21d1581441b7d3f124400b51c, type: 3}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 21300026, guid: 21f702c21d1581441b7d3f124400b51c, type: 3}
   statDescriptions:
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Attack damage
+  - Movement speed
+  - Attack damage to buildings
+  - Armor agains ranged attacks
+  - Attack range
+  - Armour against melee attacks
   visionRange: 18
   foodConsuming: 1
   healthBar: {fileID: 1853909942107304, guid: 390418c6a1078ef4eb100709ab7795ad, type: 2}
@@ -42,10 +42,14 @@ MonoBehaviour:
   damageSiege: 1
   attackSpeed: 1
   attackTriggerRadius: 18
-  isRanged: 1
+  weaponType: 2
+  canMeleeAttack: 0
+  canAttackRanged: 1
   range: 16
   projectile: {fileID: 1216179291789438, guid: ef628d521cb262a45830b2715571d158, type: 2}
-  pierceArmor: 0
+  rangedArmor: 0
   meleeArmor: 0
+  hasShield: 0
+  hasHeavyBodyArmor: 0
   isVillager: 0
   isTribe: 0

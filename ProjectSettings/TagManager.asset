@@ -53,6 +53,9 @@ TagManager:
   - name: Object
     uniqueID: 2252196787
     locked: 0
+  - name: Effects
+    uniqueID: 2818852005
+    locked: 0
   - name: Placing Building
     uniqueID: 2998641273
     locked: 0

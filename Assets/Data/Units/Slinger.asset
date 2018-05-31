@@ -38,14 +38,18 @@ MonoBehaviour:
   maxHitpoints: 120
   moveSpeed: 8
   canAttack: 1
-  damage: 7
+  damage: 8
   damageSiege: 1
   attackSpeed: 1
   attackTriggerRadius: 24
-  isRanged: 1
+  weaponType: 3
+  canMeleeAttack: 0
+  canAttackRanged: 1
   range: 22
   projectile: {fileID: 1420772327492950, guid: 0e023459167a68648a3ade7a590d4872, type: 2}
-  pierceArmor: 0
+  rangedArmor: 0
   meleeArmor: 0
+  hasShield: 0
+  hasHeavyBodyArmor: 0
   isVillager: 0
   isTribe: 0

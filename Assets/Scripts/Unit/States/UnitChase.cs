@@ -43,8 +43,14 @@ public class UnitChase : UnitMoveTo
             return;
         }
 
-        if (Grid.instance.GetDistanceBetweenNodes(
-            _controller._pathfinder.currentStandingOnNode, _targetController._pathfinder.currentStandingOnNode) <= 10)
+        if (_controller._unitStats.canAttackRanged 
+            && _controller.distanceToTarget <= _controller._unitStats.range * 10)
+        {
+            _controller.TransitionToState(_controller.rangedAttackState);
+        }
+
+        else if (_controller._unitStats.canAttackMelee 
+            && Grid.instance.GetDistanceBetweenNodes(_controller._pathfinder.currentStandingOnNode, _targetController._pathfinder.currentStandingOnNode) <= 10)
         {
             _controller.TransitionToState(_controller.attackState);
         }

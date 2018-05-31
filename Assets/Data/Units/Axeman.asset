@@ -9,15 +9,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9b23cc1b3efc76048b4f96a7047ffbc1, type: 3}
-  m_Name: Skirmisher
+  m_Name: Axeman
   m_EditorClassIdentifier: 
   selectionCircle: {fileID: 1146485549116186, guid: c9feb719354d105419dee1fad02af82d,
     type: 2}
-  title: Skirmisher
+  title: Axeman
   controllerType: 0
   size: 1
   walkable: 0
-  iconSprite: {fileID: 21300000, guid: 9c8b0aada80a4c3439f5375c46f3e8f8, type: 3}
+  iconSprite: {fileID: 21300000, guid: 77d6596e935a0b943bc525b8de1414bc, type: 3}
   statSprites:
   - {fileID: 21300010, guid: 21f702c21d1581441b7d3f124400b51c, type: 3}
   - {fileID: 21300028, guid: 21f702c21d1581441b7d3f124400b51c, type: 3}
@@ -32,20 +32,24 @@ MonoBehaviour:
   - Armor agains ranged attacks
   - 
   - Armour against melee attacks
-  visionRange: 14
+  visionRange: 16
   foodConsuming: 1
   healthBar: {fileID: 1853909942107304, guid: 390418c6a1078ef4eb100709ab7795ad, type: 2}
-  maxHitpoints: 150
-  moveSpeed: 8
+  maxHitpoints: 180
+  moveSpeed: 6
   canAttack: 1
-  damage: 9
-  damageSiege: 3
+  damage: 15
+  damageSiege: 5
   attackSpeed: 1
   attackTriggerRadius: 14
-  isRanged: 0
+  weaponType: 4
+  canAttackMelee: 1
+  canAttackRanged: 0
   range: 0
   projectile: {fileID: 0}
-  pierceArmor: 0
+  rangedArmor: 0
   meleeArmor: 0
+  hasShield: 1
+  hasHeavyBodyArmor: 0
   isVillager: 0
   isTribe: 0

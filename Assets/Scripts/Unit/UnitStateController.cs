@@ -143,6 +143,9 @@ public class UnitStateController : BaseController
     [HideInInspector]
     public bool waveAttackMode = false;
 
+    [HideInInspector]
+    public float timeSinceLastAttack = 0.0f;
+
     protected override void Start()
     {
         _basicStats = _unitStats;
@@ -189,7 +192,7 @@ public class UnitStateController : BaseController
         }
 
         // Special states
-        if (_unitStats.isRanged)
+        if (_unitStats.canAttackRanged)
         {
             rangedMoveToControllerState = ScriptableObject.CreateInstance<RangedUnitMoveToController>();
             rangedMoveToNearbyEnemyState = ScriptableObject.CreateInstance<RangedUnitMoveToNearbyEnemy>();
@@ -309,6 +312,11 @@ public class UnitStateController : BaseController
 
     protected override void Update()
     {
+        if(_unitStats.canAttack)
+        {
+            timeSinceLastAttack += Time.deltaTime;
+        }
+
         // Move away from unwalkable tiles
         if (_pathfinder.currentStandingOnNode.parentTile.controllerOccupying != null
             && !_pathfinder.currentStandingOnNode.parentTile.controllerOccupying._basicStats.walkable
@@ -335,7 +343,7 @@ public class UnitStateController : BaseController
         this.targetController = targetController;
 
         // Special cases for ranged units
-        if (_unitStats.isRanged)
+        if (_unitStats.canAttackRanged)
         {
             if (targetController.controllerType != CONTROLLER_TYPE.RESOURCE
                 && targetController.playerID != PlayerManager.myPlayerID)
@@ -389,7 +397,7 @@ public class UnitStateController : BaseController
     {
         this.targetPosition = targetPosition;
 
-        // No longer targetting a Controller
+        // No longer targeting a Controller
         targetController = null;
 
         TransitionToState(attackMoveState);
@@ -401,8 +409,6 @@ public class UnitStateController : BaseController
         {
             return;
         }
-
-        distanceToTarget = 1000; //  Reset
 
         if(currentState)
         {
@@ -481,9 +487,9 @@ public class UnitStateController : BaseController
     {
 		int damage = hitByController._unitStats.damage;
 
-		if (hitByController._unitStats.isRanged) 
+		if (hitByController._unitStats.canAttackRanged) 
 		{
-			damage -= _unitStats.pierceArmor;
+			damage -= _unitStats.rangedArmor;
 		} 
 
 		else 
@@ -684,7 +690,7 @@ public class UnitStateController : BaseController
             targetController = closestEnemyController;
 
             // Chase closest enemy
-            if (_unitStats.isRanged)
+            if (_unitStats.canAttackRanged)
             {
                 TransitionToState(rangedMoveToNearbyEnemyState);
             }
@@ -833,7 +839,7 @@ public class UnitStateController : BaseController
     {
         int[] stats = new int[6];
 
-	    stats[0] = _unitStats.damage;
+	    stats[0] = (int)(_unitStats.damage / _unitStats.attackSpeed);
         statSprites[0] = ControllerUIManager.instance.attackIcon;
         statsDescriptions[0] = "Attack damage";
 
@@ -848,7 +854,7 @@ public class UnitStateController : BaseController
         statSprites[2] = ControllerUIManager.instance.attackSiegeIcon;
         statsDescriptions[2] = "Attack damage to buildings";
 
-        stats[3] = _unitStats.pierceArmor;
+        stats[3] = _unitStats.rangedArmor;
         statSprites[3] = ControllerUIManager.instance.pierceArmorIcon;
         statsDescriptions[3] = "Armor agains ranged attacks";
 
@@ -856,9 +862,8 @@ public class UnitStateController : BaseController
         statSprites[5] = ControllerUIManager.instance.meleeArmorIcon;
         statsDescriptions[5] = "Armour against melee attacks";
 
-
         // Special (bot right)
-        if (_unitStats.isRanged)
+        if (_unitStats.canAttackRanged)
         {
             stats[4] = _unitStats.range;
             statSprites[4] = ControllerUIManager.instance.rangeIcon;

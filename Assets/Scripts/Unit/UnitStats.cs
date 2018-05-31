@@ -21,14 +21,32 @@ public class UnitStats : DefaultStats
     public float attackSpeed = 1f;
     public int attackTriggerRadius = 6;
 
+    [Header("Weapon type")]
+    public WEAPON_TYPE weaponType;
+
+    public enum WEAPON_TYPE
+    {
+        NONE,
+        SPEAR,
+        BOW,
+        SLING,
+        AXE,
+        SWORD
+    }
+
+    [Header("Melee attack")]
+    public bool canAttackMelee = false;
+
     [Header("Ranged attack")]
-    public bool isRanged = false;
+    public bool canAttackRanged = false;
     public int range = 0;
     public GameObject projectile;
 
 	[Header("Defence")]
-	public int pierceArmor = 0;
+	public int rangedArmor = 0;
 	public int meleeArmor = 0;
+    public bool hasShield = false;
+    public bool hasHeavyBodyArmor = false;
 
     [Header("Vilager")]
     public bool isVillager = false;

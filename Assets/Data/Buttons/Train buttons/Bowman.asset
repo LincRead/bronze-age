@@ -9,12 +9,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a3ad325981febcb40b1684ae72c26884, type: 3}
-  m_Name: Borman
+  m_Name: Bowman
   m_EditorClassIdentifier: 
   type: 2
   title: Bowman (B)
-  description: Bowmen deal ranged damage and are especially powerful when they are
-    stationed in an outpost, protected from melee damage.
+  description: Bowmen deal high ranged damage and are especially powerful when they
+    are stationed in an outpost.
   executeScript: {fileID: 0}
   hotkey: 98
   productionPrefab: {fileID: 1806930240321258, guid: d5d84fbe9fae28f47b913a6dcae5ff98,
@@ -25,7 +25,7 @@ MonoBehaviour:
   age: 0
   requiredTechnology: 
   food: 0
-  timber: 25
+  timber: 35
   wealth: 15
   metal: 0
   housing: 1

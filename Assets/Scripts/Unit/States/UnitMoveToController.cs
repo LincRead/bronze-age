@@ -203,7 +203,10 @@ public class UnitMoveToController : UnitMoveTo
     {
         if(_targetController.playerID != _controller.playerID)
         {
-            _controller.TransitionToState(_controller.attackState);
+            if(_controller._unitStats.canAttackMelee)
+            {
+                _controller.TransitionToState(_controller.attackState);
+            }
         }
 
         else if (_targetController.playerID == PlayerManager.myPlayerID)

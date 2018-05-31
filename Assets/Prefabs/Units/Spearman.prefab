@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 95156346083070154}
   - component: {fileID: 114009015297911082}
   m_Layer: 0
-  m_Name: Heavy Infantry
+  m_Name: Spearman
   m_TagString: Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

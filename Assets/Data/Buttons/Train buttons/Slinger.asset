@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Name: Slinger
   m_EditorClassIdentifier: 
   type: 2
-  title: Slinger (L)
-  description: Slingers are fast and has a long range, so they are good scouts or
-    for gerilja warfare.
+  title: Slinger (S)
+  description: Slingers are fast and have a long range, so they are good for scouting
+    and gerilja warfare.
   executeScript: {fileID: 0}
   hotkey: 115
   productionPrefab: {fileID: 1020951914992802, guid: 6d3fa4ecf08be154382c5969d0fa2605,

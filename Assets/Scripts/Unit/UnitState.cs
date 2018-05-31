@@ -6,13 +6,13 @@ public class UnitState : ScriptableObject
     protected UnitStateController _controller;
     protected Node _targetStandingOnNode;
     protected float timeSinceStateChange = 0.0f;
-    private bool playAnimation = false;
+    protected bool playAnimationAtStart = false;
 
     public virtual void OnEnter(UnitStateController controller)
     {
         timeSinceStateChange = 0.0f;
         _controller = controller;
-        playAnimation = true;
+        playAnimationAtStart = true;
     }
 
     protected virtual void PlayAnimation()
@@ -22,10 +22,10 @@ public class UnitState : ScriptableObject
 
     public virtual void UpdateState()
     {
-        if (playAnimation)
+        if (playAnimationAtStart)
         {
             PlayAnimation();
-            playAnimation = false;
+            playAnimationAtStart = false;
         }
 
         timeSinceStateChange += Time.deltaTime;

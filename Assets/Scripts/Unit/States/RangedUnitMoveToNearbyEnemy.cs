@@ -10,7 +10,7 @@ public class RangedUnitMoveToNearbyEnemy : UnitMoveToNearbyEnemy
 
         if (_controller.distanceToTarget <= _controller._unitStats.range * 10)
         {
-            _controller.TransitionToState(_controller.attackState);
+            _controller.TransitionToState(_controller.rangedAttackState);
         }
     }
 
@@ -30,7 +30,7 @@ public class RangedUnitMoveToNearbyEnemy : UnitMoveToNearbyEnemy
 
         else if (_controller.distanceToTarget <= _controller._unitStats.range * 10)
         {
-            _controller.TransitionToState(_controller.attackState);
+            _controller.TransitionToState(_controller.rangedAttackState);
         }
     }
 }
