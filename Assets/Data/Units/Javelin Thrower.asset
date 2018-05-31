@@ -17,7 +17,7 @@ MonoBehaviour:
   controllerType: 0
   size: 1
   walkable: 0
-  iconSprite: {fileID: 21300000, guid: 9c8b0aada80a4c3439f5375c46f3e8f8, type: 3}
+  iconSprite: {fileID: 21300042, guid: 9c8b0aada80a4c3439f5375c46f3e8f8, type: 3}
   statSprites:
   - {fileID: 21300010, guid: 21f702c21d1581441b7d3f124400b51c, type: 3}
   - {fileID: 21300028, guid: 21f702c21d1581441b7d3f124400b51c, type: 3}

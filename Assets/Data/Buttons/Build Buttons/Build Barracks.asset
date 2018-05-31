@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Name: Build Barracks
   m_EditorClassIdentifier: 
   type: 1
-  title: Barracks (C)
+  title: Barracks (B)
   description: Train close-combat warriors.
   executeScript: {fileID: 0}
-  hotkey: 99
+  hotkey: 98
   productionPrefab: {fileID: 1933542556102252, guid: 57f0bfa302c8b45478cb730db897875f,
     type: 2}
   icon: {fileID: 21300040, guid: ba24593a1f1e5a645a720966e3210547, type: 3}

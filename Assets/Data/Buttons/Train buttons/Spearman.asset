@@ -28,4 +28,4 @@ MonoBehaviour:
   timber: 25
   wealth: 35
   metal: 0
-  housing: 0
+  housing: 1

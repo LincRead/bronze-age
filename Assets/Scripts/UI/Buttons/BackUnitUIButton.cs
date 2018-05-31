@@ -9,7 +9,9 @@ public class BackUnitUIButton : UnitUIButton
         base.OnClick();
 
         if (PlayerManager.instance.currentUserState == PlayerManager.PLAYER_ACTION_STATE.PLACING_BUILDING)
+        {
             PlayerManager.instance.CancelPlaceBuildingState();
+        } 
 
         if (PlayerManager.instance._controllerSelecting.selectedUnits.Count == 1)
         {

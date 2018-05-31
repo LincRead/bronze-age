@@ -13,18 +13,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 2
   title: Javelin Throwers (J)
-  description: Javelin Throwers are cheap and fast moving skirmishers.
+  description: Javelin Throwers are fast moving skirmishers who have a slow but powerful
+    short-ranged attack.
   executeScript: {fileID: 0}
   hotkey: 106
   productionPrefab: {fileID: 1483358607672402, guid: 2b851cabbbd8b7746b21569869be993a,
     type: 2}
-  icon: {fileID: 21300074, guid: ba24593a1f1e5a645a720966e3210547, type: 3}
+  icon: {fileID: 21300080, guid: ba24593a1f1e5a645a720966e3210547, type: 3}
   position: 0
   stepsRequired: 14
   age: 0
   requiredTechnology: 
   food: 0
-  timber: 25
+  timber: 35
   wealth: 0
   metal: 0
-  housing: 0
+  housing: 1

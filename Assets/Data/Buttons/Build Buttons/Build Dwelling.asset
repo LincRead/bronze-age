@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Name: Build Dwelling
   m_EditorClassIdentifier: 
   type: 1
-  title: Dwelling (H)
+  title: Dwelling (D)
   description: Your citizens require enought housing to stay prosperous.
   executeScript: {fileID: 0}
-  hotkey: 104
+  hotkey: 100
   productionPrefab: {fileID: 1000011063203730, guid: aa52848827f11ff4584e0219992c92e3,
     type: 2}
   icon: {fileID: 21300036, guid: ba24593a1f1e5a645a720966e3210547, type: 3}

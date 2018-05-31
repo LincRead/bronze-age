@@ -1990,6 +1990,7 @@ GameObject:
   - component: {fileID: 114047748868840134}
   - component: {fileID: 223921655428186470}
   - component: {fileID: 114518407779249132}
+  - component: {fileID: 222494570209219208}
   m_Layer: 5
   m_Name: Selected Units Canvas
   m_TagString: Untagged
@@ -2206,7 +2207,7 @@ GameObject:
   - component: {fileID: 114416734929841788}
   - component: {fileID: 114526614225805014}
   m_Layer: 5
-  m_Name: Build Button
+  m_Name: Construct Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6302,7 +6303,7 @@ MonoBehaviour:
   m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
+  m_IgnoreReversedGraphics: 0
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
@@ -9154,6 +9155,12 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1985175435820532}
+--- !u!222 &222494570209219208
+CanvasRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1719059444190704}
 --- !u!222 &222504916295038272
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -12403,6 +12410,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 59.978027, y: -11.499592}
+  m_AnchoredPosition: {x: 59.978012, y: -11.499592}
   m_SizeDelta: {x: 119.96, y: 23}
   m_Pivot: {x: 0.5, y: 0.5}

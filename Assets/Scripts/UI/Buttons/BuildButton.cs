@@ -7,6 +7,8 @@ public class BuildButton : UnitUIButton
     {
         base.OnClick();
 
+        Debug.Log("CLICKED BUID");
+
         if(PlayerManager.instance._controllerSelecting.selectedUnits.Count == 1)
         {
             ControllerUIManager.instance.ChangeView(ControllerUIManager.CONTROLLER_UI_VIEW.BUILDINGS, null);
