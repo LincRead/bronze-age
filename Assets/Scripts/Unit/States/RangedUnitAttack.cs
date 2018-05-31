@@ -36,6 +36,7 @@ public class RangedUnitAttack : UnitAttack
 
     protected override void PlayAnimation()
     {
+        _controller.FaceController(_controller.targetController);
         _controller._animator.speed = 1.0f;
         _controller.timeSinceLastAttack = 0.0f;
         _controller._animator.Play("fire", -1, 0.0f);
