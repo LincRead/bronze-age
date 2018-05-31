@@ -5,7 +5,7 @@ using UnityEngine;
 public class Projectile : MonoBehaviour {
 
     [Tooltip("So projectile is in front of unit firing it")]
-    public float offsetY = 0.0f;
+    float offsetY = 0.15f;
 
     Transform _transform;
 	Node currentNode;

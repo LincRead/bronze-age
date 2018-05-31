@@ -112,13 +112,18 @@ public class UnitMoveToController : UnitMoveTo
         }
 
         // Fetch next target node
-        if (_pathfinder.path.Count > 0)
+        if (ShouldGetNextTargetNode())
         {
             nextTargetNode = _pathfinder.path[0];
         }
 
         // Based on new nextTargetNode
         IntersectingTarget();
+    }
+
+    protected virtual bool ShouldGetNextTargetNode()
+    {
+        return _pathfinder.path.Count > 0;
     }
 
     public override void UpdateState()
@@ -190,7 +195,15 @@ public class UnitMoveToController : UnitMoveTo
     {
         if (_targetController.playerID != _controller.playerID)
         {
-            _controller.TransitionToState(_controller.attackState);
+            if(_controller._unitStats.canAttack)
+            {
+                _controller.TransitionToState(_controller.attackState);
+            }
+
+            else
+            {
+                _controller.TransitionToState(_controller.idleState);
+            }
         }
 
         else
@@ -203,9 +216,14 @@ public class UnitMoveToController : UnitMoveTo
     {
         if(_targetController.playerID != _controller.playerID)
         {
-            if(_controller._unitStats.canAttackMelee)
+            if(_controller._unitStats.canAttack && _controller._unitStats.canAttackMelee)
             {
                 _controller.TransitionToState(_controller.attackState);
+            }
+
+            else
+            {
+                _controller.TransitionToState(_controller.idleState);
             }
         }
 
@@ -301,7 +319,7 @@ public class UnitMoveToController : UnitMoveTo
         }
     }
 
-    void HandleTargetControllerIsDestroyed()
+    protected void HandleTargetControllerIsDestroyed()
     {
         if (_controller.harvestingResource)
         {

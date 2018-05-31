@@ -14,11 +14,8 @@ public class UnitStats : DefaultStats
     public int maxHitpoints = 20;
     public int moveSpeed = 2;
 
-    [Header("Attack stats")]
-    public bool canAttack = true;
-    public int damage = 1;
-    public int damageSiege = 1;
-    public float attackSpeed = 1f;
+    [Header("Attack values")]
+    public bool canAttack = false;
     public int attackTriggerRadius = 6;
 
     [Header("Weapon type")]
@@ -36,13 +33,20 @@ public class UnitStats : DefaultStats
 
     [Header("Melee attack")]
     public bool canAttackMelee = false;
+    public int damageMelee = 0;
+    public float attackSpeedMelee = 1f;
 
     [Header("Ranged attack")]
     public bool canAttackRanged = false;
+    public int damageRanged = 0;
+    public float attackSpeedRanged = 1f;
     public int range = 0;
     public GameObject projectile;
 
-	[Header("Defence")]
+    [Header("Siege attack")]
+    public int damageSiege = 1;
+
+    [Header("Defence")]
 	public int rangedArmor = 0;
 	public int meleeArmor = 0;
     public bool hasShield = false;

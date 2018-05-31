@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class RangedUnitAttack : UnitAttack
 {
+    protected override void SetAttackSpeed()
+    {
+        attackSpeed = _controller._unitStats.attackSpeedRanged;
+    }
+
     protected override bool ContinueToAttack()
     {
         // Is enemy still close enought?

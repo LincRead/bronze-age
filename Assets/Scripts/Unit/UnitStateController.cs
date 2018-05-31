@@ -345,6 +345,14 @@ public class UnitStateController : BaseController
         // Special cases for ranged units
         if (_unitStats.canAttackRanged)
         {
+            // Even if unit can attack ranged, if it can also attack melee
+            // and we are targetting a building, do melee attack
+            if(_unitStats.canAttackMelee && targetController.controllerType == CONTROLLER_TYPE.BUILDING)
+            {
+                TransitionToState(moveToControllerState);
+                return;
+            }
+
             if (targetController.controllerType != CONTROLLER_TYPE.RESOURCE
                 && targetController.playerID != PlayerManager.myPlayerID)
             {
@@ -472,7 +480,7 @@ public class UnitStateController : BaseController
 
         GameObject newProjectile = GameObject.Instantiate(
             _unitStats.projectile, 
-            transform.position + new Vector3(0.0f, (_spriteRenderer.bounds.size.y / 2)), 
+            transform.position + new Vector3(0.0f, 0.15f), 
             Quaternion.identity);
         Projectile p = newProjectile.GetComponent<Projectile>();
         p.SetParentAndTargetControllers(this, targetController);
@@ -485,16 +493,16 @@ public class UnitStateController : BaseController
 
 	public override void Hit(UnitStateController hitByController)
     {
-		int damage = hitByController._unitStats.damage;
+        int damage = 0;
 
 		if (hitByController._unitStats.canAttackRanged) 
 		{
-			damage -= _unitStats.rangedArmor;
+			damage = hitByController._unitStats.damageRanged - _unitStats.rangedArmor;
 		} 
 
 		else 
 		{
-			damage -= _unitStats.meleeArmor;
+			damage = hitByController._unitStats.damageMelee - _unitStats.meleeArmor;
 		}
 
 		// Always deal at least 1 damage
@@ -692,7 +700,18 @@ public class UnitStateController : BaseController
             // Chase closest enemy
             if (_unitStats.canAttackRanged)
             {
-                TransitionToState(rangedMoveToNearbyEnemyState);
+                // Even if unit can attack ranged, if it can also attack melee
+                // and we are targetting a building, do melee attack
+                if (_unitStats.canAttackMelee && targetController.controllerType == CONTROLLER_TYPE.BUILDING)
+                {
+                    TransitionToState(moveToControllerState);
+                    return;
+                }
+
+                else
+                {
+                    TransitionToState(rangedMoveToNearbyEnemyState);
+                }
             }
 
             else
@@ -839,7 +858,7 @@ public class UnitStateController : BaseController
     {
         int[] stats = new int[6];
 
-	    stats[0] = (int)(_unitStats.damage / _unitStats.attackSpeed);
+	    stats[0] = (int)(_unitStats.damageMelee / _unitStats.attackSpeedMelee);
         statSprites[0] = ControllerUIManager.instance.attackIcon;
         statsDescriptions[0] = "Attack damage";
 

@@ -38,15 +38,17 @@ MonoBehaviour:
   maxHitpoints: 165
   moveSpeed: 8
   canAttack: 1
-  damage: 14
-  damageSiege: 3
-  attackSpeed: 2
   attackTriggerRadius: 14
   weaponType: 1
   canAttackMelee: 1
+  damageMelee: 7
+  attackSpeedMelee: 1
   canAttackRanged: 1
+  damageRanged: 14
+  attackSpeedRanged: 2
   range: 10
   projectile: {fileID: 1272150398772700, guid: 4d75bb6f4b635c94a8d90b06a86a1424, type: 2}
+  damageSiege: 3
   rangedArmor: 0
   meleeArmor: 0
   hasShield: 0

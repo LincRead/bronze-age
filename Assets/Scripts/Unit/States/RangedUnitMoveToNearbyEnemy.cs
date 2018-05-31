@@ -8,7 +8,7 @@ public class RangedUnitMoveToNearbyEnemy : UnitMoveToNearbyEnemy
     {
         base.OnEnter(controller);
 
-        if (_controller.distanceToTarget <= _controller._unitStats.range * 10)
+        if (WitinRange())
         {
             _controller.TransitionToState(_controller.rangedAttackState);
         }
@@ -28,9 +28,19 @@ public class RangedUnitMoveToNearbyEnemy : UnitMoveToNearbyEnemy
             HandleNoPathToTargetControllerFound();
         }
 
-        else if (_controller.distanceToTarget <= _controller._unitStats.range * 10)
+        else if (WitinRange())
         {
             _controller.TransitionToState(_controller.rangedAttackState);
         }
+    }
+
+    bool WitinRange()
+    {
+        return _controller.distanceToTarget <= _controller._unitStats.range * 10;
+    }
+
+    protected override bool ShouldGetNextTargetNode()
+    {
+        return _controller.distanceToTarget > _controller._unitStats.range * 10;
     }
 }

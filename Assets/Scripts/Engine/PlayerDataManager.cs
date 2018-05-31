@@ -141,8 +141,6 @@ public class PlayerDataManager : MonoBehaviour
 
     public void CalculateFoodSurplusLevelFor(int player)
     {
-        int oldfoodSurplusLevel = playerData[player].foodSurplusLevel;
-
         int foodSurplusLevel = (int)Mathf.Floor(((PlayerDataManager.foodPerSurplusLevel + playerData[player].foodInStock) / (PlayerDataManager.foodPerSurplusLevel * 5) * 5));
 
         if (foodSurplusLevel > 4)

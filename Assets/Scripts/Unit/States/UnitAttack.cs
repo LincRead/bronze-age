@@ -4,17 +4,13 @@ using System.Collections;
 [CreateAssetMenu(menuName = "States/Unit states/attack")]
 public class UnitAttack : UnitState
 {
-    float attackSpeed;
+    protected float attackSpeed;
 
     public override void OnEnter(UnitStateController controller)
     {
         base.OnEnter(controller);
 
-        if (_controller._unitStats.damage == 0)
-        {
-            _controller.TransitionToState(_controller.idleState);
-            return;
-        }
+        SetAttackSpeed();
 
         // Make sure it's not too close to last attack.
         if (_controller.timeSinceLastAttack < attackSpeed)
@@ -22,10 +18,14 @@ public class UnitAttack : UnitState
             playAnimationAtStart = false;
             _controller._animator.Play("idle", -1, 0.0f);
         }
-
-        attackSpeed = _controller._unitStats.attackSpeed;
+        
         _targetStandingOnNode = controller.targetController.GetPrimaryNode();
         _controller.FaceController(_controller.targetController);
+    }
+
+    protected virtual void SetAttackSpeed()
+    {
+        attackSpeed = _controller._unitStats.attackSpeedMelee;
     }
 
     public override void UpdateState()

@@ -27,7 +27,6 @@ public class UnitMoveToPosition : UnitMoveTo
     public override void CheckTransitions()
     {  
         // Reached target node
-        //if (nextTargetNode == endNode && Vector2.Distance(_transform.position, endNode.worldPosition) <= 0.02f)
 		if(nextTargetNode == endNode && _pathfinder.GetNodeFromPoint(_transform.position) == nextTargetNode)	
         {
             _controller.TransitionToState(_controller.idleState);
