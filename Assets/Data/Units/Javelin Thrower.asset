@@ -41,10 +41,10 @@ MonoBehaviour:
   attackTriggerRadius: 14
   weaponType: 1
   canAttackMelee: 1
-  damageMelee: 7
+  damageMelee: 6
   attackSpeedMelee: 1
   canAttackRanged: 1
-  damageRanged: 14
+  damageRanged: 12
   attackSpeedRanged: 2
   range: 10
   projectile: {fileID: 1272150398772700, guid: 4d75bb6f4b635c94a8d90b06a86a1424, type: 2}

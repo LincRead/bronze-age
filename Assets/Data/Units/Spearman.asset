@@ -49,7 +49,7 @@ MonoBehaviour:
   range: 0
   projectile: {fileID: 0}
   damageSiege: 5
-  rangedArmor: 2
+  rangedArmor: 3
   meleeArmor: 0
   hasShield: 1
   hasHeavyBodyArmor: 1
