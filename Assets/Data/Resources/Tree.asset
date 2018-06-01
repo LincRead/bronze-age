@@ -25,7 +25,7 @@ MonoBehaviour:
   visionRange: 40
   harvestType: 3
   resourceType: 1
-  amount: 30
+  amount: 20
   harvestDifficulty: 1.5
   harvestStagesSprites:
   - {fileID: 21300002, guid: 18553da7ac79cb341aa74546f7bd36bd, type: 3}

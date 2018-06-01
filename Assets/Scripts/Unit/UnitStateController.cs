@@ -858,7 +858,16 @@ public class UnitStateController : BaseController
     {
         int[] stats = new int[6];
 
-	    stats[0] = (int)(_unitStats.damageMelee / _unitStats.attackSpeedMelee);
+        if(_unitStats.canAttackMelee)
+        {
+            stats[0] = (int)(_unitStats.damageMelee / _unitStats.attackSpeedMelee);
+        }
+
+        else if(_unitStats.canAttackRanged)
+        {
+            stats[0] = (int)(_unitStats.damageRanged / _unitStats.attackSpeedRanged);
+        }
+	    
         statSprites[0] = ControllerUIManager.instance.attackIcon;
         statsDescriptions[0] = "Attack damage";
 

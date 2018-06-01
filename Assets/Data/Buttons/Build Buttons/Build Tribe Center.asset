@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Name: Build Tribe Center
   m_EditorClassIdentifier: 
   type: 1
-  title: Tribe Center (T)
+  title: Tribe Center (C)
   description: Place a home for your Tribe to train new Villagers. Your Villagers
     can also drop of resources here.
   executeScript: {fileID: 0}
-  hotkey: 116
+  hotkey: 99
   productionPrefab: {fileID: 1778839016363780, guid: 069817e06d4128649a559bff389209c9,
     type: 2}
   icon: {fileID: 21300038, guid: ba24593a1f1e5a645a720966e3210547, type: 3}

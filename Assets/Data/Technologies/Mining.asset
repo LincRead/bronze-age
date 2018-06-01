@@ -8,7 +8,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: d377e996664ed4b4b9e06e13ae52d7b5, type: 3}
   m_Name: Mining
-  m_EditorClassIdentifier: Assembly-CSharp::ImprovedMiningSpeed
+  m_EditorClassIdentifier: 
   extraMiningSpeed: 1.25

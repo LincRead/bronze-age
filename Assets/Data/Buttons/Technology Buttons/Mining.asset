@@ -13,6 +13,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   title: Mining
   description: Improve  mining speed by 25%.
-  executeScript: {fileID: 11400000, guid: 997926fcb40fb59459e2c4056964ffc3, type: 2}
+  executeScript: {fileID: 11400000, guid: 623ca1103e547d94fbdcde57959641e5, type: 2}
   icon: {fileID: 21300070, guid: ba24593a1f1e5a645a720966e3210547, type: 3}
   knowledge: 30
