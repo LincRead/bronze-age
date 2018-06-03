@@ -9,9 +9,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dc79851b7c9cc3a4b8ba538552433bcc, type: 3}
-  m_Name: Polished Stone Axe
+  m_Name: Advanced Woodworking
   m_EditorClassIdentifier: 
-  title: Polished Stone Axe
+  title: Advanced Woodworking
   description: Improve woodcutting speed by 25%.
   executeScript: {fileID: 11400000, guid: 64351a7868f0d1a4fb1ee9606215d5ac, type: 2}
   icon: {fileID: 21300052, guid: ba24593a1f1e5a645a720966e3210547, type: 3}
